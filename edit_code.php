@@ -154,9 +154,9 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         echo '<script>
             const codeCheckMessageElement = document.getElementById("code_check_message");
             const codeCheckPHPElement = document.getElementById("code_check_php");
+            const codeFormElement = document.getElementById("code_form");
             
-            var codeFormElement = document.getElementById("code_form");
-            codeFormElement.addEventListener("submit", function (event) {
+            function save() {
                 var data = new FormData();
                 data.append("requestApi", 1);
                 data.append("content", editor.state.doc.toString());
@@ -186,10 +186,19 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                         codeCheckMessageElement.innerHTML = data.error;
                     }
                 });
-
+            }
+            
+            codeFormElement.addEventListener("submit", function (event) {
                 event.preventDefault();
-                return false;
-            });
+                save()
+            })
+            
+            document.addEventListener("keydown", function(event) {
+                if (event.ctrlKey && event.key === "s") {
+                    event.preventDefault()
+                    save()
+                }
+            })
 
             
             // format code

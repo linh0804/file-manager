@@ -80,7 +80,7 @@
                 var codeHighLightElement = document.getElementById("code_highlight");
                 var codeFormElement = document.getElementById("code_form");
 
-                codeFormElement.addEventListener("submit", function (event) {                    
+                function save() {
                     var data = new FormData();
                     data.append("requestApi", 1);
                     data.append("content", editorElement.value);
@@ -110,11 +110,13 @@
                             codeCheckMessageElement.innerHTML = data.error;
                             codeCheckMessageElement.style.display = "block";
                         }
-                    });
+                    })
+                }
 
-                    event.preventDefault();
-                    return false;
-                });
+                codeFormElement.addEventListener("submit", function (event) {
+                    event.preventDefault()    
+                    save()
+                })
 
 
                 codeHighLightElement.addEventListener("click", function () {
@@ -156,6 +158,13 @@
                         editorElement.setAttribute("style", "white-space: nowrap");
                     }
                 });
+                
+                document.addEventListener("keydown", function(event) {
+                    if (event.ctrlKey && event.key === "s") {
+                        event.preventDefault()
+                        save()
+                    }
+                })
             </script>';
             echo '<style>
                 #code_check_message, #code_check_highlight {

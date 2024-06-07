@@ -230,7 +230,7 @@ if (!isInstallAsRoot($dir)) {
         <li><img src="icon/upload.png"/> <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tải lên tập tin</a></li>
         <li><img src="icon/import.png"/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
         <li><img src="icon/search.png"/> <a href="find_in_folder.php?dir=' . $dirEncode . '">Tìm trong thư mục</a></li>
-        <li><img src="icon/search.png"/> <a href="scan_error_log.php?dir=' . $dirEncode . '">Tìm <b>error_log</b></a></li>
+        <li><img src="icon/search.png"/> <a href="scan_error_log.php?dir=' . $dirEncode . '">Tìm <b style="color:red">error_log</b></a></li>
         <li><img src="icon/info.png"/> <a href="folder_detail.php?dir=' . $dirEncode . '">Thông tin thư mục</a></li>
         <li>Webdav: https://' . $_SERVER['HTTP_HOST'] . '/' . basename(__DIR__) . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '</li>
     </ul>';

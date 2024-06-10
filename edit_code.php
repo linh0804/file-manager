@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-include_once 'function.php';
+require 'function.php';
 
 if (!IS_LOGIN) {
     goURL('login.php');
@@ -10,7 +10,7 @@ if (!IS_LOGIN) {
 
 $title = 'Sửa tập tin dạng Code';
 
-include_once 'header.php';
+require 'header.php';
 
 echo '<div class="tips" style="margin-top: 0 !important">
     <img src="icon/tips.png" alt="">
@@ -152,10 +152,16 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         
 		echo '<script src="' . asset('js/edit_code.bundle.js') . '"></script>';
         echo '<script>
-            const codeCheckMessageElement = document.getElementById("code_check_message");
-            const codeCheckPHPElement = document.getElementById("code_check_php");
-            const codeFormElement = document.getElementById("code_form");
+            const codeCheckMessageElement = document.getElementById("code_check_message")
+            const codeCheckPHPElement = document.getElementById("code_check_php")
+            const codeFormElement = document.getElementById("code_form")
+            const editorElement = document.getElementById("editor")
             
+              // auto focus
+             document.addEventListener("DOMContentLoaded", function() {
+                editorElement.scrollIntoView({ behavior: "smooth", block: "center" })
+             })
+                 
             function save() {
                 var data = new FormData();
                 data.append("requestApi", 1);
@@ -245,5 +251,4 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         </ul>';
 }
 
-include_once 'footer.php';
-
+require 'footer.php';

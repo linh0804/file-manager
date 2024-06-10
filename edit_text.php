@@ -80,6 +80,11 @@
                 var codeHighLightElement = document.getElementById("code_highlight");
                 var codeFormElement = document.getElementById("code_form");
 
+                // auto focus
+                document.addEventListener("DOMContentLoaded", function() {
+                  editorElement.scrollIntoView({ behavior: "smooth", block: "center" })
+                 })
+
                 function save() {
                     var data = new FormData();
                     data.append("requestApi", 1);

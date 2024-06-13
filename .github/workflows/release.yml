@@ -27,7 +27,7 @@ jobs:
         run: |
           wget https://getcomposer.org/download/latest-stable/composer.phar
           php composer.phar install
-          zip -r file-manager-full.zip . -x ".git/*" ".github/*"
+          zip -r file-manager-full.zip . -x ".git/*" ".github/*" "file-manager.zip"
           
 
       - name: bump tag

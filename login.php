@@ -16,7 +16,8 @@ if (!ableLogin()) {
     require 'header.php';
     echo '<div class="title">' . $title . '</div>';
     echo '<div class="notice_failure">
-        Khoá đăng nhập, vào thư mục manager xoá file "' . LOGIN_LOCK . '" để mở khoá!
+        Khoá đăng nhập, vào thư mục manager xoá file "' . LOGIN_LOCK . '" để mở khoá!<br><br>
+        Hoặc bạn có thể đăng nhập lại sau "30 phút" tính từ lần đăng nhập "cuối cùng"!
     </div>';
     require 'footer.php';
     exit;

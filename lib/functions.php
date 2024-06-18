@@ -937,7 +937,17 @@ function cookie(
     }
 }
 
+// auth
 function getLoginFail() {
+    if (file_exists(LOGIN_LOCK)) {
+        $timeDifference = time() - filemtime(LOGIN_LOCK);
+    
+        // reset 30 phut
+        if ($timeDifference >= 1800) {
+            removeLoginFail();
+        }
+    }
+
     return (int) @file_get_contents(LOGIN_LOCK);
 }
 function increaseLoginFail() {

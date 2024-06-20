@@ -1,7 +1,8 @@
 <?php
 
-if (!defined('ACCESS'))
+if (!defined('ACCESS')) {
     die('Not access');
+}
 
 $script = function_exists('getenv') ? getenv('SCRIPT_NAME') : $_SERVER['SCRIPT_NAME'];
 $script = strpos($script, '/') !== false ? dirname($script) : '';
@@ -27,16 +28,16 @@ if (
 }
 
 if (
-    !defined('INDEX') 
-    && !defined('LOGIN') 
+    !defined('INDEX')
+    && !defined('LOGIN')
     && NOT_PERMISSION
 ) {
-    goURL('index.php?not');
+    //goURL('index.php?not');
 }
 
 if (NOT_PERMISSION) {
-    $dir       = '';
-    $dirEncode = '';
+    //$dir       = '';
+    //$dirEncode = '';
 }
 
 if (!empty($dir)) {
@@ -60,12 +61,13 @@ function isPathNotPermission($path, $isUseName = false): bool
         $path = str_replace('\\', '/', $path);
         $path = strtolower($path);
 
-        if (preg_match('#^' . $reg . '$#si', $path))
+        if (preg_match('#^' . $reg . '$#si', $path)) {
             return true;
-        elseif (preg_match('#^' . $reg . '/(^\/+|^\\+)(.*?)$#si', $path))
+        } elseif (preg_match('#^' . $reg . '/(^\/+|^\\+)(.*?)$#si', $path)) {
             return true;
-        elseif (preg_match('#^' . $reg . '/(.*?)$#si', $path))
+        } elseif (preg_match('#^' . $reg . '/(.*?)$#si', $path)) {
             return true;
+        }
 
         return false;
     }

@@ -37,6 +37,10 @@ mysqli_report(MYSQLI_REPORT_ERROR);
 }
 
 define('REALPATH', realpath('./'));
+define('rootPath', realpath('./'));
+
+define('isHttps', isset($_SERVER['HTTPS']));
+define('requestScheme', isHttps ? 'https' : 'http');
 
 // require function
 require_once 'lib/functions.php';

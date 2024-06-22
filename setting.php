@@ -2,7 +2,7 @@
 
 const ACCESS = true;
 
-require_once 'function.php';
+require 'function.php';
 
 $title = 'Cài đặt';
 $ref   = $_POST['ref'] ?? (isset($_SERVER['HTTP_REFFRER']) ? $_SERVER['HTTP_REFERER'] : null);
@@ -12,22 +12,22 @@ require_once 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-$username         = $configs['username'];
-$passwordO        = null;
-$passwordN        = null;
-$verifyN          = null;
-$pageList         = $configs['page_list'];
-$pageFileEdit     = $configs['page_file_edit'];
+$username = $configs['username'];
+$passwordO = null;
+$passwordN = null;
+$verifyN = null;
+$pageList = $configs['page_list'];
+$pageFileEdit = $configs['page_file_edit'];
 $pageFileEditLine = $configs['page_file_edit_line'];
 $pageDatabaseListRows = $configs['page_database_list_rows'];
 
 if (isset($_POST['submit'])) {
-    $username         = addslashes($_POST['username']);
-    $passwordO        = addslashes($_POST['password_o']);
-    $passwordN        = addslashes($_POST['password_n']);
-    $verifyN          = addslashes($_POST['verify_n']);
-    $pageList         = intval(addslashes($_POST['page_list']));
-    $pageFileEdit     = intval(addslashes($_POST['page_file_edit']));
+    $username = addslashes($_POST['username']);
+    $passwordO = addslashes($_POST['password_o']);
+    $passwordN = addslashes($_POST['password_n']);
+    $verifyN = addslashes($_POST['verify_n']);
+    $pageList = intval(addslashes($_POST['page_list']));
+    $pageFileEdit = intval(addslashes($_POST['page_file_edit']));
     $pageFileEditLine = intval(addslashes($_POST['page_file_edit_line']));
     $pageDatabaseListRows = addslashes($_POST['page_database_list_rows']);
 
@@ -62,12 +62,12 @@ if (isset($_POST['submit'])) {
         )) {
             include PATH_CONFIG;
 
-            $username         = $configs['username'];
-            $passwordO        = null;
-            $passwordN        = null;
-            $verifyN          = null;
-            $pageList         = $configs['page_list'];
-            $pageFileEdit     = $configs['page_file_edit'];
+            $username = $configs['username'];
+            $passwordO = null;
+            $passwordN = null;
+            $verifyN = null;
+            $pageList = $configs['page_list'];
+            $pageFileEdit = $configs['page_file_edit'];
             $pageFileEditLine = $configs['page_file_edit_line'];
             $pageDatabaseListRows = addslashes($_POST['page_database_list_rows']);
 
@@ -79,39 +79,39 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<div class="list">
-            <form action="setting.php" method="post">
-                <span class="bull">&bull; </span>Tài khoản:<br/>
-                <input type="text" name="username" value="' . $username . '" size="18"/><br/>
+    <form action="setting.php" method="post">
+    <span class="bull">&bull; </span>Tài khoản:<br/>
+    <input type="text" name="username" value="' . $username . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Mật khẩu cũ:<br/>
-                <input type="password" name="password_o" value="' . $passwordO . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Mật khẩu cũ:<br/>
+    <input type="password" name="password_o" value="' . $passwordO . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Mật khẩu mới:<br/>
-                <input type="password" name="password_n" value="' . $passwordN . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Mật khẩu mới:<br/>
+    <input type="password" name="password_n" value="' . $passwordN . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Nhập lại mật khẩu mới:<br/>
-                <input type="password" name="verify_n" value="' . $verifyN . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Nhập lại mật khẩu mới:<br/>
+    <input type="password" name="verify_n" value="' . $verifyN . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Phân trang danh sách:<br/>
-                <input type="text" name="page_list" value="' . $pageList . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Phân trang danh sách:<br/>
+    <input type="text" name="page_list" value="' . $pageList . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Phân trang sửa văn bản thường:<br/>
-                <input type="text" name="page_file_edit" value="' . $pageFileEdit . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Phân trang sửa văn bản thường:<br/>
+    <input type="text" name="page_file_edit" value="' . $pageFileEdit . '" size="18"/><br/>
 
-                <span class="bull">&bull; </span>Phân trang sửa văn bản theo dòng:<br/>
-                <input type="text" name="page_file_edit_line" value="' . $pageFileEditLine . '" size="18"/><br/>
+    <span class="bull">&bull; </span>Phân trang sửa văn bản theo dòng:<br/>
+    <input type="text" name="page_file_edit_line" value="' . $pageFileEditLine . '" size="18"/><br/>
 
-                <span class="bull">&bull;</span>Phân trang danh sách dữ liệu sql:<br/>
-                <input type="text" name="page_database_list_rows" value="' . $pageDatabaseListRows . '" size="18"/><br/>
+    <span class="bull">&bull;</span>Phân trang danh sách dữ liệu sql:<br/>
+    <input type="text" name="page_database_list_rows" value="' . $pageDatabaseListRows . '" size="18"/><br/>
 
-                <input type="hidden" name="ref" value="' . $ref . '"/>
+    <input type="hidden" name="ref" value="' . $ref . '"/>
 
-                <input type="submit" name="submit" value="Lưu"/>
-            </form>
-        </div>
-        <div class="tips"><img src="icon/tips.png" alt=""/> Mật khẩu để trống nếu không muốn thay đổi</div>
-        <div class="title">Chức năng</div>
-        <ul class="list">';
+    <input type="submit" name="submit" value="Lưu"/>
+    </form>
+    </div>
+    <div class="tips"><img src="icon/tips.png" alt=""/> Mật khẩu để trống nếu không muốn thay đổi</div>
+    <div class="title">Chức năng</div>
+    <ul class="list">';
 
 if ($ref != null) {
     echo '<li><img src="icon/back.png" alt=""/> <a href="' . $ref . '">Quay lại</a></li>';
@@ -123,4 +123,6 @@ echo '<li><img src="icon/download.png" alt=""/> <a href="update.php">Cập nhậ
 echo '<li><img src="icon/empty.png" alt=""/> <a href="reinstall.php">Cài đặt lại!!!</a></li>';
 echo '</ul>';
 
-require_once 'footer.php';
+echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(rootPath) . '</div>';
+
+require 'footer.php';

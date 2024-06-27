@@ -39,30 +39,35 @@ mysqli_report(MYSQLI_REPORT_ERROR);
 define('REALPATH', realpath('./'));
 define('rootPath', realpath('./'));
 
+define('isBuiltinServer', php_sapi_name() === 'cli-server');
+
 define('isHttps', isset($_SERVER['HTTPS']));
 define('requestScheme', isHttps ? 'https' : 'http');
+
+define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
+define('baseUrl', requestScheme . '://' . $_SERVER['HTTP_HOST'] . (isBuiltinServer ? '' : '/' . baseFolder));
 
 // require function
 require_once 'lib/functions.php';
 
 // tạo tmp nếu chưa có
 {
-	$tmp_dir = __DIR__ . '/tmp';
-	$tmp_file = $tmp_dir . '/.htaccess';
+    $tmp_dir = __DIR__ . '/tmp';
+    $tmp_file = $tmp_dir . '/.htaccess';
 
-	if (!is_dir($tmp_dir)) {
-		mkdir($tmp_dir);
-	}
+    if (!is_dir($tmp_dir)) {
+        mkdir($tmp_dir);
+    }
 
-	if (!file_exists($tmp_file)) {
-		file_put_contents(
-			$tmp_file,
-			'deny from all'
-		);
-	}
+    if (!file_exists($tmp_file)) {
+        file_put_contents(
+            $tmp_file,
+            'deny from all'
+        );
+    }
 
-	unset($tmp_dir);
-	unset($tmp_file);
+    unset($tmp_dir);
+    unset($tmp_file);
 }
 
 {

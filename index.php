@@ -212,7 +212,7 @@ echo '<div class="title">Chức năng</div>
     <li><img src="icon/search.png"/> <a href="find_in_folder.php?dir=' . $dirEncode . '">Tìm trong thư mục</a></li>
     <li><img src="icon/search.png"/> <a href="scan_error_log.php?dir=' . $dirEncode . '">Tìm <b style="color:red">error_log</b></a></li>
     <li><img src="icon/info.png"/> <a href="folder_detail.php?dir=' . $dirEncode . '">Thông tin thư mục</a></li>
-    <li>Webdav: ' . requestScheme . '://' . $_SERVER['HTTP_HOST'] . ltrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '</li>
+    <li>Webdav: ' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '</li>
 </ul>';
 
 require 'footer.php';

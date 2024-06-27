@@ -51,11 +51,6 @@ if (isset($_POST['submit'])) {
 
 require 'header.php';
 
-if (IS_INSTALL_ROOT_DIRECTORY) {
-    echo '<div class="title">Lỗi File Manager</div>
-            <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục. Bạn có thể đăng nhập nhưng tất cả các chức năng đều bị ẩn và chặn</div>';
-}
-
 echo '<div class="title">' . $title . '</div>';
 echo $notice;
 

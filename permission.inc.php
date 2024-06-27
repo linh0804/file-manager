@@ -82,10 +82,8 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
     $title = 'Lỗi File Manager';
 
     include_once 'header.php';
-
     echo '<div class="title">Lỗi File Manager</div>
         <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!</div>';
-
     include_once 'footer.php';
     exit();
 }

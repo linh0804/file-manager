@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 0,
-    "patch": 43,
-    "version": "1.0.43",
-    "message": "đăng nhập sai nhiều lần, chờ 30 phút mới cho đăng nhập lại, fix composer"
+    "patch": 44,
+    "version": "1.0.44",
+    "message": "toi uu!"
 }

@@ -4,25 +4,25 @@
 }
 
 @media (min-width: 240px) {
-    textarea.box_edit {
+    textarea.box_edit, div#editor {
         height: 320px;
     }
 }
 
 @media (min-width: 320px) {
-    textarea.box_edit {
+    textarea.box_edit, div#editor {
         height: 480px;
     }
 }
 
 @media (min-width: 480px) {
-    textarea.box_edit {
+    textarea.box_edit, div#editor {
         height: 640px;
     }
 }
 
 @media (min-width: 640px) {
-    textarea.box_edit {
+    textarea.box_edit, div#editor {
         height: 720px;
     }
 }

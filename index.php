@@ -115,17 +115,17 @@ if ($count <= 0) {
 
         if ($lists[$i]['is_directory']) {
             echo '<li class="folder">
-                    <div>
-                        <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                        <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
-                            <img src="icon/folder.png"/>
-                        </a>
-                        <a href="index.php?dir=' . rawurlencode($path) . '">' . $name . '</a>
-                        <div class="perms">
-                            <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
-                        </div>
+                <div>
+                    <input type="checkbox" name="entry[]" value="' . $name . '"/>
+                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
+                        <img src="icon/folder.png"/>
+                    </a>
+                    <a href="index.php?dir=' . rawurlencode($path) . '">' . $name . '</a>
+                    <div class="perms">
+                        <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
                     </div>
-                </li>';
+                </div>
+            </li>';
         } else {
             $edit   = array(null, '</a>');
             $icon   = 'unknown';
@@ -166,16 +166,16 @@ if ($count <= 0) {
             }
 
             echo '<li class="file">
-                    <p>
-                        <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                        ' . $edit[0] . '<img src="icon/mime/' . $icon . '.png"/>' . $edit[1] . '
-                        <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $name . '</a>
-                    </p>
-                    <p>
-                        <span class="size">' . size(@filesize($dir . '/' . $name)) . '</span>,
-                        <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
-                    </p>
-                </li>';
+                <p>
+                    <input type="checkbox" name="entry[]" value="' . $name . '"/>
+                    ' . $edit[0] . '<img src="icon/mime/' . $icon . '.png"/>' . $edit[1] . '
+                    <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $name . '</a>
+                </p>
+                <p>
+                    <span class="size">' . size(@filesize($dir . '/' . $name)) . '</span>,
+                    <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
+                </p>
+            </li>';
         }
     }
 
@@ -190,16 +190,16 @@ echo '</ul>';
 
 if ($count > 0) {
     echo '<div class="list">
-            <select name="option">
-                <option value="0">Sao chép</option>
-                <option value="1">Di chuyển</option>
-                <option value="2">Xóa</option>
-                <option value="3">Nén zip</option>
-                <option value="4">Chmod</option>
-                <option value="5">Đổi tên</option>
-            </select>
-            <input type="submit" name="submit" value="Thực hiện"/>
-        </div>';
+        <select name="option">
+            <option value="0">Sao chép</option>
+            <option value="1">Di chuyển</option>
+            <option value="2">Xóa</option>
+            <option value="3">Nén zip</option>
+            <option value="4">Chmod</option>
+            <option value="5">Đổi tên</option>
+        </select>
+        <input type="submit" name="submit" value="Thực hiện"/>
+    </div>';
 }
 
 echo '</form>';

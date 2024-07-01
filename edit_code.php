@@ -70,6 +70,23 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         $codeLang = $fileExtForCM;
     }
 
+    echo '<style type="text/css" media="screen">
+        .cm-editor {
+            height: 100%;
+        }
+
+        .cm-focused .cm-selectionBackground,
+        .cm-selectionBackground,
+        .cm-content ::selection {
+            background-color: #4a4a4a !important;
+        }
+
+        .cm-activeLine.cm-line::selection,
+        .cm-activeLine.cm-line ::selection {
+            background-color: #8a8a8a !important;
+        }
+    </style>';
+
     echo '<div class="list">
         <span>' . printPath($dir, true) . '</span><hr/>
         <div class="ellipsis break-word">
@@ -79,8 +96,10 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             <div>
                 <a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
                     <button class="button">Chế độ sửa văn bản</button>
-                </a><hr />
-             </div>
+                </a>
+                <button onclick="fullScreen()" class="button">F11</button>
+            <hr />
+            </div>
             <div class="code_action">
                 Loại code:
                 <select id="code_lang">';
@@ -113,45 +132,9 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         </form>
         </div>
         <div id="code_check_message" class="list">
-        </div>
+    </div>';
 
-        <style type="text/css" media="screen">
-            @media (min-width: 240px) {
-                .cm-editor {
-                    height: 320px;
-                }
-            }
-            
-            @media (min-width: 320px) {
-                .cm-editor {
-                    height: 480px;
-                }
-            }
-            
-            @media (min-width: 480px) {
-                .cm-editor {
-                    height: 640px;
-                }
-            }
-            
-            @media (min-width: 640px) {
-                .cm-editor {
-                    height: 720px;
-                }
-            }
 
-			.cm-focused .cm-selectionBackground,
-			.cm-selectionBackground,
-			.cm-content ::selection {
-				background-color: #4a4a4a !important;
-			}
-
-			.cm-activeLine.cm-line::selection,
-			.cm-activeLine.cm-line ::selection {
-				background-color: #8a8a8a !important;
-			}
-        </style>';
-        
     echo '<script src="' . asset('js/edit_code.bundle.js') . '"></script>';
     echo '<script>
         const codeCheckMessageElement = document.getElementById("code_check_message")
@@ -228,7 +211,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 if (response.status != 200) {
                     alert("Lỗi kết nối!");
                     return false;
-                }                    
+                }
                 return response.json();
             }).then((data) => {
                 if (!data.error) {
@@ -244,6 +227,29 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 }
             })
         })
+
+        // full screen
+        function fullScreen() {
+            if (!document.fullscreenElement) {
+                editorElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
+                })
+            } else {
+                document.exitFullscreen()
+            }
+        }
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "F11") {
+                event.preventDefault()
+                fullScreen();
+            }
+
+            if (event.key === "Escape") {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen()
+                }
+            }
+        });
     </script>';
 
     printFileActions($file);

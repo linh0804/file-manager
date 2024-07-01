@@ -11,7 +11,7 @@
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-php": "^6.0.1",
     "@codemirror/lang-sass": "^6.0.2",
-    "@codemirror/lang-sql": "^6.6.5",
+    "@codemirror/lang-sql": "^6.7.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "cm6-theme-material-dark": "^0.2.0",

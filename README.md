@@ -30,7 +30,7 @@ wget https://github.com/ngatngay/file-manager/releases/latest/download/file-mana
 unzip file-manager-full.zip
 ```
 
-## Hướng dẫn cài đặt
+## Lưu ý cài đặt
 
 - Tải code về và giải nén vào 1 thư mục không phải thư mục gốc (`DOCUMENT_ROOT`)!
 

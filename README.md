@@ -10,16 +10,17 @@ Nếu có lỗi các bạn cứ báo trên repo này (phần `Issues`), hoặc l
 
 ## Cài đặt nhanh
 
+### Cài đặt bằng file
+
 Tạo một file php, dán code ở [file này](https://raw.githubusercontent.com/ngatngay/file-manager/main/install.txt) vào và chạy nó.
 
-Bản nhẹ
+### Cài đặt thủ công (FTP, SSH, File Manager,...)
 
-```bash
-curl -O https://raw.githubusercontent.com/ngatngay/file-manager/main/install.txt
-php install.txt
-```
+Hoặc tải file zip ở Release về, giải nén vào 1 thư mục.
 
-Bản full (cài sẵn mấy công cụ như WebDAV)
+### Cài đặt bằng lệnh
+
+Bản full (cài sẵn mấy công cụ như WebDAV):
 
 ```bash
 mkdir file-manager

@@ -34,6 +34,8 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 } else {
     $dir = processDirectory($dir);
     $path = $dir . '/' . $name;
+    $file = new SplFileInfo($path);
+
     $content = file_get_contents($path);
     $actionEdit = 'edit_api.php?dir=' . $dirEncode . '&name=' . $name;
     $fileExt = getFormat($name);
@@ -55,7 +57,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         'js' => 'javascript',
         'scss' => 'sass'
     ];
-    
+
     $fileExtForCM = $fileExt;
     if (array_key_exists($fileExt, $forCM)) {
         $fileExtForCM = str_replace($fileExt, $forCM[$fileExt], $fileExtForCM);
@@ -150,105 +152,102 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 			}
         </style>';
         
-		echo '<script src="' . asset('js/edit_code.bundle.js') . '"></script>';
-        echo '<script>
-            const codeCheckMessageElement = document.getElementById("code_check_message")
-            const codeCheckPHPElement = document.getElementById("code_check_php")
-            const codeFormElement = document.getElementById("code_form")
-            const editorElement = document.getElementById("editor")
-            
-              // auto focus
-             document.addEventListener("DOMContentLoaded", function() {
-                editorElement.scrollIntoView({ behavior: "smooth", block: "center" })
-             })
-                 
-            function save() {
-                var data = new FormData();
-                data.append("requestApi", 1);
-                data.append("content", editor.state.doc.toString());
-                
-                codeCheckMessageElement.innerHTML = "";
-                if (codeCheckPHPElement.checked) {
-                    data.append("check", 1);
-                } else {
-                    data.append("check", 0);
-                }
+    echo '<script src="' . asset('js/edit_code.bundle.js') . '"></script>';
+    echo '<script>
+        const codeCheckMessageElement = document.getElementById("code_check_message")
+        const codeCheckPHPElement = document.getElementById("code_check_php")
+        const codeFormElement = document.getElementById("code_form")
+        const editorElement = document.getElementById("editor")
 
-                fetch("' . $actionEdit . '", {
-                    method: "POST",
-                    body: data,
-                    cache: "no-cache"
-                }).then(function (response) {
-                    if (response.status != 200) {
-                        alert("Lỗi kết nối!");
-                        return false;
-                    }
-                    
-                    return response.json();
-                }).then((data) => {
-                    alert(data.message)
+        // auto focus
+        document.addEventListener("DOMContentLoaded", function() {
+            editorElement.scrollIntoView({ behavior: "smooth", block: "center" })
+        })
 
-                    if (data.error) {
-                        codeCheckMessageElement.innerHTML = data.error;
-                    }
-                });
+        function save() {
+            var data = new FormData();
+            data.append("requestApi", 1);
+            data.append("content", editor.state.doc.toString());
+
+            codeCheckMessageElement.innerHTML = "";
+            if (codeCheckPHPElement.checked) {
+                data.append("check", 1);
+            } else {
+                data.append("check", 0);
             }
-            
-            codeFormElement.addEventListener("submit", function (event) {
-                event.preventDefault();
+
+            fetch("' . $actionEdit . '", {
+                method: "POST",
+                body: data,
+                cache: "no-cache"
+            }).then(function (response) {
+                if (response.status != 200) {
+                    alert("Lỗi kết nối!");
+                    return false;
+                }
+
+                return response.json();
+            }).then((data) => {
+                alert(data.message)
+
+                if (data.error) {
+                    codeCheckMessageElement.innerHTML = data.error;
+                }
+            });
+        }
+
+        codeFormElement.addEventListener("submit", function (event) {
+            event.preventDefault();
+            save()
+        })
+
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.key === "s") {
+                event.preventDefault()
                 save()
-            })
-            
-            document.addEventListener("keydown", function(event) {
-                if (event.ctrlKey && event.key === "s") {
-                    event.preventDefault()
-                    save()
+            }
+        })
+
+        // format code
+        var codeFormatElement = document.getElementById("code_format");
+        codeFormatElement.addEventListener("click", function () {
+            if (!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
+                return;
+            }
+
+            var data = new FormData();
+            data.append("requestApi", 1);
+            data.append("format_php", 1);
+            data.append("content", editor.state.doc.toString());
+
+            fetch("'. $actionEdit .'", {
+                method: "POST",
+                body: data,
+                cache: "no-cache"
+            }).then(function (response) {
+                if (response.status != 200) {
+                    alert("Lỗi kết nối!");
+                    return false;
+                }                    
+                return response.json();
+            }).then((data) => {
+                if (!data.error) {
+                    editor.dispatch({
+                        changes: {
+                            from: 0,
+                            to: editor.state.doc.length,
+                            insert: data.format
+                        }
+                    })
+                } else {
+                    alert(data.error);
                 }
             })
+        })
+    </script>';
 
-            
-            // format code
-            var codeFormatElement = document.getElementById("code_format");
-            codeFormatElement.addEventListener("click", function () {
-                    if (!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
-                        return;
-                    }
-
-                    var data = new FormData();
-                    data.append("requestApi", 1);
-                    data.append("format_php", 1);
-                    data.append("content", editor.state.doc.toString());
-
-                    fetch("'. $actionEdit .'", {
-                        method: "POST",
-                        body: data,
-                        cache: "no-cache"
-                    }).then(function (response) {
-                        if (response.status != 200) {
-                            alert("Lỗi kết nối!");
-                            return false;
-                        }                    
-                        return response.json();
-                    }).then((data) => {
-                        if (!data.error) {
-                            editor.dispatch({
-                                changes: {
-                                    from: 0,
-                                    to: editor.state.doc.length,
-                                    insert: data.format
-                                }
-                            })
-                        } else {
-                            alert(data.error);
-                        }
-                    });                  
-                });
-        </script>
-
-        <div class="title">Chức năng</div>
-        <ul class="list">
-            <li><img src="icon/info.png"/> <a href="file.php?dir='      . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Thông tin</a></li>
-        </ul>';
+    printFileActions($file);
 }
 
 require 'footer.php';
+

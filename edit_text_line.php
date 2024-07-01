@@ -2,29 +2,29 @@
 
 define('ACCESS', true);
 
-require_once 'function.php';
+require 'function.php';
 
 $title = 'Sửa tập tin theo dòng';
 $page = array('current' => 0, 'total' => 1, 'paramater_0' => null, 'paramater_1' => null);
 $page['current'] = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $page['current'] = $page['current'] <= 0 ? 1 : $page['current'];
 
-require_once 'header.php';
+require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
 if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
-            <div class="title">Chức năng</div>
-            <ul class="list">
-                <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
-            </ul>';
+    <div class="title">Chức năng</div>
+    <ul class="list">
+        <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
+    </ul>';
 } elseif (!isFormatText($name) && !isFormatUnknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
-            <div class="title">Chức năng</div>
-            <ul class="list">
-                <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-            </ul>';
+    <div class="title">Chức năng</div>
+    <ul class="list">
+        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+    </ul>';
 } else {
     if ($page['current'] > 1 && $configs['page_file_edit_line'] > 0) {
         $page['paramater_0'] = '?page=' . $page['current'];
@@ -32,6 +32,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     $path = $dir . '/' . $name;
+    $file = new SplFileInfo($path);
     $content = file_get_contents($path);
     $lines = array();
     $count = 0;
@@ -75,23 +76,23 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     echo '<div class="list">
-                <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
-                <div class="ellipsis break-word">
-                    <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong>
-                </div>
-            </div>
-            <div class="list_line">';
+        <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
+        <div class="ellipsis break-word">
+            <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong>
+        </div>
+    </div>
+    <div class="list_line">';
 
     for ($i = $start; $i < $end; ++$i) {
         echo '<div id="line">
-                    <div id="line_number_' . $i . '">' . htmlspecialchars($lines[$i]) . '</div>
-                    <div>
-                        <span id="line_number">[<span>' . ($i + 1) . '</span>]</span>
-                        <a href="edit_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $i . $page['paramater_1'] . '">Sửa</a>
-                        <span> | </span>
-                        <a href="delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $i . $page['paramater_1'] . '">Xóa</a>
-                    </div>
-                </div>';
+            <div id="line_number_' . $i . '">' . htmlspecialchars($lines[$i]) . '</div>
+            <div>
+                <span id="line_number">[<span>' . ($i + 1) . '</span>]</span>
+                <a href="edit_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $i . $page['paramater_1'] . '">Sửa</a>
+                <span> | </span>
+                <a href="delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $i . $page['paramater_1'] . '">Xóa</a>
+            </div>
+        </div>';
     }
 
     if ($page['total'] > 1 && $configs['page_file_edit_line'] > 0) {
@@ -99,22 +100,13 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     echo '</div>
-            <div class="tips">
-                <img src="icon/tips.png"/>
-                <span>Khuyên bạn nên sửa dạng văn bản, dạng sửa này xử lý khá nhiều trong một lần request</span>
-            </div>
-            <div class="title">Chức năng</div>
-            <ul class="list">
-                <li><img src="icon/edit.png"/> <a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sửa văn bản</a></li>
-                <li><img src="icon/download.png"/> <a href="file_download.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Tải về</a></li>
-                <li><img src="icon/info.png"/> <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Thông tin</a></li>
-                <li><img src="icon/rename.png"/> <a href="file_rename.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Đổi tên</a></li>
-                <li><img src="icon/copy.png"/> <a href="file_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sao chép</a></li>
-                <li><img src="icon/move.png"/> <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>
-                <li><img src="icon/delete.png"/> <a href="file_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Xóa</a></li>
-                <li><img src="icon/access.png"/> <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Chmod</a></li>
-                <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-            </ul>';
+    <div class="tips">
+        <img src="icon/tips.png"/>
+        <span>Khuyên bạn nên sửa dạng văn bản, dạng sửa này xử lý khá nhiều trong một lần request</span>
+    </div>';
+
+    printFileActions($file);
 }
 
-require_once 'footer.php';
+require 'footer.php';
+

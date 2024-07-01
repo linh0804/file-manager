@@ -84,8 +84,8 @@ if (preg_replace('|[a-zA-Z]+:|', '', str_replace('\\', '/', $dir)) != '/') {
     }
 
     echo '<li class="normal">
-        <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
         <a href="' . $path . '">
+            <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
             <strong class="back">...</strong>
         </a>
     </li>';

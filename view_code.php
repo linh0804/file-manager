@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require_once 'function.php';
+require 'function.php';
 
 $themes = ['a11y-light','a11y-dark','vs','xcode','github-dark-dimmed','github'];
 $coder = ['Auto','php','javascript','html','json','text'];
@@ -44,7 +44,7 @@ function detectCodeType($code) {
 
 $title = 'Xem tập tin';
 
-require_once 'header.php';
+require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -63,11 +63,12 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 } else {
     $dir = processDirectory($dir);
     $path = $dir . '/' . $name;
+    $file = new SplFileInfo($path);
     $content = file_get_contents($path);
     $hightlight = highlightStringWithLineNumbers($content);
 
     echo '<link id="classHl" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css">
-    <style>        
+    <style>
         pre code.hljs {
             line-height: 1.4;
             text-align: left;
@@ -76,7 +77,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             padding-left: 4px !important;
             margin: 0;
         }
-        
+
         .line {
             line-height: 1.4;
             font-family: monospace;
@@ -88,7 +89,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             border-right: 1px solid red;
             background-color: #fff;
         }
-        
+
         #view_code {
             display: flex;
         }
@@ -116,7 +117,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <div id="code_content">
             <pre><code class="language-' . detectCodeType($content) .'">'
                 . htmlspecialchars($content)
-				. $hightlight['text']
+                . $hightlight['text']
             . '</code></pre>
         </div>
     </div>';
@@ -134,7 +135,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <hr />
         Cú pháp<br />';
     echo '<select id="coder">';
-    foreach($coder as $key) {       
+    foreach($coder as $key) {
         echo '<option value="'. (($key == 'Auto') ? '' : 'language-'. $key) .'">'.
             $key .'
         </option>';
@@ -177,15 +178,15 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             '. $hightlight['line'] .'
         </span>
         <pre class="code">
-			<code >'
-				. htmlspecialchars($content)
-				. $hightlight['text']
-			. '</code>
-		</pre>
+            <code >'
+                . htmlspecialchars($content)
+                . $hightlight['text']
+            . '</code>
+        </pre>
     </div>';
 
-    echo '<style>        
-        pre {                   
+    echo '<style>
+        pre {
             margin:0!important;
             width:80%;
             overflow-x: auto;
@@ -200,7 +201,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         .line:hover {
             background-color: #e0e0e0;
         }
-        .code, .linecode {                    
+        .code, .linecode {
             vertical-align: top;
         }
         .codeload::-webkit-scrollbar {
@@ -212,11 +213,11 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         }
         .linecode, .code {
             display: inline-grid;
-        }              
+        }
         pre code .hljs, coce.hljs { 
             padding:0px;
             margin-top:0;
-        }          
+        }
         .line {
             line-height: 1.4;
             font-family: monospace;
@@ -229,14 +230,14 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             background: white;
         }
     </style>';
-    
+
     echo '<script>
         var codeElements = document.querySelector("code");       
         document.addEventListener("DOMContentLoaded", function() {  
             hljs.highlightAll();
 
             document.querySelector(".codeload").style.display = "block";  
-                              
+
             var lineElements = document.querySelectorAll(".line");
             var maxWidth = 0;
             lineElements.forEach(function(lineElement) {
@@ -244,13 +245,13 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 if (currentWidth > maxWidth) {
                     maxWidth = currentWidth;
                 }
-            });   
-              
+            })
+
             lineElements.forEach(function(lineElement) {
                 lineElement.style.width = maxWidth + "px";
-            });
-        });
-        
+            })
+        })
+
         var percentWith = 0;
         const targetElement = document.querySelector(".codeload");
         const resizeObserver = new ResizeObserver(entries => {
@@ -263,10 +264,8 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     </script>';
     */
 
-    echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/info.png"/> <a href="file.php?dir='      . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Thông tin</a></li>
-    </ul>';
+    printFileActions($file);
 }
 
-require_once 'footer.php';
+require 'footer.php';
+

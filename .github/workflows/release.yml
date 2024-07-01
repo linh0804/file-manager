@@ -15,6 +15,10 @@ jobs:
       - name: clone repo
         uses: actions/checkout@v4
 
+      - name: php version
+        run: |
+          php -v
+
       - name: get version
         run: |
           VERSION=$(cat version.json | jq -r ".version")

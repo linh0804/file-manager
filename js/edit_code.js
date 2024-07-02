@@ -47,7 +47,7 @@ const initialState = EditorState.create({
     highlightSelectionMatches(),
 
     history(),
-    //drawSelection(),    
+    //drawSelection(),
     foldGutter(),
     lineNumbers(),
     highlightActiveLineGutter(),
@@ -57,8 +57,8 @@ const initialState = EditorState.create({
 //    readOnlyConf.of(EditorState.readOnly.of(true)),
 //    editableConf.of(EditorView.editable.of(false)),
     indentService.of(undefined),
+    /*
     keymap.of([
-        /*
         {
             key: "Tab",
             preventDefault: true,
@@ -71,10 +71,10 @@ const initialState = EditorState.create({
                 return true
             }
         }
-        */
         ...defaultKeymap,
         ...historyKeymap
     ]),
+    */
 
     lineWrapConf.of([]),
     languageConf.of([]),
@@ -87,7 +87,7 @@ const editor = new EditorView({
   state: initialState,
   parent: document.querySelector("#editor")
 });
-
+editor.EDIT_CONTEXT = false
 
 // doi ngon ngu
 var codeLangElement = document.getElementById("code_lang");

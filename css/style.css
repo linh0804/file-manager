@@ -1,8 +1,3 @@
-* {
-    word-wrap: break-word;
-    box-sizing: border-box;
-}
-
 @media (min-width: 240px) {
     textarea.box_edit, div#editor {
         height: 320px;
@@ -25,6 +20,11 @@
     textarea.box_edit, div#editor {
         height: 720px;
     }
+}
+
+* {
+    word-wrap: break-word;
+    box-sizing: border-box;
 }
 
 body {
@@ -57,6 +57,10 @@ hr {
     border-left: 0;
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
+}
+
+pre, textarea {
+    tab-size: 4;
 }
 
 input[type=submit],

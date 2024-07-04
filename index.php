@@ -49,7 +49,11 @@ if ($count > 0) {
         natcasesort($folders);
 
         foreach ($folders as $entry) {
-            $lists[] = array('name' => $entry, 'is_directory' => true);
+            $lists[] = [
+                'name' => $entry,
+                'is_directory' => true,
+                'is_app_dir' => isAppDir($dir . '/' . $entry)
+            ];
         }
     }
 
@@ -57,7 +61,11 @@ if ($count > 0) {
         natcasesort($files);
 
         foreach ($files as $entry) {
-            $lists[] = array('name' => $entry, 'is_directory' => false);
+            $lists[] = [
+                'name' => $entry,
+                'is_directory' => false,
+                'is_app_dir' => isAppDir($dir . '/' . $entry)
+            ];
         }
     }
 }
@@ -112,6 +120,12 @@ if ($count <= 0) {
         $name  = $lists[$i]['name'];
         $path  = $dir . '/' . $name;
         $perms = getChmod($path);
+        
+        if ($lists[$i]['is_app_dir']) {
+            $nameDisplay = '<mark>' . $name . '</mark>';
+        } else {
+            $nameDisplay = $name;
+        }
 
         if ($lists[$i]['is_directory']) {
             echo '<li class="folder">
@@ -120,7 +134,7 @@ if ($count <= 0) {
                     <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
                         <img src="icon/folder.png"/>
                     </a>
-                    <a href="index.php?dir=' . rawurlencode($path) . '">' . $name . '</a>
+                    <a href="index.php?dir=' . rawurlencode($path) . '">' . $nameDisplay . '</a>
                     <div class="perms">
                         <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
                     </div>
@@ -169,7 +183,7 @@ if ($count <= 0) {
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
                     ' . $edit[0] . '<img src="icon/mime/' . $icon . '.png"/>' . $edit[1] . '
-                    <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $name . '</a>
+                    <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
                 </p>
                 <p>
                     <span class="size">' . size(@filesize($dir . '/' . $name)) . '</span>,

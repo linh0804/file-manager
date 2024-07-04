@@ -119,6 +119,8 @@ if ($count <= 0) {
     for ($i = $start; $i < $end; ++$i) {
         $name  = $lists[$i]['name'];
         $path  = $dir . '/' . $name;
+        $file = new SplFileInfo($path);
+        $fileExt = $file->getExtension();
         $perms = getChmod($path);
         
         if ($lists[$i]['is_app_dir']) {
@@ -142,32 +144,28 @@ if ($count <= 0) {
             </li>';
         } else {
             $edit   = array(null, '</a>');
-            $icon   = 'unknown';
-            $type   = getFormat($name);
+            $icon   = 'file';
+            $type   = $fileExt;
             $isEdit = false;
 
-            if (in_array($type, $formats['other'])) {
-                $icon = $type;
-            } elseif (in_array($type, $formats['text'])) {
-                $icon   = $type;
+            if (file_exists(rootPath . '/icon/filetype/' . $fileExt . '.svg')) {
+                $icon = $fileExt;
+            }
+
+            if (in_array($type, $formats['text'])) {
                 $isEdit = true;
             } elseif (in_array($type, $formats['archive'])) {
-                $icon = $type;
+                $icon = 'archive';
             } elseif (in_array($type, $formats['audio'])) {
-                $icon = $type;
             } elseif (in_array($type, $formats['font'])) {
-                $icon = $type;
             } elseif (in_array($type, $formats['binary'])) {
-                $icon = $type;
             } elseif (in_array($type, $formats['document'])) {
-                $icon = $type;
             } elseif (in_array($type, $formats['image'])) {
                 $icon = 'image';
             } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
-                $icon   = strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name);
+                /* $icon   = strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name); */
                 $isEdit = true;
             } elseif (isFormatUnknown($name)) {
-                $icon   = 'unknown';
                 $isEdit = true;
             }
 
@@ -182,7 +180,7 @@ if ($count <= 0) {
             echo '<li class="file">
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . $edit[0] . '<img src="icon/mime/' . $icon . '.png"/>' . $edit[1] . '
+                    ' . $edit[0] . '<img src="icon/filetype/' . $icon . '.svg"/>' . $edit[1] . '
                     <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
                 </p>
                 <p>

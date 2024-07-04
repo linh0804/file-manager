@@ -25,13 +25,13 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: zip repo
-        run: zip -r file-manager.zip . -x ".git/*" ".github/*"
+        run: zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
 
       - name: zip full
         run: |
           wget https://getcomposer.org/download/latest-stable/composer.phar
           php composer.phar install
-          zip -r file-manager-full.zip . -x ".git/*" ".github/*" "file-manager.zip"
+          zip -r -9 file-manager-full.zip . -x ".git/*" ".github/*" "file-manager.zip"
           
 
       - name: bump tag

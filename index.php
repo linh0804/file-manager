@@ -124,7 +124,7 @@ if ($count <= 0) {
         $perms = getChmod($path);
         
         if ($lists[$i]['is_app_dir']) {
-            $nameDisplay = '<mark>' . $name . '</mark>';
+            $nameDisplay = '<i>' . $name . '</i>';
         } else {
             $nameDisplay = $name;
         }

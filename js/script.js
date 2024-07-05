@@ -1,3 +1,17 @@
+// check cookie enable
+function checkCookiesEnabled() {
+    document.cookie = "fm_testcookie=1";
+
+    if (document.cookie.indexOf("fm_testcookie=") == -1) {
+        alert("Cookie bị tắt! File Manager sẽ không hoạt động đúng!")
+    } else {
+        // Xóa cookie vừa tạo
+        document.cookie = "fm_testcookie=1; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+}
+checkCookiesEnabled()
+
+// scroll
 var scrollToTopTimeout = null;
 var lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 

@@ -480,10 +480,7 @@ function mergeFolder($source, $destination, $overwrite = true)
 
 
 // chi dung de doc tat ca file
-function readDirectoryIterator(
-    $path,
-    $excludes = []
-) {
+function readDirectoryIterator($path, $excludes = []) {
     $directory = new RecursiveDirectoryIterator(
         $path,
         FilesystemIterator::UNIX_PATHS
@@ -491,29 +488,18 @@ function readDirectoryIterator(
     );
 
     $filter = new RecursiveCallbackFilterIterator($directory, function ($current, $key, $iterator) use ($path, $excludes) {
-        $relative_path = str_replace_first($path, '', $current->getPathname());
-
-        $excludes = array_map(function ($data) {
-            return ltrim($data, '/');
-        }, $excludes);
+        $relativePath = str_replace_first($path, '', $current->getPathname());
 
         foreach ($excludes as $exclude) {
-            $exclude = trim($exclude);
-
             if (empty($exclude)) {
                 continue;
             }
 
-            $fileName = $current->getFilename();
+            $exclude = trim($exclude);
+            $exclude = trim($exclude, '/');
+            $relativePath = trim($relativePath, '/');
 
-            if (
-                substr($exclude, -1) == '/'
-                && $current->isDir()
-            ) {
-                $fileName .= '/';
-            }
-
-            if ($fileName === $exclude) {
+            if (fnmatch($exclude, $relativePath)) {
                 return false;
             }
         }

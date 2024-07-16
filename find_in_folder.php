@@ -75,8 +75,7 @@ if (
             Loại trừ theo biểu thức:<br />
             <textarea name="exclude" rows="5" style="width: 60%">' . htmlspecialchars($exclude) . '</textarea><br />
             <p style="font-size: small">
-                Thư mục thì thêm / vào sau tên: <b>vendor/</b><br />
-                Chỉ hỗ trợ loại trừ 1 cấp! Như: "vendor/" gồm("*/vendor/"). Không hỗ trợ "abc/vendor/".
+                VD: "vendor/*", "*/vendor/", "*/css",...
             </p>
             <input type="submit" name="submit" value="Tìm kiếm"/>
         </form>

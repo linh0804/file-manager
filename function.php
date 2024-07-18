@@ -16,8 +16,6 @@ if (!defined('DONT_LOAD_INI_SET')) {
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);
 
-header('Content-Type:text/html;charset=utf-8');
-
 // Check require function
 {
     $require = [

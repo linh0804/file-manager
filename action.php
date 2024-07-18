@@ -2,11 +2,7 @@
 
 const ACCESS = true;
 
-include_once 'function.php';
-
-if (!IS_LOGIN) {
-    goURL('login.php');
-}
+require_once 'function.php';
 
 $title  = 'Hành động';
 $entry  = $_POST['entry'] ?? [];
@@ -47,23 +43,26 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
     $entryCheckbox = null;
     $entryHtmlList = null;
 
-    if ($option != 5)
+    if ($option != 5) {
         $entryHtmlList = '<ul class="list">';
+    }
 
     foreach ($entry as $e) {
         $isFolder = is_dir($dir . '/' . $e);
 
         $entryCheckbox .= '<input type="hidden" name="entry[]" value="' . $e . '" checked="checked"/>';
 
-        if ($option != 5)
+        if ($option != 5) {
             $entryHtmlList .= '<li>
                 <img src="icon/' . ($isFolder ? 'folder' : 'file') . '.png" alt="" /> '
                 . ($isFolder ? '<strong class="folder_name">' . $e . '</strong>' : '<span class="file_name">' . $e . '</span>') . '
                 </li>';
+        }
     }
 
-    if ($option != 5)
+    if ($option != 5) {
         $entryHtmlList .= '</ul>';
+    }
 
     if ($option === 0) {
         $title = 'Sao chép';
@@ -75,18 +74,19 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         if (isset($_POST['submit']) && isset($_POST['is_action'])) {
             echo '<div class="notice_failure">';
 
-            if (empty($_POST['path']))
+            if (empty($_POST['path'])) {
                 echo 'Chưa nhập đầy đủ thông tin';
-            elseif ($dir == processDirectory($_POST['path']))
+            } elseif ($dir == processDirectory($_POST['path'])) {
                 echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
-            elseif (!is_dir($_POST['path']))
+            } elseif (!is_dir($_POST['path'])) {
                 echo 'Đường dẫn mới không tồn tại';
-            elseif (isPathNotPermission(processDirectory($_POST['path'])))
+            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
                 echo 'Bạn không thể sao chép tới đường dẫn của File Manager';
-            elseif (!copys($entry, $dir, processDirectory($_POST['path'])))
+            } elseif (!copys($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Sao chép thất bại';
-            else
+            } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
 
             echo '</div>';
         }
@@ -115,18 +115,19 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         if (isset($_POST['submit']) && isset($_POST['is_action'])) {
             echo '<div class="notice_failure">';
 
-            if (empty($_POST['path']))
+            if (empty($_POST['path'])) {
                 echo 'Chưa nhập đầy đủ thông tin';
-            elseif ($dir == processDirectory($_POST['path']))
+            } elseif ($dir == processDirectory($_POST['path'])) {
                 echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
-            elseif (!is_dir($_POST['path']))
+            } elseif (!is_dir($_POST['path'])) {
                 echo 'Đường dẫn mới không tồn tại';
-            elseif (isPathNotPermission(processDirectory($_POST['path'])))
+            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
                 echo 'Bạn không thể di chuyển tới đường dẫn của File Manager';
-            elseif (!moves($entry, $dir, processDirectory($_POST['path'])))
+            } elseif (!moves($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Di chuyển thất bại';
-            else
+            } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
 
             echo '</div>';
         }
@@ -153,12 +154,13 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         echo '<div class="title">' . $title . '</div>';
 
         if (isset($_POST['accept'])) {
-            if (isPathNotPermission(processDirectory($dir)))
+            if (isPathNotPermission(processDirectory($dir))) {
                 echo 'Bạn không thể xóa các mục của File Manager';
-            elseif (!rrms($entry, $dir))
+            } elseif (!rrms($entry, $dir)) {
                 echo '<div class="notice_failure">Xóa thất bại</div>';
-            else
+            } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
         } elseif (isset($_POST['not_accept'])) {
             goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
         }
@@ -189,18 +191,19 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         if (isset($_POST['submit']) && isset($_POST['is_action'])) {
             echo '<div class="notice_failure">';
 
-            if (empty($_POST['name']) || empty($_POST['path']))
+            if (empty($_POST['name']) || empty($_POST['path'])) {
                 echo 'Chưa nhập đầy đủ thông tin';
-            elseif (isset($_POST['is_delete']) && processDirectory($_POST['path']) == $dir . '/' . $name)
+            } elseif (isset($_POST['is_delete']) && processDirectory($_POST['path']) == $dir . '/' . $name) {
                 echo 'Nếu chọn xóa thư mục bạn không thể lưu tập tin nén ở đó';
-            elseif (isPathNotPermission(processDirectory($_POST['path'])))
+            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
                 echo 'Bạn không thể nén tập tin zip tới đường dẫn của File Manager';
-            elseif (isNameError($_POST['name']))
+            } elseif (isNameError($_POST['name'])) {
                 echo 'Tên tập tin zip không hợp lệ';
-            elseif (!zips($dir, $entry, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete'])))
+            } elseif (!zips($dir, $entry, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']))) {
                 echo 'Nén zip thất bại';
-            else
+            } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
 
             echo '</div>';
         }
@@ -232,12 +235,13 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         if (isset($_POST['submit']) && isset($_POST['is_action'])) {
             echo '<div class="notice_failure">';
 
-            if (empty($_POST['folder']) || empty($_POST['file']))
+            if (empty($_POST['folder']) || empty($_POST['file'])) {
                 echo 'Chưa nhập đầy đủ thông tin';
-            elseif (!chmods($dir, $entry, $_POST['folder'], $_POST['file']))
+            } elseif (!chmods($dir, $entry, $_POST['folder'], $_POST['file'])) {
                 echo 'Chmod thất bại';
-            else
+            } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
 
             echo '</div>';
         }
@@ -331,8 +335,9 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 }
             }
 
-            if (!$isFailed && $isSucceed)
+            if (!$isFailed && $isSucceed) {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            }
         }
 
         echo $entryHtmlList;
@@ -344,10 +349,11 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             $entryPath = $dir . '/' . $entry[$i];
             $entryName = $entry[$i];
 
-            if (is_dir($entryPath))
+            if (is_dir($entryPath)) {
                 echo '<span class="bull">&bull; </span>Tên thư mục (<strong class="folder_name_rename_action">' . $entryName . '</strong>):<br/>';
-            else
+            } else {
                 echo '<span class="bull">&bull; </span>Tên tập tin (<strong class="file_name_rename_action">' . $entryName . '</strong>):<br/>';
+            }
 
             echo '<input type="text" name="modifier[]" value="' . $modifier[$i] . '" size="18"/><br/>';
         }
@@ -369,4 +375,3 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
 }
 
 include_once 'footer.php';
-

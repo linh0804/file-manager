@@ -555,19 +555,27 @@ function zipdir($path, $file, $isDelete = false)
 
 function zips($dir, $entrys, $file, $isDelete = false)
 {
-    require_once __DIR__ . '/pclzip.class.php';
-
     if (@is_file($file)) {
         @unlink($file);
     }
 
-    $zip = new PclZip($file);
-
-    foreach ($entrys as $e) {
-        if (!$zip->add($dir . '/' . $e, PCLZIP_OPT_REMOVE_PATH, $dir)) {
-            return false;
+    $zip = new Zip();
+    if ($zip->open($file, ZipArchive::CREATE) !== true) {
+        return false;
+    }
+    foreach ($entrys as $entry) {
+        $path = "$dir/$entry";
+        $zip->add($path, $dir);
+        
+        if (is_dir($path)) {
+            $files = readDirectoryIterator($path);
+            
+            foreach ($files as $value) {
+                $zip->add($value->getPathname(), $dir);
+            }
         }
     }
+    $zip->close();
 
     if ($isDelete) {
         rrms($entrys, $dir);

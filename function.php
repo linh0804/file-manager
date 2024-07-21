@@ -235,3 +235,5 @@ $autoload = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoload)) {
     include_once $autoload;
 }
+
+require 'lib/zip.class.php';

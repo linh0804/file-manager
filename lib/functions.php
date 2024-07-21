@@ -106,11 +106,13 @@ function isDatabaseVariable($array)
 
 function getNewVersion()
 {
-    if (cookie('fm_check_update')) {
-        return false;
-    } else {
-        // 1 hour
-        cookie(['fm_check_update' => 1], ['expires' => time() + 3600]);
+    if (!defined('alwaysCheckUpdate')) {
+        if (cookie('fm_check_update')) {
+            return false;
+        } else {
+            // 1 hour
+            cookie(['fm_check_update' => 1], ['expires' => time() + 3600]);
+        }
     }
 
     $remoteVersion = json_decode(@file_get_contents(REMOTE_VERSION_FILE), true);

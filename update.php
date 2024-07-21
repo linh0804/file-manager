@@ -1,6 +1,7 @@
 <?php
 
 define('ACCESS', true);
+define('alwaysCheckUpdate', true);
 
 require_once 'function.php';
 require_once __DIR__ . '/lib/pclzip.class.php';

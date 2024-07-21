@@ -1,6 +1,7 @@
 <?php
 
 const ACCESS = true;
+define('alwaysCheckUpdate', true);
 
 require 'function.php';
 

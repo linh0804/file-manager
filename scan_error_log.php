@@ -41,6 +41,10 @@ if (
     ]);
     
     foreach ($files as $file) {
+        if (!$file->getSize()) {
+            continue;
+        }
+        
         if ($file->getFilename() !== 'error_log') {
             continue;
         }

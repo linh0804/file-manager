@@ -16,6 +16,8 @@ $menuToggle = '';
     <link rel="icon" type="image/png" href="icon/icon.png">
     <link rel="icon" type="image/x-icon" href="icon/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
+    
+    <script src="<?= asset('js/script.js') ?>" defer></script>
 </head>
 
 <body>
@@ -51,3 +53,54 @@ $menuToggle = '';
         Có phiên bản mới! <a href="update.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!
     </div>
 <?php } ?>
+
+
+<div id="loader-on-fetch" class="spinner-on-fetch" style="display: none;"></div>
+<script>
+    // loader on load
+function showLoaderOnFetch() {
+    document.getElementById("loader-on-fetch").style.display = "block";
+}
+function hideLoaderOnFetch() {
+    document.getElementById("loader-on-fetch").style.display = "none";
+}
+const originalFetch = window.fetch;
+window.fetch = async function (...args) {
+    showLoaderOnFetch();
+
+    try {
+        const response = await originalFetch(...args);
+        return response;
+    } finally {
+        hideLoaderOnFetch();
+    }
+};
+</script>
+<style>
+.spinner-on-fetch {
+  border: 10px solid #1e9fff;
+  border-top: 10px solid transparent;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  z-index: 9999;
+    
+  /*
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  */
+  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: -25px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>

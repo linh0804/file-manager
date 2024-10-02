@@ -107,8 +107,6 @@ echo '<div
 
 echo '<div id="menuOverlay"></div>';
 
-echo '<script src="' . asset('js/script.js') . '"></script>';
-
 echo '</body>
 </html>';
 

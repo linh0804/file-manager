@@ -199,6 +199,8 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 echo 'Bạn không thể nén tập tin zip tới đường dẫn của File Manager';
             } elseif (isNameError($_POST['name'])) {
                 echo 'Tên tập tin zip không hợp lệ';
+            } elseif (file_exists(processDirectory($_POST['path'] . '/' . processName($_POST['name'])))) {
+                echo 'Tập tin đã tồn tại, vui lòng đổi tên!';
             } elseif (!zips($dir, $entry, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']))) {
                 echo 'Nén zip thất bại';
             } else {

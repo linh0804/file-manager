@@ -11,6 +11,7 @@ function checkCookiesEnabled() {
 }
 checkCookiesEnabled()
 
+
 // scroll
 var scrollToTopTimeout = null;
 var lastScrollTop = window.scrollY || document.documentElement.scrollTop;

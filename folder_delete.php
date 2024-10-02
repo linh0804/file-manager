@@ -1,33 +1,35 @@
-<?php define('ACCESS', true);
+<?php
 
-    include_once 'function.php';
+define('ACCESS', true);
 
-    if (IS_LOGIN) {
-        $title = 'Xóa thư mục';
+include_once 'function.php';
 
-        include_once 'header.php';
+$title = 'Xóa thư mục';
 
-        echo '<div class="title">' . $title . '</div>';
+include_once 'header.php';
 
-        if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name))) {
-            echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
+echo '<div class="title">' . $title . '</div>';
+
+if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name))) {
+    echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
             <div class="title">Chức năng</div>
             <ul class="list">
                 <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
             </ul>';
+} else {
+    $dir = processDirectory($dir);
+
+    if (isset($_POST['accept'])) {
+        if (!rrmdir($dir . '/' . $name)) {
+            echo '<div class="notice_failure">Xóa thư mục thất bại</div>';
         } else {
-            $dir = processDirectory($dir);
+            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+        }
+    } elseif (isset($_POST['not_accept'])) {
+        goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+    }
 
-            if (isset($_POST['accept'])) {
-                if (!rrmdir($dir . '/' . $name))
-                    echo '<div class="notice_failure">Xóa thư mục thất bại</div>';
-                else
-                    goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
-            } else if (isset($_POST['not_accept'])) {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
-            }
-
-            echo '<div class="list">
+    echo '<div class="list">
                 <span>Bạn có thực sự muốn xóa thư mục <strong class="folder_name_delete">' . $name . '</strong> không?</span><hr/><br/>
                 <center>
                     <form action="folder_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" method="post">
@@ -45,11 +47,6 @@
                 <li><img src="icon/access.png"/> <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Chmod</a></li>
                 <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
             </ul>';
-        }
+}
 
-        include_once 'footer.php';
-    } else {
-        goURL('login.php');
-    }
-
-?>
+include_once 'footer.php';

@@ -532,17 +532,38 @@ function dirSize($path)
 
 function zipdir($path, $file, $isDelete = false)
 {
-    require_once __DIR__ . '/pclzip.class.php';
-
     if (@is_file($file)) {
         @unlink($file);
     }
 
-    $zip = new PclZip($file);
+    $zip = new ZipArchive;
 
-    if ($zip->add($path, PCLZIP_OPT_REMOVE_PATH, $path)) {
+    if ($zip->open($file, ZipArchive::CREATE) === TRUE) {
+        $path = realpath($path);
+
+        $addDirToZip = function ($dir) use ($zip, $path) {
+            $dir = realpath($dir);
+
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($dir),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file) {
+                if (!$file->isDir()) {                    
+                    $filePath = $file->getRealPath();
+                    $relativePath = str_replace($path . DIRECTORY_SEPARATOR, '', $filePath);
+                  
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+        };
+        $addDirToZip($path);
+
+        $zip->close();
+
         if ($isDelete) {
-            rrmdir($path);
+            rrmdir($path);  
         }
 
         return true;

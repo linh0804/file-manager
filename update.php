@@ -4,18 +4,21 @@ define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
 require_once 'function.php';
-require_once __DIR__ . '/lib/pclzip.class.php';
 require_once 'update.class.php';
 
 define('FORMATS', $formats);
 
-function remove_dir($dir = null) {
+function remove_dir($dir = null)
+{
     if (is_dir($dir)) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
-                if (filetype($dir."/".$object) == "dir") remove_dir($dir."/".$object);
-                else unlink($dir."/".$object);
+                if (filetype($dir."/".$object) == "dir") {
+                    remove_dir($dir."/".$object);
+                } else {
+                    unlink($dir."/".$object);
+                }
             }
         }
         reset($objects);
@@ -27,6 +30,7 @@ $title = 'Cập nhật';
 
 require_once 'header.php';
 
+$zip = new ZipArchive();
 $update = new Update();
 $thisver = __DIR__ .'/tmp/thisversion';
 
@@ -40,7 +44,7 @@ if ($remoteVersion === false) {
     exit();
 }
 
-if (isset($_POST['submit'])) {     
+if (isset($_POST['submit'])) {
     if (
         !isset($_POST['token'])
         || !isset($_SESSION['token'])
@@ -49,24 +53,24 @@ if (isset($_POST['submit'])) {
         unset($_SESSION['token']);
         goURL('update.php');
     }
-    
+
     if(!isset($_POST['select']) && !isset($_POST['all'])) {
-      echo '<div class="list">Lựa chọn không chính xác!</div>';
+        echo '<div class="list">Lựa chọn không chính xác!</div>';
     }
 
     if(isset($_POST['select']) && !isset($_POST['all'])) {
-        $select = $_POST['select'];   
-        echo '<div class="list">';  
+        $select = $_POST['select'];
+        echo '<div class="list">';
         foreach ($select as $value) {
-            $name = explode('/',$value);
+            $name = explode('/', $value);
             $lastElement = array_pop($name);
-            $folder = __DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace('/'. $lastElement,'',$value);
-            $save = __DIR__ . str_replace('/'. $lastElement,'',$value);
+            $folder = __DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace('/'. $lastElement, '', $value);
+            $save = __DIR__ . str_replace('/'. $lastElement, '', $value);
             if($update->exec($lastElement, $folder, $save)) {
                 echo $lastElement . ' đã được cập nhật!<hr />';
             } else {
-              echo  $lastElement . ' không được cập nhật!<hr />';       
-            } 
+                echo  $lastElement . ' không được cập nhật!<hr />';
+            }
         }
         echo '<a style="color:blue" href="index.php">Trang chủ</a></div>';
     }
@@ -76,16 +80,24 @@ if (isset($_POST['submit'])) {
         @remove_dir(__DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
         @remove_dir($thisver .'/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
 
-        $file = 'manager-' . time() . '.zip';           
-        import(REMOTE_FILE, $file);    
-        $zip = new PclZip($file);
-        if (
-            $zip->extract(
-                PCLZIP_OPT_PATH,
-                $thisver,
-                PCLZIP_OPT_REPLACE_NEWER
-            ) != false
-        ) {
+        $file = 'manager-' . time() . '.zip';
+        import(REMOTE_FILE, $file);
+        if ($zip->open($file) === true) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $fileInfo = $zip->statIndex($i);
+                $filename = $fileInfo['name'];
+                $fileInExtractPath = $thisver . '/' . $filename;
+                if (file_exists($fileInExtractPath)) {
+                    $zipFileTime = $fileInfo['mtime'];
+                    $localFileTime = filemtime($fileInExtractPath);
+                    if ($zipFileTime > $localFileTime) {
+                        $zip->extractTo($extractPath, $filename);
+                    }
+                } else {
+                    $zip->extractTo($extractPath, $filename);
+                }
+            }
+            $zip->close();
             if (
                 unlink($file)
                 && @rename($thisver .'/'. REMOTE_DIR_IN_ZIP, $thisver .'/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER)
@@ -106,16 +118,24 @@ if (isset($_POST['submit'])) {
     $file = 'manager-' . time() . '.zip';
 
     if (!isset($_POST['submit']) && import(REMOTE_FILE, $file)) {
-        $zip = new PclZip($file);
-        if (
-            $zip->extract(
-                PCLZIP_OPT_PATH,
-                __DIR__ .'/tmp',
-                PCLZIP_OPT_REPLACE_NEWER
-            ) != false
-        ) {
+        if ($zip->open($file) === true) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $fileInfo = $zip->statIndex($i);
+                $filename = $fileInfo['name'];
+                $fileInExtractPath = __DIR__ .'/tmp/' . $filename;
+                if (file_exists($fileInExtractPath)) {
+                    $zipFileTime = $fileInfo['mtime'];
+                    $localFileTime = filemtime($fileInExtractPath);
+                    if ($zipFileTime > $localFileTime) {
+                        $zip->extractTo($extractPath, $filename);
+                    }
+                } else {
+                    $zip->extractTo($extractPath, $filename);
+                }
+            }
+            $zip->close();
             @rename(__DIR__ .'/tmp/'. REMOTE_DIR_IN_ZIP, __DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
-            @unlink($file);                                               
+            @unlink($file);
         } else {
             echo '<div class="list">Lỗi! Không thể cài đặt bản cập nhật</div>';
         }
@@ -148,14 +168,14 @@ if (isset($_POST['submit'])) {
     echo '<td style="width: 50%; border-right:1px solid red;text-align:left;margin: 0; vertical-align: top;">';
     echo '<div style="overflow-x: scroll; height:100%; ">';
     echo '<b style="margin-left: 5px">Bản hiện tại</b><br /><br />';
-    echo $update->compareAll($old, $new,1);
+    echo $update->compareAll($old, $new, 1);
     echo '</div>';
     echo '</td>';
 
     echo '<td style="width: 50%; border-left:1px solid red;text-align:left;margin: 0; vertical-align: top;">';
     echo '<div style="overflow-x: scroll; height:100%;">';
     echo '<b style="margin-left: 10px">Bản mới</b><br /><br />';
-    echo $update->compareAll($new, $old,2);
+    echo $update->compareAll($new, $old, 2);
     echo '</div>';
     echo '</td>';
 

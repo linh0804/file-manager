@@ -28,15 +28,36 @@
             $title .= ':' . $name;
 
             include_once 'header.php';
-            require_once __DIR__ . '/lib/pclzip.class.php';
 
             $path = isset($_GET['path']) && !empty($_GET['path']) ? processPathZip($_GET['path']) : null;
             $dir = processDirectory($dir);
             $format = getFormat($name);
-            $zip = new PclZIP($dir . '/' . $name);
-            $lists = $zip->listContent();
+            $zip = new ZipArchive;
+            $zip->open($dir . '/' . $name);
+            $lists = [];
             $arrays = array('folders' => array(), 'files' => array());
-
+            for($i = 0; $i < $zip->numFiles; $i++)
+            {   
+                $stat = $zip->statIndex($i);
+                if ($stat['size']) {
+                    $folder = false;
+                } else {
+                    $folder = true;
+                }
+                $lists[$i] = [
+                    "filename" => $zip->getNameIndex($i),
+                    "stored_filename" => $zip->getNameIndex($i),
+                    "size" => $stat['size'],
+                    "compressed_size" => $stat['comp_size'],
+                    "mtime" => $stat['mtime'],
+                    "comment" => "",
+                    "folder" => $folder,
+                    "index" => $stat['index'],
+                    "status" => "ok",
+                    "crc" => $stat['crc']
+                ];
+            }
+            
             if (!$lists) {
                 echo '<div class="title">' . $title . '</div>
                 <div class="list">

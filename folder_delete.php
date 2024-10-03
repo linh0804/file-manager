@@ -20,7 +20,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
     $dir = processDirectory($dir);
 
     if (isset($_POST['accept'])) {
-        if (!rrmdir($dir . '/' . $name)) {
+        if (!removeDir($dir . '/' . $name)) {
             echo '<div class="notice_failure">Xóa thư mục thất bại</div>';
         } else {
             goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);

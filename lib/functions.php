@@ -264,28 +264,26 @@ function isNameError($var)
 
 function rrmdir($path)
 {
-    $handler = @scandir($path);
+    $handler = scandir($path);
 
     if ($handler !== false) {
         foreach ($handler as $entry) {
             if ($entry != '.' && $entry != '..') {
                 $pa = $path . '/' . $entry;
 
-                if (@is_file($pa)) {
-                    if (!@unlink($pa)) {
-                        return false;
-                    }
-                } elseif (@is_dir($pa)) {
+                if (is_dir($pa)) {
                     if (!rrmdir($pa)) {
                         return false;
                     }
                 } else {
-                    return false;
+                    if (!unlink($pa)) {
+                        return false;
+                    }
                 }
             }
         }
 
-        return @rmdir($path);
+        return rmdir($path);
     }
 
     return false;

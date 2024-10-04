@@ -529,49 +529,6 @@ function dirSize($path)
     return $size;
 }
 
-
-function zipdir($path, $file, $isDelete = false)
-{
-    if (@is_file($file)) {
-        @unlink($file);
-    }
-
-    $zip = new ZipArchive;
-
-    if ($zip->open($file, ZipArchive::CREATE) === TRUE) {
-        $path = realpath($path);
-
-        $addDirToZip = function ($dir) use ($zip, $path) {
-            $dir = realpath($dir);
-
-            $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($dir),
-                RecursiveIteratorIterator::LEAVES_ONLY
-            );
-
-            foreach ($files as $name => $file) {
-                if (!$file->isDir()) {                    
-                    $filePath = $file->getRealPath();
-                    $relativePath = str_replace($path . DIRECTORY_SEPARATOR, '', $filePath);
-                  
-                    $zip->addFile($filePath, $relativePath);
-                }
-            }
-        };
-        $addDirToZip($path);
-
-        $zip->close();
-
-        if ($isDelete) {
-            rrmdir($path);  
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
 function zips($dir, $entrys, $file, $isDelete = false)
 {
     if (@is_file($file)) {

@@ -154,9 +154,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         echo '<div class="title">' . $title . '</div>';
 
         if (isset($_POST['accept'])) {
-            if (isPathNotPermission(processDirectory($dir))) {
-                echo 'Bạn không thể xóa các mục của File Manager';
-            } elseif (!rrms($entry, $dir)) {
+            if (!rrms($entry, $dir)) {
                 echo '<div class="notice_failure">Xóa thất bại</div>';
             } else {
                 goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);

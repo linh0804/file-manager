@@ -105,7 +105,7 @@ echo '<div
     style="display: block; visibility: visible; opacity: 0.5; display: none;"
 ></div>';
 
-echo '<div id="menuOverlay"></div>';
+echo '<div id="menuOverlay"></div><div id="boxOverlay"></div>';
 
 echo '</body>
 </html>';

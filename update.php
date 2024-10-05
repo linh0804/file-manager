@@ -86,6 +86,7 @@ if (isset($_POST['submit'])) {
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $fileInfo = $zip->statIndex($i);
                 $filename = $fileInfo['name'];
+                $extractPath = $thisver;
                 $fileInExtractPath = $thisver . '/' . $filename;
                 if (file_exists($fileInExtractPath)) {
                     $zipFileTime = $fileInfo['mtime'];
@@ -122,6 +123,7 @@ if (isset($_POST['submit'])) {
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $fileInfo = $zip->statIndex($i);
                 $filename = $fileInfo['name'];
+                $extractPath = __DIR__ .'/tmp';
                 $fileInExtractPath = __DIR__ .'/tmp/' . $filename;
                 if (file_exists($fileInExtractPath)) {
                     $zipFileTime = $fileInfo['mtime'];

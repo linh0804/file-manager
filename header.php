@@ -44,6 +44,7 @@ $menuToggle = '';
     </ul>
     <div style="clear: both"></div>
 </div>
+<div id="loader-on-fetch" class="spinner-on-fetch" style="display: none;"></div>
 
 <div id="container">
 
@@ -54,15 +55,17 @@ $menuToggle = '';
     </div>
 <?php } ?>
 
-
-<div id="loader-on-fetch" class="spinner-on-fetch" style="display: none;"></div>
 <script>
     // loader on load
 function showLoaderOnFetch() {
     document.getElementById("loader-on-fetch").style.display = "block";
+    document.querySelector('#boxOverlay').style.display = "block";
+    document.body.style.overflowY = "hidden";
 }
 function hideLoaderOnFetch() {
     document.getElementById("loader-on-fetch").style.display = "none";
+    document.querySelector('#boxOverlay').style.display = "none";
+    document.body.style.overflowY = "auto";
 }
 const originalFetch = window.fetch;
 window.fetch = async function (...args) {
@@ -78,11 +81,11 @@ window.fetch = async function (...args) {
 </script>
 <style>
 .spinner-on-fetch {
-  border: 10px solid #1e9fff;
-  border-top: 10px solid transparent;
+  border: 5px solid #1e9fff;
+  border-top: 5px solid transparent;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   animation: spin 1s linear infinite;
   z-index: 9999;
     

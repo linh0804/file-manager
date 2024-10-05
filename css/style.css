@@ -765,7 +765,7 @@ strong.order_query_href {
     float: left;
 }
 
-#menuOverlay {
+#menuOverlay, #boxOverlay {
     display:none;
     -webkit-backdrop-filter:blur(7px);
     backdrop-filter:blur(7px);

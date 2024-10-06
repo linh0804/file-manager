@@ -134,7 +134,8 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <div id="code_check_message" class="list">
     </div>';
 
-
+        // fix codemirror
+    echo '<script>window.EditContext = false</script>';
     echo '<script src="' . asset('js/edit_code.bundle.js') . '"></script>';
     echo '<script>
         const codeCheckMessageElement = document.getElementById("code_check_message")

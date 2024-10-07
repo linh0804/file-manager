@@ -159,6 +159,10 @@ div#footer {
     text-align: center;
     text-shadow: 1px 1px 5px #101010;
 }
+div#footer a {
+    color: #fff !important;
+    text-decoration: underline;
+}
 
 div.title {
     word-wrap: break-word;

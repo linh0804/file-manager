@@ -31,7 +31,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     echo '<ul class="info">';
     echo '<li class="not_ellipsis"><span class="bull">&bull; </span><strong>Đường dẫn</strong>: <span>' . printPath($dir, true) . '</span></li>';
 
-    if ($format != null && in_array($format, array('png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp'))) {
+    if ($format != null && in_array($format, array('png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'))) {
         $pixel = getimagesize($path);
         $isImage = true;
 

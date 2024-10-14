@@ -150,7 +150,7 @@ $pages = array(
 );
 
 $formats = array(
-    'image'    => array('png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp'),
+    'image'    => array('png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'),
     'text'     => array('cpp', 'css', 'csv', 'h', 'htaccess', 'html', 'java', 'js', 'lng', 'pas', 'php', 'pl', 'py', 'rb', 'rss', 'sh', 'svg', 'tpl', 'txt', 'xml', 'ini', 'cnf', 'config', 'conf', 'conv'),
     'archive'  => array('7z', 'rar', 'tar', 'tarz', 'zip'),
     'audio'    => array('acc', 'midi', 'mp3', 'mp4', 'swf', 'wav'),

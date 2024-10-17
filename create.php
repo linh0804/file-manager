@@ -2,16 +2,11 @@
 
 const ACCESS = true;
 
-include_once 'function.php';
-
-// login
-if (!IS_LOGIN) {
-    goURL('login.php');
-}
+require 'function.php';
 
 $title = 'Tạo mới';
 
-include_once 'header.php';
+require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -42,7 +37,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 else
                     goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
             } else if (intval($_POST['type']) === 1) {
-                if (!@file_put_contents($dir . '/' . $_POST['name'], '...'))
+                if (@file_put_contents($dir . '/' . $_POST['name'], '') === false)
                     echo 'Tạo tập tin thất bại';
                 else
                     goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
@@ -72,6 +67,6 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         </ul>';
 }
 
-include_once 'footer.php';
+require 'footer.php';
 
 

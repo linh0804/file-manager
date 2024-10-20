@@ -39,7 +39,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
         </ul>';
 } else {
-    $dir           = processDirectory($dir);
+    $dir = processDirectory($dir);
     $entryCheckbox = null;
     $entryHtmlList = null;
 

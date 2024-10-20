@@ -401,11 +401,9 @@ function movedir($old, $new, $isParent = true)
                 $paNew = $new . '/' . $entry;
 
                 if (@is_file($paOld)) {
-                    if (!@copy($paOld, $paNew)) {
+                    if (!@rename($paOld, $paNew)) {
                         return false;
                     }
-
-                    @unlink($paOld);
                 } elseif (@is_dir($paOld)) {
                     if (!movedir($paOld, $paNew, false)) {
                         return false;
@@ -427,14 +425,10 @@ function moves($entrys, $dir, $path)
     foreach ($entrys as $e) {
         $pa = $dir . '/' . $e;
 
-        if (isPathNotPermission(processDirectory($path . '/' . $e))) {
-            /* Entry not permission */
-        } elseif (@is_file($pa)) {
-            if (!@copy($pa, $path . '/' . $e)) {
+        if (@is_file($pa)) {
+            if (!@rename($pa, $path . '/' . $e)) {
                 return false;
             }
-
-            @unlink($pa);
         } elseif (@is_dir($pa)) {
             if (!movedir($pa, $path)) {
                 return false;

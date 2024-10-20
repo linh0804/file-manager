@@ -372,7 +372,7 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
                             <span class="bull">&bull;</span>Giá trị mặc định:<br/>
                             <input type="text" name="default" value="' . stripslashes($default) . '" size="18"/><br/>
                             <span class="bull">&bull;</span>Đội dài:<br/>
-                            <input type="text" name="length" value="' . stripslashes($length) . '" size="18"/><br/>
+                            <input type="text" name="length" value="' . stripslashes((string) $length) . '" size="18"/><br/>
                             <span class="bull">&bull;</span>Loại dữ liệu:<br/>
                             <select name="type">' . printDataType(stripslashes($type)) . '</select><br/>
                             <span class="bull">&bull;</span>Mã hóa - Đối chiếu:<br/>

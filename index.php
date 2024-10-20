@@ -74,7 +74,7 @@ $count = count($lists);
 $html  = printPath($dir);
 
 echo '<script language="javascript" src="' . asset('js/checkbox.js') . '"></script>';
-echo '<div class="title">' . $html . '</div>';
+echo '<div class="title">' . $html . ' <span id="copyDirPath" data-path="' . rawurlencode($dir) . '" style="color: pink">[copy]</span></div>';
 
 if (isAppDir($dir)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';

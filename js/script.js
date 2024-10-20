@@ -63,6 +63,7 @@ copyDirPathButton?.addEventListener("click", function () {
     path = decodeURIComponent(path);
     
     navigator.clipboard.writeText(path);
+    alert('Đã copy!')
 });
 
 

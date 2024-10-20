@@ -110,8 +110,8 @@ function getNewVersion()
         if (cookie('fm_check_update')) {
             return false;
         } else {
-            // 1 hour
-            cookie(['fm_check_update' => 1], ['expires' => time() + 3600]);
+            // 3 hour
+            cookie(['fm_check_update' => 1], ['expires' => time() + 3600*3]);
         }
     }
 
@@ -664,7 +664,7 @@ function import($url, $path)
     $binarys = file_get_contents($url);
 
     if (!file_put_contents($path, $binarys)) {
-        @unlink($path);
+        //@unlink($path);
         return false;
     }
 
@@ -673,12 +673,12 @@ function import($url, $path)
 
 function page($current, $total, $url)
 {
-    $html                   = '<div class="page">';
-    $center                 = PAGE_NUMBER - 2;
-    $link                   = array();
+    $html = '<div class="page">';
+    $center = PAGE_NUMBER - 2;
+    $link = array();
     $link[PAGE_URL_DEFAULT] = $url[PAGE_URL_DEFAULT] ?? null;
-    $link[PAGE_URL_START]   = $url[PAGE_URL_START] ?? null;
-    $link[PAGE_URL_END]     = $url[PAGE_URL_END] ?? null;
+    $link[PAGE_URL_START] = $url[PAGE_URL_START] ?? null;
+    $link[PAGE_URL_END] = $url[PAGE_URL_END] ?? null;
 
     if ($total <= PAGE_NUMBER) {
         for ($i = 1; $i <= $total; ++$i) {

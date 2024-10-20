@@ -5,6 +5,7 @@ vendor/
 tmp/*
 tmp/!.htaccess
 
+error_log
 config.inc.php
 database.inc.php
 bookmark.json

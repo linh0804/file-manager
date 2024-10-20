@@ -632,9 +632,9 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
                     echo '<span class="bull">&bull;</span>Cột (<strong class="name_columns_create_data">' . $k . '</strong>):<br/>';
 
                     if (preg_match('/^([a-zA-Z0-9\-_]+)(\(+|\s+|\\b)/', $v['Type'], $matches) && isDataTypeHasLength($matches[1]) == false) {
-                        echo '<textarea cols="18" rows="5" name="' . $k . '">' . htmlspecialchars(stripslashes((string) $data[$k])) . '</textarea>';
+                        echo '<textarea rows="5" name="' . $k . '">' . htmlspecialchars(stripslashes((string) $data[$k])) . '</textarea>';
                     } else {
-                        echo '<input type="text" name="' . $k . '" value="' . htmlspecialchars(stripslashes((string) $data[$k])) . '" size="18"/>';
+                        echo '<input type="text" name="' . $k . '" value="' . htmlspecialchars(stripslashes((string) $data[$k])) . '" />';
                     }
 
                     if ($i < $count - 1) {

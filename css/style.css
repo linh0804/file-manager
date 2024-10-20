@@ -117,6 +117,12 @@ select:disabled:hover {
     border: 1px solid #cecece !important;
 }
 
+form textarea,
+form input[type=text],
+form input[type=password] {
+    width: 100%;
+}
+
 span.bull {
     color: green !important;
 }

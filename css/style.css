@@ -63,6 +63,15 @@ pre, textarea {
     tab-size: 4;
 }
 
+input[type=file] {
+    border: 1px solid #cecece;
+    padding: 0;
+}
+input[type=file]::file-selector-button {
+    border: none;
+    padding: 8px;
+}
+
 input[type=submit],
 .button {
     color: #707070 !important;

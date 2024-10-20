@@ -112,32 +112,32 @@ const FM_COOKIE_NAME = 'fm_php';
         file_get_contents('version.json'),
         true
     );
-    
+
     define('VERSION_MAJOR', $version['major']);
     define('VERSION_MINOR', $version['minor']);
     define('VERSION_PATCH', $version['patch']);
     define('VERSION_MESSAGE', $version['message']);
-    
+
     unset($version);
 }
 
 { // lay phien ban moi
     define('REMOTE_FILE', 'https://github.com/ngatngay/file-manager/archive/main.zip');
-	define('REMOTE_FILE_CURRENT', 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . VERSION_MAJOR . '.' . VERSION_MINOR . '.' . VERSION_PATCH . '.zip');
+    define('REMOTE_FILE_CURRENT', 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . VERSION_MAJOR . '.' . VERSION_MINOR . '.' . VERSION_PATCH . '.zip');
     define('REMOTE_DIR_IN_ZIP', 'file-manager-main');
     define('REMOTE_VERSION_FILE', 'https://raw.githubusercontent.com/ngatngay/file-manager/main/version.json');
 
-	$version = getNewVersion();
-	$remoteFileNew = REMOTE_FILE_CURRENT;
+    $version = getNewVersion();
+    $remoteFileNew = REMOTE_FILE_CURRENT;
 
-	if ($version !== false) {
-		$remoteFileNew = 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . $version['major'] . '.' . $version['minor'] . '.' . $version['patch'] . '.zip';
-	}
+    if ($version !== false) {
+        $remoteFileNew = 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . $version['major'] . '.' . $version['minor'] . '.' . $version['patch'] . '.zip';
+    }
 
-	define('REMOTE_FILE_NEW', $remoteFileNew);
+    define('REMOTE_FILE_NEW', $remoteFileNew);
 
-	unset($remoteFileNew);
-	unset($version);
+    unset($remoteFileNew);
+    unset($version);
 }
 
 $configs = array();
@@ -162,6 +162,12 @@ $formats = array(
     'other'    => array('rpm', 'sql')
 );
 
+$excludeDirDefault = implode("\n", [
+    '.git/',
+    'node_modules/',
+    'vendor/'
+]);
+
 if (is_file(PATH_CONFIG)) {
     include PATH_CONFIG;
 }
@@ -184,13 +190,14 @@ if (
 }
 
 if (!IS_CONFIG_UPDATE && (
-        !preg_match('#\\b[0-9]+\\b#', $configs['page_list']) ||
+    !preg_match('#\\b[0-9]+\\b#', $configs['page_list']) ||
         !preg_match('#\\b[0-9]+\\b#', $configs['page_file_edit']) ||
         !preg_match('#\\b[0-9]+\\b#', $configs['page_file_edit_line']) ||
         !preg_match('#\\b[0-9]+\\b#', $configs['page_database_list_rows']) ||
 
         empty($configs['username']) || $configs['username'] == null ||
-        empty($configs['password']) || $configs['password'] == null)
+        empty($configs['password']) || $configs['password'] == null
+)
 ) {
     define('IS_CONFIG_ERROR', true);
 } else {

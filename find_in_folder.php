@@ -55,7 +55,7 @@ if (
     $case = isset($_POST['case']) ? (bool) $_POST['case'] : false;
     $only_dir  = isset($_POST['only_dir'])  ? (bool) $_POST['only_dir']  : false;
     $only_file = isset($_POST['only_file']) ? (bool) $_POST['only_file'] : false;
-    $exclude = isset($_POST['exclude']) ? $_POST['exclude'] : '.git/' . PHP_EOL . 'node_modules/' . PHP_EOL . 'vendor/';
+    $exclude = isset($_POST['exclude']) ? $_POST['exclude'] : $excludeDirDefault;
 
     echo '<div class="list">
         <span>' . printPath($dir, true) . '</span><hr/>
@@ -75,7 +75,7 @@ if (
             Loại trừ theo biểu thức:<br />
             <textarea name="exclude" rows="5" style="width: 60%">' . htmlspecialchars($exclude) . '</textarea><br />
             <p style="font-size: small">
-                VD: "vendor/*", "*/vendor/", "*/css",...
+                VD: "vendor/", "system/vendor/", "style.css",...
             </p>
             <input type="submit" name="submit" value="Tìm kiếm"/>
         </form>

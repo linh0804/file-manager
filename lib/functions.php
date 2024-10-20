@@ -478,6 +478,15 @@ function mergeFolder($source, $destination, $overwrite = true)
     return true;
 }
 
+if (!function_exists('str_ends_with')) {
+function str_ends_with($haystack, $needle) {
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+    return (substr($haystack, -$length) === $needle);
+}
+}
 
 // chi dung de doc tat ca file
 function readDirectoryIterator($path, $excludes = []) {
@@ -494,12 +503,14 @@ function readDirectoryIterator($path, $excludes = []) {
             if (empty($exclude)) {
                 continue;
             }
+            //var_dump($relativePath);
+            //var_dump($exclude);
 
             $exclude = trim($exclude);
             $exclude = trim($exclude, '/');
             $relativePath = trim($relativePath, '/');
 
-            if (fnmatch($exclude, $relativePath)) {
+            if (str_ends_with($relativePath, $exclude)) {
                 return false;
             }
         }

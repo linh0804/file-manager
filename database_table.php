@@ -232,17 +232,17 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
         echo '<div class="list">
                     <form action="database_table.php?action=add_columns&name=' . $name . DATABASE_NAME_PARAMATER_1 . '" method="post">
                         <span class="bull">&bull;</span>Tên cột:<br/>
-                        <input type="text" name="column" value="' . stripslashes($column) . '" size="18"/><br/>
+                        <input type="text" name="column" value="' . stripslashes((string) $column) . '" size="18"/><br/>
                         <span class="bull">&bull;</span>Giá trị mặc định:<br/>
-                        <input type="text" name="default" value="' . stripslashes($default) . '" size="18"/><br/>
+                        <input type="text" name="default" value="' . stripslashes((string) $default) . '" size="18"/><br/>
                         <span class="bull">&bull;</span>Đội dài:<br/>
-                        <input type="text" name="length" value="' . stripslashes($length) . '" size="18"/><br/>
+                        <input type="text" name="length" value="' . stripslashes((string) $length) . '" size="18"/><br/>
                         <span class="bull">&bull;</span>Loại dữ liệu:<br/>
-                        <select name="type">' . printDataType(stripslashes($type)) . '</select><br/>
+                        <select name="type">' . printDataType(stripslashes((string) $type)) . '</select><br/>
                         <span class="bull">&bull;</span>Mã hóa - Đối chiếu:<br/>
-                        <select name="collection">' . printCollection(stripslashes($collection)) . '</select><br/>
+                        <select name="collection">' . printCollection(stripslashes((string) $collection)) . '</select><br/>
                         <span class="bull">&bull;</span>Thuộc tính:<br/>
-                        <select name="attributes">' . printAttributes(stripslashes($attributes)) . '</select><br/>
+                        <select name="attributes">' . printAttributes(stripslashes((string) $attributes)) . '</select><br/>
                         <span class="bull">&bull;</span>Vị trí:<br/>
                         <select name="position">
                             <option value="' . MYSQL_AFTER_FIRST . '"' . ($position == MYSQL_AFTER_FIRST ? ' selected="selected"' : null) . '>Đầu bảng</option>

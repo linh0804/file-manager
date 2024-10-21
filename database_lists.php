@@ -84,6 +84,7 @@
                     echo '</ul>
                     <div class="title">Chức năng</div>
                     <ul class="list">
+                        <li><img src="icon/database.png"/> <a href="database_query.php">SQL</a></li>
                         <li><img src="icon/database_create.png"/> <a href="database_create.php">Tạo database</a></li>
                     </ul>';
                 } else {
@@ -92,6 +93,7 @@
                     <div class="title">Chức năng</div>
                     <ul class="list">
                         <li><img src="icon/disconnect.png"/> <a href="database_disconnect.php">Ngắt kết nối database</a></li>
+                        <li><img src="icon/database.png"/> <a href="database_query.php">SQL</a></li>
                     </ul>';
                 }
             }

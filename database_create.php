@@ -5,10 +5,6 @@ define('PHPMYADMIN', true);
 
 include_once 'function.php';
 
-if (!IS_LOGIN) {
-    goURL('login.php');
-}
-
 $title = 'Tạo database';
 
 include_once 'database_connect.php';
@@ -51,9 +47,9 @@ if (IS_CONNECT && IS_DATABASE_ROOT) {
     echo '<div class="list">
         <form action="database_create.php" method="post">
             <span class="bull">&bull;</span>Tên database:<br/>
-            <input type="text" name="name" value="' . $name . '" size="18"/><br/>
+            <input type="text" name="name" value="' . $name . '" /><br/>
             <span class="bull">&bull;</span>Mã hóa - Đối chiếu:<br/>
-            <select name="collection">' . printCollection(stripslashes($collection)) . '</select><br/>
+            <select name="collection">' . printCollection(stripslashes((string) $collection)) . '</select><br/>
             <input type="submit" name="submit" value="Tạo"/>
         </form>
     </div>

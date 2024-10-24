@@ -62,8 +62,11 @@ copyDirPathButton?.addEventListener("click", function () {
     let path = copyDirPathButton.getAttribute("data-path");
     path = decodeURIComponent(path);
     
-    navigator.clipboard.writeText(path);
-    alert('Đã copy!')
+    navigator.clipboard.writeText(path).then(function() {
+        alert('Đã copy!')
+    }).catch(function(err) {
+        alert('Lỗi: ', err);
+    });
 });
 
 

@@ -143,8 +143,8 @@ const FM_COOKIE_NAME = 'fm_php';
 $configs = array();
 
 $pages = array(
-    'current'     => 1,
-    'total'       => 0,
+    'current' => 1,
+    'total' => 0,
     'paramater_0' => null,
     'paramater_1' => null
 );
@@ -165,7 +165,10 @@ $formats = array(
 $excludeDirDefault = implode("\n", [
     '.git/',
     'node_modules/',
-    'vendor/'
+    'vendor/',
+    'asset/',
+    'assets/',
+    'files/'
 ]);
 
 if (is_file(PATH_CONFIG)) {

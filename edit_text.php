@@ -55,25 +55,33 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content">'. PHP_EOL . htmlspecialchars($content) . '</textarea>
             </div>
             
-            <div class="search_replace search">
-                <span class="bull">&bull; </span>Tìm kiếm:<br/>
-                <input type="text" name="search" value=""/>
-            </div>
-            <div class="search_replace replace">
-                <span class="bull">&bull; </span>Thay thế:<br/>
-                <input type="text" name="replace" value=""/>
-            </div>
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>'.
                 ($isExecute && strtolower(getFormat($name)) == 'php' ? '<input type="checkbox" id="code_check_php"/> Kiểm tra lỗi' : '') . '
             </div>
         </form>';
-        echo '</div>'.
-            '<div id="code_check_message" class="list"></div>';
- 
+    echo '</div>';
     
-    echo '<script>
+    echo '<div class="list">
+        <div class="search_replace search">
+                <span class="bull">&bull; </span>Tìm kiếm:<br/>
+                <input type="text" id="searchInput" name="searchInput" value=""/>
+            </div>
+            <div class="search_replace replace">
+                <span class="bull">&bull; </span>Thay thế:<br/>
+                <input type="text" id="replaceInput" name="replaceInput" value=""/>
+            </div>
+            <div class="input_action">                    
+                <button class="button" onclick="searchText()">Tìm kiếm</button>
+                <button class="button" onclick="replaceText()">Thay thế</button>
+            </div>
+        </div>';
+    
+    echo '<div id="code_check_message" class="list"></div>';
+ ?>
+    
+    <script>
         const codeCheckMessageElement = document.getElementById("code_check_message");
         const codeCheckPHPElement = document.getElementById("code_check_php");
 
@@ -81,6 +89,56 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         var codeWrapElement = document.getElementById("code_wrap");
         var codeHighLightElement = document.getElementById("code_highlight");
         var codeFormElement = document.getElementById("code_form");
+
+        // search & replace
+        var searchInput = document.getElementById("searchInput")
+        var replaceInput = document.getElementById("replaceInput")
+        
+        function searchText() {
+            let searchValue = searchInput.value
+            let lines = editorElement.value.split("\n")
+            let foundLines = [];
+            
+            if (!searchValue) {
+                alert("Chưa nhập nội dung!")
+                return
+            }
+            
+            lines.forEach((line, index) => {
+                if (line.includes(searchValue)) {
+                    foundLines.push(index + 1); // +1 to match human-readable line numbers
+                }
+            });
+
+            if (foundLines.length > 0) {
+                alert(`Tìm thấy ${foundLines.length} dòng: ${foundLines.join(", ")}`);
+            } else {
+                alert(`Không tìm thấy!`);
+            }
+        }
+        function replaceText() {
+            const content = editorElement.value;
+            const searchValue = searchInput.value
+            const replaceValue = replaceInput.value;
+        
+            if (!searchValue) {
+                alert("Chưa nhập nội dung!")
+                return
+            }
+            //alert(typeof searchValue)
+        
+            const searchValueR = searchValue.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const regex = new RegExp(searchValueR, "g");
+            const matches = content.match(regex);
+            const count = matches ? matches.length : 0;
+        
+            if (count > 0) {
+                editorElement.value = content.replaceAll(searchValue, function(){ return replaceValue });
+                alert(`Đã thay thế ${count} từ.`);
+            } else {
+                alert(`Không có từ nào khớp!`);
+            }
+        }
 
         // auto focus
         document.addEventListener("DOMContentLoaded", function() {
@@ -99,7 +157,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 data.append("check", 0);
             }
 
-            fetch("' . $actionEdit . '", {
+            fetch("<?= $actionEdit ?>", {
                 method: "POST",
                 body: data,
                 cache: "no-cache"
@@ -136,7 +194,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             data.append("format_php", 1);
             data.append("content", editorElement.value);
 
-            fetch("'. $actionEdit .'", {
+            fetch("<?= $actionEdit ?>", {
                 method: "POST",
                 body: data,
                 cache: "no-cache"
@@ -172,13 +230,15 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 save()
             }
         })
-    </script>';
-    echo '<style>
+    </script>
+    
+    <style>
         #code_check_message, #code_check_highlight {
             display:none;
         }
-    </style>';
+    </style>
 
+<?php
     printFileActions($file);
 }
 

@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 0,
-    "patch": 55,
-    "version": "1.0.55",
-    "message": "thêm truy vấn SQL"
+    "patch": 56,
+    "version": "1.0.56",
+    "message": "thêm search & replace"
 }

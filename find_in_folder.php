@@ -51,7 +51,9 @@ if (
     </ul>';
 } else {
     $dir = processDirectory($dir);
-    $search = isset($_POST['search']) ? ltrim($_POST['search'], '/') : '';
+    $search = isset($_POST['search']) ? $_POST['search'] : '';
+    $replace = isset($_POST['replace']) ? $_POST['replace'] : '';
+    $replaceCheck  = isset($_POST['replaceCheck'])  ? (bool) $_POST['replaceCheck']  : false;
     $case = isset($_POST['case']) ? (bool) $_POST['case'] : false;
     $only_dir  = isset($_POST['only_dir'])  ? (bool) $_POST['only_dir']  : false;
     $only_file = isset($_POST['only_file']) ? (bool) $_POST['only_file'] : false;
@@ -62,12 +64,17 @@ if (
         <form method="post">
             Nội dung tìm kiếm:<br />
             <input type="text" name="search" value="' . htmlspecialchars($search) . '" style="width: 80%" /><br />
+            
+            Thay thế:<br />
+            <input type="text" name="replace" value="' . htmlspecialchars($replace) . '" style="width: 80%" /><br />
 
             <input type="checkbox" name="case" ' . ($case ? 'checked="checked"' : '') . ' />
             Phân biệt chữ hoa<br />
 
             <input type="checkbox" name="only_dir" ' . ($only_dir ? 'checked="checked"' : '') . ' />
             Chỉ tìm tên thư mục<br />
+            <input type="checkbox" name="replaceCheck" />
+            Thay thế<br />
 
             <input type="checkbox" name="only_file" ' . ($only_file ? 'checked="checked"' : '') . ' />
             Chỉ tìm tên file<br /><br />
@@ -105,6 +112,7 @@ if (
 
                 // xử lý loại tìm kiếm
                 if ($only_dir) {
+                    $search = ltrim($search, '/');
                     if (!$file->isDir()) {
                         continue;
                     }
@@ -123,7 +131,7 @@ if (
                         echo '<div class="item">';
                         echo '<div class="item-title">';
                         echo '<span class="bull">&bull;</span>
-                            <a style="color: red" href="index.php?dir=' . rawurlencode($file_path) . '">'
+                            <a style="color: red" target="_blank" href="index.php?dir=' . rawurlencode($file_path) . '">'
                                 . htmlspecialchars($file_path_sort)
                             . '</a>';
                         echo '</div>';
@@ -132,6 +140,7 @@ if (
 
                     continue;
                 } else if ($only_file) {
+                    $search = ltrim($search, '/');
                     if (!$file->isFile()) {
                         continue;
                     }
@@ -191,7 +200,7 @@ if (
                             echo '<div class="item">';
                             echo '<div class="item-title">';
                             echo '<span class="bull">&bull;</span>
-                                <a style="color: red" href="edit_text.php?dir=' . rawurlencode(dirname($file_path)) . '&name=' . $file_name . '">'
+                                <a style="color: red" target="_blank" href="edit_text.php?dir=' . rawurlencode(dirname($file_path)) . '&name=' . $file_name . '">'
                                     . htmlspecialchars($file_path_sort)
                                 . '</a>';
                             echo '</div>';
@@ -217,10 +226,17 @@ if (
                     } // end tìm thấy
                     
                     if ($fileObj->eof() && $display) {
+                        if ($replaceCheck) {
+                            $content = file_get_contents($fileObj->getRealPath());
+                            $newContent = str_replace($search, $replace, $content);
+                            file_put_contents($fileObj->getRealPath(), $newContent);
+
+                            echo '<span style="color: blue">Đã thay thế!!!</span>';
+                        }
                         // phải dời ra ngoài vì để ở trong
                         // sẽ bị đóng trước khi đọc hết
-                        echo '</div>';
-                        echo '</div>';
+                        echo '</div>'; // item-content
+                        echo '</div>'; // item
                     }
                 } // end read line
             } // end loop all file

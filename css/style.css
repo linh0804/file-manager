@@ -112,6 +112,7 @@ textarea:focus,
 textarea:hover,
 .button:focus,
 .button:hover {
+    outline: none;
     color: #555555;
     border: 1px solid #eaaa11;
 }

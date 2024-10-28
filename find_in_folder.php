@@ -80,7 +80,7 @@ if (
             Chỉ tìm tên file<br /><br />
 
             Loại trừ theo biểu thức:<br />
-            <textarea name="exclude" rows="5" style="width: 60%">' . htmlspecialchars($exclude) . '</textarea><br />
+            <textarea name="exclude" rows="5">' . htmlspecialchars($exclude) . '</textarea><br />
             <p style="font-size: small">
                 VD: "vendor/", "system/vendor/", "style.css",...
             </p>

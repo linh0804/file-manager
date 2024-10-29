@@ -44,8 +44,14 @@ define('requestScheme', isHttps ? 'https' : 'http');
 define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
 define('baseUrl', requestScheme . '://' . $_SERVER['HTTP_HOST'] . (isBuiltinServer ? '' : '/' . baseFolder));
 
-// require function
+// load thu vien
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    include_once $autoload;
+}
+
 require __DIR__ . '/lib/function.php';
+require __DIR__ . '/lib/zip.class.php';
 
 // tạo tmp nếu chưa có
 {
@@ -226,22 +232,106 @@ if (
     }
 }
 
-$isLogin = isset($_COOKIE[FM_COOKIE_NAME])
-    && isset($configs['password'])
-    && $_COOKIE[FM_COOKIE_NAME] === $configs['password'];
-
-define('IS_LOGIN', $isLogin);
-
 $dir = isset($_GET['dir']) && !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
 $name = isset($_GET['name']) && !empty($_GET['name']) ? $_GET['name'] : null;
 $dirEncode = !empty($dir) ? rawurlencode($dir) : '';
 
-require_once 'permission.inc.php';
+// kiem tra nguoi dung
+$script = function_exists('getenv') ? getenv('SCRIPT_NAME') : $_SERVER['SCRIPT_NAME'];
+$script = strpos($script, '/') !== false ? dirname($script) : '';
+$script = str_replace('\\', '/', $script);
 
-// load thu vien
-$autoload = __DIR__ . '/vendor/autoload.php';
-if (file_exists($autoload)) {
-    include_once $autoload;
+define('IS_INSTALL_ROOT_DIRECTORY', $script == '.' || $script == '/');
+define('IS_ACCESS_FILE_IN_FILE_MANAGER', defined('INDEX') && isset($_GET['not']));
+define('DIRECTORY_FILE_MANAGER', strpos($script, '/') !== false ? @substr($script, strrpos($script, '/') + 1) : null);
+define('PATH_FILE_MANAGER', str_replace('\\', '/', strtolower($_SERVER['DOCUMENT_ROOT'] . $script)));
+define('NAME_DIRECTORY_INSTALL_FILE_MANAGER', !IS_INSTALL_ROOT_DIRECTORY ? preg_replace('#(\/+|/\+)(.+?)#s', '$2', $script) : null);
+define('PARENT_PATH_FILE_MANAGER', substr(PATH_FILE_MANAGER, 0, strlen(PATH_FILE_MANAGER) - (NAME_DIRECTORY_INSTALL_FILE_MANAGER == null ? 0 : strlen(NAME_DIRECTORY_INSTALL_FILE_MANAGER) + 1)));
+
+if (
+    IS_INSTALL_ROOT_DIRECTORY ||
+    IS_ACCESS_FILE_IN_FILE_MANAGER ||
+
+    ($script != '.' && $script != '/' && isPathNotPermission(processDirectory($dir))) ||
+    ($script != '.' && $script != '/' && $name != null && isPathNotPermission(processDirectory($dir . '/' . $name)))
+) {
+    define('NOT_PERMISSION', true);
+} else {
+    define('NOT_PERMISSION', false);
 }
 
-require 'lib/zip.class.php';
+if (
+    !defined('INDEX')
+    && !defined('LOGIN')
+    && NOT_PERMISSION
+) {
+    //goURL('index.php?not');
+}
+
+if (NOT_PERMISSION) {
+    //$dir       = '';
+    //$dirEncode = '';
+}
+
+if (!empty($dir)) {
+    define(
+        'IS_ACCESS_PARENT_PATH_FILE_MANAGER',
+        strtolower(processDirectory($dir)) == strtolower(processDirectory(PARENT_PATH_FILE_MANAGER))
+    );
+} else {
+    define(
+        'IS_ACCESS_PARENT_PATH_FILE_MANAGER',
+        strtolower(processDirectory(PARENT_PATH_FILE_MANAGER)) == strtolower(processDirectory($_SERVER['DOCUMENT_ROOT']))
+    );
+}
+
+function isPathNotPermission($path, $isUseName = false): bool
+{
+    if (empty($path) == false) {
+        $reg  = $isUseName ? NAME_DIRECTORY_INSTALL_FILE_MANAGER : PATH_FILE_MANAGER;
+        $reg  = $reg != null ? strtolower($reg) : null;
+        $path = str_replace('\\', '/', $path);
+        $path = strtolower($path);
+
+        if (preg_match('#^' . $reg . '$#si', $path)) {
+            return true;
+        } elseif (preg_match('#^' . $reg . '/(^\/+|^\\+)(.*?)$#si', $path)) {
+            return true;
+        } elseif (preg_match('#^' . $reg . '/(.*?)$#si', $path)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    return false;
+}
+
+unset($script);
+
+// Kiểm tra thư mục cài đặt
+if (IS_INSTALL_ROOT_DIRECTORY) {
+    $title = 'Lỗi File Manager';
+
+    include_once 'header.php';
+    echo '<div class="title">Lỗi File Manager</div>
+        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!</div>';
+    include_once 'footer.php';
+    exit();
+}
+
+// Kiểm tra đăng nhập
+$isLogin = isset($_COOKIE[FM_COOKIE_NAME])
+    && isset($configs['password'])
+    && $_COOKIE[FM_COOKIE_NAME]
+    === $configs['password'];
+
+define('IS_LOGIN', $isLogin);
+
+if (
+    !IS_LOGIN
+    && !defined('LOGIN')
+) {
+    goURL('login.php');
+}
+

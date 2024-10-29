@@ -913,3 +913,17 @@ function removeLoginFail() {
 function ableLogin() {
     return getLoginFail() < LOGIN_MAX;
 }
+
+
+function sortNatural(&$array) {
+    usort($array, function($a, $b) {
+        // Nếu cả hai chuỗi đều bắt đầu bằng ký tự đặc biệt hoặc đều không bắt đầu bằng ký tự đặc biệt
+        if ((ctype_alnum($a[0]) && ctype_alnum($b[0])) || (!ctype_alnum($a[0]) && !ctype_alnum($b[0]))) {
+            // So sánh không phân biệt hoa thường theo kiểu tự nhiên
+            return strnatcasecmp($a, $b);
+        }
+        
+        // Đưa chuỗi bắt đầu bằng ký tự đặc biệt lên trước
+        return ctype_alnum($a[0]) ? 1 : -1;
+    });
+}

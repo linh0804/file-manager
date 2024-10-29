@@ -46,7 +46,7 @@ if ($count > 0) {
     }
 
     if (count($folders) > 0) {
-        natcasesort($folders);
+        sortNatural($folders);
 
         foreach ($folders as $entry) {
             $lists[] = [
@@ -58,7 +58,7 @@ if ($count > 0) {
     }
 
     if (count($files) > 0) {
-        natcasesort($files);
+        sortNatural($files);
 
         foreach ($files as $entry) {
             $lists[] = [

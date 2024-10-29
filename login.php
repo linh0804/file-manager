@@ -3,7 +3,7 @@
 const ACCESS = true;
 const LOGIN  = true;
 
-require 'function.php';
+require '.init.php';
 
 if (IS_LOGIN) {
     goURL('index.php');

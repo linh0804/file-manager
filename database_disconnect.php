@@ -3,7 +3,7 @@
     define('ACCESS', true);
     define('PHPMYADMIN', true);
 
-    include_once 'function.php';
+    include_once '.init.php';
 
     if (IS_LOGIN) {
         $title = 'Ngắt kết nối database';

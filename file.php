@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 if (!IS_LOGIN) {
     goURL('login.php');

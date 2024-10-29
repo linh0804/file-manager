@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 $title = 'Sửa tập tin theo dòng';
 $page = array('current' => 0, 'total' => 1, 'paramater_0' => null, 'paramater_1' => null);

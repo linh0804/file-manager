@@ -1,6 +1,6 @@
 <?php define('ACCESS', true);
 
-    include_once 'function.php';
+    include_once '.init.php';
 
     setcookie(FM_COOKIE_NAME, '', 0);
     goURL('index.php');

@@ -2,7 +2,7 @@
 
 const ACCESS = true;
 
-require 'function.php';
+require '.init.php';
 
 $title = 'Tạo mới';
 

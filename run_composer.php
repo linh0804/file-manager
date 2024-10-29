@@ -7,7 +7,7 @@ if (!function_exists($function)) {
     exit($function . '() function not found');
 }
 
-require_once 'function.php';
+require_once '.init.php';
 
 // cài đặt composer.phar
 if (!file_exists('composer.phar')) {

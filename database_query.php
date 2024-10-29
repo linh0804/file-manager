@@ -3,7 +3,7 @@
 define('ACCESS', true);
 define('PHPMYADMIN', true);
 
-require 'function.php';
+require '.init.php';
 require 'database_connect.php';
 
 if (!IS_CONNECT) {

@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-include_once 'function.php';
+include_once '.init.php';
 
 function zipDir($path, $file, $isDelete = false)
 {

@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-include_once 'function.php';
+include_once '.init.php';
 
 $title = 'Kết nối database';
 

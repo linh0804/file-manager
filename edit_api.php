@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 $data = [
     'status' => false,

@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 $themes = ['a11y-light','a11y-dark','vs','xcode','github-dark-dimmed','github'];
 $coder = ['Auto','php','javascript','html','json','text'];

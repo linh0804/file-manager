@@ -3,7 +3,7 @@
 define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
-require_once 'function.php';
+require_once '.init.php';
 require_once 'update.class.php';
 
 define('FORMATS', $formats);

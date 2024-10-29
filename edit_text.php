@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 $title = 'Sửa tập tin';
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

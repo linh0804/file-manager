@@ -3,7 +3,7 @@
 const ACCESS = true;
 const INDEX  = true;
 
-require 'function.php';
+require '.init.php';
 
 if (!IS_LOGIN) {
     goURL('login.php');

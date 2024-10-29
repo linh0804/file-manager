@@ -3,7 +3,7 @@
 define('ACCESS', true);
 define('PHPMYADMIN', true);
 
-include_once 'function.php';
+include_once '.init.php';
 
 $title = 'Bảng';
 $name = isset($_GET['name']) ? addslashes($_GET['name']) : null;

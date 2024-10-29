@@ -2,7 +2,7 @@
 
 const ACCESS = true;
 
-include 'function.php';
+include '.init.php';
 
 $path = !empty($_GET['path']) ? rawurldecode($_GET['path']) : '';
 

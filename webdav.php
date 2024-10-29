@@ -5,7 +5,7 @@ use Sabre\DAV;
 const ACCESS = true;
 const LOGIN  = true;
 
-require 'function.php';
+require '.init.php';
 
 if (!class_exists('Sabre\DAV\Server')) {
     exit('run composer install');

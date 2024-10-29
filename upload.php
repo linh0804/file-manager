@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require 'function.php';
+require '.init.php';
 
 $dir = processDirectory($dir);
 $title = 'Tải lên tập tin';

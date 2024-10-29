@@ -1,7 +1,7 @@
 <?php
     const ACCESS = true;
 
-    include_once 'function.php';
+    include_once '.init.php';
 
     if (IS_LOGIN) {
         $title = 'Xóa dòng';

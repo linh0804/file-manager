@@ -3,7 +3,7 @@
 define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
-require_once 'function.php';
+require_once '.init.php';
 
 $title = 'Cài đặt lại Manager!!!';
 

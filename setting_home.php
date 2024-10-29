@@ -2,7 +2,7 @@
 
 define('ACCESS', true);
 
-require_once 'function.php';
+require_once '.init.php';
 
 $title = 'Sửa Trang chủ';
 

@@ -3,7 +3,7 @@
 const ACCESS = true;
 define('alwaysCheckUpdate', true);
 
-require 'function.php';
+require '.init.php';
 
 $title = 'Cài đặt';
 $ref   = $_POST['ref'] ?? (isset($_SERVER['HTTP_REFFRER']) ? $_SERVER['HTTP_REFERER'] : null);

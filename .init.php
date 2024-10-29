@@ -45,7 +45,7 @@ define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
 define('baseUrl', requestScheme . '://' . $_SERVER['HTTP_HOST'] . (isBuiltinServer ? '' : '/' . baseFolder));
 
 // require function
-require_once 'lib/functions.php';
+require __DIR__ . '/lib/function.php';
 
 // tạo tmp nếu chưa có
 {

@@ -483,7 +483,7 @@ function str_ends_with($haystack, $needle) {
 }
 
 // chi dung de doc tat ca file
-function readDirectoryIterator($path, $excludes = []) {
+function readFullDir($path, $excludes = []) {
     $directory = new RecursiveDirectoryIterator(
         $path,
         FilesystemIterator::UNIX_PATHS
@@ -523,7 +523,7 @@ function dirSize($path)
 {
     $size = 0;
 
-    $files = readDirectoryIterator($path);
+    $files = readFullDir($path);
 
     foreach ($files as $file) {
         if ($file->isFile()) {
@@ -549,7 +549,7 @@ function zips($dir, $entrys, $file, $isDelete = false)
         $zip->add($path, $dir);
         
         if (is_dir($path)) {
-            $files = readDirectoryIterator($path);
+            $files = readFullDir($path);
             
             foreach ($files as $value) {
                 $zip->add($value->getPathname(), $dir);

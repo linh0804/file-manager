@@ -73,11 +73,12 @@ if (
 
             <input type="checkbox" name="only_dir" ' . ($only_dir ? 'checked="checked"' : '') . ' />
             Chỉ tìm tên thư mục<br />
-            <input type="checkbox" name="replaceCheck" />
-            Thay thế<br />
 
             <input type="checkbox" name="only_file" ' . ($only_file ? 'checked="checked"' : '') . ' />
-            Chỉ tìm tên file<br /><br />
+            Chỉ tìm tên file<br />
+            
+            <input type="checkbox" name="replaceCheck" />
+            Thay thế<br><br>
 
             Loại trừ theo biểu thức:<br />
             <textarea name="exclude" rows="5">' . htmlspecialchars($exclude) . '</textarea><br />
@@ -97,7 +98,7 @@ if (
         }
         
         if ($error === false) {
-            $files = readDirectoryIterator($dir, $excludes);
+            $files = readFullDir($dir, $excludes);
             $files_search_count = 0;
 
             echo '<div id="find_list">';

@@ -35,7 +35,7 @@ if (
     echo '<div class="title">Danh sách error_log</div>';
     
     $have_error = false;
-    $files = readDirectoryIterator($dir, [
+    $files = readFullDir($dir, [
         'vendor/',
         'node_modules/'
     ]);

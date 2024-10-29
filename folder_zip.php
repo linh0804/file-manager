@@ -14,7 +14,7 @@ function zipDir($path, $file, $isDelete = false)
 
     if ($zip->open($file, ZipArchive::CREATE) === true) {
         $path = realpath($path);
-        $files = readDirectoryIterator($path);
+        $files = readFullDir($path);
 
         foreach ($files as $name => $file) { 
             $filePath = $file->getRealPath();          

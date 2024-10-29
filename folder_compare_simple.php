@@ -71,12 +71,12 @@ if (isset($_POST['submit'])) {
     }
 
     // lay het file thu muc 1
-    foreach(readDirectoryIterator($folder1, $excludes) as $file) {
+    foreach(readFullDir($folder1, $excludes) as $file) {
         $files1[] = str_replace_first($folder1, '', $file->getPathname());
     }
 
     // lay het file thu muc 2
-    foreach(readDirectoryIterator($folder2, $excludes) as $file) {
+    foreach(readFullDir($folder2, $excludes) as $file) {
         $files2[] = str_replace_first($folder2, '', $file->getPathname());
     }
 

@@ -26,7 +26,7 @@ if (
 } else {
     $dir = processDirectory($dir);
     $dirInfo = new SplFileInfo($dir);
-    $files = readDirectoryIterator($dir);
+    $files = readFullDir($dir);
 
     $dir_size = 0;
     $total_file = 0;

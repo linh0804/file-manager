@@ -121,8 +121,6 @@ function getNewVersion()
         ? $remoteVersion
         : false;
 }
-
-
 function hasNewVersion()
 {
     return REMOTE_FILE_CURRENT !== REMOTE_FILE_NEW;
@@ -149,7 +147,6 @@ function getFormat($name)
         : '';
 }
 
-
 function isFormatText($name)
 {
     global $formats;
@@ -162,7 +159,6 @@ function isFormatText($name)
 
     return in_array($format, $formats['text']) || in_array($format, $formats['other']) || in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source']);
 }
-
 
 function isFormatUnknown($name)
 {
@@ -262,7 +258,7 @@ function isNameError($var)
     return strpos($var, '\\') !== false || strpos($var, '/') !== false;
 }
 
-function rrmdir($path)
+function removeDir($path)
 {
     $handler = scandir($path);
 
@@ -272,7 +268,7 @@ function rrmdir($path)
                 $pa = $path . '/' . $entry;
 
                 if (is_dir($pa)) {
-                    if (!rrmdir($pa)) {
+                    if (!removeDir($pa)) {
                         return false;
                     }
                 } else {
@@ -289,11 +285,6 @@ function rrmdir($path)
     return false;
 }
 
-function removeDir($path)
-{
-    return rrmdir($path);
-}
-
 function rrms($entrys, $dir)
 {
     foreach ($entrys as $e) {
@@ -304,7 +295,7 @@ function rrms($entrys, $dir)
                 return false;
             }
         } elseif (@is_dir($pa)) {
-            if (!rrmdir($pa)) {
+            if (!removeDir($pa)) {
                 return false;
             }
         } else {

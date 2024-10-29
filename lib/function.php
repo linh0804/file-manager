@@ -513,7 +513,6 @@ function readFullDir($path, $excludes = []) {
 function dirSize($path)
 {
     $size = 0;
-
     $files = readFullDir($path);
 
     foreach ($files as $file) {
@@ -595,59 +594,6 @@ function size($size)
     }
 
     return $size;
-}
-
-function grab($url, $ref = '', $cookie = '', $user_agent = '', $header = '')
-{
-    $ch = curl_init();
-
-    $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
-    $headers[] = 'Accept-Language: en-us,en;q=0.5';
-    $headers[] = 'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7';
-    $headers[] = 'Keep-Alive: 300';
-    $headers[] = 'Connection: Keep-Alive';
-    $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
-
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    if ($user_agent) {
-        curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-    } else {
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Nokia3110c/2.0 (04.91) Profile/MIDP-2.0 Configuration/CLDC-1.1');
-    }
-
-    if ($header) {
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-    } else {
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-    }
-
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-    if ($ref) {
-        curl_setopt($ch, CURLOPT_REFERER, $ref);
-    } else {
-        curl_setopt($ch, CURLOPT_REFERER, 'http://www.google.com.vn/search?hl=vi&client=firefox-a&rls=org.mozilla:en-US:official&hs=hKS&q=video+clip&start=20&sa=N');
-    }
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    if (strncmp($url, 'https', 6)) {
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    }
-
-    if ($cookie) {
-        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
-    }
-
-    curl_setopt($ch, CURLOPT_TIMEOUT, 100);
-
-    $html       = curl_exec($ch);
-    $mess_error = curl_error($ch);
-
-    curl_close($ch);
-
-    return $html;
 }
 
 function import($url, $path)
@@ -856,13 +802,11 @@ function getPathPHP()
 
     return 'php';
 }
-
 function isFunctionExecEnable()
 {
     return function_exists('exec')
         && isFunctionDisable('exec') == false;
 }
-
 function isFunctionDisable($func)
 {
     $list = @ini_get('disable_functions');

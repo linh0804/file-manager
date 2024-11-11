@@ -2,19 +2,19 @@
 
 define('ACCESS', true);
 
-include_once '.init.php';
+require '.init.php';
 
 $title = 'Tìm error_log';
 
-require_once 'header.php';
-
-echo '<div class="title">' . $title . '</div>';
+require 'header.php';
 
 echo '<style>
 	ul.info > li {
 		white-space: normal !important;
 	}
 </style>';
+
+echo '<div class="title">' . $title . '</div>';
 
 if (
     $dir == null
@@ -41,14 +41,13 @@ if (
     ]);
     
     foreach ($files as $file) {
-        if (!$file->getSize()) {
-            continue;
-        }
-        
         if ($file->getFilename() !== 'error_log') {
             continue;
         }
-        
+        if (!$file->getSize()) {
+            continue;
+        }
+
         if (!$have_error) {
             echo '<ul class="info">';
         }
@@ -81,4 +80,4 @@ if (
     </ul>';
 }
 
-require_once 'footer.php';
+require 'footer.php';

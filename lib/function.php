@@ -279,7 +279,7 @@ function removeDir($path)
             }
         }
 
-        return rmdir($path);
+        return is_dir($path) ? rmdir($path) : unlink($path);
     }
 
     return false;

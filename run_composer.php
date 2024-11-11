@@ -41,7 +41,7 @@ echo '<div class="title">' . $title . '</div>';
 
 $folder = $_POST['folder'] ?? $dir;
 $php = $_POST['php'] ?? 'php';
-$command = $_POST['command'] ?? '';
+$command = $_POST['command'] ?? 'composer update';
 
 echo '<div class="list">';
 

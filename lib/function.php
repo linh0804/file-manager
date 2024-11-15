@@ -824,6 +824,40 @@ function isFunctionDisable($func)
 
     return false;
 }
+function runCommand($command)
+{
+    $descriptorspec = [
+        0 => ["pipe", "r"],  // stdin
+        1 => ["pipe", "w"],  // stdout
+        2 => ["pipe", "w"]   // stderr
+    ];
+
+    // Mở tiến trình
+    $process = proc_open($command, $descriptorspec, $pipes);
+
+    if (is_resource($process)) {
+        // Đọc đầu ra từ stdout
+        $output = stream_get_contents($pipes[1]);
+        fclose($pipes[1]); // Đóng luồng stdout
+
+        // Đọc lỗi từ stderr
+        $error = stream_get_contents($pipes[2]);
+        fclose($pipes[2]); // Đóng luồng stderr
+
+        // Đóng tiến trình
+        $return_value = proc_close($process);
+
+        // Hiển thị kết quả
+        return [
+            'out' => $output,
+            'err' => $error,
+            'code' => $return_value
+        ];
+    } else {
+        return false;
+    }
+}
+
 
 // file
 function printFileActions(SplFileInfo $file) {

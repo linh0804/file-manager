@@ -145,7 +145,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
         // auto focus
         document.addEventListener("DOMContentLoaded", function() {
-            editorElement.scrollIntoView({ behavior: "smooth", block: "center" })
+            editorElement.scrollIntoView({ behavior: "smooth" })
         })
 
         function save() {

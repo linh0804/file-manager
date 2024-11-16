@@ -903,7 +903,7 @@ function debug($o)
 
 function asset($asset)
 {
-    return $asset . '?' .  date('YmdHi', filemtime($asset));
+    return $asset . '?' .  filemtime($asset);
 }
 
 function cookie(

@@ -2,7 +2,9 @@
     "require": {
         "php": ">=7.4.0",
         "friendsofphp/php-cs-fixer": "^3.49",
-        "sabre/dav": "^4.6"
+        "sabre/dav": "^4.6",
+        "ext-mysqli": "*",
+        "ext-json": "*"
     },
     "config": {
         "platform": {

@@ -232,9 +232,24 @@ if (
     }
 }
 
-$dir = isset($_GET['dir']) && !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
-$name = isset($_GET['name']) && !empty($_GET['name']) ? $_GET['name'] : null;
+$dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
+$name = !empty($_GET['name']) ? $_GET['name'] : null;
 $dirEncode = !empty($dir) ? rawurlencode($dir) : '';
+
+// Kiểm tra đăng nhập
+$isLogin = isset($_COOKIE[FM_COOKIE_NAME])
+    && isset($configs['password'])
+    && $_COOKIE[FM_COOKIE_NAME]
+    === $configs['password'];
+
+define('IS_LOGIN', $isLogin);
+
+if (
+    !IS_LOGIN
+    && !defined('LOGIN')
+) {
+    goURL('login.php');
+}
 
 // kiem tra nguoi dung
 $script = function_exists('getenv') ? getenv('SCRIPT_NAME') : $_SERVER['SCRIPT_NAME'];
@@ -245,7 +260,7 @@ define('IS_INSTALL_ROOT_DIRECTORY', $script == '.' || $script == '/');
 define('IS_ACCESS_FILE_IN_FILE_MANAGER', defined('INDEX') && isset($_GET['not']));
 define('DIRECTORY_FILE_MANAGER', strpos($script, '/') !== false ? @substr($script, strrpos($script, '/') + 1) : null);
 define('PATH_FILE_MANAGER', str_replace('\\', '/', strtolower($_SERVER['DOCUMENT_ROOT'] . $script)));
-define('NAME_DIRECTORY_INSTALL_FILE_MANAGER', !IS_INSTALL_ROOT_DIRECTORY ? preg_replace('#(\/+|/\+)(.+?)#s', '$2', $script) : null);
+define('NAME_DIRECTORY_INSTALL_FILE_MANAGER', !IS_INSTALL_ROOT_DIRECTORY ? preg_replace('#(/+|/\+)(.+?)#s', '$2', $script) : null);
 define('PARENT_PATH_FILE_MANAGER', substr(PATH_FILE_MANAGER, 0, strlen(PATH_FILE_MANAGER) - (NAME_DIRECTORY_INSTALL_FILE_MANAGER == null ? 0 : strlen(NAME_DIRECTORY_INSTALL_FILE_MANAGER) + 1)));
 
 if (
@@ -268,11 +283,6 @@ if (
     //goURL('index.php?not');
 }
 
-if (NOT_PERMISSION) {
-    //$dir       = '';
-    //$dirEncode = '';
-}
-
 if (!empty($dir)) {
     define(
         'IS_ACCESS_PARENT_PATH_FILE_MANAGER',
@@ -287,7 +297,7 @@ if (!empty($dir)) {
 
 function isPathNotPermission($path, $isUseName = false): bool
 {
-    if (empty($path) == false) {
+    if (!empty($path)) {
         $reg  = $isUseName ? NAME_DIRECTORY_INSTALL_FILE_MANAGER : PATH_FILE_MANAGER;
         $reg  = $reg != null ? strtolower($reg) : null;
         $path = str_replace('\\', '/', $path);
@@ -320,22 +330,7 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
     exit();
 }
 
-// Kiểm tra đăng nhập
-$isLogin = isset($_COOKIE[FM_COOKIE_NAME])
-    && isset($configs['password'])
-    && $_COOKIE[FM_COOKIE_NAME]
-    === $configs['password'];
-
-define('IS_LOGIN', $isLogin);
-
-if (
-    !IS_LOGIN
-    && !defined('LOGIN')
-) {
-    goURL('login.php');
-}
-
 // no cache
-header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate'); 
+header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');

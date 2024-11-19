@@ -97,35 +97,30 @@ echo '<div class="list">
     <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
 </ul>';
 
-echo '<script>
+?>
+
+<script>
   const form = document.getElementById("formUpload")
-  const submit = document.getElementById("buttonUpload")
   const files = document.getElementsByClassName("fileUpload")
   let uploading = 0
 
-  submit.addEventListener("click", function (e) {
+  $('#buttonUpload').click(function (e) {
     e.preventDefault()
-    
+
     if (uploading) {
         alert("Đang upload!")
         return
     }
-
-    filesLength = files.length;
-
-    for (let i = 0; i < filesLength; i++) {
-      const fileElement = files[i]
-      const fileInput = fileElement.querySelector(`input[type="file"]`)
-      const fileResult = fileElement.querySelector(".result")
-
-      if (!fileInput.files.length) {
-        return
-      }
-
-      const file = fileInput.files[0]
-
-      upload(file, fileResult);
-    }
+    
+    $('.fileUpload').each(function() {
+        let e = $(this)
+        let file = e.find('input[type=file]')[0]
+        let result = e.find('.result')
+        
+        if (file.files.length) {
+            upload(file.files[0], result);
+        }
+    })
   })
 
   function upload(file, result) {
@@ -135,14 +130,14 @@ echo '<script>
     formData.append("file", file)
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "' . $action . '");
+    xhr.open("POST", "<?= $action ?>");
 
     xhr.upload.onprogress = function (e) {
       if (e.lengthComputable) {
         let loaded = (e.loaded / 1024).toFixed(2) + " KB"
         let total = (e.total / 1024).toFixed(2) + " KB"
         
-        result.innerText = loaded + " / " + total
+        result.html('<span style="color: blue">' + loaded + " / " + total + '</span>')
       }
     }
 
@@ -151,23 +146,23 @@ echo '<script>
         var res = JSON.parse(xhr.responseText)
 
         if (res.error) {
-          result.innerText = res.error
+          result.html('<span style="color:red">' + res.error + '</span>')
         } else {
-          result.innerText = "OK!"
+          result.html('<span style="color:green">OK!</span>')
         }
       } catch (e) {
-        result.innerText = "Thất bại!"
+        result.html('<span style="color:red">Thất bại!</span>')
         alert("Tải lên thất bại: " + file.name)
         console.log(e)
       }
     }
 
-    xhr.onloadend = function () {
+    xhr.onloadend = () => {
         uploading--
     }
 
     xhr.send(formData)
   }
-</script>';
+</script>
 
-require 'footer.php';
+<?php require 'footer.php';

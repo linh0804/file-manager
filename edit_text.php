@@ -46,9 +46,9 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <form action="javascript:void(0)" id="code_form" method="post">
             <span class="bull">&bull; </span>Nội dung:
 
-            <div style="display: inline-block; float: right">
-                <input type="button" id="code_highlight" value="Format" />
-                <input type="checkbox" id="code_wrap" /> Wrap
+            <div style="display: inline-block; float: right">'
+                . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
+                . '<input type="checkbox" id="code_wrap" /> Wrap
             </div>
             
             <div class="parent_box_edit">
@@ -191,7 +191,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
             var data = new FormData();
             data.append("requestApi", 1);
-            data.append("format_php", 1);
+            data.append("format", "<?= $file->getExtension() ?>");
             data.append("content", editorElement.value);
 
             fetch("<?= $actionEdit ?>", {

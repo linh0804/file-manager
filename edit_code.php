@@ -111,12 +111,14 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
     // <input type="checkbox" checked="checked" id="code_readonly" /> ReadOnly
     echo '</select>
-            <span style="float: right">
-                <button class="button" id="code_format">Format</button>
-                <input type="checkbox" id="code_wrap" /> Wrap
-            </span>
-            </div>
-            <hr/>
+        <span style="float: right">';
+    if (ableFormatCode($fileExt)) {
+        echo '<button class="button" id="code_format">Format</button> ';
+    }
+    echo '<input type="checkbox" id="code_wrap" /> Wrap
+        </span>
+        </div>
+        <hr/>
         </div>
 
         <form id="code_form" action="javascript:void(0)">
@@ -201,7 +203,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
             var data = new FormData();
             data.append("requestApi", 1);
-            data.append("format_php", 1);
+            data.append("format", "' . $fileExt . '");
             data.append("content", editor.state.doc.toString());
 
             fetch("'. $actionEdit .'", {

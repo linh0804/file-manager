@@ -18,36 +18,64 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     goto end_request;
 }
 
-
 if (!isFormatText($name) && !isFormatUnknown($name)) {
     $data['message'] = 'Tập tin này không phải dạng văn bản';
     goto end_request;
 }
 
-if (isset($_POST['format_php'])) {
-    $configFile = __DIR__ . '/.php-cs-fixer.dist.php';
-    $tempFile = __DIR__ . '/tmp/fixer.txt';
-    //$cacheFile = __DIR__ . '/tmp/.php-cs-fixer.cache';
+// thông tin file
+$dir = processDirectory($dir);
+$path = $dir . '/' . $name;
 
-    $content = isset($_POST['content']) ? $_POST['content'] : '';
-    $data = array(
-        'format' => '',
-        'error' => 'Không thành công! Yêu cầu chạy "composer install"!'
-    );
+$content = isset($_POST['content']) ? $_POST['content'] : '';
 
-    if (!empty($content)) {
-        file_put_contents($tempFile, $content);
-        
-        @chmod('vendor/bin/php-cs-fixer', 0775);
-        $result = exec("vendor/bin/php-cs-fixer fix {$tempFile} --config {$configFile}");
+if (isset($_POST['format'])) {
+    $formatType = trim($_POST['format']);
 
-        if ($result) {
-            $data['format'] = file_get_contents($tempFile);
+    switch ($formatType) {
+        case 'php':
+            $configFile = __DIR__ . '/.php-cs-fixer.dist.php';
+            $tempFile = __DIR__ . '/tmp/fixer.txt';
+            $data = [
+                'format' => '',
+                'error' => 'Không thành công! Yêu cầu chạy "composer install"!'
+            ];
+
+            if (!empty($content)) {
+                file_put_contents($tempFile, $content);
+
+                @chmod('vendor/bin/php-cs-fixer', 0775);
+                $result = exec("vendor/bin/php-cs-fixer fix {$tempFile} --config {$configFile}");
+
+                if ($result) {
+                    $data['format'] = file_get_contents($tempFile);
+                    $data['error'] = '';
+
+                    @unlink($tempFile);
+                }
+            }
+            break;
+
+        case 'js':
+        case 'html':
+        case 'ts':
+        case 'css':
+        case 'scss':
+        case 'json':
+        case 'yaml':
+            $opt = [
+                '--print-width=1000000',
+                '--quote-props=preserve'
+            ];
+            $res = runCommand('source ~/.bashrc; prettier ' . implode(' ', $opt) . ' ' . $path);
+            $data['format'] = $res['out'];
             $data['error'] = '';
 
-            @unlink($tempFile);
-            //@unlink($cacheFile);
-        }
+            break;
+
+        default:
+            $data['format'] = $content;
+            $data['error'] = '';
     }
 
     goto end_request;
@@ -55,9 +83,6 @@ if (isset($_POST['format_php'])) {
 
 
 // luu file
-$dir = processDirectory($dir);
-$path = $dir . '/' . $name;
-
 if (!isset($_POST['content'])) {
     $data['message'] = 'Chưa nhập nội dung';
     goto end_request;

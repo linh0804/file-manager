@@ -48,7 +48,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
             <div style="display: inline-block; float: right">'
                 . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
-                . '<input type="checkbox" id="code_wrap" /> Wrap
+                . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
             </div>
             
             <div class="parent_box_edit">

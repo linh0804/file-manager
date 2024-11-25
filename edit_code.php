@@ -115,7 +115,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     if (ableFormatCode($fileExt)) {
         echo '<button class="button" id="code_format">Format</button> ';
     }
-    echo '<input type="checkbox" id="code_wrap" /> Wrap
+    echo '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
         </span>
         </div>
         <hr/>

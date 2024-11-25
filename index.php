@@ -71,7 +71,7 @@ if ($count > 0) {
 }
 
 $count = count($lists);
-$html  = printPath($dir);
+$html  = printPath($dir, true);
 
 echo '<script language="javascript" src="' . asset('js/checkbox.js') . '"></script>';
 echo '<div class="title">' . $html . ' <span class="copyButton" data-copy="' . htmlspecialchars($dir) . '" style="color: pink">[copy]</span></div>';

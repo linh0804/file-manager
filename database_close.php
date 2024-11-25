@@ -3,8 +3,8 @@
 if (
     !defined('ACCESS')
     || !defined('PHPMYADMIN')
-    || !defined('REALPATH')
-    || !defined('PATH_DATABASE')
+    || !defined('rootPath')
+    || !defined('pathDatabase')
     || !defined('LINK_IDENTIFIER')
 ) {
     die('Not access');

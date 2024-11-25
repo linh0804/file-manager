@@ -2,11 +2,11 @@
 
 define('ACCESS', true);
 
-include_once '.init.php';
+require '.init.php';
 
 $title = 'Kết nối database';
 
-include_once 'header.php';
+require 'header.php';
 
 $host = 'localhost';
 $username = 'root';
@@ -16,8 +16,8 @@ $notice = '';
 $auto = true;
 $go = false;
 
-if (is_file(PATH_DATABASE)) {
-    include PATH_DATABASE;
+if (is_file(pathDatabase)) {
+    require pathDatabase;
 
     if (isDatabaseVariable($databases)) {
         $host = $databases['db_host'];
@@ -36,9 +36,7 @@ if (is_file(PATH_DATABASE)) {
             }
         }
     } elseif (!isset($_POST['submit'])) {
-        if (@is_file(REALPATH . '/' . PATH_DATABASE)) {
-            @unlink(REALPATH . '/' . PATH_DATABASE);
-        }
+        @unlink(pathDatabase);
 
         $notice = '<div class="notice_failure">Cấu hình database bị lỗi</div>';
     }
@@ -77,23 +75,23 @@ if ($go) {
 echo '<div class="title">' . $title . '</div>';
 echo $notice;
 echo '<div class="list">
-            <form action="database.php" method="post">
-                <span class="bull">&bull;</span>Host:<br/>
-                <input type="text" name="host" value="' . stripslashes($host) . '" size="18"/><br/>
-                <span class="bull">&bull;</span>Tài khoản database:<br/>
-                <input type="text" name="username" value="' . stripslashes($username) . '" size="18"/><br/>
-                <span class="bull">&bull;</span>Mật khẩu database:<br/>
-                <input type="text" name="password" value="' . stripslashes($password) . '" size="18" autocomplete="off"/><br/>
-                <span class="bull">&bull;</span>Tên database:<br/>
-                <input type="text" name="name" value="' . stripslashes($name) . '" size="18"/><br/>
-                <input type="checkbox" name="is_auto" value="1"' . ($auto ? ' checked="checked"' : null) . '/>Tự động kết nối<br/>
-                <input type="submit" name="submit" value="Kết nối"/>
-            </form>
-        </div>
-        <div class="tips"><img src="icon/tips.png"/> Tên database để trống nếu bạn muốn kết nối vào danh sách database. Nếu bạn không có toàn quyền với mysql hãy nhập tên database</div>
-        <div class="title">Chức năng</div>
-        <ul class="list">
-            <li><img src="icon/list.png"/> <a href="index.php">Quản lý tập tin</a></li>
-        </ul>';
+    <form action="database.php" method="post">
+        <span class="bull">&bull;</span>Host:<br/>
+        <input type="text" name="host" value="' . stripslashes($host) . '" size="18"/><br/>
+        <span class="bull">&bull;</span>Tài khoản database:<br/>
+        <input type="text" name="username" value="' . stripslashes($username) . '" size="18"/><br/>
+        <span class="bull">&bull;</span>Mật khẩu database:<br/>
+        <input type="text" name="password" value="' . stripslashes($password) . '" size="18" autocomplete="off"/><br/>
+        <span class="bull">&bull;</span>Tên database:<br/>
+        <input type="text" name="name" value="' . stripslashes($name) . '" size="18"/><br/>
+        <input type="checkbox" name="is_auto" value="1"' . ($auto ? ' checked="checked"' : null) . '/>Tự động kết nối<br/>
+        <input type="submit" name="submit" value="Kết nối"/>
+    </form>
+</div>
+<div class="tips"><img src="icon/tips.png"/> Tên database để trống nếu bạn muốn kết nối vào danh sách database. Nếu bạn không có toàn quyền với mysql hãy nhập tên database</div>
+<div class="title">Chức năng</div>
+<ul class="list">
+    <li><img src="icon/list.png"/> <a href="index.php">Quản lý tập tin</a></li>
+</ul>';
 
-include_once 'footer.php';
+require 'footer.php';

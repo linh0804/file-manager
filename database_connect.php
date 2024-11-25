@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('ACCESS') || !defined('PHPMYADMIN') || !defined('REALPATH') || !defined('PATH_DATABASE')) {
+if (!defined('ACCESS') || !defined('PHPMYADMIN') || !defined('rootPath') || !defined('pathDatabase')) {
     die('Not access');
 }
 
@@ -28,8 +28,8 @@ $MYSQL_FIELD_KEY = array();
 $MYSQL_DATA_TYPE = array();
 $MYSQL_ENGINE_STORAGE = array();
 
-if (@is_file(REALPATH . '/' . PATH_DATABASE)) {
-    include PATH_DATABASE;
+if (@is_file(pathDatabase)) {
+    require pathDatabase;
 
     if (isDatabaseVariable($databases)) {
         define('IS_VALIDATE', true);

@@ -94,7 +94,9 @@ require __DIR__ . '/lib/zip.class.php';
 
 // cau hinh
 const PATH_CONFIG = 'config.inc.php';
-const PATH_DATABASE = 'database.inc.php';
+
+define('pathConfig', rootPath . '/config.inc.php');
+define('pathDatabase', rootPath . '/config.db.inc.php');
 
 const LOGIN_USERNAME_DEFAULT = 'Admin';
 const LOGIN_PASSWORD_DEFAULT = '12345';

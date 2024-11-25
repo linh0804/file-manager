@@ -66,30 +66,9 @@ function createDatabaseConfig($host, $username, $password, $name, $auto)
     $content .= "'db_name' => '$name', ";
     $content .= "'is_auto' => " . ($auto == true ? 'true' : 'false') . "";
     $content .= '); ?>';
-
-    if (@is_file(REALPATH . '/' . PATH_DATABASE)) {
-        @unlink(REALPATH . '/' . PATH_DATABASE);
-    }
-
-    $put = @file_put_contents(REALPATH . '/' . PATH_DATABASE, $content);
-
-    if ($put) {
-        return true;
-    } else {
-        $handler = @fopen(REALPATH . '/' . PATH_DATABASE, "w+");
-
-        if ($handler) {
-            if (@fwrite($handler, $content)) {
-                @fclose($handler);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    return true;
+    
+    return @file_put_contents(pathDatabase, $content)
+        !== false;
 }
 
 function isDatabaseVariable($array)

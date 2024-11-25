@@ -7,6 +7,7 @@ tmp/!.htaccess
 
 error_log
 config.inc.php
+config.db.inc.php
 database.inc.php
 bookmark.json
 login_fail.lock

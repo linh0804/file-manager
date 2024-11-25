@@ -53,14 +53,21 @@ window.addEventListener("scroll", function () {
   }, 3000);
 });
 
-// sao chep duong dan thu muc
-const copyDirPathButton = document.querySelector("#copyDirPath");
-copyDirPathButton?.addEventListener("click", function () {
-  let path = copyDirPathButton.getAttribute("data-path");
-  path = decodeURIComponent(path);
+// autogrow
+$('textarea[data-autoresize]').on('change input', function () {
+  if (this.scrollHeight > this.clientHeight) {
+    this.style.height = `${this.scrollHeight}px`;
+  }
+});
+
+// copy
+$('.copyButton').click(function (e) {
+  e.preventDefault();
+
+  let data = $(this).data('copy');
 
   navigator.clipboard
-    .writeText(path)
+    .writeText(data)
     .then(function () {
       alert("Đã copy!");
     })

@@ -169,8 +169,16 @@ if (
                     
                     continue;
                 } else {
+                	// tìm trong file
                     if (!$file->isFile()) {
                         continue;
+                    }
+                    if (in_array($file->getExtension(), [
+                        'mp3',
+                        'zip',
+                        'phar'
+                    ])) {
+                    	continue;
                     }
                 }
 

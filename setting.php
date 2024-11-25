@@ -116,14 +116,19 @@ echo '<div class="list">
 
 if ($ref != null) {
     echo '<li><img src="icon/back.png" alt=""/> <a href="' . $ref . '">Quay lại</a></li>';
-} else {
-    echo '<li><img src="icon/list.png" alt=""/> <a href="index.php">Danh sách</a></li>';
 }
 
-echo '<li><img src="icon/download.png" alt=""/> <a href="update.php">Cập nhật</a></li>';
-echo '<li><img src="icon/empty.png" alt=""/> <a href="reinstall.php">Cài đặt lại!!!</a></li>';
+echo '<li>
+  <a href="update.php" class="button"><img src="icon/download.png" alt=""/> Cập nhật</a>
+  <a href="reinstall.php" class="button"><img src="icon/empty.png" alt=""/> Cài đặt lại!!!</a>
+</li>';
 echo '</ul>';
 
 echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(rootPath) . '</div>';
+
+echo '<a href="javascript:history.back()" style="">
+    <img src="icon/back.png"> 
+    <strong class="back">Trở lại</strong>
+</a>';
 
 require 'footer.php';

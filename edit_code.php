@@ -195,15 +195,14 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         })
 
         // format code
-        var codeFormatElement = document.getElementById("code_format");
-        codeFormatElement.addEventListener("click", function () {
+        $("#code_format").click(function() {
             if (!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
                 return;
             }
 
             var data = new FormData();
             data.append("requestApi", 1);
-            data.append("format", "' . $fileExt . '");
+            data.append("format", "' . $file->getExtension() . '");
             data.append("content", editor.state.doc.toString());
 
             fetch("'. $actionEdit .'", {

@@ -16,6 +16,11 @@ if (!defined('DONT_LOAD_INI_SET')) {
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);
 
+// no cache
+header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+
 // Check require function
 {
     $require = [
@@ -34,7 +39,7 @@ mysqli_report(MYSQLI_REPORT_ERROR);
 }
 
 define('REALPATH', realpath('./'));
-define('rootPath', realpath('./'));
+define('rootPath', __DIR__);
 
 define('isBuiltinServer', php_sapi_name() === 'cli-server');
 
@@ -171,7 +176,7 @@ function ableFormatCode($type)
 {
     return in_array($type, [
         'php',
-        'html',      
+        'html',
         'js',
         'ts',
         'css',
@@ -343,7 +348,14 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
     exit();
 }
 
-// no cache
-header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+function encodePath($path) {
+    return base64_encode($path);
+}
+function decodePath($path) {
+    //$path = 
+    $path = str_replace('\\', '/', $path);
+}
+
+
+$path = processDirectory((string) $dir, true) . processName((string) $name);
+$file = file_exists($path) ? new SplFileInfo($path) : null;

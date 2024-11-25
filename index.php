@@ -74,7 +74,7 @@ $count = count($lists);
 $html  = printPath($dir);
 
 echo '<script language="javascript" src="' . asset('js/checkbox.js') . '"></script>';
-echo '<div class="title">' . $html . ' <span id="copyDirPath" data-path="' . rawurlencode($dir) . '" style="color: pink">[copy]</span></div>';
+echo '<div class="title">' . $html . ' <span class="copyButton" data-copy="' . htmlspecialchars($dir) . '" style="color: pink">[copy]</span></div>';
 
 if (isAppDir($dir)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';
@@ -217,15 +217,15 @@ if ($count > 0) {
 echo '</form>';
 
 echo '<div class="title">Chức năng</div>
-<ul class="list">
-    <li><img src="icon/create.png"/> <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tạo mới</a></li>
-    <li><img src="icon/upload.png"/> <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tải lên tập tin</a></li>
-    <li><img src="icon/import.png"/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
-    <li><img src="icon/search.png"/> <a href="find_in_folder.php?dir=' . $dirEncode . '">Tìm trong thư mục</a></li>
-    <li><img src="icon/search.png"/> <a href="scan_error_log.php?dir=' . $dirEncode . '">Tìm <b style="color:red">error_log</b></a></li>
-    <li><img src="icon/info.png"/> <a href="folder_detail.php?dir=' . $dirEncode . '">Thông tin thư mục</a></li>
-    <li>Webdav: ' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '</li>
-</ul>';
+<div class="list">
+    <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/create.png"/> Tạo mới</a>
+    <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/upload.png"/> Tải lên tập tin</a>
+    <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/import.png"/> Nhập khẩu tập tin</a>
+    <a href="find_in_folder.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm trong thư mục</a>
+    <a href="scan_error_log.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a>
+    <a href="#" class="button copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">&bull; Webdav</a>
+    <a href="folder_detail.php?dir=' . $dirEncode . '" class="button"><img src="icon/info.png"/> Thông tin</a>
+</div>';
 
 require 'footer.php';
 

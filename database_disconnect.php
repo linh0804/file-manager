@@ -12,7 +12,9 @@ require 'header.php';
 
 if (IS_CONNECT) {
     if ($databases['is_auto']) {
-        if (!createDatabaseConfig($databases['db_host'], $databases['db_username'], $databases['db_password'], $databases['db_name'], false)) {
+        $databases['is_auto'] = false;
+        
+        if (!createDatabaseConfig($databases)) {
             echo '<div class="title">' . $title . '</div>
             <div class="list">Ngắt kết nối thất bại</div>
             <div class="title">Chức năng</div>

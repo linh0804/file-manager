@@ -59,18 +59,9 @@ function createConfig(
 }
 
 
-function createDatabaseConfig($host, $username, $password, $name, $auto)
+function createDatabaseConfig($config)
 {
-    $content = "<?php if (!defined('ACCESS')) die('Not access'); else \$databases = array(";
-    $content .= "'db_host' => '$host', ";
-    $content .= "'db_username' => '$username', ";
-    $content .= "'db_password' => '$password', ";
-    $content .= "'db_name' => '$name', ";
-    $content .= "'is_auto' => " . ($auto == true ? 'true' : 'false') . "";
-    $content .= '); ?>';
-    
-    return @file_put_contents(pathDatabase, $content)
-        !== false;
+    return Arr::toFile(pathDatabase, $config);
 }
 
 function isDatabaseVariable($array)

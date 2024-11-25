@@ -17,7 +17,7 @@ $auto = true;
 $go = false;
 
 if (is_file(pathDatabase)) {
-    require pathDatabase;
+    $databases = require pathDatabase;
 
     if (isDatabaseVariable($databases)) {
         $host = $databases['db_host'];
@@ -56,7 +56,13 @@ if (isset($_POST['submit'])) {
     } elseif (!empty($name) && !@mysqli_select_db($connectTemp, $name)) {
         $notice = '<div class="notice_failure">Không thể chọn database</div>';
     } else {
-        if (createDatabaseConfig($host, $username, $password, $name, $auto)) {
+        if (createDatabaseConfig([
+            'db_host' => $host,
+            'db_username' => $username,
+            'db_password' => $password,
+            'db_name' => $name,
+            'is_auto' => $auto
+        ])) {
             $go = true;
         } else {
             $notice = '<div class="notice_failure">Lưu cấu hình database thất bại</div>';
@@ -75,21 +81,21 @@ if ($go) {
 echo '<div class="title">' . $title . '</div>';
 echo $notice;
 echo '<div class="list">
-    <form action="database.php" method="post">
+    <form method="post">
         <span class="bull">&bull;</span>Host:<br/>
-        <input type="text" name="host" value="' . stripslashes($host) . '" size="18"/><br/>
+        <input type="text" name="host" value="' . htmlspecialchars($host) . '" size="18"/><br/>
         <span class="bull">&bull;</span>Tài khoản database:<br/>
-        <input type="text" name="username" value="' . stripslashes($username) . '" size="18"/><br/>
+        <input type="text" name="username" value="' . htmlspecialchars($username) . '" size="18"/><br/>
         <span class="bull">&bull;</span>Mật khẩu database:<br/>
-        <input type="text" name="password" value="' . stripslashes($password) . '" size="18" autocomplete="off"/><br/>
+        <input type="password" name="password" value="' . htmlspecialchars($password) . '" size="18" autocomplete="off"/><br/>
         <span class="bull">&bull;</span>Tên database:<br/>
-        <input type="text" name="name" value="' . stripslashes($name) . '" size="18"/><br/>
+        <input type="text" name="name" value="' . htmlspecialchars($name) . '" size="18"/><br/>
         <input type="checkbox" name="is_auto" value="1"' . ($auto ? ' checked="checked"' : null) . '/>Tự động kết nối<br/>
         <input type="submit" name="submit" value="Kết nối"/>
     </form>
 </div>
 
-<div class="tips"><img src="icon/tips.png"/> Tên database để trống nếu bạn muốn kết nối vào danh sách database. Nếu bạn không có toàn quyền với mysql hãy nhập tên database</div>
+<div class="tips"><img src="icon/tips.png"/> Tên database để trống nếu bạn muốn kết nối vào danh sách database.</div>
 
 <div class="title">Chức năng</div>
 <ul class="list">

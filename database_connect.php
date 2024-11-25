@@ -29,7 +29,7 @@ $MYSQL_DATA_TYPE = array();
 $MYSQL_ENGINE_STORAGE = array();
 
 if (@is_file(pathDatabase)) {
-    require pathDatabase;
+    $databases = require pathDatabase;
 
     if (isDatabaseVariable($databases)) {
         define('IS_VALIDATE', true);

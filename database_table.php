@@ -940,5 +940,3 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
 }
 
 include_once 'footer.php';
-
-include_once 'database_close.php';

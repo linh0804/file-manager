@@ -3,17 +3,17 @@
 define('ACCESS', true);
 define('PHPMYADMIN', true);
 
-include_once '.init.php';
+require '.init.php';
 
 $title = 'Danh sách bảng';
 
-include_once 'database_connect.php';
+require 'database_connect.php';
 
 if (IS_CONNECT) {
     $title .= ': ' . DATABASE_NAME;
     $query = mysqli_query($MySQLi, 'SHOW TABLE STATUS');
 
-    include_once 'header.php';
+    require 'header.php';
 
     if ($query !== false) {
         echo '<div class="title"><div class="ellipsis">' . $title . '</div></div>
@@ -78,7 +78,7 @@ if (IS_CONNECT) {
         echo '</ul>';
     }
 } elseif (ERROR_CONNECT == false && ERROR_SELECT_DB && IS_DATABASE_ROOT) {
-    include_once 'header.php';
+    require 'header.php';
 
     echo '<div class="title">' . $title . '</div>
             <div class="list">Không thể chọn database</div>
@@ -87,7 +87,7 @@ if (IS_CONNECT) {
                 <li><img src="icon/database.png"/> <a href="database_lists.php">Danh sách database</a></li>
             </ul>';
 } else {
-    include_once 'header.php';
+    require 'header.php';
 
     echo '<div class="title">' . $title . '</div>
             <div class="list">Lỗi cấu hình hoặc không kết nối được</div>
@@ -97,5 +97,4 @@ if (IS_CONNECT) {
             </ul>';
 }
 
-include_once 'footer.php';
-include_once 'database_close.php';
+require 'footer.php';

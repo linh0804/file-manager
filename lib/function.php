@@ -1,5 +1,7 @@
 <?php
 
+use NgatNgay\Helper\Arr;
+
 function isAppFile($dir)
 {
     return stripos($dir, REALPATH) === 0;
@@ -74,13 +76,11 @@ function createDatabaseConfig($host, $username, $password, $name, $auto)
 function isDatabaseVariable($array)
 {
     return is_array($array) &&
-                isset($array['db_host']) &&
-                isset($array['db_username']) &&
-                isset($array['db_password']) &&
-                isset($array['db_name']) &&
-                isset($array['is_auto']) &&
-                empty($array['db_host']) == false && $array['db_host'] != null &&
-                empty($array['db_username']) == false && $array['db_username'] != null;
+        !empty($array['db_host']) &&
+        !empty($array['db_username']) &&
+        isset($array['db_password']) &&
+        isset($array['db_name']) &&
+        isset($array['is_auto']);
 }
 
 function getNewVersion()

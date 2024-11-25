@@ -43,11 +43,11 @@ if (is_file(pathDatabase)) {
 }
 
 if (isset($_POST['submit'])) {
-    $host = addslashes($_POST['host']);
-    $username = addslashes($_POST['username']);
-    $password = addslashes($_POST['password']);
-    $name = addslashes($_POST['name']);
-    $auto = isset($_POST['is_auto']) && intval($_POST['is_auto']) == 1;
+    $host = $_POST['host'] ?? '';
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $name = $_POST['name'] ?? '';
+    $auto = isset($_POST['is_auto']);
 
     if (empty($host) || empty($username)) {
         $notice = '<div class="notice_failure">Chưa nhập đầy đủ thông tin</div>';
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 }
 
 if ($go) {
-    if (empty($name) || $name == null) {
+    if (empty($name)) {
         goURL('database_lists.php');
     } else {
         goURL('database_tables.php');
@@ -88,7 +88,9 @@ echo '<div class="list">
         <input type="submit" name="submit" value="Kết nối"/>
     </form>
 </div>
+
 <div class="tips"><img src="icon/tips.png"/> Tên database để trống nếu bạn muốn kết nối vào danh sách database. Nếu bạn không có toàn quyền với mysql hãy nhập tên database</div>
+
 <div class="title">Chức năng</div>
 <ul class="list">
     <li><img src="icon/list.png"/> <a href="index.php">Quản lý tập tin</a></li>

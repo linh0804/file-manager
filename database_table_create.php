@@ -155,7 +155,3 @@
     } else {
         goURL('login.php');
     }
-
-    include_once 'database_close.php';
-
-?>

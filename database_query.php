@@ -61,4 +61,3 @@ echo '<div class="title">Chức năng</div>
 </ul>';
 
 require 'footer.php';
-require 'database_close.php';

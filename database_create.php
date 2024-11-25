@@ -3,12 +3,12 @@
 define('ACCESS', true);
 define('PHPMYADMIN', true);
 
-include_once '.init.php';
+require '.init.php';
 
 $title = 'Tạo database';
 
-include_once 'database_connect.php';
-include_once 'header.php';
+require 'database_connect.php';
+require 'header.php';
 
 if (IS_CONNECT && IS_DATABASE_ROOT) {
     $name = null;
@@ -73,6 +73,4 @@ if (IS_CONNECT && IS_DATABASE_ROOT) {
     </ul>';
 }
 
-include_once 'footer.php';
-
-include_once 'database_close.php';
+require 'footer.php';

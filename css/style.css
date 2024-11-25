@@ -245,7 +245,7 @@ div.notice_failure,
 div.notice_info,
 div.tips {
     padding: 7px;
-    margin: 1px 5px 1px 5px;
+    margin: 1px 0;
 }
 
 div.tips img.tips {

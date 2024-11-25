@@ -558,13 +558,13 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
 
                 foreach ($info as $key => $value) {
                     echo '<div id="line">
-                                <div>
-                                    <span>' . htmlspecialchars((string) $value) . '</span>
-                                </div>
-                                <div>
-                                    [<strong class="name_columns_edit">' . htmlspecialchars((string) $key) . '</strong>]
-                                </div>
-                            </div>';
+                        <div style="font-size: small; font-style: italic; color: inherit; background-color: inherit">
+                            <strong class="name_columns_edit">' . htmlspecialchars((string) $key) . '</strong>
+                        </div>
+                        <div style="text-align: left; color: #303030; background-color: #eeeeee;">
+                            <span>' . (is_string($value) ? htmlspecialchars($value) : '<span style="font-style: italic; color: blue;">' . gettype($value) . '</span>') . '</span>
+                        </div>
+                    </div>';
                 }
 
                 echo '</div>';
@@ -801,7 +801,7 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
             goURL('database_table.php?action=list_struct' . DATABASE_NAME_PARAMATER_1 . '&name=' . $name . $order['paramater_1']);
         }
 
-        echo '<div class="title"><div class="ellipsis">' . $title . '</div></div>';
+        echo '<div class="title">' . $title . '</div>';
 
         if ($count <= 0) {
             echo '<ul class="list">

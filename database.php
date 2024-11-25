@@ -90,7 +90,7 @@ echo '<div class="list">
         <input type="password" name="password" value="' . htmlspecialchars($password) . '" size="18" autocomplete="off"/><br/>
         <span class="bull">&bull;</span>Tên database:<br/>
         <input type="text" name="name" value="' . htmlspecialchars($name) . '" size="18"/><br/>
-        <input type="checkbox" name="is_auto" value="1"' . ($auto ? ' checked="checked"' : null) . '/>Tự động kết nối<br/>
+        <label><input type="checkbox" name="is_auto" value="1"' . ($auto ? ' checked="checked"' : null) . '/>Tự động kết nối</label><br/>
         <input type="submit" name="submit" value="Kết nối"/>
     </form>
 </div>

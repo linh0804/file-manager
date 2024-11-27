@@ -21,6 +21,21 @@ $menuToggle = '';
 
 <body>
 
+<?php
+    if (IS_LOGIN) {
+    	if (isset($_GET['dev'])) {
+    	    setcookie('dev', 1, time() + 86400 + 365);
+    	}
+        if (isset($_GET['undev'])) {
+    	    setcookie('dev', 1, time() - 1);
+    	}
+    }
+?>
+<?php if (IS_LOGIN && isset($_COOKIE['dev'])) { ?>
+	<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+<?php } ?>
+
 <div id="header">
     <ul>
         <?php if (IS_LOGIN) { ?>

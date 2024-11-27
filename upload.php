@@ -1,5 +1,7 @@
 <?php
 
+use function NgatNgay\Helper\response;
+
 define('ACCESS', true);
 
 require '.init.php';
@@ -7,7 +9,7 @@ require '.init.php';
 $dir = processDirectory($dir);
 $title = 'Tải lên tập tin';
 
-if (!$dir || !is_dir($dir)) {
+if (!$file->isDir()) {
     require 'header.php';
     echo '<div class="title">' . $title . '</div>';
 
@@ -34,78 +36,83 @@ if (isset($_FILES['file'])) {
                 $data['error'] = '';
             }
         }
-    }
+    }   
     
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($data);
-    exit;
+    response($data)->send();
 }
 
-$action = 'upload.php?dir=' . $dirEncode . $pages['paramater_1'];
+$action = 'upload.php?dir=' . $dirEncode;
 
 require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
 echo '<div class="list">
-    <span>' . printPath($dir, true) . '</span><hr/>
-    <form id="formUpload" enctype="multipart/form-data">
-
-        <div class="fileUpload">
-            <span class="bull">&bull; </span>Tập tin:<br/>
-            <input type="file" size="18"/><br/>
-            <div class="result"></div>
-            <hr />
-        </div>
-        
-        <div class="fileUpload">
-            <span class="bull">&bull; </span>Tập tin:<br/>
-            <input type="file" size="18"/><br/>
-            <div class="result"></div>
-            <hr />
-        </div>
-        
-        <div class="fileUpload">
-            <span class="bull">&bull; </span>Tập tin:<br/>
-            <input type="file" size="18"/><br/>
-            <div class="result"></div>
-            <hr />
-        </div>
-        
-        <div class="fileUpload">
-            <span class="bull">&bull; </span>Tập tin:<br/>
-            <input type="file" size="18"/><br/>
-            <div class="result"></div>
-            <hr />
-        </div>
-        
-        <div class="fileUpload">
-            <span class="bull">&bull; </span>Tập tin:<br/>
-            <input type="file" size="18"/><br/>
-            <div class="result"></div>
-            <hr />
-        </div>
-
-        <button id="buttonUpload" class="button">Tải lên</button>
-    </form>
+  <span>' . printPath($dir, true) . '</span><hr/>
+  <form enctype="multipart/form-data">        
+    <div id="fileList"></div>
+    <input id="files" type="file" multiple style="display:none">
+ 
+    <button id="buttonChoose" class="button"><img src="icon/file.png" alt=""/> Chọn file</button>
+    <button id="buttonReset" class="button"><img src="icon/delete.png" alt=""/> Reset</button>
+    <br>
+    <button id="buttonUpload" class="button"><img src="icon/upload.png" alt=""/> Tải lên</button>
+  </form>
 </div>
 
 <div class="title">Chức năng</div>
 <ul class="list">
-    <li><img src="icon/create.png" alt=""/> <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tạo mới</a></li>
-    <li><img src="icon/import.png" alt=""/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
-    <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+  <li><img src="icon/create.png" alt=""/> <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tạo mới</a></li>
+  <li><img src="icon/import.png" alt=""/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
+  <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
 </ul>';
 
 ?>
 
 <script>
-  const form = document.getElementById("formUpload")
-  const files = document.getElementsByClassName("fileUpload")
-  let uploading = 0
+  const fileList = $('#fileList');
+  
+  const files = [];
+  let uploading = 0;
+    
+  $('#buttonChoose').on('click', function (e) {
+    e.preventDefault();
+    $('#files').val('');
+    $('#files').click();
+  });
+  $('#buttonReset').on('click', function (e) {
+    e.preventDefault();
+    
+    if (uploading) {
+        alert("Đang upload!")
+        return
+    }
+    
+    files.length = 0;
+    fileList.empty();
+  });
+  $('#files').on('change', function (e) {
+	fileList.empty();
+	
+	files.push(...Array.from($(this)[0].files))
+    for (let i = 0; i < files.length; i++) {      
+      fileList.append(`
+        <div class="fileUpload" data-id="${i}">
+          <span class="bull">&gt;&gt; </span>${files[i].name}<br/>
+          <div class="result"></div>
+          <hr />
+        </div>
+      `);
+    }
+  });
 
   $('#buttonUpload').click(function (e) {
     e.preventDefault()
+
+    if (!files) {
+      alert('Chưa chọn file!');
+      return;
+    }
 
     if (uploading) {
         alert("Đang upload!")
@@ -113,17 +120,17 @@ echo '<div class="list">
     }
     
     $('.fileUpload').each(function() {
-        let e = $(this)
-        let file = e.find('input[type=file]')[0]
-        let result = e.find('.result')
+        let e = $(this);
+        let id = e.data('id');
         
-        if (file.files.length) {
-            upload(file.files[0], result);
+        if (files[id]) {
+            upload(files[id], e.find('.result'));
         }
     })
   })
 
   function upload(file, result) {
+    console.log(file.name);
     uploading++;
 
     const formData = new FormData();

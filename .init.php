@@ -367,4 +367,5 @@ function decodePath($path) {
 
 
 $path = processDirectory((string) $dir, true) . processName((string) $name);
+$path = file_exists($path) ? $path : '';
 $file = new SplFileInfo($path);

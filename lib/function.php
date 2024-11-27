@@ -169,7 +169,7 @@ function isURL($url)
 function processDirectory($var, $seSlash = false)
 {
     if (empty($var)) {
-        $var = '';
+        return '';
     }
 
     $var = str_replace('\\', '/', $var);

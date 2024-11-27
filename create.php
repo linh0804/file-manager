@@ -10,12 +10,12 @@ require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || !is_dir(processDirectory($dir))) {
+if (!$file->isDir()) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
-            <div class="title">Chức năng</div>
-            <ul class="list">
-                <li><img src="icon/list.png" alt=""/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
-            </ul>';
+    <div class="title">Chức năng</div>
+    <ul class="list">
+      <li><img src="icon/list.png" alt=""/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
+    </ul>';
 } else {
     $dir = processDirectory($dir);
 
@@ -50,21 +50,21 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
     }
 
     echo '<div class="list">
-            <span>' . printPath($dir, true) . '</span><hr/>
-            <form action="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">
-                <span class="bull">&bull; </span>Tên:<br/>
-                <input type="text" name="name" value="' . ($_POST['name'] ?? null) . '" size="18"/><br/>
-                <input type="radio" name="type" value="0" checked="checked"/>Thư mục &nbsp;&nbsp;
-                <input type="radio" name="type" value="1"/>Tập tin<br/>
-                <input type="submit" name="submit" value="Tạo"/>
-            </form>
-        </div>
-        <div class="title">Chức năng</div>
-        <ul class="list">
-            <li><img src="icon/upload.png" alt=""/> <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tải lên tập tin</a></li>
-            <li><img src="icon/import.png" alt=""/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
-            <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-        </ul>';
+        <span>' . printPath($dir, true) . '</span><hr/>
+        <form action="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">
+            <span class="bull">&bull; </span>Tên:<br/>
+            <input type="text" name="name" value="' . ($_POST['name'] ?? null) . '" size="18"/><br/>
+            <button name="type" value="1" class="button"><img src="icon/file.png" alt=""/> Tập tin</button>
+            <button name="type" value="0" class="button"><img src="icon/folder.png" alt=""/> Thư mục </button>
+            <input type="hidden" name="submit" value="1" />
+        </form>
+    </div>
+    <div class="title">Chức năng</div>
+    <ul class="list">
+        <li><img src="icon/upload.png" alt=""/> <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tải lên tập tin</a></li>
+        <li><img src="icon/import.png" alt=""/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
+        <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+    </ul>';
 }
 
 require 'footer.php';

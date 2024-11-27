@@ -40,7 +40,7 @@ echo '<style>
 echo '<div class="title">' . $title . '</div>';
 
 $folder = $_POST['folder'] ?? $dir;
-$php = $_POST['php'] ?? 'php';
+$php = $_POST['php'] ?? PHP_BINARY;
 $command = $_POST['command'] ?? 'composer update';
 
 echo '<div class="list">';

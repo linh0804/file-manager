@@ -55,6 +55,13 @@ if (file_exists($autoload)) {
     include_once $autoload;
 }
 
+$helper = rootPath . '/lib/helper.php';
+if (!file_exists($helper)) {
+	file_put_contents($helper, file_get_contents('https://raw.githubusercontent.com/ngatngay/helper-php/refs/heads/main/helper.php'));
+}
+require $helper;
+unset($helper);
+
 require __DIR__ . '/lib/function.php';
 require __DIR__ . '/lib/zip.class.php';
 
@@ -360,4 +367,4 @@ function decodePath($path) {
 
 
 $path = processDirectory((string) $dir, true) . processName((string) $name);
-$file = file_exists($path) ? new SplFileInfo($path) : null;
+$file = new SplFileInfo($path);

@@ -202,15 +202,12 @@ echo '</ul>';
 
 if ($count > 0) {
     echo '<div class="list">
-        <select name="option">
-            <option value="0">Sao chép</option>
-            <option value="1">Di chuyển</option>
-            <option value="2">Xóa</option>
-            <option value="3">Nén zip</option>
-            <option value="4">Chmod</option>
-            <option value="5">Đổi tên</option>
-        </select>
-        <input type="submit" name="submit" value="Thực hiện"/>
+        <button name="option" value="0" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button name="option" value="1" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button name="option" value="3" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button name="option" value="2" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button name="option" value="4" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button name="option" value="5" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 }
 

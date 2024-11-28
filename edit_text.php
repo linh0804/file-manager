@@ -5,14 +5,12 @@ define('ACCESS', true);
 require '.init.php';
 
 $title = 'Sửa tập tin';
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$page = $page <= 0 ? 1 : $page;
 
 require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
+if (!$file->isFile()) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
@@ -27,8 +25,6 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 } else {
     $total = 0;
     $dir = processDirectory($dir);
-    $path = $dir . '/' . $name;
-    $file = new SplFileInfo($path);
     $content = file_get_contents($path);
     $isExecute = isFunctionExecEnable();
     $actionEdit = 'edit_api.php?dir=' . $dirEncode . '&name=' . $name;
@@ -85,9 +81,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         const codeCheckMessageElement = document.getElementById("code_check_message");
         const codeCheckPHPElement = document.getElementById("code_check_php");
 
-        var editorElement = document.getElementById("editor");                
-        var codeWrapElement = document.getElementById("code_wrap");
-        var codeHighLightElement = document.getElementById("code_highlight");
+        var editorElement = document.getElementById("editor");
         var codeFormElement = document.getElementById("code_form");
 
         // search & replace
@@ -184,7 +178,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         })
 
 
-        codeHighLightElement.addEventListener("click", function () {
+        $("#code_highlight").on("click", function () {
             if(!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
                 return;
             }
@@ -214,8 +208,8 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         });
 
 
-        codeWrapElement.addEventListener("change", function () {
-            if (codeWrapElement.checked) {
+        $('#code_wrap').on("change", function () {
+            if (this.checked) {
                 editorElement.removeAttribute("wrap");
                 editorElement.removeAttribute("style");
             } else {

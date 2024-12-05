@@ -130,11 +130,17 @@ if ($count <= 0) {
         }
 
         if ($lists[$i]['is_directory']) {
+            $icon = 'folder';
+            $nameIcon = trim($name, '.');
+            if (in_array($nameIcon, icons['folders'])) {
+                $icon = $nameIcon;
+            }
+            
             echo '<li class="folder">
                 <div>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
                     <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
-                        <img src="icon/folder.png"/>
+                        <img style="backdrop-filter: blur(80%);" src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>
                     </a>
                     <a href="index.php?dir=' . rawurlencode($path) . '">' . $nameDisplay . '</a>
                     <div class="perms">

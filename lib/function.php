@@ -979,3 +979,13 @@ function displaySqlTable(mysqli_result $res, bool $showAction = false) {
     echo '</table>';
     echo '</div><br>';
 }
+
+function getIcon($type, $icon) {
+    if ($type == 'folder') {
+        return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>';
+    }
+    
+    if ($type == 'file') {
+        return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg">';
+    }
+}

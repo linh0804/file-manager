@@ -139,9 +139,7 @@ if ($count <= 0) {
             echo '<li class="folder">
                 <div>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
-                        <img style="backdrop-filter: blur(80%);" src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>
-                    </a>
+                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . getIcon('folder', $icon) . '</a>
                     <a href="index.php?dir=' . rawurlencode($path) . '">' . $nameDisplay . '</a>
                     <div class="perms">
                         <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
@@ -186,7 +184,7 @@ if ($count <= 0) {
             echo '<li class="file">
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . $edit[0] . '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg"/>' . $edit[1] . '
+                    ' . $edit[0] . getIcon('file', $icon) . $edit[1] . '
                     <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
                 </p>
                 <p>

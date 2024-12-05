@@ -468,7 +468,7 @@ ul.list_database > li > p:last-child > span.count_columns {
 ul.info {
     border: 1px solid #cecece;
     list-style: none;
-    margin: 0 5px 10px 5px;
+    margin: 0 0 10px 0;
     padding: 0;
 }
 

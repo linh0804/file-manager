@@ -980,12 +980,35 @@ function displaySqlTable(mysqli_result $res, bool $showAction = false) {
     echo '</div><br>';
 }
 
-function getIcon($type, $icon) {
-    if ($type == 'folder') {
+function getIcon($type, $name) {
+    global $formats;
+    $file = new SplFileInfo($name);
+
+    if ($type === 'folder') {
+        $icon = 'folder';
+        $nameIcon = trim($name, '.');
+        if (in_array($nameIcon, icons['folders'])) {
+            $icon = $nameIcon;
+        }
+        
         return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>';
     }
     
-    if ($type == 'file') {
+    if ($type === 'file') {
+        $icon = 'file';
+        
+        if (in_array($file->getExtension(), icons['files'])) {
+            $icon = $file->getExtension();
+        } elseif (in_array($file->getExtension(), $formats['archive'])) {
+            $icon = 'archive';
+        } elseif (in_array($file->getExtension(), $formats['audio'])) {
+        } elseif (in_array($file->getExtension(), $formats['font'])) {
+        } elseif (in_array($file->getExtension(), $formats['binary'])) {
+        } elseif (in_array($file->getExtension(), $formats['document'])) {
+        } elseif (in_array($file->getExtension(), $formats['image'])) {
+            $icon = 'image';
+        }
+        
         return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg">';
     }
 }

@@ -120,7 +120,6 @@ if ($count <= 0) {
         $name  = $lists[$i]['name'];
         $path  = $dir . '/' . $name;
         $file = new SplFileInfo($path);
-        $fileExt = $file->getExtension();
         $perms = getChmod($path);
         
         if ($lists[$i]['is_app_dir']) {
@@ -129,17 +128,11 @@ if ($count <= 0) {
             $nameDisplay = $name;
         }
 
-        if ($lists[$i]['is_directory']) {
-            $icon = 'folder';
-            $nameIcon = trim($name, '.');
-            if (in_array($nameIcon, icons['folders'])) {
-                $icon = $nameIcon;
-            }
-            
+        if ($lists[$i]['is_directory']) {            
             echo '<li class="folder">
                 <div>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . getIcon('folder', $icon) . '</a>
+                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . getIcon('folder', $name) . '</a>
                     <a href="index.php?dir=' . rawurlencode($path) . '">' . $nameDisplay . '</a>
                     <div class="perms">
                         <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
@@ -148,26 +141,11 @@ if ($count <= 0) {
             </li>';
         } else {
             $edit   = array(null, '</a>');
-            $icon   = 'file';
-            $type   = $fileExt;
             $isEdit = false;
 
-            if (in_array($fileExt, icons['files'])) {
-                $icon = $fileExt;
-            }
-
-            if (in_array($type, $formats['text'])) {
+            if (in_array($file->getExtension(), $formats['text'])) {
                 $isEdit = true;
-            } elseif (in_array($type, $formats['archive'])) {
-                $icon = 'archive';
-            } elseif (in_array($type, $formats['audio'])) {
-            } elseif (in_array($type, $formats['font'])) {
-            } elseif (in_array($type, $formats['binary'])) {
-            } elseif (in_array($type, $formats['document'])) {
-            } elseif (in_array($type, $formats['image'])) {
-                $icon = 'image';
             } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
-                /* $icon   = strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name); */
                 $isEdit = true;
             } elseif (isFormatUnknown($name)) {
                 $isEdit = true;
@@ -175,7 +153,7 @@ if ($count <= 0) {
 
             if (strtolower($name) == 'error_log' || $isEdit) {
                 $edit[0] = '<a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
-            } elseif (in_array($type, $formats['zip'])) {
+            } elseif (in_array($file->getExtension(), $formats['zip'])) {
                 $edit[0] = '<a href="file_unzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
             } else {
                 $edit[0] = '<a href="file_rename.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
@@ -184,7 +162,7 @@ if ($count <= 0) {
             echo '<li class="file">
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . $edit[0] . getIcon('file', $icon) . $edit[1] . '
+                    ' . $edit[0] . getIcon('file', $name) . $edit[1] . '
                     <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
                 </p>
                 <p>

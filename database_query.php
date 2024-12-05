@@ -21,7 +21,17 @@ if (DATABASE_NAME) {
     echo '<div class="list">Database: <b>' . DATABASE_NAME . '</b></div>';
 }
 
+echo '<div class="list">
+  <form method="post">
+    <span class="bull">&bull; </span>Truy vấn:<br/>
+    <textarea name="query" rows="10">' . htmlspecialchars($query) . '</textarea><br/>
+    <input type="submit" name="exec" value="Thực hiện" />
+    <!-- <input type="submit" name="demo" value="Chạy thử" /> -->
+  </form>
+</div>';
+
 if (isset($_POST['exec']) && !empty($query)) {
+    /*
     @mysqli_multi_query($MySQLi, $query);
     do {
         if (mysqli_errno($MySQLi)) {
@@ -30,10 +40,18 @@ if (isset($_POST['exec']) && !empty($query)) {
 
         if ($result = mysqli_store_result($MySQLi)) {
             //
+            var_dump($result);
         }
 
         $affRows = mysqli_affected_rows($MySQLi);
     } while (@mysqli_next_result($MySQLi));
+    */
+    
+    $res = @mysqli_query($MySQLi, $query);
+    
+    if ($res !== false) {
+        $affRows = mysqli_affected_rows($MySQLi);
+    }
 
     if (mysqli_errno($MySQLi)) {
         echo '<div class="notice_failure">Truy vấn thất bại!<hr>';
@@ -44,16 +62,11 @@ if (isset($_POST['exec']) && !empty($query)) {
     }
 
     echo '<div class="tips">Số hàng tác động: ' . $affRows . '</div>';
+    
+    if ($res instanceof mysqli_result) {
+        displaySqlTable($res);
+    }
 }
-
-echo '<div class="list">
-  <form method="post">
-    <span class="bull">&bull; </span>Truy vấn:<br/>
-    <textarea name="query" rows="10">' . htmlspecialchars($query) . '</textarea><br/>
-    <input type="submit" name="exec" value="Thực hiện" />
-    <input type="submit" name="demo" value="Chạy thử" />
-  </form>
-</div>';
 
 echo '<div class="title">Chức năng</div>
 <ul class="list">

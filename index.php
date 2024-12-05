@@ -148,7 +148,7 @@ if ($count <= 0) {
             $type   = $fileExt;
             $isEdit = false;
 
-            if (file_exists(rootPath . '/icon/filetype/' . $fileExt . '.svg')) {
+            if (in_array($fileExt, icons['files'])) {
                 $icon = $fileExt;
             }
 
@@ -180,7 +180,7 @@ if ($count <= 0) {
             echo '<li class="file">
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . $edit[0] . '<img src="icon/filetype/' . $icon . '.svg"/>' . $edit[1] . '
+                    ' . $edit[0] . '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg"/>' . $edit[1] . '
                     <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
                 </p>
                 <p>

@@ -65,6 +65,13 @@ unset($helper);
 require __DIR__ . '/lib/function.php';
 require __DIR__ . '/lib/zip.class.php';
 
+// tải tài nguyên
+$icon = rootPath . '/json/icon.json';
+if (!file_exists($icon)) {
+    file_put_contents($icon, file_get_contents('https://cdn.ngatngay.net/icon/atom.json'));
+}
+define('icons', json_decode(file_get_contents($icon), true));
+
 // tạo tmp nếu chưa có
 {
     $tmp_dir = __DIR__ . '/tmp';

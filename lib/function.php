@@ -931,3 +931,51 @@ function sortNatural(&$array) {
         return ctype_alnum($a[0]) ? 1 : -1;
     });
 }
+
+function displaySqlTable(mysqli_result $res, bool $showAction = false) {
+    echo '<style>
+        table {
+            text-align: left;
+        }
+        table, th, td {
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+    </style>';
+    echo '<div style="overflow: scroll;">';
+    echo '<table>';
+    
+    while ($row = mysqli_fetch_assoc($res)) {
+        if (!isset($keys)) {
+            $keys = array_keys($row);
+            
+            echo '<tr>';
+            if ($showAction) {
+                echo '<th></th>';
+            }
+            foreach ($keys as $key) {
+                echo '<th>' . htmlspecialchars($key) . '</th>';
+            }
+            if ($showAction) {
+                echo '<th>&bull; Action</th>';
+            }
+            echo '</tr>';
+        }
+        
+        echo '<tr>';
+        if ($showAction) {
+            echo '<td><input type="checkbox"></td>';
+        }
+        foreach ($row as $value) {           
+            echo '<td>' . htmlspecialchars($value) . '</td>';
+        }
+        if ($showAction) {
+            echo '<td>[Edit] [View]</td>';
+        }
+        echo '</tr>';
+    }
+    
+    echo '</table>';
+    echo '</div><br>';
+}

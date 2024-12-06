@@ -53,8 +53,8 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         $entryCheckbox .= '<input type="hidden" name="entry[]" value="' . $e . '" checked="checked"/>';
 
         if ($option != 5) {
-            $entryHtmlList .= '<li>
-                <img src="icon/' . ($isFolder ? 'folder' : 'file') . '.png" alt="" /> '
+            $entryHtmlList .= '<li>'
+                . getIcon($isFolder ? 'folder' : 'file', $e) . ' '
                 . ($isFolder ? '<strong class="folder_name">' . $e . '</strong>' : '<span class="file_name">' . $e . '</span>') . '
                 </li>';
         }

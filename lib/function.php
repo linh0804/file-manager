@@ -934,17 +934,25 @@ function sortNatural(&$array) {
 
 function displaySqlTable(mysqli_result $res, bool $showAction = false) {
     echo '<style>
-        table {
+        table.sql-data {
             text-align: left;
         }
-        table, th, td {
+        table.sql-data, 
+        .sql-data th,
+        .sql-data td {
             padding: 4px;
             border: 1px solid #ccc;
             border-collapse: collapse;
         }
+
+        table.sql-data tr:first-child {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
     </style>';
     echo '<div style="overflow: scroll;">';
-    echo '<table>';
+    echo '<table class="sql-data">';
     
     while ($row = mysqli_fetch_assoc($res)) {
         if (!isset($keys)) {

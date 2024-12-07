@@ -96,7 +96,7 @@ echo '<div id="footer">
     <span>
 		ngatngay cooperation with linh
 	</span><br />
-    <span>Version: ' . VERSION_MAJOR . '.' . VERSION_MINOR . '.' . VERSION_PATCH . '</span>
+    <span>Version: ' . localVersion . '</span>
     <br><a href="https://github.com/ngatngay/file-manager">Github</a>
 </div>';
 

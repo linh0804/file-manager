@@ -85,7 +85,7 @@ function getNewVersion()
         }
     }
 
-    $remoteVersion = json_decode(@file_get_contents(REMOTE_VERSION_FILE), true);
+    $remoteVersion = json_decode(@file_get_contents(remoteVersionFile), true);
 
     return is_array($remoteVersion) && isset($remoteVersion['message'])
         ? $remoteVersion
@@ -93,7 +93,7 @@ function getNewVersion()
 }
 function hasNewVersion()
 {
-    return REMOTE_FILE_CURRENT !== REMOTE_FILE_NEW;
+    return localVersion !== remoteVersion;
 }
 
 

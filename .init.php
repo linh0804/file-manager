@@ -136,32 +136,28 @@ const FM_COOKIE_NAME = 'fm_php';
     define('VERSION_MAJOR', $version['major']);
     define('VERSION_MINOR', $version['minor']);
     define('VERSION_PATCH', $version['patch']);
-    define('VERSION_MESSAGE', $version['message']);
+    define('localVersion', $version['version']);
 
     unset($version);
 }
 
 { // lay phien ban moi
+    define('remoteVersionFile', 'https://raw.githubusercontent.com/ngatngay/file-manager/main/version.json');
+    define('remoteFile', 'https://raw.githubusercontent.com/ngatngay/file-manager/refs/heads/main/file-manager.zip');
     define('REMOTE_FILE', 'https://github.com/ngatngay/file-manager/archive/main.zip');
-    define('REMOTE_FILE_CURRENT', 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . VERSION_MAJOR . '.' . VERSION_MINOR . '.' . VERSION_PATCH . '.zip');
     define('REMOTE_DIR_IN_ZIP', 'file-manager-main');
-    define('REMOTE_VERSION_FILE', 'https://raw.githubusercontent.com/ngatngay/file-manager/main/version.json');
 
     $version = getNewVersion();
-    $remoteFileNew = REMOTE_FILE_CURRENT;
+    $remoteVersion = localVersion;
 
     if ($version !== false) {
-        $remoteFileNew = 'https://github.com/ngatngay/file-manager/archive/refs/tags/' . $version['major'] . '.' . $version['minor'] . '.' . $version['patch'] . '.zip';
+        $remoteVersion = $version['version'];
     }
 
-    define('REMOTE_FILE_NEW', $remoteFileNew);
-
-    unset($remoteFileNew);
-    unset($version);
+    define('remoteVersion', $remoteVersion);
 }
 
 $configs = array();
-
 $pages = array(
     'current' => 1,
     'total' => 0,

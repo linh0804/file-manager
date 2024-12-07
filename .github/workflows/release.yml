@@ -24,14 +24,14 @@ jobs:
           VERSION=$(cat version.json | jq -r ".version")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: zip repo
-        run: zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
+      #- name: zip repo
+      #  run: zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
 
       - name: zip full
         run: |
           wget https://getcomposer.org/download/latest-stable/composer.phar
           php composer.phar install
-          zip -r -9 file-manager-full.zip . -x ".git/*" ".github/*" "file-manager.zip"
+          zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
           
 
       - name: bump tag
@@ -47,4 +47,6 @@ jobs:
           generate_release_notes: true
           files: |
             file-manager.zip
-            file-manager-full.zip
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+      

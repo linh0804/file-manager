@@ -52,15 +52,8 @@ define('baseUrl', requestScheme . '://' . $_SERVER['HTTP_HOST'] . (isBuiltinServ
 // load thu vien
 $autoload = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoload)) {
-    include_once $autoload;
+    require_once $autoload;
 }
-
-$helper = rootPath . '/lib/helper.php';
-if (!file_exists($helper)) {
-	file_put_contents($helper, file_get_contents('https://raw.githubusercontent.com/ngatngay/helper-php/refs/heads/main/helper.php'));
-}
-require $helper;
-unset($helper);
 
 require __DIR__ . '/lib/function.php';
 require __DIR__ . '/lib/zip.class.php';

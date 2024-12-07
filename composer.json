@@ -1,10 +1,11 @@
 {
     "require": {
         "php": ">=7.4.0",
-        "friendsofphp/php-cs-fixer": "^3.49",
-        "sabre/dav": "^4.6",
+        "ext-json": "*",
         "ext-mysqli": "*",
-        "ext-json": "*"
+        "friendsofphp/php-cs-fixer": "^3.49",
+        "ngatngay/helper": "dev-main",
+        "sabre/dav": "^4.6"
     },
     "config": {
         "sort-packages": true,

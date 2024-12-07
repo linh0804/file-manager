@@ -31,6 +31,7 @@ jobs:
         run: |
           wget https://getcomposer.org/download/latest-stable/composer.phar
           php composer.phar install
+          rm -f file-manager.zip
           zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
           
 

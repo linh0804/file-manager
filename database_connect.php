@@ -22,11 +22,11 @@ define('MYSQL_AFTER_FIRST', 'first');
 define('MYSQL_AFTER_LAST', 'last');
 define('MYSQL_AFTER_SPLIT', '-@-');
 
-$MYSQL_COLLECTION = array();
-$MYSQL_ATTRIBUTES = array();
-$MYSQL_FIELD_KEY = array();
-$MYSQL_DATA_TYPE = array();
-$MYSQL_ENGINE_STORAGE = array();
+$MYSQL_COLLECTION = [];
+$MYSQL_ATTRIBUTES = [];
+$MYSQL_FIELD_KEY = [];
+$MYSQL_DATA_TYPE = [];
+$MYSQL_ENGINE_STORAGE = [];
 
 if (@is_file(pathDatabase)) {
     $databases = require pathDatabase;

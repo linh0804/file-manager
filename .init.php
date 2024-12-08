@@ -143,7 +143,7 @@ const FM_COOKIE_NAME = 'fm_php';
     define('remoteVersion', $remoteVersion);
 }
 
-$configs = array();
+$configs = [];
 $pages = array(
     'current' => 1,
     'total' => 0,
@@ -346,7 +346,6 @@ function decodePath($path) {
     //$path = 
     $path = str_replace('\\', '/', $path);
 }
-
 
 $path = processDirectory((string) $dir, true) . processName((string) $name);
 $path = file_exists($path) ? $path : '';

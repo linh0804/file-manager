@@ -20,16 +20,16 @@ require 'header.php';
 $handler = @scandir($dir);
 
 if (!is_array($handler)) {
-    $handler = array();
+    $handler = [];
 }
 
 $dirEncode = rawurlencode($dir);
 $count = count($handler);
-$lists = array();
+$lists = [];
 
 if ($count > 0) {
-    $folders = array();
-    $files   = array();
+    $folders = [];
+    $files   = [];
 
     foreach ($handler as $entry) {
         if ($entry != '.' && $entry != '..') {

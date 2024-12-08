@@ -51,7 +51,7 @@
             $line = isset($_GET['line']) ? intval($_GET['line']) : 0;
             $content = null;
             $notice = null;
-            $lines = array();
+            $lines = [];
             $count = 0;
 
             if ($page['current'] > 1) {

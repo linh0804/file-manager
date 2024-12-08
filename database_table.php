@@ -440,8 +440,8 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
         if ($query && $count > 0) {
             echo '<div class="title"><div class="ellipsis">' . $title . '</div></div>';
 
-            $array = array();
-            $data = array();
+            $array = [];
+            $data = [];
 
             while ($assoc = mysqli_fetch_assoc($query)) {
                 $array[$assoc['Field']] = $assoc;
@@ -588,7 +588,7 @@ if (IS_CONNECT && $name != null && ($isTableExists = isTableExists($name))) {
             $columns = mysqli_query($MySQLi, "SHOW COLUMNS FROM `$name`");
 
             if ($data != false && $columns) {
-                $array = array();
+                $array = [];
                 $count = 0;
                 $i = 0;
 

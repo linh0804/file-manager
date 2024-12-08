@@ -19,7 +19,7 @@
       $out = '';
       if(!is_dir($dir)) return 'Chưa có update!';
       $scan = scandir($dir);
-      $scan = array_diff($scan, ['.', '..','tmp','config.inc.php','database.inc.php']);
+      $scan = array_diff($scan, ['.', '..','tmp','config.inc.php','config.db.inc.php']);
       if($types == 1) {
         $notif = '<span style="color:red">[remove]</span>';
       } else {
@@ -118,7 +118,7 @@
     }
     public function fileFolderUpdate($dir, $dirOne) {      
       $scan = scandir($dir);
-      $scan = array_diff($scan, ['.', '..','tmp','config.inc.php','database.inc.php']);
+      $scan = array_diff($scan, ['.', '..','tmp','config.inc.php','config.db.inc.php']);
       foreach($scan as $value) {     
         if(is_dir($dir .'/'. $value)) {
           return $this->fileFolderUpdate($dir.'/'. $value, $dirOne.'/'. $value);

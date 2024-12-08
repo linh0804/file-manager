@@ -575,7 +575,7 @@ function page($current, $total, $url)
 {
     $html = '<div class="page">';
     $center = PAGE_NUMBER - 2;
-    $link = array();
+    $link = [];
     $link[PAGE_URL_DEFAULT] = $url[PAGE_URL_DEFAULT] ?? null;
     $link[PAGE_URL_START] = $url[PAGE_URL_START] ?? null;
     $link[PAGE_URL_END] = $url[PAGE_URL_END] ?? null;
@@ -609,7 +609,7 @@ function page($current, $total, $url)
             }
         }
 
-        $offset = array();
+        $offset = [];
 
         {
             if ($current <= $center) {

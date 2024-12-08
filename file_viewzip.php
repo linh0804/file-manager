@@ -36,7 +36,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     $zip = new ZipArchive;
     $zip->open($dir . '/' . $name);
     $lists = [];
-    $arrays = array('folders' => array(), 'files' => array());
+    $arrays = array('folders' => [], 'files' => []);
     for($i = 0; $i < $zip->numFiles; $i++)
     {   
         $stat = $zip->statIndex($i);
@@ -81,7 +81,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             }
         }
 
-        $sorts = array();
+        $sorts = [];
 
         if (count($arrays['folders']) > 0) {
             ksort($arrays['folders']);

@@ -48,7 +48,7 @@
 
             $path = $dir . '/' . $name;
             $line = isset($_GET['line']) ? intval($_GET['line']) : 0;
-            $lines = array();
+            $lines = [];
             $content = null;
             $notice = null;
             $count = 0;

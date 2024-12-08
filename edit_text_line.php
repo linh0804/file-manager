@@ -34,7 +34,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     $path = $dir . '/' . $name;
     $file = new SplFileInfo($path);
     $content = file_get_contents($path);
-    $lines = array();
+    $lines = [];
     $count = 0;
     $start = 0;
     $end = 0;

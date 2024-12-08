@@ -1,6 +1,11 @@
 <?php
 
 use NgatNgay\Helper\Arr;
+use NgatNgay\Helper\Request;
+
+function request() {
+    return NgatNgay\Helper\request();
+}
 
 function isAppFile($dir)
 {

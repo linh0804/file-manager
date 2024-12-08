@@ -85,20 +85,6 @@ define('icons', json_decode(file_get_contents($icon), true));
     unset($tmp_file);
 }
 
-{
-    $dir = getenv('SCRIPT_NAME');
-    $dir = str_replace('\\', '/', $dir);
-    $dir = strpos($dir, '/') !== false ? dirname($dir) : '';
-    $dir = str_replace('\\', '/', $dir);
-    $dir = $dir == '.' || $dir == '/' ? '' : $dir;
-
-    $_SERVER['DOCUMENT_ROOT'] = realpath('.');
-    $_SERVER['DOCUMENT_ROOT'] = !$dir ? $_SERVER['DOCUMENT_ROOT'] : substr($_SERVER['DOCUMENT_ROOT'], 0, strlen($_SERVER['DOCUMENT_ROOT']) - strlen($dir));
-    $_SERVER['DOCUMENT_ROOT'] = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-
-    unset($dir);
-}
-
 // cau hinh
 const PATH_CONFIG = 'config.inc.php';
 

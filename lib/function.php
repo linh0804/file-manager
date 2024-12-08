@@ -1,7 +1,6 @@
 <?php
 
 use NgatNgay\Helper\Arr;
-use NgatNgay\Helper\Request;
 
 function request() {
     return NgatNgay\Helper\request();
@@ -192,17 +191,6 @@ function processDirectory($var, $seSlash = false)
 
     return $var;
 }
-
-
-function processImport($url)
-{
-    if (!preg_match('|^http[s]?://(.+?)$|i', $url)) {
-        $url = 'http://' . $url;
-    }
-
-    return $url;
-}
-
 
 function processPathZip($var)
 {

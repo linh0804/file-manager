@@ -96,7 +96,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 <span>' . printPath($dir, true) . '</span><hr/>
                 <form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">
                     <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
-                    <input type="text" name="path" value="' . ($_POST['path'] ?? $dir) . '" size="18"/><br/>
+                    <textarea name="path" data-autoresize>' . ($_POST['path'] ?? $dir) . '</textarea><br/>
                     <input type="hidden" name="is_action" value="1"/>
                     <input type="hidden" name="option" value="' . $option . '"/>';
 
@@ -137,7 +137,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 <span>' . printPath($dir, true) . '</span><hr/>
                 <form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">
                     <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
-                    <input type="text" name="path" value="' . ($_POST['path'] ?? $dir) . '" size="18"/><br/>
+                    <textarea name="path" data-autoresize>' . ($_POST['path'] ?? $dir) . '</textarea><br/>
                     <input type="hidden" name="is_action" value="1"/>
                     <input type="hidden" name="option" value="' . $option . '"/>';
 
@@ -215,7 +215,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                     <span class="bull">&bull; </span>Tên tập tin nén:<br/>
                     <input type="text" name="name" value="' . ($_POST['name'] ?? 'archive.zip') . '" size="18"/><br/>
                     <span class="bull">&bull; </span>Đường dẫn lưu:<br/>
-                    <input type="text" name="path" value="' . ($_POST['path'] ?? $dir) . '" size="18"/><br/>
+                    <textarea name="path" data-autoresize>' . ($_POST['path'] ?? $dir) . '</textarea><br/>
                     <input type="checkbox" name="is_delete" value="1"' . (isset($_POST['is_delete']) ? ' checked="checked"' : null) . '/> Xóa nguồn<br/>
                     <input type="hidden" name="is_action" value="1"/>
                     <input type="hidden" name="option" value="' . $option . '"/>';
@@ -341,7 +341,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         }
 
         echo $entryHtmlList;
-        echo '<div class="list ellipsis break-word">
+        echo '<div class="list break-word">
                 <span>' . printPath($dir, true) . '</span><hr/>
                 <form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">';
 

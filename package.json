@@ -5,6 +5,7 @@
     "build": "rollup --config rollup.config.js"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.7.1",
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.2",
@@ -13,8 +14,9 @@
     "@codemirror/lang-sass": "^6.0.2",
     "@codemirror/lang-sql": "^6.8.0",
     "@codemirror/language": "^6.10.6",
-    "@codemirror/state": "^6.4.1",
-    "@codemirror/view": "6.35.2",
+    "@codemirror/search": "^6.5.8",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/view": "6.35.3",
     "@lezer/highlight": "^1.2.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",

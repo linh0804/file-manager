@@ -83,7 +83,7 @@ textarea,
     background: #ffffff;
     border: 1px solid #cecece;
     padding: 6px;
-    margin: 4px auto;
+    margin: 2px auto;
 }
 
 input:focus,
@@ -121,7 +121,7 @@ span.bull {
 
 div#header {
     background-color: #005090;
-    padding: 9px;
+    padding: 6px 9px;
     text-align: right;
 }
 
@@ -167,7 +167,7 @@ div.title {
     color: #ffffff;
     background-color: #0080c0;
     border-bottom: 1px solid #0090e0;
-    padding: 8px;
+    padding: 7px;
     font-weight: bold;
     margin-bottom: 3px;
     position: relative;

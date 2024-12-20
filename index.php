@@ -16,6 +16,16 @@ $handler = null;
 
 require 'header.php';
 
+if (!file_exists($dir)) {
+    echo '<div class="notice_failure">Đường dẫn không tồn tại!</div>';
+    echo '<br><a href="javascript:history.back()" style="">
+      <img src="icon/back.png"> 
+      <strong class="back">Trở lại</strong>
+    </a>';
+    require 'footer.php';
+    exit;
+}
+
 // load file list
 $handler = @scandir($dir);
 
@@ -198,13 +208,19 @@ echo '</form>';
 echo '<div class="title">Chức năng</div>
 <div class="list">
     <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/create.png"/> Tạo mới</a>
-    <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/upload.png"/> Tải lên tập tin</a>
-    <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/import.png"/> Nhập khẩu tập tin</a>
+    <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/upload.png"/> Tải lên</a>
+    <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/import.png"/> Nhập khẩu</a>
     <a href="find_in_folder.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm trong thư mục</a>
     <a href="scan_error_log.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a>
-    <a href="#" class="button copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">&bull; Webdav</a>
+    <a href="#" class="button copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">Webdav</a>
+    <hr>
     <a href="folder_detail.php?dir=' . $dirEncode . '" class="button"><img src="icon/info.png"/> Thông tin</a>
+    <a href="folder_edit.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
+    <a href="folder_zip.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/zip.png"/> Nén zip</a>
+    <a href="folder_copy.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
+    <a href="folder_move.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
+    <a href="folder_chmod.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
+    <a href="folder_delete.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/delete.png"/> Xoá</a>
 </div>';
 
 require 'footer.php';
-

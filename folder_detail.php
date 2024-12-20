@@ -56,10 +56,10 @@ if (
     echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($dirInfo->getOwner())['name']) . '</span></li>';
     echo '</ul>';
 
-    echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
+    echo '<a href="javascript:history.back()" style="">
+      <img src="icon/back.png"> 
+      <strong class="back">Trở lại</strong>
+    </a>';
 }
 
 require_once 'footer.php';

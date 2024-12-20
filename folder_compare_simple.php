@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
     </div>';
 
     // only 1
-    echo '<div id="only1" class="title">Em</div>';
+    echo '<div id="only1" class="title">Em (' . count($files1_only) . ')</div>';
     echo '<ul class="list">';
     foreach ($files1_only as $file) {
         $full_path = $folder1 . $file;
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
     echo '</ul>';
 
     // only 2
-    echo '<div id="only2" class="title">Anh</div>';
+    echo '<div id="only2" class="title">Anh (' . count($files2_only) . ')</div>';
     echo '<ul class="list">';
     foreach ($files2_only as $file) {
         $full_path = $folder2 . $file;
@@ -161,7 +161,7 @@ if (isset($_POST['submit'])) {
     echo '</ul>';
 
     // diff
-    echo '<div id="diff" class="title">Chung đường nhưng khác lối</div>';
+    echo '<div id="diff" class="title">Chung đường nhưng khác lối (' . count($files_intersect_final) . ')</div>';
     echo '<ul class="list">';
     foreach ($files_intersect_final as $file) {
         $full_path1 = $folder1 . $file;

@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 0,
-    "patch": 68,
-    "version": "1.0.68",
-    "message": "hot fix"
+    "patch": 69,
+    "version": "1.0.69",
+    "message": "new database manager"
 }

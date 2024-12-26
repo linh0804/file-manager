@@ -42,12 +42,8 @@ $menuToggle = '';
             <button id="nav-menu">&#9776;</button>
         <?php } ?>
         <li><a href="index.php"><img src="icon/home.png" /></a></li>
-        <?php if (IS_LOGIN) { ?>            
-            <?php if (!defined('IS_CONNECT')) { ?>
-                <li><a href="database.php"><img src="icon/database.png"/></a></li>
-            <?php } else { ?>
-                <li><a href="database_disconnect.php"><img src="icon/disconnect.png"/></a></li>
-            <?php } ?>
+        <?php if (IS_LOGIN) { ?>
+            <li><a href="database/"><img src="icon/database.png"/></a></li>
             <li><a href="setting.php"><img src="icon/setting.png" /></a></li>
             <li><a href="logout.php"><img src="icon/exit.png" /></a></li>
         <?php } ?>

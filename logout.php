@@ -1,22 +1,9 @@
-<?php define('ACCESS', true);
+<?php
 
-    include_once '.init.php';
+define('ACCESS', true);
 
-    setcookie(FM_COOKIE_NAME, '', 0);
-    goURL('index.php');
-    
-    /*
-    if (IS_LOGIN) {
-        setcookie(FM_COOKIE_NAME, '', 0);
+require '.init.php';
 
-        $ref = $_SERVER['REQUEST_URI'];
-        $ref = $ref != $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ? $ref : null;
+setcookie(FM_COOKIE_NAME, '', 0);
 
-        if (IS_LOGIN)
-            goURL('login.php');
-        else
-            goURL($ref != null ? $ref : 'index.php');
-    } else {
-        goURL('login.php');
-    }
-    */
+goURL('index.php');

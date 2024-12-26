@@ -47,16 +47,16 @@ define('isHttps', isset($_SERVER['HTTPS']));
 define('requestScheme', isHttps ? 'https' : 'http');
 
 define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
-define('baseUrl', requestScheme . '://' . $_SERVER['HTTP_HOST'] . (isBuiltinServer ? '' : '/' . baseFolder));
+define('baseUrl', requestScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . (isBuiltinServer ? '' : '/' . baseFolder));
 
 // load thu vien
-$autoload = __DIR__ . '/vendor/autoload.php';
+$autoload = rootPath . '/vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once $autoload;
 }
 
-require __DIR__ . '/lib/function.php';
-require __DIR__ . '/lib/zip.class.php';
+require rootPath . '/lib/function.php';
+require rootPath . '/lib/zip.class.php';
 
 // tải tài nguyên
 $icon = rootPath . '/json/icon.json';
@@ -67,7 +67,7 @@ define('icons', json_decode(file_get_contents($icon), true));
 
 // tạo tmp nếu chưa có
 {
-    $tmp_dir = __DIR__ . '/tmp';
+    $tmp_dir = rootPath . '/tmp';
     $tmp_file = $tmp_dir . '/.htaccess';
 
     if (!is_dir($tmp_dir)) {
@@ -86,7 +86,7 @@ define('icons', json_decode(file_get_contents($icon), true));
 }
 
 // cau hinh
-const PATH_CONFIG = 'config.inc.php';
+const PATH_CONFIG = rootPath . '/config.inc.php';
 
 define('pathConfig', rootPath . '/config.inc.php');
 define('pathDatabase', rootPath . '/config.db.inc.php');
@@ -94,7 +94,7 @@ define('pathDatabase', rootPath . '/config.db.inc.php');
 const LOGIN_USERNAME_DEFAULT = 'Admin';
 const LOGIN_PASSWORD_DEFAULT = '12345';
 
-const LOGIN_LOCK = __DIR__ . '/login_fail.lock';
+const LOGIN_LOCK = rootPath . '/login_fail.lock';
 const LOGIN_MAX = 5;
 
 const PAGE_LIST_DEFAULT = 1000;
@@ -115,7 +115,7 @@ const FM_COOKIE_NAME = 'fm_php';
 
 { // lay thong tin phien ban hien tai
     $version = json_decode(
-        file_get_contents('version.json'),
+        file_get_contents(rootPath . '/version.json'),
         true
     );
 

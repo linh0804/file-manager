@@ -16,7 +16,7 @@ $davDir = __DIR__ . '/tmp/webdav';
 
 $rootDirectory = new DAV\FS\Directory('/');
 $server = new DAV\Server($rootDirectory);
-//$server->setBaseUri('/' . basename(__DIR__) . '/webdav.php');
+$server->setBaseUri(request()->server['script_name']);
 
 $authBackend = new DAV\Auth\Backend\BasicCallBack(function ($username, $password) use ($configs) {
     if (!ableLogin()) {

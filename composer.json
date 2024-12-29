@@ -5,7 +5,7 @@
         "ext-mysqli": "*",
         "friendsofphp/php-cs-fixer": "^3.49",
         "ngatngay/helper": "dev-main",
-        "sabre/dav": "^4.6"
+        "sabre/dav": "dev-master"
     },
     "config": {
         "sort-packages": true,

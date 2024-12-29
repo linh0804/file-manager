@@ -121,8 +121,6 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
             } elseif (!is_dir($_POST['path'])) {
                 echo 'Đường dẫn mới không tồn tại';
-            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
-                echo 'Bạn không thể di chuyển tới đường dẫn của File Manager';
             } elseif (!moves($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Di chuyển thất bại';
             } else {

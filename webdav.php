@@ -7,17 +7,6 @@ const LOGIN  = true;
 
 require '.init.php';
 
-if (!class_exists('Sabre\DAV\Server')) {
-    exit('run composer install');
-}
-
-$davDir = __DIR__ . '/tmp/webdav';
-@mkdir($davDir);
-
-$rootDirectory = new DAV\FS\Directory('/');
-$server = new DAV\Server($rootDirectory);
-$server->setBaseUri(request()->server['script_name']);
-
 $authBackend = new DAV\Auth\Backend\BasicCallBack(function ($username, $password) use ($configs) {
     if (!ableLogin()) {
         return false;
@@ -36,11 +25,7 @@ $authBackend = new DAV\Auth\Backend\BasicCallBack(function ($username, $password
     return false;
 });
 
-$lockBackend = new DAV\Locks\Backend\File($davDir . '/locks');
-$lockPlugin = new DAV\Locks\Plugin($lockBackend);
-
+$server = new DAV\Server(new DAV\FS\Directory('/'));
+$server->setBaseUri(request()->server['script_name']);
 $server->addPlugin(new DAV\Auth\Plugin($authBackend));
-$server->addPlugin($lockPlugin);
-$server->addPlugin(new DAV\Sync\Plugin());
-
 $server->exec();

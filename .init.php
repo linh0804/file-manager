@@ -2,16 +2,9 @@
 
 defined('ACCESS') or exit('Not access');
 
-session_start();
-ob_start();
-
-if (!defined('DONT_LOAD_INI_SET')) {
-    @ini_set('display_errors', true);
-    @ini_set('display_startup_errors', true);
-    @ini_set('memory_limit', -1);
-    @ini_set('max_execution_time', 0);
-    @ini_set('opcache.enable', false);
-}
+@ini_set('display_errors', true);
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 0);
 
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);
@@ -20,6 +13,10 @@ mysqli_report(MYSQLI_REPORT_ERROR);
 header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
+
+// session
+session_start();
+ob_start();
 
 // Check require function
 {

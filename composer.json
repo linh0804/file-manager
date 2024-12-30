@@ -1,10 +1,4 @@
 {
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../helper-php"
-        }
-    ],
     "require": {
         "php": ">=7.4.0",
         "ext-json": "*",

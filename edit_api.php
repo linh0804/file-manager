@@ -64,12 +64,12 @@ if (isset($_POST['format'])) {
         case 'json':
         case 'yaml':
             $opt = [
-                '--print-width=1000000',
+                //'--print-width=1000000',
                 '--quote-props=preserve'
             ];
-            $res = runCommand('source ~/.bashrc; prettier ' . implode(' ', $opt) . ' ' . $path);
-            $data['format'] = $res['out'];
-            $data['error'] = '';
+            $res = runCommand('prettier ' . implode(' ', $opt) . ' ' . $path);
+            $data['format'] = $res['out'] ?: $content;
+            $data['error'] = $res['err'];
 
             break;
 

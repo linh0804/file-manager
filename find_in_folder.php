@@ -175,6 +175,8 @@ if (
                     }
                     if (in_array($file->getExtension(), [
                         'mp3',
+                        'mp4',
+                        'flac',
                         'zip',
                         'phar'
                     ])) {

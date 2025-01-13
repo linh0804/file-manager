@@ -216,7 +216,13 @@ if (!$file->isFile()) {
                 editorElement.setAttribute("wrap", "off");
                 editorElement.setAttribute("style", "white-space: nowrap");
             }
+            $.lsData.set('file_manager.edit.wrap', this.checked);
         });
+        if ($.lsData.get('file_manager.edit.wrap')) {
+            $('#code_wrap').prop('checked', true);
+            editorElement.removeAttribute("wrap");
+            editorElement.removeAttribute("style");
+        }
         
         document.addEventListener("keydown", function(event) {
             if (event.ctrlKey && event.key === "s") {
@@ -237,4 +243,3 @@ if (!$file->isFile()) {
 }
 
 require 'footer.php';
-

@@ -1,10 +1,8 @@
 {
     "require": {
         "php": ">=7.4.0",
-        "ext-json": "*",
-        "ext-mysqli": "*",
         "friendsofphp/php-cs-fixer": "^3.49",
-        "ngatngay/helper": "dev-main",
+        "ngatngay/ngatngay": "dev-main",
         "sabre/dav": "dev-master"
     },
     "config": {

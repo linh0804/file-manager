@@ -44,17 +44,19 @@ if (
         if ($file->getFilename() !== 'error_log') {
             continue;
         }
-        if (!$file->getSize()) {
+        
+        if (isset($_POST['clear'])) {
+            unlink($file->getPathname());
             continue;
         }
-
+        
         if (!$have_error) {
-            echo '<ul class="info">';
+            echo '<ul id="list" class="info">';
         }
         
         echo '<li>
             <span class="bull">&bull;</span>
-            <a style="color: red" href="file.php?dir=' . rawurlencode(dirname($file->getPathname())) . '&name=' . $file->getFilename() . '">'
+            <a style="color: red" href="edit_text.php?dir=' . rawurlencode(dirname($file->getPathname())) . '&name=' . $file->getFilename() . '" target="_blank">'
             . htmlspecialchars(ltrim(
                 str_replace_first($dir, '', $file->getPathname())
             , '/'))
@@ -74,10 +76,21 @@ if (
         echo '<div class="list">Trống</div>';
     }
     
-    echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
+    echo '<div class="list"><button id="clear" class="button">Xoá hết</button></div>';
+    echo <<<'Z'
+    <script>
+        $('#clear').on('click', function () {
+            if (!confirm('Xoá hết error_log')) {
+                return;
+            }
+            $.post(window.location.href, {clear:1}, function () {
+                $('#list').empty();
+            });
+        });
+    </script>
+    Z;
+    
+    showBack();
 }
 
 require 'footer.php';

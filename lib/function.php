@@ -3,7 +3,7 @@
 use NgatNgay\Helper\Arr;
 
 function request() {
-    return NgatNgay\Helper\request();
+    return NgatNgay\request();
 }
 
 function isAppFile($dir)
@@ -1012,4 +1012,11 @@ function getIcon($type, $name) {
         
         return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg">';
     }
+}
+
+function showBack() {
+    echo '<a href="javascript:history.back()">
+      <img src="icon/back.png"> 
+      <strong class="back">Trở lại</strong>
+    </a>';
 }

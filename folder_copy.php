@@ -27,10 +27,6 @@
                     echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
                 else if (!is_dir($_POST['path']))
                     echo 'Đường dẫn mới không tồn tại';
-                else if (isPathNotPermission(processDirectory($_POST['path'])))
-                    echo 'Bạn không thể sao chép thư mục tới đường dẫn của File Manager';
-                else if (isPathNotPermission(processDirectory($_POST['path'] . '/' . $name)))
-                    echo 'Bạn không thể sao chép thư mục giống tên tới thư mục chứa thư mục của File Manager';
                 else if (!copydir($dir . '/' . $name, processDirectory($_POST['path'])))
                     echo 'Sao chép thư mục thất bại';
                 else

@@ -33,8 +33,6 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             echo 'Chưa nhập đầy đủ thông tin';
         } elseif (!is_dir(processDirectory($_POST['path']))) {
             echo 'Đường dẫn giải nén không tồn tại';
-        } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
-            echo 'Bạn không thể giải nén tập tin zip tới đường dẫn của File Manager';
         } else {
             $zip = new ZipArchive();
 
@@ -43,9 +41,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                     $fileInfo = $zip->statIndex($i);
                     $filename = $fileInfo['name'];
 
-                    if (!isPathNotPermission($filename)) {
-                        $zip->extractTo(processDirectory($_POST['path']), $filename);
-                    }
+                    $zip->extractTo(processDirectory($_POST['path']), $filename);
                 }
                 $zip->close();
                 if (isset($_POST['is_delete'])) {

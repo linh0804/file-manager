@@ -160,20 +160,6 @@ $formats = array(
     'zip'      => array('zip', 'jar'),
     'other'    => array('rpm', 'sql')
 );
-function ableFormatCode($type)
-{
-    return in_array($type, [
-        'php',
-        'html',
-        'js',
-        'ts',
-        'css',
-        'scss',
-        'json',
-        'yaml'
-    ]);
-}
-
 $excludeDirDefault = implode("\n", [
     '.git/',
     'node_modules/',

@@ -80,8 +80,6 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
             } elseif (!is_dir($_POST['path'])) {
                 echo 'Đường dẫn mới không tồn tại';
-            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
-                echo 'Bạn không thể sao chép tới đường dẫn của File Manager';
             } elseif (!copys($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Sao chép thất bại';
             } else {
@@ -191,8 +189,6 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
                 echo 'Chưa nhập đầy đủ thông tin';
             } elseif (isset($_POST['is_delete']) && processDirectory($_POST['path']) == $dir . '/' . $name) {
                 echo 'Nếu chọn xóa thư mục bạn không thể lưu tập tin nén ở đó';
-            } elseif (isPathNotPermission(processDirectory($_POST['path']))) {
-                echo 'Bạn không thể nén tập tin zip tới đường dẫn của File Manager';
             } elseif (isNameError($_POST['name'])) {
                 echo 'Tên tập tin zip không hợp lệ';
             } elseif (file_exists(processDirectory($_POST['path'] . '/' . processName($_POST['name'])))) {

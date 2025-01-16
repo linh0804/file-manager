@@ -1,6 +1,6 @@
 <?php
 
-use NgatNgay\Helper\Arr;
+use NgatNgay\Arr;
 
 function request() {
     return NgatNgay\request();
@@ -315,9 +315,7 @@ function copys($entrys, $dir, $path)
     foreach ($entrys as $e) {
         $pa = $dir . '/' . $e;
 
-        if (isPathNotPermission(processDirectory($path . '/' . $e))) {
-            /* Entry not permission */
-        } elseif (@is_file($pa)) {
+        if (@is_file($pa)) {
             if (!@copy($pa, $path . '/' . $e)) {
                 return false;
             }
@@ -1019,4 +1017,18 @@ function showBack() {
       <img src="icon/back.png"> 
       <strong class="back">Trở lại</strong>
     </a>';
+}
+
+function ableFormatCode($type)
+{
+    return in_array($type, [
+        'php',
+        'html',
+        'js',
+        'ts',
+        'css',
+        'scss',
+        'json',
+        'yaml'
+    ]);
 }

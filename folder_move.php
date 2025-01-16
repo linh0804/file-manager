@@ -28,10 +28,6 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
             echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
         else if (!is_dir($_POST['path']))
             echo 'Đường dẫn mới không tồn tại';
-        else if (isPathNotPermission(processDirectory($_POST['path'])))
-            echo 'Bạn không thể di chuyển thư mục tới đường dẫn của File Manager';
-        else if (isPathNotPermission(processDirectory($_POST['path'] . '/' . $name)))
-            echo 'Bạn không thể di chuyển thư mục giống tên tới thư mục chứa thư mục của File Manager';
         else if (!movedir($dir . '/' . $name, processDirectory($_POST['path'])))
             echo 'Di chuyển thư mục thất bại';
         else

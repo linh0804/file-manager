@@ -1,0 +1,14 @@
+parameters:
+    phpVersion: 70400
+    level: 0
+    paths:
+        - .
+    excludePaths:
+        - node_modules/
+        - vendor/
+        - css/
+        - database/
+        - tmp/
+        - icon/
+        - js/
+        - json/

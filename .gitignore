@@ -3,7 +3,7 @@ node_modules/
 vendor/
 
 tmp/*
-tmp/!.htaccess
+!tmp/.htaccess
 
 error_log
 config.inc.php

@@ -63,22 +63,6 @@ function createConfig(
     return true;
 }
 
-
-function createDatabaseConfig($config)
-{
-    return Arr::toFile(pathDatabase, $config);
-}
-
-function isDatabaseVariable($array)
-{
-    return is_array($array) &&
-        !empty($array['db_host']) &&
-        !empty($array['db_username']) &&
-        isset($array['db_password']) &&
-        isset($array['db_name']) &&
-        isset($array['is_auto']);
-}
-
 function getNewVersion()
 {
     if (!defined('alwaysCheckUpdate')) {
@@ -415,13 +399,13 @@ function mergeFolder($source, $destination, $overwrite = true)
 }
 
 if (!function_exists('str_ends_with')) {
-function str_ends_with($haystack, $needle) {
-    $length = strlen($needle);
-    if ($length == 0) {
-        return true;
+    function str_ends_with($haystack, $needle) {
+        $length = strlen($needle);
+        if ($length == 0) {
+            return true;
+        }
+        return (substr($haystack, -$length) === $needle);
     }
-    return (substr($haystack, -$length) === $needle);
-}
 }
 
 // chi dung de doc tat ca file
@@ -458,21 +442,6 @@ function readFullDir($path, $excludes = []) {
         $filter,
         RecursiveIteratorIterator::SELF_FIRST
     );
-}
-
-
-function dirSize($path)
-{
-    $size = 0;
-    $files = readFullDir($path);
-
-    foreach ($files as $file) {
-        if ($file->isFile()) {
-            $size += $file->getSize();
-        }
-    }
-
-    return $size;
 }
 
 function zips($dir, $entrys, $file, $isDelete = false)
@@ -847,9 +816,9 @@ function printFileActions(SplFileInfo $file) {
 
 function debug($o)
 {
-    echo('<pre>');
+    echo '<pre>';
     var_dump($o);
-    echo('</pre>');
+    echo '</pre>';
 }
 
 function asset($asset)
@@ -911,62 +880,6 @@ function sortNatural(&$array) {
         // Đưa chuỗi bắt đầu bằng ký tự đặc biệt lên trước
         return ctype_alnum($a[0]) ? 1 : -1;
     });
-}
-
-function displaySqlTable(mysqli_result $res, bool $showAction = false) {
-    echo '<style>
-        .sql-data {
-            text-align: left;
-        }
-        .sql-data table, 
-        .sql-data th,
-        .sql-data td {
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-collapse: collapse;
-        }
-
-       .sql-data th {
-            position: sticky !important;
-            top: 0 !important;
-            z-index: 100;
-        }
-    </style>';
-    echo '<div class="sql-data" style="overflow-x: scroll;">';
-    echo '<table>';
-    
-    while ($row = mysqli_fetch_assoc($res)) {
-        if (!isset($keys)) {
-            $keys = array_keys($row);
-            
-            echo '<tr>';
-            if ($showAction) {
-                echo '<th></th>';
-            }
-            foreach ($keys as $key) {
-                echo '<th>' . htmlspecialchars($key) . '</th>';
-            }
-            if ($showAction) {
-                echo '<th>&bull; Action</th>';
-            }
-            echo '</tr>';
-        }
-        
-        echo '<tr>';
-        if ($showAction) {
-            echo '<td><input type="checkbox"></td>';
-        }
-        foreach ($row as $value) {           
-            echo '<td>' . htmlspecialchars($value) . '</td>';
-        }
-        if ($showAction) {
-            echo '<td>[Edit] [View]</td>';
-        }
-        echo '</tr>';
-    }
-    
-    echo '</table>';
-    echo '</div><br>';
 }
 
 function getIcon($type, $name) {

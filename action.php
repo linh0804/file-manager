@@ -2,7 +2,7 @@
 
 const ACCESS = true;
 
-require_once '.init.php';
+require '.init.php';
 
 $title  = 'Hành động';
 $entry  = $_POST['entry'] ?? [];

@@ -1,6 +1,7 @@
 <?php
 
 use NgatNgay\Arr;
+use NgatNgay\FS;
 
 function request() {
     return NgatNgay\request();
@@ -251,21 +252,10 @@ function removeDir($path)
 function rrms($entrys, $dir)
 {
     foreach ($entrys as $e) {
-        $pa = $dir . '/' . $e;
-
-        if (@is_file($pa)) {
-            if (!@unlink($pa)) {
-                return false;
-            }
-        } elseif (@is_dir($pa)) {
-            if (!removeDir($pa)) {
-                return false;
-            }
-        } else {
+        if (!FS::remove($dir . '/' . $e)) {
             return false;
-        }
+        }   
     }
-
     return true;
 }
 

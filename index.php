@@ -137,6 +137,10 @@ if ($count <= 0) {
         } else {
             $nameDisplay = $name;
         }
+        
+        if ($file->isLink()) {
+            $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
+        }
 
         if ($lists[$i]['is_directory']) {            
             echo '<li class="folder">

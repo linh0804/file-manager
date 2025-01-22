@@ -22,7 +22,7 @@ $menuToggle = '';
 <body>
 
 <?php
-    if (IS_LOGIN) {
+    if (isLogin) {
     	if (isset($_GET['dev'])) {
     	    setcookie('dev', 1, time() + 86400 + 365);
     	}
@@ -31,18 +31,18 @@ $menuToggle = '';
     	}
     }
 ?>
-<?php if (IS_LOGIN && isset($_COOKIE['dev'])) { ?>
+<?php if (isLogin && isset($_COOKIE['dev'])) { ?>
 	<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
 <?php } ?>
 
 <div id="header">
     <ul>
-        <?php if (IS_LOGIN) { ?>
+        <?php if (isLogin) { ?>
             <button id="nav-menu">&#9776;</button>
         <?php } ?>
         <li><a href="index.php"><img src="icon/home.png" /></a></li>
-        <?php if (IS_LOGIN) { ?>
+        <?php if (isLogin) { ?>
             <li><a href="database/"><img src="icon/database.png"/></a></li>
             <li><a href="setting.php"><img src="icon/setting.png" /></a></li>
             <li><a href="logout.php"><img src="icon/exit.png" /></a></li>
@@ -54,7 +54,7 @@ $menuToggle = '';
 
 <div id="container">
 
-<?php if (IS_LOGIN && version_compare((string) cookie('fm_check_update'), (string) localVersion, '>')) { ?>
+<?php if (isLogin && version_compare((string) cookie('fm_check_update'), (string) localVersion, '>')) { ?>
     <div class="tips" style="margin-top: 0 !important">
         <img src="icon/tips.png" alt="">
         Có phiên bản mới! <a href="update.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!

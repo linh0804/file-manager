@@ -2,7 +2,7 @@
 
     include_once '.init.php';
 
-    if (IS_LOGIN) {
+    if (isLogin) {
         $title = 'Tải tập tin';
 
         if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {

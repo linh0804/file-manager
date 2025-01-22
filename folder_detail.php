@@ -4,7 +4,7 @@ define('ACCESS', true);
 
 include_once '.init.php';
 
-if (!IS_LOGIN) {
+if (!isLogin) {
     goURL('login.php');
 }
 

@@ -2,7 +2,7 @@
 
     include_once '.init.php';
 
-    if (IS_LOGIN) {
+    if (isLogin) {
         $title = 'Chmod thư mục';
 
         include_once 'header.php';

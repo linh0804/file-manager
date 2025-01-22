@@ -4,7 +4,7 @@ const ACCESS = true;
 
 require '.init.php';
 
-if (!IS_LOGIN) {
+if (!isLogin) {
     goURL('login.php');
 }
 

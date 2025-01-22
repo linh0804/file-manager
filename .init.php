@@ -234,10 +234,10 @@ $isLogin = isset($_COOKIE[FM_COOKIE_NAME])
     && $_COOKIE[FM_COOKIE_NAME]
     === $configs['password'];
 
-define('IS_LOGIN', $isLogin);
+define('isLogin', $isLogin);
 
 if (
-    !IS_LOGIN
+    !isLogin
     && !defined('LOGIN')
 ) {
     goURL('login.php');

@@ -5,7 +5,7 @@ const LOGIN  = true;
 
 require '.init.php';
 
-if (IS_LOGIN) {
+if (isLogin) {
     goURL('index.php');
 }
 

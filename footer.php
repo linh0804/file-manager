@@ -2,7 +2,10 @@
 
 if (!defined('ACCESS')) die('Not access');
 
-if (IS_LOGIN) {
+if (isLogin) {
+    // file list
+
+    // function
     $menuToggle .= '<div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/search.png"/> <a href="folder_compare_simple.php">So sánh thư mục</a></li>

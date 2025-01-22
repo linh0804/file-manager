@@ -65,17 +65,14 @@ function createConfig(
 
 function getNewVersion()
 {
-    if (!defined('alwaysCheckUpdate')) {
-        if (cookie('fm_check_update')) {
-            return false;
-        } else {
-            // 3 hour
-            cookie(['fm_check_update' => 1], ['expires' => time() + 3600*3]);
-        }
+    if (cookie('fm_check_update') && !defined('alwaysCheckUpdate')) {
+        return false;
     }
 
     $remoteVersion = json_decode(@file_get_contents(remoteVersionFile), true);
 
+    cookie(['fm_check_update' => ($remoteVersion['version'] ?? localVersion)], ['expires' => time() + 3600*3]);
+    
     return is_array($remoteVersion) && isset($remoteVersion['message'])
         ? $remoteVersion
         : false;

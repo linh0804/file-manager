@@ -54,7 +54,7 @@ $menuToggle = '';
 
 <div id="container">
 
-<?php if (IS_LOGIN && version_compare(cookie('fm_check_update'), localVersion, '>')) { ?>
+<?php if (IS_LOGIN && version_compare((string) cookie('fm_check_update'), (string) localVersion, '>')) { ?>
     <div class="tips" style="margin-top: 0 !important">
         <img src="icon/tips.png" alt="">
         Có phiên bản mới! <a href="update.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!

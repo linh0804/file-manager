@@ -7,6 +7,10 @@ function request() {
     return NgatNgay\request();
 }
 
+function response(...$args) {
+    return NgatNgay\response(...$args);
+}
+
 function isAppFile($dir)
 {
     return stripos($dir, REALPATH) === 0;
@@ -780,6 +784,7 @@ function runCommand($command)
 function printFileActions(SplFileInfo $file) {
     global $pages, $formats, $dirEncode;
 
+    $path = $file->getPathname();
     $name = $file->getFilename();
     $ext = $file->getExtension();
 
@@ -801,7 +806,7 @@ function printFileActions(SplFileInfo $file) {
         <a href="file_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
         <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
         <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
-        <a href="file_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/delete.png"/> Xóa</a>
+        <button onclick="fileAjaxDelete(this)" data-action="delete1" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
         <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     </div>';
     

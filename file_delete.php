@@ -35,7 +35,7 @@ if ($dir == null || $name == null || !file_exists(processDirectory($dir . '/' . 
         <span>Bạn có thực sự muốn xóa ' . ($file->isFile() ? 'tập tin' : 'thư mục') . ' <strong class="file_name_delete">' . $name . '</strong> không?</span><hr/>
         <span>Đường dẫn: ' . printPath($dir . '/' . $name) . '</span><hr/>
         <center>
-            <form action="file_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" method="post">
+            <form action="" method="post">
                 <input type="submit" name="accept" value="Đồng ý"/>
                 <input type="submit" name="not_accept" value="Huỷ bỏ"/>
             </form>

@@ -83,3 +83,37 @@ document.addEventListener("click", function (e) {
     document.body.classList.toggle("has-menu");
   }
 });
+
+function redirect(url) {
+  window.location.href = url;
+}
+
+function fileAjax(data, success) {
+  $.ajax({
+    url: 'api.file.php',
+    method: 'post',
+    data: data,
+    success: success,
+    error: function () {
+      alert("Lỗi server!");
+    }
+  });
+}
+
+function fileAjaxDelete(element) {
+  const data = $(element).data();
+
+  if (!confirm(`Xác nhận xóa "${data.path}"?`)) {
+    return;
+  }
+
+  fileAjax(data, function (res) {
+    if (res.msg) {
+      alert(res.msg);
+    }
+
+    if (res.redirect) {
+      redirect(res.redirect);
+    }
+  });
+}

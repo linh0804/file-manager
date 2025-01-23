@@ -17,9 +17,9 @@ switch ($action) {
     case 'delete':
         $isDelete = FS::remove($path);
         response([
-            'status' => $is_delete,
-            'msg' => !$is_delete ? 'Xóa thất bại!' : '',
-            'redirect' => $is_delete ? 'index.php?dir=' . dirname($path) : ''
+            'status' => $isDelete,
+            'msg' => !$isDelete ? 'Xóa thất bại!' : '',
+            'redirect' => $isDelete ? 'index.php?dir=' . dirname($path) : ''
         ])->send();
         break;
 

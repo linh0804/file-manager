@@ -12,7 +12,7 @@ if (!isLogin) {
 $dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : cookie('fm_home', $_SERVER['DOCUMENT_ROOT']);
 $dir = processDirectory($dir);
 $title = 'Danh sách';
-$handler = null;
+$dirEncode = rawurlencode($dir);
 
 require 'header.php';
 
@@ -26,60 +26,7 @@ if (!file_exists($dir)) {
     exit;
 }
 
-// load file list
-$handler = @scandir($dir);
-
-if (!is_array($handler)) {
-    $handler = [];
-}
-
-$dirEncode = rawurlencode($dir);
-$count = count($handler);
-$lists = [];
-
-if ($count > 0) {
-    $folders = [];
-    $files   = [];
-
-    foreach ($handler as $entry) {
-        if ($entry != '.' && $entry != '..') {
-            //if ($entry == DIRECTORY_FILE_MANAGER && IS_ACCESS_PARENT_PATH_FILE_MANAGER) {
-            /* Is hide directory File Manager */
-            //} else
-
-            if (is_dir($dir . '/' . $entry)) {
-                $folders[] = $entry;
-            } else {
-                $files[] = $entry;
-            }
-        }
-    }
-
-    if (count($folders) > 0) {
-        sortNatural($folders);
-
-        foreach ($folders as $entry) {
-            $lists[] = [
-                'name' => $entry,
-                'is_directory' => true,
-                'is_app_dir' => isAppDir($dir . '/' . $entry)
-            ];
-        }
-    }
-
-    if (count($files) > 0) {
-        sortNatural($files);
-
-        foreach ($files as $entry) {
-            $lists[] = [
-                'name' => $entry,
-                'is_directory' => false,
-                'is_app_dir' => isAppDir($dir . '/' . $entry)
-            ];
-        }
-    }
-}
-
+$lists = getListDirIndex($dir);
 $count = count($lists);
 $html  = printPath($dir, true);
 
@@ -113,7 +60,7 @@ if ($count <= 0) {
     echo '<li class="normal"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></li>';
 } else {
     $start = 0;
-    $end   = $count;
+    $end = $count;
 
     if ($configs['page_list'] > 0 && $count > $configs['page_list']) {
         $pages['total'] = ceil($count / $configs['page_list']);
@@ -146,38 +93,17 @@ if ($count <= 0) {
             echo '<li class="folder">
                 <div>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    <a href="folder_edit.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . getIcon('folder', $name) . '</a>
-                    <a href="index.php?dir=' . rawurlencode($path) . '">' . $nameDisplay . '</a>
+                    ' . getFileLink($path) . '
                     <div class="perms">
                         <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
                     </div>
                 </div>
             </li>';
         } else {
-            $edit   = array(null, '</a>');
-            $isEdit = false;
-
-            if (in_array($file->getExtension(), $formats['text'])) {
-                $isEdit = true;
-            } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
-                $isEdit = true;
-            } elseif (isFormatUnknown($name)) {
-                $isEdit = true;
-            }
-
-            if (strtolower($name) == 'error_log' || $isEdit) {
-                $edit[0] = '<a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
-            } elseif (in_array($file->getExtension(), $formats['zip'])) {
-                $edit[0] = '<a href="file_unzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
-            } else {
-                $edit[0] = '<a href="file_rename.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">';
-            }
-
             echo '<li class="file">
                 <p>
                     <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . $edit[0] . getIcon('file', $name) . $edit[1] . '
-                    <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $nameDisplay . '</a>
+                    ' . getFileLink($path) . '
                 </p>
                 <p>
                     <span class="size">' . size(@filesize($dir . '/' . $name)) . '</span>,
@@ -217,7 +143,9 @@ echo '<div class="title">Chức năng</div>
     <a href="find_in_folder.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm trong thư mục</a>
     <a href="scan_error_log.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a>
     <a href="#" class="button copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">Webdav</a>
-    <hr>
+</div>
+<div class="title">Thư mục hiện tại</div>
+<div class="list">
     <a href="folder_detail.php?dir=' . $dirEncode . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     <a href="folder_edit.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
     <a href="folder_zip.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/zip.png"/> Nén zip</a>

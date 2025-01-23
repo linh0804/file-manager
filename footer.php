@@ -1,22 +1,29 @@
 <?php
 
-if (!defined('ACCESS')) die('Not access');
+defined('ACCESS') or exit('Not access');
 
 if (isLogin) {
     // file list
-
-    // function
-    $menuToggle .= '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/search.png"/> <a href="folder_compare_simple.php">So sánh thư mục</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="run_command.php?dir=' . $dirEncode . '">Chạy lệnh</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="run_composer.php?dir=' . $dirEncode . '">Chạy lệnh Composer</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="fix_permission.php?dir=' . $dirEncode . '">Fix chown/chmod</a></li>
-        <li><img src="icon/home.png"/> <a href="setting_home.php">Sửa Trang chủ</a></li>
-        <li><img src="icon/mime/php.png"/> <a href="phpinfo.php">phpinfo()</a></li>
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . '">Danh sách</a></li>
-    </ul>';
-
+    $out = '<div class="title">Danh sách</div>';
+    if ($path) {
+        $current_path = is_file($path) ? dirname($path) : $path;
+        $list = getListDirIndex($current_path);
+        $out .= '<ul class="list_file">';
+        $out .= '<li class="normal">
+            <a href="index.php?dir=' . dirname($current_path) . '">
+                <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
+                <strong class="back">...</strong>
+            </a>
+        </li>';
+        foreach ($list as $file) {
+            $filePath = $current_path . '/' . $file['name']; 
+            $out .= '<li class="folder">
+                <div>' . getFileLink($filePath) . '</div>
+            </li>';
+        }
+        $out .= '</ul>';
+        $menuToggle .= $out;
+    }
 
     // bookmark
     require __DIR__ . '/lib/bookmark.class.php';
@@ -78,10 +85,22 @@ if (isLogin) {
 
     $menuToggle .= '</ul>';
 
+    // function
+    $menuToggle .= '<div class="title">Chức năng</div>
+    <ul class="list">
+        <li><img src="icon/search.png"/> <a href="folder_compare_simple.php">So sánh thư mục</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="run_command.php?dir=' . $dirEncode . '">Chạy lệnh</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="run_composer.php?dir=' . $dirEncode . '">Chạy lệnh Composer</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="fix_permission.php?dir=' . $dirEncode . '">Fix chown/chmod</a></li>
+        <li><img src="icon/home.png"/> <a href="setting_home.php">Sửa Trang chủ</a></li>
+        <li><img src="icon/mime/php.png"/> <a href="phpinfo.php">phpinfo()</a></li>
+        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . '">Danh sách</a></li>
+    </ul>';
+
     $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
         run on: ' . get_current_user() . ' (' . getmyuid() . ')
     </div>';
-
+    
     if (file_exists(LOGIN_LOCK)) {
         $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
             fail login: <span style="color: red; font-weight: bold">' . getLoginFail() . '</span> (xoá <b>"' . htmlspecialchars(LOGIN_LOCK) . '"</b> để reset)

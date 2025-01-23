@@ -806,7 +806,7 @@ function printFileActions(SplFileInfo $file) {
         <a href="file_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
         <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
         <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
-        <button onclick="fileAjaxDelete(this)" data-action="delete1" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
+        <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
         <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     </div>';
     
@@ -936,4 +936,100 @@ function ableFormatCode($type)
         'json',
         'yaml'
     ]);
+}
+
+function getListDirIndex(string $dir): array {
+    $handler = @scandir($dir);
+
+    if (!is_array($handler)) {
+        return [];
+    }
+    
+    $lists = [];
+    $folders = [];
+    $files = [];
+
+    foreach ($handler as $entry) {
+        if ($entry == '.' || $entry == '..') {
+            continue;
+        }
+
+        if (is_dir($dir . '/' . $entry)) {
+            $folders[] = $entry;
+        } else {
+            $files[] = $entry;
+        }
+    }
+
+    if (count($folders) > 0) {
+        sortNatural($folders);
+        foreach ($folders as $entry) {
+            $lists[] = [
+                'name' => $entry,
+                'is_directory' => true,
+                'is_app_dir' => isAppDir($dir . '/' . $entry)
+            ];
+        }
+    }
+
+    if (count($files) > 0) {
+        sortNatural($files);
+        foreach ($files as $entry) {
+            $lists[] = [
+                'name' => $entry,
+                'is_directory' => false,
+                'is_app_dir' => isAppDir($dir . '/' . $entry)
+            ];
+        }
+    }
+
+    return $lists;
+}
+
+function getFileLink($path) {
+    global $formats, $pages;
+    
+    $file = new \SplFileInfo($path);
+    $fileDir = $file->isDir() ? $path : dirname($path);
+    $name = $file->getFilename();
+    $isEdit = false;
+    
+    $fileIcon = getIcon($file->isDir() ? 'folder' : 'file', $name);
+
+    if ($file->isFile()) {
+        if (in_array($file->getExtension(), $formats['text'])) {
+            $isEdit = true;
+        } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
+            $isEdit = true;
+        } elseif (isFormatUnknown($name)) {
+            $isEdit = true;
+        }
+        
+        if (strtolower($file->getFilename()) == 'error_log' || $isEdit) {
+            $fileLink = 'edit_text.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+        } elseif (in_array($file->getExtension(), $formats['zip'])) {
+            $fileLink = 'file_unzip.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+        } else {
+            $fileLink = 'file_rename.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+        }
+    } else {
+        $fileLink = 'folder_edit.php?dir=' . dirname($fileDir) . '&name=' . $name . $pages['paramater_1'];
+    }
+    $fileIcon = sprintf('<a href="%s">%s</a>', $fileLink, $fileIcon);
+        if (isAppDir($path)) {
+            $nameDisplay = '<i>' . $name . '</i>';
+        } else {
+            $nameDisplay = $name;
+        }
+        
+        if ($file->isLink()) {
+            $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
+        }
+        
+    return sprintf(
+        '%s <a href="%s">%s</a>',
+        $fileIcon,
+        $file->isDir() ? 'index.php?dir=' . rawurlencode($fileDir) : 'file.php?dir=' . $fileDir . '&name=' . $name,
+        $nameDisplay
+    );
 }

@@ -802,13 +802,32 @@ function printFileActions(SplFileInfo $file) {
     }
 
     echo '<a href="file_download.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    
-        <a href="file_rename.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
+        <a href="file.php?act=rename&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
         <a href="file_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
         <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
         <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
         <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
         <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     </div>';
+    
+    echo '<a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '" style="">
+        <img src="icon/back.png"> 
+        <strong class="back">Trở lại</strong>
+    </a>';
+}
+
+function printFolderActions() {
+    global $name, $pages, $formats, $dirEncode;
+
+    echo '<div class="title">Chức năng</div>
+    <ul class="list">
+        <li><img src="icon/zip.png"/> <a href="folder_zip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Nén zip</a></li>
+        <li><img src="icon/rename.png"/> <a href="file.php?act=rename&path=' . $dirEncode . '%2F' . $name . $pages['paramater_1'] . '">Đổi tên</a></li>
+        <li><img src="icon/copy.png"/> <a href="folder_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sao chép</a></li>
+        <li><img src="icon/move.png"/> <a href="folder_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>
+        <li><img src="icon/delete.png"/> <a href="file_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Xóa</a></li>
+        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+    </ul>';
     
     echo '<a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '" style="">
         <img src="icon/back.png"> 
@@ -1010,10 +1029,10 @@ function getFileLink($path) {
         } elseif (in_array($file->getExtension(), $formats['zip'])) {
             $fileLink = 'file_unzip.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
         } else {
-            $fileLink = 'file_rename.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+            $fileLink = 'file.php?act=rename&path=' . $path . $pages['paramater_1'];
         }
     } else {
-        $fileLink = 'folder_edit.php?dir=' . dirname($fileDir) . '&name=' . $name . $pages['paramater_1'];
+        $fileLink = 'file.php?act=rename&path=' . $path . $pages['paramater_1'];
     }
     $fileIcon = sprintf('<a href="%s">%s</a>', $fileLink, $fileIcon);
         if (isAppDir($path)) {

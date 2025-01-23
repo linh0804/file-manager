@@ -147,7 +147,7 @@ echo '<div class="title">Chức năng</div>
 <div class="title">Thư mục hiện tại</div>
 <div class="list">
     <a href="folder_detail.php?dir=' . $dirEncode . '" class="button"><img src="icon/info.png"/> Thông tin</a>
-    <a href="folder_edit.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
+    <a href="file.php?act=rename&path=' . $dir . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
     <a href="folder_zip.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/zip.png"/> Nén zip</a>
     <a href="folder_copy.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
     <a href="folder_move.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>

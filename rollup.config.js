@@ -9,8 +9,7 @@ export default {
 	},
 	plugins: [
 	    nodeResolve(),
-        terser({
-            maxWorkers: 4
-        })
-    ]
+        terser({maxWorkers: 8})
+    ],
+	treeshake: false
 };

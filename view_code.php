@@ -4,6 +4,7 @@ define('ACCESS', true);
 
 require '.init.php';
 
+$title = 'Xem tập tin';
 $themes = ['a11y-light','a11y-dark','vs','xcode','github-dark-dimmed','github'];
 $coder = ['Auto','php','javascript','html','json','text'];
 
@@ -40,9 +41,6 @@ function detectCodeType($code) {
         return "html";
     }
 }
-
-
-$title = 'Xem tập tin';
 
 require 'header.php';
 
@@ -172,100 +170,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     });
     </script>';
 
-    /*
-    echo '<div class="list codeload" style="padding:0;">
-        <span class="linecode">
-            '. $hightlight['line'] .'
-        </span>
-        <pre class="code">
-            <code >'
-                . htmlspecialchars($content)
-                . $hightlight['text']
-            . '</code>
-        </pre>
-    </div>';
-
-    echo '<style>
-        pre {
-            margin:0!important;
-            width:80%;
-            overflow-x: auto;
-        }
-        code {
-            line-height: 1.4;
-            text-align: left;
-            font-size:14px!important;
-            padding:0!important;
-            width:100%;
-        }
-        .line:hover {
-            background-color: #e0e0e0;
-        }
-        .code, .linecode {
-            vertical-align: top;
-        }
-        .codeload::-webkit-scrollbar {
-            display:none;
-        }
-        .codeload {
-            background-color: #e0e0e0;
-            display:none;
-        }
-        .linecode, .code {
-            display: inline-grid;
-        }
-        pre code .hljs, coce.hljs { 
-            padding:0px;
-            margin-top:0;
-        }
-        .line {
-            line-height: 1.4;
-            font-family: monospace;
-            font-size:14px;
-            padding-right: 5px;
-            display: block;
-            text-align: right; 
-            color: #999; 
-            border-right: 1px solid red;
-            background: white;
-        }
-    </style>';
-
-    echo '<script>
-        var codeElements = document.querySelector("code");       
-        document.addEventListener("DOMContentLoaded", function() {  
-            hljs.highlightAll();
-
-            document.querySelector(".codeload").style.display = "block";  
-
-            var lineElements = document.querySelectorAll(".line");
-            var maxWidth = 0;
-            lineElements.forEach(function(lineElement) {
-                var currentWidth = lineElement.offsetWidth;
-                if (currentWidth > maxWidth) {
-                    maxWidth = currentWidth;
-                }
-            })
-
-            lineElements.forEach(function(lineElement) {
-                lineElement.style.width = maxWidth + "px";
-            })
-        })
-
-        var percentWith = 0;
-        const targetElement = document.querySelector(".codeload");
-        const resizeObserver = new ResizeObserver(entries => {
-            for (let entry of entries) {
-                percentWidth = document.querySelector(".codeload").offsetWidth - document.querySelector(".linecode").offsetWidth;
-                document.querySelector("pre").style.width = (percentWidth - 10) + "px";
-            }
-        });
-        resizeObserver.observe(targetElement);              
-    </script>';
-    */
-
     printFileActions($file);
 }
 
 require 'footer.php';
-

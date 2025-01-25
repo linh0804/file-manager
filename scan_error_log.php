@@ -1,5 +1,7 @@
 <?php
 
+use NgatNgay\FS;
+
 define('ACCESS', true);
 
 require '.init.php';
@@ -46,7 +48,7 @@ if (
         }
         
         if (isset($_POST['clear'])) {
-            unlink($file->getPathname());
+            FS::remove($file->getPathname());
             continue;
         }
         

@@ -30,7 +30,7 @@ jobs:
       - name: zip full
         run: |
           wget https://getcomposer.org/download/latest-stable/composer.phar
-          php composer.phar install
+          php composer.phar install --no-dev
           rm -f file-manager.zip
           zip -r -9 file-manager.zip . -x ".git/*" ".github/*"
           

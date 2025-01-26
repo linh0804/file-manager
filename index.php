@@ -152,7 +152,7 @@ echo '<div class="title">Chức năng</div>
     <a href="folder_copy.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
     <a href="folder_move.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
     <a href="folder_chmod.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
-    <a href="file_delete.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/delete.png"/> Xoá</a>
+    <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($dir) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
 </div>';
 
 require 'footer.php';

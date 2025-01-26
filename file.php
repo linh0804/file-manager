@@ -9,7 +9,8 @@ if (!isLogin) {
 }
 
 $action = request()->get('act');
-$path = request()->get('path');
+$path = (string) request()->get('path');
+$path = rawurldecode($path);
 
 switch ($action) {
     case 'rename':

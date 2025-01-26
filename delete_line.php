@@ -4,7 +4,6 @@ const ACCESS = true;
 
 require '.init.php';
 
-
 $title = 'Xóa dòng';
 $page = array('current' => 0, 'paramater_0' => null, 'paramater_1' => null);
 $page['current'] = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -20,7 +19,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
     </ul>';
-} else if (!isFormatText($name) && !isFormatUnknown($name)) {
+} elseif (!isFormatText($name) && !isFormatUnknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
@@ -37,10 +36,11 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             $content = str_replace("\r\n", "\n", $content);
             $content = str_replace("\r", "\n", $content);
 
-            if (strpos($content, "\n") !== false)
+            if (strpos($content, "\n") !== false) {
                 $lines = explode("\n", $content);
-            else
+            } else {
                 $lines[] = $content;
+            }
         } else {
             $lines[] = $content;
         }
@@ -67,13 +67,15 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
         if ($count > 1) {
             if ($line > 0) {
-                for ($i = 0; $i < $line; ++$i)
+                for ($i = 0; $i < $line; ++$i) {
                     $data .= $lines[$i] . ($i < $line - 1 ? "\n" : null);
+                }
             }
 
             if ($line < $count - 1) {
-                for ($i = ($line + 1); $i < $count; ++$i)
+                for ($i = ($line + 1); $i < $count; ++$i) {
                     $data .= ($i > 1 || $line > 0 ? "\n" : null) . $lines[$i];
+                }
             }
         } else {
             $data = null;
@@ -82,8 +84,9 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         if (file_put_contents($path, $data)) {
             $notice = '<div class="notice_succeed">Xóa thành công</div>';
 
-            if (isset($_POST['delete']))
+            if (isset($_POST['delete'])) {
                 goURL('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . $page['paramater_1'] . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
+            }
         } else {
             $notice = '<div class="notice_failure">Xóa thất bại</div>';
         }
@@ -102,11 +105,13 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         }
     }
 
-    if ($line < 0)
+    if ($line < 0) {
         goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=0'  . $page['paramater_1']);
+    }
 
-    if ($line > $count - 1)
+    if ($line > $count - 1) {
         goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line='  . ($count - 1) . $page['paramater_1']);
+    }
 
     $page['current'] = $line + 1 > $configs['page_file_edit_line'] ? ceil(($line + 1) / $configs['page_file_edit_line']) : 1;
 
@@ -115,8 +120,9 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         $page['paramater_1'] = '&page=' . $page['current'];
     }
 
-    if ($isGO)
+    if ($isGO) {
         goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $line . $page['paramater_1']);
+    }
 
     $url = array('action' => null, 'prev' => null, 'next' => null);
     $url['action'] = 'delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $line . $page['paramater_1'] . '#line_label';

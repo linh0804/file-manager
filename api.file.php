@@ -7,7 +7,8 @@ define('ACCESS', 1);
 require __DIR__ . '/.init.php';
 
 $action = request()->post('action');
-$path = request()->post('path');
+$path = (string) request()->post('path');
+$path = rawurldecode($path);
 
 if (!request()->isMethod('post')) {
     response(['status' => false,'msg' => 'method error'])->send();
@@ -16,6 +17,7 @@ if (!request()->isMethod('post')) {
 switch ($action) {
     case 'delete':
         $isDelete = FS::remove($path);
+
         response([
             'status' => $isDelete,
             'msg' => !$isDelete ? 'Xóa thất bại!' : '',

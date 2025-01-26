@@ -825,7 +825,7 @@ function printFolderActions() {
         <li><img src="icon/rename.png"/> <a href="file.php?act=rename&path=' . $dirEncode . '%2F' . $name . $pages['paramater_1'] . '">Đổi tên</a></li>
         <li><img src="icon/copy.png"/> <a href="folder_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sao chép</a></li>
         <li><img src="icon/move.png"/> <a href="folder_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>
-        <li><img src="icon/delete.png"/> <a href="file_delete.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Xóa</a></li>
+        <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . $dirEncode . '%2F' . $name . '" class="button"><img src="icon/delete.png"/> Xóa</button>
         <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
     </ul>';
     

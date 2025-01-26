@@ -32,8 +32,15 @@ $menuToggle = '';
     }
 ?>
 <?php if (isLogin && isset($_COOKIE['dev'])) { ?>
+<!--
 	<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
+-->
+<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>
+  // VConsole will be exported to `window.VConsole` by default.
+  var vConsole = new window.VConsole();
+</script>
 <?php } ?>
 
 <div id="header">

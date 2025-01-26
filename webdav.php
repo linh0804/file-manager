@@ -28,4 +28,4 @@ $authBackend = new DAV\Auth\Backend\BasicCallBack(function ($username, $password
 $server = new DAV\Server(new DAV\FS\Directory('/'));
 $server->setBaseUri(request()->server['script_name']);
 $server->addPlugin(new DAV\Auth\Plugin($authBackend));
-$server->exec();
+$server->start();

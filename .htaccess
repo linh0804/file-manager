@@ -2,5 +2,4 @@ DirectoryIndex index.php
 
 RewriteEngine On
 
-# chan truy cap tmp/
 RewriteRule tmp/.* - [F,L]

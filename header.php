@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('ACCESS')) die('Not access');
+defined('ACCESS') or exit('Not access');
 
 $menuToggle = '';
 ?><!DOCTYPE html>

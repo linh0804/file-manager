@@ -143,7 +143,6 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 $html = '/<a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $root . '</a>/' . $path;
         }
 
-        echo '<script language="javascript" src="' . asset('js/checkbox.js') . '"></script>';
         echo '<div class="title">' . $html . '</div>';
         echo '<ul class="list_file">';
         echo '<li class="normal">

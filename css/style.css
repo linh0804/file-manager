@@ -819,6 +819,7 @@ body.has-menu .menuToggle {
 /* index */
 .table-list-file {
     overflow-x: auto;
+    margin: 0 -7px;
     padding-bottom: 6px;
 }
 table.list-file {
@@ -831,18 +832,25 @@ table.list-file {
 table.list-file .chmod {
     color: #ff7900;
     font-weight: bold;
-    font-size: 14px;
-    text-shadow: none !important;
 }
 
-table.list-file img {
+table.list-file * {
   vertical-align: middle;
+}
+
+table.list-file input[type=checkbox] {
+    padding: 0;
+    margin: 0;
+}
+
+table.list-file td.name {
+    width: 100%;
 }
 
 table.list-file,
 table.list-file th,
 table.list-file td {
-  padding: 4px;
+  padding: 5px 4px;
   border: 1px solid #f2f2f2;
 }
 table.list-file td:first-child,
@@ -852,5 +860,9 @@ table.list-file th:first-child {
 }
 
 table.list-file .active {
+    background-color: #f0f0f0;
+}
+
+table.list-file tr:hover {
     background-color: #f0f0f0;
 }

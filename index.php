@@ -136,16 +136,18 @@ if ($count > 0) {
 echo '</form>';
 
 echo '<div class="title">Chức năng</div>
-<div class="list">
-    <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/create.png"/> Tạo mới</a>
-    <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/upload.png"/> Tải lên</a>
-    <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '" class="button"><img src="icon/import.png"/> Nhập khẩu</a>
-    <a href="find_in_folder.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm trong thư mục</a>
-    <a href="scan_error_log.php?dir=' . $dirEncode . '" class="button"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a>
-    <a href="#" class="button copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">Webdav</a>
-</div>
-<div class="title">Thư mục hiện tại</div>
-<div class="list">
+<ul class="list">
+    <li><a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="find_in_folder.php?dir=' . $dirEncode . '"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="scan_error_log.php?dir=' . $dirEncode . '"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
+    <li><a href="#" class="copyButton" data-copy="' . baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') . '">&bull; Webdav</a></li>
+
+    <li>
+    <details>
+    <summary>-- Thư mục hiện tại --</summary>
+    <hr>
     <a href="file.php?path=' . $dir . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     <a href="file.php?act=rename&path=' . $dir . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
     <a href="folder_zip.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/zip.png"/> Nén zip</a>
@@ -153,6 +155,8 @@ echo '<div class="title">Chức năng</div>
     <a href="folder_move.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
     <a href="folder_chmod.php?dir=' . dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
     <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($dir) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
-</div>';
+    </details>
+    </li>
+</ul>';
 
 require 'footer.php';

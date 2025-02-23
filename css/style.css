@@ -815,3 +815,42 @@ body.has-menu #menuOverlay {
 body.has-menu .menuToggle {
     left:0
 }
+
+/* index */
+.table-list-file {
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+table.list-file {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.list-file .chmod {
+    color: #ff7900;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: none !important;
+}
+
+table.list-file img {
+  vertical-align: middle;
+}
+
+table.list-file,
+table.list-file th,
+table.list-file td {
+  padding: 4px;
+  border: 1px solid #f2f2f2;
+}
+table.list-file td:first-child,
+table.list-file th:first-child {
+    width: 1px;
+    white-space: nowrap;
+}
+
+table.list-file .active {
+    background-color: #f0f0f0;
+}

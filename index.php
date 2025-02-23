@@ -37,7 +37,8 @@ if (isAppDir($dir)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';
 }
 
-echo '<form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post" name="form"><ul class="list_file">';
+echo '<form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post" name="form">
+<div class="list">';
 
 if (preg_replace('|[a-zA-Z]+:|', '', str_replace('\\', '/', $dir)) != '/') {
     $path = strrchr($dir, '/');
@@ -48,16 +49,16 @@ if (preg_replace('|[a-zA-Z]+:|', '', str_replace('\\', '/', $dir)) != '/') {
         $path = 'index.php';
     }
 
-    echo '<li class="normal">
+    echo '
         <a href="' . $path . '">
             <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
             <strong class="back">...</strong>
         </a>
-    </li>';
+    <hr>';
 }
 
 if ($count <= 0) {
-    echo '<li class="normal"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></li>';
+    echo '<img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span>';
 } else {
     $start = 0;
     $end = $count;
@@ -72,6 +73,16 @@ if ($count <= 0) {
         $start = ($pages['current'] * $configs['page_list']) - $configs['page_list'];
         $end   = $start + $configs['page_list'] >= $count ? $count : $start + $configs['page_list'];
     }
+    
+    echo '<div class="table-list-file"><table class="list-file">';
+    echo <<<Z
+    <tr>
+        <th></th>
+        <th>Tên</th>
+        <th>Kích thước</th>
+        <th>Chmod</th>
+    </tr>
+    Z;
 
     for ($i = $start; $i < $end; ++$i) {
         $name  = $lists[$i]['name'];
@@ -90,37 +101,39 @@ if ($count <= 0) {
         }
 
         if ($lists[$i]['is_directory']) {            
-            echo '<li class="folder">
-                <div>
-                    <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . getFileLink($path) . '
-                    <div class="perms">
-                        <a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
-                    </div>
-                </div>
-            </li>';
+            echo '<tr>
+                <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
+                <td><b>' . getFileLink($path) . '</b></td>
+                <td></td>
+                <td><a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+            </tr>';
         } else {
-            echo '<li class="file">
-                <p>
-                    <input type="checkbox" name="entry[]" value="' . $name . '"/>
-                    ' . getFileLink($path) . '
-                </p>
-                <p>
-                    <span class="size">' . size(@filesize($dir . '/' . $name)) . '</span>,
-                    <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a>
-                </p>
-            </li>';
+            echo '<tr>
+                <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
+                <td>' . getFileLink($path) . '</td>
+                <td><span class="size">' . size(@filesize($dir . '/' . $name)) . '</span></td>
+                <td><a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+            </tr>';
         }
     }
-
-    echo '<li class="normal"><input type="checkbox" name="all" value="1" onClick="javascript:onCheckItem();"/> <strong class="form_checkbox_all">Chọn tất cả</strong></li>';
+    
+    echo '</table></div>';
+    echo <<<'Z'
+    <script>
+        $("table.list-file tr").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+    </script>
+    Z;
+    
+    echo '<hr><input type="checkbox" name="all" value="1" onClick="javascript:onCheckItem();"/> <strong class="form_checkbox_all">Chọn tất cả</strong>';
 
     if ($configs['page_list'] > 0 && $pages['total'] > 1) {
-        echo '<li class="normal">' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => 'index.php?dir=' . $dirEncode, PAGE_URL_START => 'index.php?dir=' . $dirEncode . '&page_list=')) . '</li>';
+        echo '<hr>' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => 'index.php?dir=' . $dirEncode, PAGE_URL_START => 'index.php?dir=' . $dirEncode . '&page_list='));
     }
 }
 
-echo '</ul>';
+echo '</div>';
 
 if ($count > 0) {
     echo '<div class="list">

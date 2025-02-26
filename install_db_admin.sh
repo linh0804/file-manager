@@ -1,11 +1,18 @@
+#!/bin/bash
+
+rm -rf adminer-custom/
+git clone https://github.com/pematon/adminer-custom --depth 1
+rm -rf adminer-custom/.git
+
+sed -i '1s/.*/<?php isset($_COOKIE["fm_php"]) or exit;/' adminer-custom/adminer.php
+
+cat > adminer-custom/index.php << EOF
 <?php
 
 function adminer_object()
 {
-    // Required to run any plugin.
     include_once "./plugins/plugin.php";
 
-    // Plugins auto-loader.
     foreach (glob("plugins/*.php") as $filename) {
         include_once "./$filename";
     }
@@ -14,7 +21,6 @@ function adminer_object()
         include_once "config.php";
     }
 
-    // Specify enabled plugins here.
     $plugins = [
         new AdminerDatabaseHide(["mysql", "sys", "information_schema", "performance_schema"]),
         new AdminerSimpleMenu(),
@@ -25,5 +31,8 @@ function adminer_object()
     return new AdminerPlugin($plugins);
 }
 
-// Include original Adminer or Adminer Editor.
-include "./adminer.php";
+require './adminer.php';
+EOF
+
+rm -rf db/
+mv adminer-custom db

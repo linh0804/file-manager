@@ -1,4 +1,4 @@
-<?php
+<?php isset($_COOKIE["fm_php"]) or exit;
 /**
  * Adminer - Database management in a single PHP file
  *

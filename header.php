@@ -8,12 +8,14 @@ $menuToggle = '';
 
 <head>
     <title><?= $title ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="<?= asset('css/style.css') ?>" media="all,handheld" />
+
     <link rel="icon" type="image/png" href="icon/icon.png">
     <link rel="icon" type="image/x-icon" href="icon/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
+
+    <link rel="stylesheet" type="text/css" href="<?= asset('css/style.css') ?>" media="all,handheld" />
     
     <script src="https://cdn.ngatngay.net/js/helper/dist/jquery.js"></script>
     <script src="<?= asset('js/script.js') ?>" defer></script>
@@ -43,7 +45,7 @@ $menuToggle = '';
         <?php } ?>
         <li><a href="index.php"><img src="icon/home.png" /></a></li>
         <?php if (isLogin) { ?>
-            <li><a href="database/"><img src="icon/database.png"/></a></li>
+            <li><a href="db/"><img src="icon/database.png"/></a></li>
             <li><a href="setting.php"><img src="icon/setting.png" /></a></li>
             <li><a href="logout.php"><img src="icon/exit.png" /></a></li>
         <?php } ?>

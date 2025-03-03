@@ -1,6 +1,6 @@
 <?php
 
-use NgatNgay\FS;
+use ngatngay\fs;
 
 define('ACCESS', true);
 

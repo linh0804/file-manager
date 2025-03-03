@@ -1,6 +1,6 @@
 <?php
 
-use function NgatNgay\response;
+use function ngatngay\response;
 
 define('ACCESS', true);
 

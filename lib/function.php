@@ -1,14 +1,14 @@
 <?php
 
-use NgatNgay\Arr;
-use NgatNgay\FS;
+use ngatngay\arr;
+use ngatngay\fs;
 
 function request() {
-    return NgatNgay\request();
+    return ngatngay\request();
 }
 
 function response(...$args) {
-    return NgatNgay\response(...$args);
+    return ngatngay\response(...$args);
 }
 
 function isAppFile($dir)
@@ -237,7 +237,7 @@ function removeDir($path)
 function rrms($entrys, $dir)
 {
     foreach ($entrys as $e) {
-        if (!FS::remove($dir . '/' . $e)) {
+        if (!fs::remove($dir . '/' . $e)) {
             return false;
         }   
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace NgatNgay;
+namespace ngatngay;
 
 define('ACCESS', 1);
 
@@ -16,7 +16,7 @@ if (!request()->isMethod('post')) {
 
 switch ($action) {
     case 'delete':
-        $isDelete = FS::remove($path);
+        $isDelete = fs::remove($path);
 
         response([
             'status' => $isDelete,

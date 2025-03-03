@@ -7,7 +7,7 @@ parameters:
         - node_modules/
         - vendor/
         - css/
-        - database/
+        - db/
         - tmp/
         - icon/
         - js/

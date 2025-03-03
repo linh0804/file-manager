@@ -119,7 +119,8 @@ switch ($action) {
         }
 
         $title = 'Thông tin tập tin';
-
+        $path = $dir . '/' . $name;
+        
         require 'header.php';
 
         echo '<div class="title">' . $title . '</div>';

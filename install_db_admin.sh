@@ -6,7 +6,7 @@ rm -rf adminer-custom/.git
 
 sed -i '1s/.*/<?php isset($_COOKIE["fm_php"]) or exit;/' adminer-custom/adminer.php
 
-cat > adminer-custom/index.php << EOF
+cat > adminer-custom/index.php << 'EOF'
 <?php
 
 function adminer_object()

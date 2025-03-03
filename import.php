@@ -1,5 +1,7 @@
 <?php
 
+use ngatngay\http\curl;
+
 const ACCESS = true;
 
 require '.init.php';
@@ -38,14 +40,18 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         } else {
             for ($i = 0; $i < count($_POST['url']); ++$i) {
                 if (!empty($_POST['url'][$i])) {
+                    $curl = new curl();
+                    $curl->setFollowLocation();
+
                     $_POST['url'][$i] = $_POST['url'][$i];
 
-                    if (!isURL($_POST['url'][$i]))
+                    if (!isURL($_POST['url'][$i])) {
                         echo '<div class="notice_failure">URL <strong class="url_import">' . $_POST['url'][$i] . '</strong> không hợp lệ</div>';
-                    elseif (import($_POST['url'][$i], $dir . '/' . basename($_POST['url'][$i])))
+                    } elseif ($curl->download($_POST['url'][$i], $dir . '/' . basename($_POST['url'][$i]))) {
                         echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename($_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . size(filesize($dir . '/' . basename($_POST['url'][$i]))) . '</span> thành công</div>';
-                    else
+                    } else {
                         echo '<div class="notice_failure">Nhập khẩu tập tin <strong class="file_name_import">' . basename($_POST['url'][$i]) . '</strong> thất bại</div>';
+                    }
                 }
             }
         }

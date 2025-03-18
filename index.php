@@ -48,16 +48,15 @@ if (preg_replace('|[a-zA-Z]+:|', '', str_replace('\\', '/', $dir)) != '/') {
         $path = 'index.php';
     }
 
-    echo '
-        <a href="' . $path . '">
-            <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
-            <strong class="back">...</strong>
-        </a>
-    <hr>';
+    echo '<a href="' . $path . '">
+        <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
+        <strong class="back">...</strong>
+    </a>';
 }
+echo '</div>';
 
 if ($count <= 0) {
-    echo '<img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span>';
+    echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';
 } else {
     $start = 0;
     $end = $count;
@@ -117,24 +116,24 @@ if ($count <= 0) {
     </script>
     Z;
     
-    echo '<hr><label><input id="file-select-all" type="checkbox" name="all" value="1" /> <strong class="form_checkbox_all">Chọn tất cả</strong></label>';
+    echo '<div class="list">';
+    echo '<label><input id="file-select-all" type="checkbox" name="all" value="1" /> <strong class="form_checkbox_all">Chọn tất cả</strong></label>';
+    echo '<div id="file-select-opt" style="display: none">
+        <hr>
+        <button name="option" value="0" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button name="option" value="1" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button name="option" value="3" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button name="option" value="2" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button name="option" value="4" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button name="option" value="5" class="button"><img src="icon/rename.png"/> Đổi tên</button>
+    </div>';
 
     if ($configs['page_list'] > 0 && $pages['total'] > 1) {
         echo '<hr>' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => 'index.php?dir=' . $dirEncode, PAGE_URL_START => 'index.php?dir=' . $dirEncode . '&page_list='));
     }
+    echo '</div>';
 }
 ?>
-
-</div>
-
-<div id="file-select-opt" class="list" style="display: none">
-    <button name="option" value="0" class="button"><img src="icon/copy.png"/> Sao chép</button>
-    <button name="option" value="1" class="button"><img src="icon/move.png"/> Di chuyển</button>
-    <button name="option" value="3" class="button"><img src="icon/zip.png"/> Zip</button>
-    <button name="option" value="2" class="button"><img src="icon/delete.png"/> Xoá</button>
-    <button name="option" value="4" class="button"><img src="icon/access.png"/> Chmod</button>
-    <button name="option" value="5" class="button"><img src="icon/rename.png"/> Đổi tên</button>
-</div>
 
 <script>
     $('#file-select-all').on('change', function () {
@@ -170,7 +169,7 @@ if ($count <= 0) {
     <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') ?>">&bull; Webdav</a></li>
     <li>
         <details>
-            <summary>-- Thư mục hiện tại --</summary>
+            <summary><i>__ Thư mục hiện tại __</i></summary>
             <hr>
             <a href="file.php?path=<?= $dir ?>" class="button"><img src="icon/info.png"/> Thông tin</a>
             <a href="file.php?act=rename&path=<?= $dir . $pages['paramater_1'] ?>" class="button"><img src="icon/rename.png"/> Đổi tên</a>

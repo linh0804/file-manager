@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 0,
-    "patch": 85,
-    "version": "1.0.85",
-    "message": "sửa lỗi import"
+    "patch": 86,
+    "version": "1.0.86",
+    "message": "update style"
 }

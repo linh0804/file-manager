@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf adminer-custom/
+rm -rf adminer-custom
 git clone https://github.com/pematon/adminer-custom --depth 1
 rm -rf adminer-custom/.git
 
@@ -11,28 +11,28 @@ cat > adminer-custom/index.php << 'EOF'
 
 function adminer_object()
 {
-    include_once "./plugins/plugin.php";
+    require_once "./plugins/plugin.php";
 
     foreach (glob("plugins/*.php") as $filename) {
-        include_once "./$filename";
+        require_once "./$filename";
     }
 
     if (file_exists("config.php")) {
-        include_once "config.php";
+        require_once "config.php";
     }
 
     $plugins = [
         new AdminerDatabaseHide(["mysql", "sys", "information_schema", "performance_schema"]),
         new AdminerSimpleMenu(),
-        new AdminerCollations(["ascii_general_ci", "utf8mb4_general_ci",  "utf8mb4_vietnamese_ci"]),
+        new AdminerCollations(["utf8mb4_general_ci",  "utf8mb4_vietnamese_ci"]),
         new AdminerTheme('default-green'),
     ];
 
     return new AdminerPlugin($plugins);
 }
 
-require './adminer.php';
+require_once './adminer.php';
 EOF
 
-rm -rf db/
+rm -rf db
 mv adminer-custom db

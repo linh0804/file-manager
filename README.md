@@ -10,6 +10,12 @@ Nếu có lỗi các bạn cứ báo trên repo này (phần `Issues`), hoặc l
 
 ## Cài đặt nhanh
 
+### Termux
+
+```
+curl -s https://raw.githubusercontent.com/ngatngay/file-manager/main/install_termux.sh | bash
+```
+
 ### Cài đặt bằng file
 
 Tạo một file php, dán code ở [file này](https://raw.githubusercontent.com/ngatngay/file-manager/main/install.txt) vào và chạy nó.

@@ -45,6 +45,7 @@ if (isset($_POST['format'])) {
                 file_put_contents($tempFile, $content);
 
                 @chmod('vendor/bin/php-cs-fixer', 0775);
+                @putenv('PHP_CS_FIXER_IGNORE_ENV=1');
                 $result = exec("vendor/bin/php-cs-fixer fix {$tempFile} --config {$configFile}");
 
                 if ($result) {

@@ -529,7 +529,7 @@ div.parent_box_edit {
 }
 
 textarea.box_edit, div#editor {
-    height: 70vh;
+    height: 75vh;
 }
 
 textarea.box_edit, textarea.box_edit_normal {
@@ -708,6 +708,7 @@ div.list div.search_replace input {
 }
 
 div.list div.input_action {
+    font-size: small;
     display: block;
 }
 

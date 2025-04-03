@@ -18,7 +18,6 @@ header('Pragma: no-cache');
 
 // session
 session_start();
-ob_start();
 
 // Check require function
 {

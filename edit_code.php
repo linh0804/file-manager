@@ -111,12 +111,6 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
     // <input type="checkbox" checked="checked" id="code_readonly" /> ReadOnly
     echo '</select>
-        <span style="float: right">';
-    if (ableFormatCode($fileExt)) {
-        echo '<button class="button" id="code_format">Format</button> ';
-    }
-    echo '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
-        </span>
         </div>
         <hr/>
         </div>
@@ -130,6 +124,13 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 <input type="submit" value="Lưu lại" />
                 <span style="margin-right: 12px"></span>
                 <input type="checkbox" id="code_check_php" /> Kiểm tra lỗi PHP
+                
+                <span style="float: right">';
+    if (ableFormatCode($fileExt)) {
+        echo '<button class="button" id="code_format">Format</button> ';
+    }
+    echo '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
+        </span>
             </div>
         </form>
         </div>

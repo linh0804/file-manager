@@ -131,6 +131,3 @@ echo '<div id="menuOverlay"></div><div id="boxOverlay"></div>';
 
 echo '</body>
 </html>';
-
-ob_end_flush();
-

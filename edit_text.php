@@ -42,11 +42,6 @@ if (!$file->isFile()) {
         <form action="javascript:void(0)" id="code_form" method="post">
             <span class="bull">&bull; </span>Nội dung:
 
-            <div style="display: inline-block; float: right">'
-                . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
-                . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
-            </div>
-            
             <div class="parent_box_edit">
                 <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content">'. PHP_EOL . htmlspecialchars($content) . '</textarea>
             </div>
@@ -55,6 +50,10 @@ if (!$file->isFile()) {
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>'.
                 ($isExecute && strtolower(getFormat($name)) == 'php' ? '<input type="checkbox" id="code_check_php"/> Kiểm tra lỗi' : '') . '
+                <div style="display: inline-block; float: right">'
+                    . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
+                    . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
+                </div>
             </div>
         </form>';
     echo '</div>';

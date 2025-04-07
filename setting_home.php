@@ -4,12 +4,6 @@ define('ACCESS', true);
 
 require_once '.init.php';
 
-$title = 'Sửa Trang chủ';
-
-require_once 'header.php';
-
-echo '<div class="title">' . $title . '</div>';
-
 $home = $_POST['home'] ?? cookie('fm_home', '');
 
 if (isset($_POST['submit'])) {
@@ -20,6 +14,12 @@ if (isset($_POST['submit'])) {
     
     goURL('index.php');
 }
+
+$title = 'Sửa Trang chủ';
+
+require_once 'header.php';
+
+echo '<div class="title">' . $title . '</div>';
 
 echo '<div class="list">';
 

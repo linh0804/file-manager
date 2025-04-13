@@ -2,7 +2,7 @@
     "require": {
         "php": ">=7.4.0",
         "friendsofphp/php-cs-fixer": "^3.49",
-        "ngatngay/ngatngay": "dev-main",
+        "ngatngay/ngatngay": "dev-main#9ac46a0dcee97f07dfe4f0329da4cb6dfbb76ea0",
         "sabre/dav": "dev-master"
     },
     "config": {

@@ -10,7 +10,7 @@ $action = request()->post('action');
 $path = (string) request()->post('path');
 $path = rawurldecode($path);
 
-if (!request()->isMethod('post')) {
+if (!request()->is_method('post')) {
     response(['status' => false,'msg' => 'method error'])->send();
 }
 

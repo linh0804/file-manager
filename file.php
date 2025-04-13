@@ -30,7 +30,7 @@ switch ($action) {
             $name = request()->post('name', basename($path));
             $newPath = dirname($path) . '/' . $name;
 
-            if (request()->hasPost('submit')) {    
+            if (request()->has_post('submit')) {    
                 echo '<div class="notice_failure">';
 
                 if (empty($name)) {

@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 0,
-    "patch": 90,
-    "version": "1.0.90",
+    "patch": 94,
+    "version": "1.0.94",
     "message": "php <= 7.4"
 }

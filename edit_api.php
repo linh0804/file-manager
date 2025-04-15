@@ -66,6 +66,7 @@ if (isset($_POST['format'])) {
         case 'yaml':
             $opt = [
                 //'--print-width=1000000',
+                '--tab-width=4',
                 '--quote-props=preserve'
             ];
             $res = runCommand('prettier ' . implode(' ', $opt) . ' ' . $path);

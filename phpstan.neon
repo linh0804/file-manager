@@ -1,6 +1,6 @@
 parameters:
-    phpVersion: 70400
-    level: 0
+    phpVersion: 80100
+    level: 2
     paths:
         - .
     excludePaths:
@@ -12,3 +12,8 @@ parameters:
         - icon/
         - js/
         - json/
+    ignoreErrors:
+        -
+            identifier: variable.undefined
+        -
+            identifier: constant.notFound

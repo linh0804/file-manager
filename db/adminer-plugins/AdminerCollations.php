@@ -32,13 +32,13 @@ class AdminerCollations
 
         ?>
 
-        <script <?php echo nonce(); ?>>
+        <script <?php echo Adminer\nonce(); ?>>
             (function(document) {
                 "use strict";
 
                 const characterSets = [
                     <?php
-                        echo "'(" . lang('collation') . ")'";
+                        echo "'(" . Adminer\lang('collation') . ")'";
 
                         foreach ($this->characterSets as $characterSet) {
                             echo ", '" . $characterSet . "'";

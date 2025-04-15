@@ -1,14 +1,14 @@
 {
     "require": {
-        "php": ">=7.4.0",
-        "friendsofphp/php-cs-fixer": "^3.49",
-        "ngatngay/ngatngay": "v7.4",
+        "php": ">=8.1.0",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "ngatngay/ngatngay": "dev-main",
         "sabre/dav": "dev-master"
     },
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.4"
+            "php": "8.1.0"
         }
     }
 }

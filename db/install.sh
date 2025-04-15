@@ -12,3 +12,4 @@ cd adminer-plugins
 
 curl -O -L https://raw.githubusercontent.com/vrana/adminer/refs/heads/master/plugins/database-hide.php
 curl -O -L https://raw.githubusercontent.com/vrana/adminer-plugins-pematon/refs/heads/master/AdminerCollations.php
+curl -O -L https://raw.githubusercontent.com/vrana/adminer-plugins-pematon/refs/heads/master/AdminerJsonPreview.php

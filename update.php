@@ -1,5 +1,7 @@
 <?php
 
+exit('cho nguoi bao tri');
+
 define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 

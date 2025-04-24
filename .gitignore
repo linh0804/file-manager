@@ -5,6 +5,7 @@ vendor/
 tmp/*
 !tmp/.htaccess
 
+.config.php
 error_log
 config.inc.php
 config.db.inc.php

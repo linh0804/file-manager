@@ -2,6 +2,17 @@
 
 use ngatngay\arr;
 use ngatngay\fs;
+use ngatngay\config;
+
+function config() {
+    static $instance = null;
+
+    if ($instance === null) {
+        $instance = new config(rootPath . '/.config.php');
+    }
+
+    return $instance;
+}
 
 function request() {
     return ngatngay\request();

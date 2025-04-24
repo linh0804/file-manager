@@ -16,7 +16,7 @@ class AdminerCollations
     /**
      * @param array $characterSets Array of allowed character sets.
      */
-    public function __construct(array $characterSets = ["utf8mb4_general_ci"])
+    public function __construct(array $characterSets = ["utf8mb4_general_ci", "ascii_general_ci"])
     {
         $this->characterSets = $characterSets;
     }
@@ -38,15 +38,17 @@ class AdminerCollations
 
                 const characterSets = [
                     <?php
-                        $data = [];
+                        echo "'(" . Adminer\lang('collation') . ")'";
+
                         foreach ($this->characterSets as $characterSet) {
-                            $data[] = "'" . $characterSet . "'";
+                            echo ", '" . $characterSet . "'";
                         }
-                        echo implode(',', $data);
                     ?>
                 ];
 
-                document.addEventListener("DOMContentLoaded", function () {
+                document.addEventListener("DOMContentLoaded", init, false);
+
+                function init() {
                     var selects = document.querySelector("datalist[id='collations']");
                     var html = "";
 
@@ -57,8 +59,48 @@ class AdminerCollations
                     if (selects) {
                         selects.innerHTML = html;
                     }
-                }, false);
+
+                    var selects = document.querySelectorAll("select[name='Collation'], select[name*='collation']");
+
+                    for (var i = 0; i < selects.length; i++) {
+                        replaceOptions(selects[i]);
+                    }
+                }
+
+                function replaceOptions(select) {
+                    var selectedSet = getSelectedSet(select);
+                    var html = '';
+                    var hasSelected = false;
+
+                    for (var i = 0; i < characterSets.length; i++) {
+                        if (characterSets[i] === selectedSet) {
+                            hasSelected = true;
+                            html += '<option selected="selected">' + characterSets[i] + '</option>';
+                        } else {
+                            html += '<option>' + characterSets[i] + '</option>';
+                        }
+                    }
+
+                    if (!hasSelected && selectedSet !== "") {
+                        html += '<option selected="selected">' + selectedSet + '</option>';
+                    }
+
+                    select.innerHTML = html;
+                }
+
+                function getSelectedSet(select) {
+                    var options = select.getElementsByTagName("option");
+
+                    for (var i = 0; i < options.length; i++) {
+                        if (options[i].selected) {
+                            return options[i].innerHTML.trim();
+                        }
+                    }
+
+                    return "";
+                }
             })(document);
+
         </script>
 
         <?php

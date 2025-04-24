@@ -129,3 +129,34 @@ function fileAjaxDelete(element) {
     }
   });
 }
+
+// show recent edit
+function recent_add(path) {
+   var data = $.lsData.get('file_manager.edit.recent');
+
+   if (recent) {
+       data.push(path);
+   } else {
+       data = [path];
+   }
+   
+   data = [...new Set(data)];
+   
+   $.lsData.set('file_manager.edit.recent', data);
+}
+
+var recent = $.lsData.get('file_manager.edit.recent');
+if (recent) {
+    var html = '<ul class="list_file">';
+    recent.reverse().forEach(e => {
+        html = html + `<li class="normal">
+            <a href="/">
+                &bull;
+                ${e}
+            </a>
+        </li>`;
+    });
+    html = html + '</ul>';
+    
+    $('#edit-recent').html(html);
+}

@@ -1,9 +1,15 @@
 <?php
 
+use function ngatngay\request;
+
 define('ACCESS', true);
 
 require '.init.php';
 
+$path = base64_decode((string) request()->get('path'));
+$file = new SplFileInfo($path);
+$dir = dirname($file->getPathname());
+$name = basename($file->getPathname());
 $title = 'Sửa tập tin';
 
 require 'header.php';
@@ -77,6 +83,10 @@ if (!$file->isFile()) {
  ?>
     
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          recent_add('<?= $file->getPathname() ?>');
+        });
+
         const codeCheckMessageElement = document.getElementById("code_check_message");
         const codeCheckPHPElement = document.getElementById("code_check_php");
 

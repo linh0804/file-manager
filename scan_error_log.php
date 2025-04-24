@@ -58,7 +58,7 @@ if (
         
         echo '<li>
             <span class="bull">&bull;</span>
-            <a style="color: red" href="edit_text.php?dir=' . rawurlencode(dirname($file->getPathname())) . '&name=' . $file->getFilename() . '" target="_blank">'
+            <a style="color: red" href="edit_text.php?path=' . base64_encode($file->getPathname()) . '" target="_blank">'
             . htmlspecialchars(ltrim(
                 str_replace_first($dir, '', $file->getPathname())
             , '/'))

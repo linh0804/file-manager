@@ -211,7 +211,7 @@ if (
                             echo '<div class="item">';
                             echo '<div class="item-title">';
                             echo '<span class="bull">&bull;</span>
-                                <a style="color: red" target="_blank" href="edit_text.php?dir=' . rawurlencode(dirname($file_path)) . '&name=' . $file_name . '">'
+                                <a style="color: red" target="_blank" href="edit_text.php?path=' . base64_encode($file_path) . '">'
                                     . htmlspecialchars($file_path_sort)
                                 . '</a>';
                             echo '</div>';

@@ -94,7 +94,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             Tập tin:
             <strong class="file_name_edit">' . $name . '</strong><hr />
             <div>
-                <a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">
+                <a href="edit_text.php?path=' . base64_encode($file->getPathname()) . '">
                     <button class="button">Chế độ sửa văn bản</button>
                 </a>
                 <button onclick="fullScreen()" class="button">F11</button>

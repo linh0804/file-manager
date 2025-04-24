@@ -15,7 +15,7 @@ $menuToggle = '';
     <link rel="icon" type="image/x-icon" href="icon/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
 
-    <link rel="stylesheet" type="text/css" href="<?= asset('css/style.css') ?>" media="all,handheld" />
+    <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     
     <script src="https://cdn.ngatngay.net/js/helper/dist/jquery.js"></script>
     <script src="<?= asset('js/script.js') ?>" defer></script>
@@ -59,7 +59,7 @@ $menuToggle = '';
 <?php if (isLogin && version_compare((string) cookie('fm_check_update'), (string) localVersion, '>')) { ?>
     <div class="tips" style="margin-top: 0 !important">
         <img src="icon/tips.png" alt="">
-        Có phiên bản mới! <a href="update.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!
+        Có phiên bản mới! <a href="reinstall.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!
     </div>
 <?php } ?>
 

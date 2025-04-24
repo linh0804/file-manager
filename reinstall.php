@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 
             @unlink($file);
 
-            echo '<div class="list">Cài đặt lại thành công</div>';
+            goURL('index.php');
         } else {
             echo '<div class="list">Lỗi</div>';
         }

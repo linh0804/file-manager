@@ -5,7 +5,7 @@
     "build": "rollup --config rollup.config.js"
   },
   "dependencies": {
-    "@codemirror/commands": "^6.8.0",
+    "@codemirror/commands": "^6.8.1",
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.3",
@@ -13,15 +13,16 @@
     "@codemirror/lang-php": "^6.0.1",
     "@codemirror/lang-sass": "^6.0.2",
     "@codemirror/lang-sql": "^6.8.0",
-    "@codemirror/language": "^6.10.8",
+    "@codemirror/language": "^6.11.0",
     "@codemirror/search": "^6.5.10",
     "@codemirror/state": "^6.5.2",
-    "@codemirror/view": "6.36.4",
+    "@codemirror/view": "6.36.5",
     "@lezer/highlight": "^1.2.1",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "cm6-theme-material-dark": "^0.2.0",
     "codemirror": "^6.0.1",
-    "rollup": "^4.35.0"
-  }
+    "rollup": "^4.40.0"
+  },
+  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
 }

@@ -75,26 +75,9 @@ if (isLogin) {
     $menuToggle .= '</ul>';
 
     // file list
-    $out = '<div class="title">Danh sách</div>';
-    if ($path) {
-        $current_path = is_file($path) ? dirname($path) : $path;
-        $list = getListDirIndex($current_path);
-        $out .= '<ul class="list_file">';
-        $out .= '<li class="normal">
-            <a href="index.php?dir=' . dirname($current_path) . '">
-                <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
-                <strong class="back">...</strong>
-            </a>
-        </li>';
-        foreach ($list as $file) {
-            $filePath = $current_path . '/' . $file['name']; 
-            $out .= '<li class="folder">
-                <div>' . getFileLink($filePath) . '</div>
-            </li>';
-        }
-        $out .= '</ul>';
-        $menuToggle .= $out;
-    }
+    $menuToggle .= '<div class="title">Sửa gần đây</div>';
+    $menuToggle .= '<div id="edit-recent"></div>';
+    // end filelist
 
     $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
         run on: ' . get_current_user() . ' (' . getmyuid() . ')

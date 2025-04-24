@@ -795,7 +795,7 @@ function printFileActions(SplFileInfo $file) {
         echo '<a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/unzip.png"/> Xem</a>
           <a href="file_unzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/unzip.png"/> Giải nén</a> ';
     } elseif (isFormatText($name) || isFormatUnknown($name)) {
-        echo '<a href="edit_text.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/edit.png"/> Sửa văn bản</a>
+        echo '<a href="edit_text.php?path=' . base64_encode($path) . '" class="button"><img src="icon/edit.png"/> Sửa văn bản</a>
           <a href="edit_code.php?dir=' . $dirEncode . '&name=' . $name . '" class="button"><img src="icon/edit_text_line.png"/> Sửa code</a>
           <a href="edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/edit_text_line.png"/> Sửa theo dòng</a>
           <a href="view_code.php?dir=' . $dirEncode . '&name=' . $name . '" class="button"><img src="icon/columns.png"/> Xem code</a> ';
@@ -1025,7 +1025,7 @@ function getFileLink($path) {
         }
         
         if (strtolower($file->getFilename()) == 'error_log' || $isEdit) {
-            $fileLink = 'edit_text.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+            $fileLink = 'edit_text.php?path=' . base64_encode($file->getPathname());
         } elseif (in_array($file->getExtension(), $formats['zip'])) {
             $fileLink = 'file_unzip.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
         } else {

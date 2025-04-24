@@ -37,7 +37,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     $file = new SplFileInfo($path);
 
     $content = file_get_contents($path);
-    $actionEdit = 'edit_api.php?dir=' . $dirEncode . '&name=' . $name;
+    $actionEdit = 'edit_api.php?path=' . base64_encode($path);
     $fileExt = getFormat($name);
 
     $codeLang = 'text';

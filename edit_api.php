@@ -4,6 +4,11 @@ define('ACCESS', true);
 
 require '.init.php';
 
+$path = base64_decode((string) request()->get('path'));
+$file = new SplFileInfo($path);
+$dir = dirname($file->getPathname());
+$name = basename($file->getPathname());
+
 $data = [
     'status' => false,
     'message' => 'error'

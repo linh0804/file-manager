@@ -33,7 +33,7 @@ if (!$file->isFile()) {
     $dir = processDirectory($dir);
     $content = file_get_contents($path);
     $isExecute = isFunctionExecEnable();
-    $actionEdit = 'edit_api.php?dir=' . $dirEncode . '&name=' . $name;
+    $actionEdit = 'edit_api.php?path=' . base64_encode($path);
 
     echo '<div class="list">
         <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
@@ -41,7 +41,7 @@ if (!$file->isFile()) {
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong><hr/>
         </div>
         <div>
-            <a href="edit_code.php?dir=' . $dirEncode . '&name=' . $name . '">
+            <a href="edit_code.php?dir=' . $dir . '&name=' . $name . '">
                 <button class="button">Chế độ sửa code</button>
             </a><hr />
         </div>

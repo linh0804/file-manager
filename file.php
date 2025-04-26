@@ -62,6 +62,7 @@ switch ($action) {
 
         require 'footer.php';
         break;
+
     default:
         if ($path) {
             $title = 'Thông tin thư mục';

@@ -47,13 +47,13 @@ echo '<div class="list">';
 
 echo '<form method="post">
     <span>Thư mục:</span><br />
-    <input type="text" name="folder" value="' . htmlspecialchars($folder) . '" /><br />
+    <input type="text" name="folder" value="' . htmlspecialchars((string) $folder) . '" /><br />
 
     <span>PHP BINARY:</span><br />
-    <input type="text" name="php" value="' . htmlspecialchars($php) . '" /><br />
+    <input type="text" name="php" value="' . htmlspecialchars((string) $php) . '" /><br />
 
     <span>Lệnh:</span><br />
-    <input type="text" name="command" value="' . htmlspecialchars($command) . '" /><br />
+    <input type="text" name="command" value="' . htmlspecialchars((string) $command) . '" /><br />
 
    <input type="submit" name="submit" value="OK" />
 </form>';

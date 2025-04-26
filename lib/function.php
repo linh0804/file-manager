@@ -8,7 +8,10 @@ function config() {
     static $instance = null;
 
     if ($instance === null) {
-        $instance = new config(rootPath . '/.config.php');
+        $instance = new config([
+            'driver' => 'php_file',
+            'file' => rootPath . '/.config.php'
+        ]);
     }
 
     return $instance;

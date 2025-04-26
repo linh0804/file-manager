@@ -2,22 +2,19 @@
 
 define('ACCESS', true);
 
-require_once '.init.php';
+require '.init.php';
 
-$home = $_POST['home'] ?? cookie('fm_home', '');
+$home = $_POST['home'] ?? config()->get('home', '');
 
 if (isset($_POST['submit'])) {
-    // save 30 day
-    cookie(['fm_home' => $home], [
-        'expires' => time() + 86400 * 30
-    ]);
+    config()->set('home', $home);
     
     goURL('index.php');
 }
 
 $title = 'Sửa Trang chủ';
 
-require_once 'header.php';
+require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -32,4 +29,4 @@ echo '<form method="post">
 
 echo '</div>';
 
-require_once 'footer.php';
+require 'footer.php';

@@ -12,7 +12,7 @@ echo '<div class="title">' . $title . '</div>';
 
 echo '<style>
     #find_list {
-        margin: 5px;
+        margin: 5px 0;
     }
     
     #find_list .item {
@@ -68,17 +68,25 @@ if (
             Thay thế:<br />
             <input type="text" name="replace" value="' . htmlspecialchars($replace) . '" style="width: 80%" /><br />
 
+            <label>
             <input type="checkbox" name="case" ' . ($case ? 'checked="checked"' : '') . ' />
             Phân biệt chữ hoa<br />
-
+            </label>
+            
+            <label>
             <input type="checkbox" name="only_dir" ' . ($only_dir ? 'checked="checked"' : '') . ' />
             Chỉ tìm tên thư mục<br />
-
+            </label>
+            
+            <label>
             <input type="checkbox" name="only_file" ' . ($only_file ? 'checked="checked"' : '') . ' />
             Chỉ tìm tên file<br />
-            
+            </label>
+
+            <label>
             <input type="checkbox" name="replaceCheck" />
             Thay thế<br><br>
+            </label>
 
             Loại trừ theo biểu thức:<br />
             <textarea name="exclude" rows="5">' . htmlspecialchars($exclude) . '</textarea><br />

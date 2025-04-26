@@ -9,12 +9,18 @@ if (!isLogin) {
     goURL('login.php');
 }
 
-$dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : cookie('fm_home', $_SERVER['DOCUMENT_ROOT']);
+$dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
 $dir = processDirectory($dir);
 $title = 'Danh sách';
 $dirEncode = rawurlencode($dir);
 
 require 'header.php';
+
+/*
+dump(is_file($dir));
+dump(is_dir($dir));
+dump(is_link($dir));
+*/
 
 if (!file_exists($dir)) {
     echo '<div class="notice_failure">Đường dẫn không tồn tại!</div>';

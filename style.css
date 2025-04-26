@@ -39,6 +39,10 @@ pre, textarea {
     tab-size: 4;
 }
 
+label > input {
+    vertical-align: middle;
+}
+
 input[type=file] {
     border: 1px solid #cecece;
     padding: 0;

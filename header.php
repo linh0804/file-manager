@@ -45,7 +45,7 @@ $menuToggle = '';
         <?php } ?>
         <li><a href="index.php"><img src="icon/home.png" /></a></li>
         <?php if (isLogin) { ?>
-            <li><a href="db/adminer-en.php"><img src="icon/database.png"/></a></li>
+            <li><a href="db/"><img src="icon/database.png"/></a></li>
             <li><a href="setting.php"><img src="icon/setting.png" /></a></li>
             <li><a href="logout.php"><img src="icon/exit.png" /></a></li>
         <?php } ?>

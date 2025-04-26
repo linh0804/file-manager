@@ -1,7 +1,7 @@
 VERSION="5.2.1"
 
 # isset($_COOKIE["fm_php"]) or exit;
-curl -O -L https://github.com/vrana/adminer/releases/download/v${VERSION}/adminer-${VERSION}-en.php
+#curl -o adminer-en -L https://github.com/vrana/adminer/releases/download/v${VERSION}/adminer-${VERSION}-en.php
 
 # theme
 curl -O -L https://raw.githubusercontent.com/vrana/adminer/refs/heads/master/designs/flat/adminer.css

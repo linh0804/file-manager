@@ -5,10 +5,7 @@ define('ACCESS', true);
 require '.init.php';
 
 $title = 'Cài đặt lại Manager!!!';
-
-require 'header.php';
-
-echo '<div class="title">' . $title . '</div>';
+$error = '';
 
 if (isset($_POST['submit'])) {
     $file = 'tmp/manager-reinstall.zip';
@@ -24,11 +21,19 @@ if (isset($_POST['submit'])) {
 
             goURL('index.php');
         } else {
-            echo '<div class="list">Lỗi</div>';
+            $error = '<div class="list">Lỗi</div>';
         }
     } else {
-        echo '<div class="list">Lỗi! Không thể tải bản  cập nhật</div>';
+        $error = '<div class="list">Lỗi! Không thể tải bản  cập nhật</div>';
     }
+}
+
+require 'header.php';
+
+echo '<div class="title">' . $title . '</div>';
+
+if ($error) {
+    echo $error;
 } else {
     echo '<div class="list">
         <span>Cài đặt lại Manager? Bạn phải tự chịu rủi ro khi thực hiện thao tác này!!!</span><hr />

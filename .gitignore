@@ -8,11 +8,6 @@ tmp/*
 .config.php
 error_log
 config.inc.php
-config.db.inc.php
-bookmark.json
-login_fail.lock
 
 composer.phar
 composer.lock
-package-lock.json
-yarn.lock

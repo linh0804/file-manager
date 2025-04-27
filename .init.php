@@ -7,6 +7,7 @@ defined('ACCESS') or exit('Not access');
 @ini_set('max_execution_time', 0);
 @ini_set('log_errors', 'On');
 @ini_set('error_log', __DIR__ . '/error_log');
+@ini_set('opcache.enable', false);
 
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);
@@ -45,11 +46,7 @@ define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
 define('baseUrl', requestScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . (isBuiltinServer ? '' : '/' . baseFolder));
 
 // load thu vien
-$autoload = rootPath . '/vendor/autoload.php';
-if (file_exists($autoload)) {
-    require_once $autoload;
-}
-
+require rootPath . '/vendor/autoload.php';
 require rootPath . '/lib/function.php';
 require rootPath . '/lib/zip.class.php';
 
@@ -89,7 +86,7 @@ define('pathDatabase', rootPath . '/config.db.inc.php');
 const LOGIN_USERNAME_DEFAULT = 'Admin';
 const LOGIN_PASSWORD_DEFAULT = '12345';
 
-const LOGIN_LOCK = rootPath . '/login_fail.lock';
+const LOGIN_LOCK = 'login_fail';
 const LOGIN_MAX = 5;
 
 const PAGE_LIST_DEFAULT = 1000;
@@ -320,14 +317,33 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
     exit();
 }
 
-function encodePath($path) {
+function encodePath($path)
+{
     return base64_encode($path);
 }
-function decodePath($path) {
-    //$path = 
+function decodePath($path)
+{
+    //$path =
     $path = str_replace('\\', '/', $path);
 }
 
 $path = processDirectory((string) $dir, true) . processName((string) $name);
 $path = file_exists($path) ? $path : '';
 $file = new SplFileInfo($path);
+
+// bookmark
+$add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';
+if (!empty($add_bookmark)) {
+    $add_bookmark = rawurldecode($add_bookmark);
+
+    if (is_dir($add_bookmark)) {
+        bookmark_add($add_bookmark);
+        goURL('index.php?dir=' . $add_bookmark);
+    }
+}
+
+$delete_bookmark = isset($_GET['delete_bookmark']) ? trim($_GET['delete_bookmark']) : '';
+if (!empty($delete_bookmark)) {
+    bookmark_delete(rawurldecode($delete_bookmark));
+    goURL('index.php');
+}

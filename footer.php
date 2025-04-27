@@ -16,30 +16,7 @@ if (isLogin) {
     </ul>';
     
     // bookmark
-    require __DIR__ . '/lib/bookmark.class.php';
-
-    define('BOOKMARK_FILE', __DIR__ . '/bookmark.json');
-
-    $Bookmark = new Bookmark(BOOKMARK_FILE);
-
-    $add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';
-    if (!empty($add_bookmark)) {
-        $add_bookmark = rawurldecode($add_bookmark);
-
-        if (is_dir($add_bookmark)) {
-            $Bookmark->add($add_bookmark);
-            goURL('index.php?dir=' . rawurlencode($add_bookmark));
-        }
-    }
-
-    $delete_bookmark = isset($_GET['delete_bookmark']) ? trim($_GET['delete_bookmark']) : '';
-    if (!empty($delete_bookmark)) {
-        $Bookmark->delete(rawurldecode($delete_bookmark));
-        goURL('index.php');
-    }
-
-    $bookmarks = array_reverse($Bookmark->get());
-
+    $bookmarks = array_reverse(bookmark_get());
     $menuToggle .= '<style>
     ul.list li {
         white-space: normal;
@@ -55,7 +32,7 @@ if (isLogin) {
     ) {
         $menuToggle .= '<li>
         <img src="icon/create.png" />
-        <a href="index.php?add_bookmark=' . rawurlencode($dir) . '">
+        <a href="index.php?add_bookmark=' . $dir . '">
             Thêm thư mục hiện tại
         </a>
         </li>';
@@ -67,7 +44,7 @@ if (isLogin) {
         <a href="index.php?dir=' . rawurlencode($bookmark) . '">
             ' . htmlspecialchars(dirname($bookmark)) . '/<b>' . htmlspecialchars(basename($bookmark)) . '</b>
         </a>
-        <a href="index.php?delete_bookmark=' . rawurlencode($bookmark) . '">
+        <a href="index.php?delete_bookmark=' . $bookmark . '">
             <span style="color: red">[X]</span>
         </a>
         </li>';

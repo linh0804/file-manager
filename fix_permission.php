@@ -1,5 +1,7 @@
 <?php
 
+use function ngatngay\request;
+
 define('ACCESS', true);
 
 require_once '.init.php';
@@ -33,10 +35,10 @@ echo '<div class="list">
    Công cụ này đã được sinh ra ^^!
 </div>';
 
-$folder = $_POST['folder'] ?? $dir;
-$own = $_POST['own'] ?? get_current_user();
-$folder_mode = $_POST['folder_mode'] ?? 755;
-$file_mode = $_POST['file_mode'] ?? 644;
+$folder = (string) request()->post('folder', $dir);
+$own = (string) request()->post('own', get_current_user());
+$folder_mode = (string) request()->post('folder_mode', 755);
+$file_mode = (string) request()->post('file_mode', 644);
 
 echo '<div class="list">';
 

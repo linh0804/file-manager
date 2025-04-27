@@ -103,8 +103,7 @@ function hasNewVersion()
 
 function goURL($url)
 {
-    header('Location:' . $url);
-    exit(0);
+    ngatngay\redirect($url);
 }
 
 
@@ -880,30 +879,6 @@ function cookie(
     }
 }
 
-// auth
-function getLoginFail() {
-    if (file_exists(LOGIN_LOCK)) {
-        $timeDifference = time() - filemtime(LOGIN_LOCK);
-    
-        // reset 30 phut
-        if ($timeDifference >= 1800) {
-            removeLoginFail();
-        }
-    }
-
-    return (int) @file_get_contents(LOGIN_LOCK);
-}
-function increaseLoginFail() {
-    file_put_contents(LOGIN_LOCK, getLoginFail() + 1);
-}
-function removeLoginFail() {
-    @unlink(LOGIN_LOCK);
-}
-function ableLogin() {
-    return getLoginFail() < LOGIN_MAX;
-}
-
-
 function sortNatural(&$array) {
     usort($array, function($a, $b) {
         // Nếu cả hai chuỗi đều bắt đầu bằng ký tự đặc biệt hoặc đều không bắt đầu bằng ký tự đặc biệt
@@ -1076,3 +1051,5 @@ function edit_recent_add($path) {
     config()->set('edit_recent', $old);
 }
 
+require 'auth.fn.php';
+require 'bookmark.fn.php';

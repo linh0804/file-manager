@@ -1066,3 +1066,13 @@ function getFileLink($path) {
         $nameDisplay
     );
 }
+
+function edit_recent_add($path) {
+    $old = config()->get('edit_recent', []);
+    $old[] = $path;
+    $old = array_unique($old);
+    $old = array_reverse($old);
+    $old = array_slice($old, 0, 100);
+    config()->set('edit_recent', $old);
+}
+

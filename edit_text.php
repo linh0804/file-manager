@@ -34,6 +34,7 @@ if (!$file->isFile()) {
     $content = file_get_contents($path);
     $isExecute = isFunctionExecEnable();
     $actionEdit = 'edit_api.php?path=' . base64_encode($path);
+    edit_recent_add($path);
 
     echo '<div class="list">
         <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>

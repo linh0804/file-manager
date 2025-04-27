@@ -1,8 +1,8 @@
 {
     "repo": "file-manager-main",
     "major": 1,
-    "minor": 0,
-    "patch": 99,
-    "version": "1.0.99",
-    "message": "php 8.1.0"
+    "minor": 1,
+    "patch": 0,
+    "version": "1.1.0",
+    "message": "update"
 }

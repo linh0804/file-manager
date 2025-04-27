@@ -76,7 +76,17 @@ if (isLogin) {
 
     // file list
     $menuToggle .= '<div class="title">Sửa gần đây</div>';
-    $menuToggle .= '<div id="edit-recent"></div>';
+    $menuToggle .= '<ul class="list">';
+    
+    foreach (config()->get('edit_recent', []) as $i) {
+        $menuToggle .= '<li>
+            <a href="edit_text.php?path=' . base64_encode($i) . '">
+            ' . htmlspecialchars(dirname($i)) . '/<b>' . htmlspecialchars(basename($i)) . '</b>
+            </a>
+        </li>';
+    }
+    
+    $menuToggle .= '</ul>';
     // end filelist
 
     $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">

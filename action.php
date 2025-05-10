@@ -27,7 +27,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         <div class="list"><span>Không có hành động</span></div>
         <div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
         </ul>';
 } elseif (count($entry) <= 0) {
     include_once 'header.php';
@@ -36,7 +36,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
         <div class="list"><span>Không có lựa chọn</span></div>
         <div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
         </ul>';
 } else {
     $dir = processDirectory($dir);
@@ -83,7 +83,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             } elseif (!copys($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Sao chép thất bại';
             } else {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
 
             echo '</div>';
@@ -122,7 +122,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             } elseif (!moves($entry, $dir, processDirectory($_POST['path']))) {
                 echo 'Di chuyển thất bại';
             } else {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
 
             echo '</div>';
@@ -153,10 +153,10 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             if (!rrms($entry, $dir)) {
                 echo '<div class="notice_failure">Xóa thất bại</div>';
             } else {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
         } elseif (isset($_POST['not_accept'])) {
-            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
         }
 
         echo $entryHtmlList;
@@ -196,7 +196,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             } elseif (!zips($dir, $entry, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']))) {
                 echo 'Nén zip thất bại';
             } else {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
 
             echo '</div>';
@@ -234,7 +234,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             } elseif (!chmods($dir, $entry, $_POST['folder'], $_POST['file'])) {
                 echo 'Chmod thất bại';
             } else {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
 
             echo '</div>';
@@ -330,7 +330,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             }
 
             if (!$isFailed && $isSucceed) {
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             }
         }
 
@@ -364,7 +364,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
 
     echo '<div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
         </ul>';
 }
 

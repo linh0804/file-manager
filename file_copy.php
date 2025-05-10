@@ -33,7 +33,7 @@ if (!$file->isFile()) {
         } elseif (!@copy($dir . '/' . $name, $newPath)) {
             echo 'Sao chép tập tin thất bại';
         } else {
-            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
         }
 
         echo '</div>';

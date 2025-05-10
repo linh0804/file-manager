@@ -1,32 +1,15 @@
-<?php define('ACCESS', true);
+<?php
 
-    include_once '.init.php';
+define('ACCESS', true);
 
-    if (isLogin) {
-        $title = 'Tải tập tin';
+require '.init.php';
 
-        if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
-            include_once 'header.php';
+$title = 'Tải tập tin';
 
-            echo '<div class="title">' . $title . '</div>';
-            echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
-            <div class="title">Chức năng</div>
-            <ul class="list">
-                <li><img src="icon/list.png"/> <a href="index.php">Danh sách</a></li>
-            </ul>';
+check_path($path, 'file');
 
-            include_once 'footer.php';
-        } else {
-            $dir = processDirectory($dir);
-            $path = $dir . '/' . $name;
-
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: inline; filename=' . $name);
-            header('Content-Length: ' . filesize($path));
-            readfile($path);
-        }
-    } else {
-        goURL('login.php');
-    }
-
-?>
+// down
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: inline; filename=' . basename($path));
+header('Content-Length: ' . filesize($path));
+readfile($path);

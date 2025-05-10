@@ -31,7 +31,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
         else if (!movedir($dir . '/' . $name, processDirectory($_POST['path'])))
             echo 'Di chuyển thư mục thất bại';
         else
-            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
 
         echo '</div>';
     }

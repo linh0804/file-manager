@@ -21,7 +21,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     echo '<div class="list"><span>Tập tin không phải zip</span></div>
         <div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+            <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
         </ul>';
 } else {
     $dir = processDirectory($dir);
@@ -48,7 +48,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                     @unlink($dir . '/' . $name);
                 }
 
-                goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
             } else {
                 echo 'Giải nén tập tin lỗi';
             }

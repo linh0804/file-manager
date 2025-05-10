@@ -20,7 +20,7 @@ exec > /dev/null 2>&1
 CURRENT_DIR=\$PWD
 cd $MANAGER_DIR
 PHP_CLI_SERVER_WORKERS=4 nohup php -S $MANAGER_ADDR &> /dev/null &
-xdg-open "http://$MANAGER_ADDR/index.php?dir=\$CURRENT_DIR"
+xdg-open "http://$MANAGER_ADDR/index.php?path=\$CURRENT_DIR"
 EOF
 
 chmod +x $MANAGER_BIN

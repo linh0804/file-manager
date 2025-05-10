@@ -6,21 +6,9 @@ define('ACCESS', true);
 
 require '.init.php';
 
-$dir = processDirectory($dir);
 $title = 'Tải lên tập tin';
 
-if (!$file->isDir()) {
-    require 'header.php';
-    echo '<div class="title">' . $title . '</div>';
-
-    echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
-    <div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
-    </ul>';
-    require 'footer.php';
-    exit;
-}
+check_path($path);
 
 if (isset($_FILES['file'])) {
     $data = [];
@@ -30,7 +18,7 @@ if (isset($_FILES['file'])) {
         if ($_FILES['file']['error'] == UPLOAD_ERR_INI_SIZE) {
             $data['error'] = 'Tập tin ' . $_FILES['file']['name'] . ' vượt quá kích thước cho phép';
         } else {
-            $newName = $dir . '/' . $_FILES['file']['name'];
+            $newName = $path . '/' . $_FILES['file']['name'];
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $newName)) {
                 $data['error'] = '';
@@ -41,14 +29,14 @@ if (isset($_FILES['file'])) {
     response($data)->send();
 }
 
-$action = 'upload.php?dir=' . $dirEncode;
+$action = 'upload.php?path=' . $path;
 
 require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
 echo '<div class="list">
-  <span>' . printPath($dir, true) . '</span><hr/>
+  <span>' . printPath($path, true) . '</span><hr/>
   <form enctype="multipart/form-data">        
     <div id="fileList"></div>
     <input id="files" type="file" multiple style="display:none">
@@ -58,14 +46,9 @@ echo '<div class="list">
     <br>
     <button id="buttonUpload" class="button"><img src="icon/upload.png" alt=""/> Tải lên</button>
   </form>
-</div>
+</div>';
 
-<div class="title">Chức năng</div>
-<ul class="list">
-  <li><img src="icon/create.png" alt=""/> <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tạo mới</a></li>
-  <li><img src="icon/import.png" alt=""/> <a href="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Nhập khẩu tập tin</a></li>
-  <li><img src="icon/list.png" alt=""/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-</ul>';
+show_back();
 
 ?>
 

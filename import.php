@@ -72,14 +72,9 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
             <input type="text" name="url[]" size="18"/><br/>
             <input type="submit" name="submit" value="Nhập khẩu"/>
         </form>
-    </div>
+    </div>';
 
-    <div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/create.png"/> <a href="create.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tạo mới</a></li>
-        <li><img src="icon/upload.png"/> <a href="upload.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Tải lên tập tin</a></li>
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
+    show_back();
 }
 
 require 'footer.php';

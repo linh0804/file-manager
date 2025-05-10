@@ -30,7 +30,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         } elseif (!@rename($dir . '/' . $name, processDirectory($_POST['path']) . '/' . $name)) {
             echo 'Di chuyển tập tin thất bại';
         } else {
-            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
         }
 
         echo '</div>';

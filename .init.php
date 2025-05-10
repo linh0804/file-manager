@@ -1,5 +1,7 @@
 <?php
 
+use function ngatngay\request;
+
 defined('ACCESS') or exit('Not access');
 
 @ini_set('display_errors', true);
@@ -327,9 +329,42 @@ function decodePath($path)
     $path = str_replace('\\', '/', $path);
 }
 
-$path = processDirectory((string) $dir, true) . processName((string) $name);
-$path = file_exists($path) ? $path : '';
+$path = rawurldecode((string) request()->get('path'));
 $file = new SplFileInfo($path);
+
+// referer
+function removeRefererParam(string $url): string {
+    // Parse URL
+    $parts = parse_url($url);
+
+    // Nếu không có query thì trả nguyên
+    if (!isset($parts['query'])) {
+        return $url;
+    }
+
+    // Parse các tham số query
+    parse_str($parts['query'], $queryParams);
+
+    // Xoá tham số 'referer'
+    unset($queryParams['referer']);
+
+    // Build lại query string
+    $newQuery = http_build_query($queryParams);
+
+    // Build lại URL
+    $cleanUrl = $parts['path'];
+    if ($newQuery) {
+        $cleanUrl .= '?' . $newQuery;
+    }
+
+    return $cleanUrl;
+}
+
+$referer_qs = base64_encode(removeRefererParam(request()->get_uri()));
+define('referer_qs', 'referer=' . $referer_qs);
+
+$referer = (string) request()->get('referer');
+define('referer', base64_decode($referer));
 
 // bookmark
 $add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';
@@ -338,7 +373,7 @@ if (!empty($add_bookmark)) {
 
     if (is_dir($add_bookmark)) {
         bookmark_add($add_bookmark);
-        goURL('index.php?dir=' . $add_bookmark);
+        goURL('index.php?path=' . $add_bookmark);
     }
 }
 

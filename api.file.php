@@ -21,7 +21,7 @@ switch ($action) {
         response([
             'status' => $isDelete,
             'msg' => !$isDelete ? 'Xóa thất bại!' : '',
-            'redirect' => $isDelete ? 'index.php?dir=' . dirname($path) : ''
+            'redirect' => $isDelete ? 'index.php?path=' . dirname($path) : ''
         ])->send();
         break;
 

@@ -86,13 +86,13 @@ if (
                 return;
             }
             $.post(window.location.href, {clear:1}, function () {
-                $('#list').empty();
+                $('#list').html('<li>Trống</li>');
             });
         });
     </script>
     Z;
     
-    showBack();
+    show_back();
 }
 
 require 'footer.php';

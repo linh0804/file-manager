@@ -3,6 +3,12 @@
 defined('ACCESS') or exit('Not access');
 
 if (isLogin) {
+    if (getLoginFail()) {
+        $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
+            fail login: <span style="color: red; font-weight: bold">' . getLoginFail() . '</span>
+        </div>';
+    }
+
     // function
     $menuToggle .= '<div class="title">Chức năng</div>
     <ul class="list">
@@ -12,7 +18,6 @@ if (isLogin) {
         <li><img src="icon/mime/unknown.png"/> <a href="fix_permission.php?dir=' . $dirEncode . '">Fix chown/chmod</a></li>
         <li><img src="icon/home.png"/> <a href="setting_home.php">Sửa Trang chủ</a></li>
         <li><img src="icon/mime/php.png"/> <a href="phpinfo.php">phpinfo()</a></li>
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . '">Danh sách</a></li>
     </ul>';
     
     // bookmark
@@ -26,13 +31,10 @@ if (isLogin) {
     <div class="title">Bookmark</div>
     <ul class="list">';
 
-    if (
-        !empty($dir)
-        && is_dir(processDirectory($dir))
-    ) {
+    if (!empty($path) && is_dir($path)) {
         $menuToggle .= '<li>
         <img src="icon/create.png" />
-        <a href="index.php?add_bookmark=' . $dir . '">
+        <a href="index.php?add_bookmark=' . $path . '">
             Thêm thư mục hiện tại
         </a>
         </li>';
@@ -41,8 +43,8 @@ if (isLogin) {
     foreach ($bookmarks as $bookmark) {
         $menuToggle .= '<li>
 
-        <a href="index.php?dir=' . rawurlencode($bookmark) . '">
-            ' . htmlspecialchars(dirname($bookmark)) . '/<b>' . htmlspecialchars(basename($bookmark)) . '</b>
+        <a href="index.php?path=' . rawurlencode($bookmark) . '">
+            ' . htmlspecialchars(rtrim(dirname($bookmark), '/')) . '/<b>' . htmlspecialchars(basename($bookmark)) . '</b>
         </a>
         <a href="index.php?delete_bookmark=' . $bookmark . '">
             <span style="color: red">[X]</span>
@@ -51,14 +53,14 @@ if (isLogin) {
     }
     $menuToggle .= '</ul>';
 
-    // file list
+    // filelist
     $menuToggle .= '<div class="title">Sửa gần đây</div>';
     $menuToggle .= '<ul class="list">';
     
     foreach (config()->get('edit_recent', []) as $i) {
         $menuToggle .= '<li>
             <a href="edit_text.php?path=' . base64_encode($i) . '">
-            ' . htmlspecialchars(dirname($i)) . '/<b>' . htmlspecialchars(basename($i)) . '</b>
+            ' . htmlspecialchars(rtrim(dirname($i), '/')) . '/<b>' . htmlspecialchars(basename($i)) . '</b>
             </a>
         </li>';
     }
@@ -69,12 +71,6 @@ if (isLogin) {
     $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
         run on: ' . get_current_user() . ' (' . getmyuid() . ')
     </div>';
-    
-    if (file_exists(LOGIN_LOCK)) {
-        $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
-            fail login: <span style="color: red; font-weight: bold">' . getLoginFail() . '</span> (xoá <b>"' . htmlspecialchars(LOGIN_LOCK) . '"</b> để reset)
-        </div>';
-    }
 
     echo '<div class="menuToggle">
         ' . $menuToggle . '

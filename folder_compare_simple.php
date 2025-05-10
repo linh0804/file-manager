@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim($file, '/')
-            . ' [<a href="file.php?dir=' . $dir_url . '&name=' . $name . '">1</a>]
+            . ' [<a href="file.php?path=' . $full_path . '">1</a>]
         </li>';
     }
     if (empty($files1_only)) {
@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim($file, '/')
-            . ' [<a href="file.php?dir=' . $dir_url . '&name=' . $name . '">2</a>]
+            . ' [<a href="file.php?path=' . $full_path . '">2</a>]
         </li>';
     }
     if (empty($files2_only)) {
@@ -175,8 +175,8 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim($file, '/')
-            . ' [<a href="file.php?dir=' . $dir_url1 . '&name=' . $name1 . '">1</a>]'
-            . ' [<a href="file.php?dir=' . $dir_url2 . '&name=' . $name2 . '">2</a>]
+            . ' [<a href="file.php?path=' . $full_path1 . '">1</a>]'
+            . ' [<a href="file.php?path=' . $full_path2 . '">2</a>]
         </li>';
     }
     if (empty($files_intersect_final)) {

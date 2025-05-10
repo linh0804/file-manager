@@ -1,5 +1,7 @@
 <?php
 
+use ngatngay\fs;
+
 const ACCESS = true;
 const INDEX  = true;
 
@@ -9,57 +11,62 @@ if (!isLogin) {
     goURL('login.php');
 }
 
-$dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
-$dir = processDirectory($dir);
-$title = 'Danh sách';
-$dirEncode = rawurlencode($dir);
+$path = isset($_GET['path']) ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
+$title = 'Danh sách - ' . basename($path);
+
+if (!isset($_GET['path'])) {
+    goURL('index.php?path=' . $path);
+}
+
+check_path($path);
 
 require 'header.php';
 
-/*
-dump(is_file($dir));
-dump(is_dir($dir));
-dump(is_link($dir));
-*/
+echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars($path) . '" style="color: pink">[copy]</span></div>';
 
-if (!file_exists($dir)) {
-    echo '<div class="notice_failure">Đường dẫn không tồn tại!</div>';
-    echo '<br><a href="javascript:history.back()" style="">
-      <img src="icon/back.png"> 
-      <strong class="back">Trở lại</strong>
-    </a>';
-    require 'footer.php';
-    exit;
-}
+echo '<div class="list">
+  <a href="index.php?path=' . dirname($path) . '">
+    <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
+    <strong class="back">...</strong>
+  </a>
+</div>';
 
-$lists = getListDirIndex($dir);
-$count = count($lists);
-$html  = printPath($dir, true);
-
-echo '<div class="title">' . $html . ' <span class="copyButton" data-copy="' . htmlspecialchars($dir) . '" style="color: pink">[copy]</span></div>';
-
-if (isAppDir($dir)) {
+if (isAppDir($path)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';
 }
 
-echo '<form action="action.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post" name="form">
-<div class="list">';
+// list
+$handler = @scandir($path, SCANDIR_SORT_NONE);
 
-if (preg_replace('|[a-zA-Z]+:|', '', str_replace('\\', '/', $dir)) != '/') {
-    $path = strrchr($dir, '/');
+if (!is_array($handler)) {
+    $handler = [];
+}
 
-    if ($path !== false) {
-        $path = 'index.php?dir=' . rawurlencode(dirname($dir));
-    } else {
-        $path = 'index.php';
+$lists = [];
+$folders = [];
+$files = [];
+
+foreach ($handler as $entry) {
+    if ($entry == '.' || $entry == '..') {
+        continue;
     }
 
-    echo '<a href="' . $path . '">
-        <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
-        <strong class="back">...</strong>
-    </a>';
+    $entry_path = fs::join_path($path, $entry);
+
+    if (is_dir($entry_path)) {
+        $folders[] = $entry_path;
+    } else {
+        $files[] = $entry_path;
+    }
 }
-echo '</div>';
+
+sortNatural($folders);
+sortNatural($files);
+
+$lists = array_merge($folders, $files);
+$count = count($lists);
+
+echo '<form action="action.php?dir=' . $path . $pages['paramater_1'] . '" method="post" name="form">';
 
 if ($count <= 0) {
     echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';
@@ -71,48 +78,52 @@ if ($count <= 0) {
         $pages['total'] = ceil($count / $configs['page_list']);
 
         if ($pages['total'] <= 0 || $pages['current'] > $pages['total']) {
-            goURL('index.php?dir=' . $dirEncode . ($pages['total'] <= 0 ? null : '&page_list=' . $pages['total']));
+            goURL('index.php?path=' . $path . ($pages['total'] <= 0 ? null : '&page_list=' . $pages['total']));
         }
 
         $start = ($pages['current'] * $configs['page_list']) - $configs['page_list'];
         $end   = $start + $configs['page_list'] >= $count ? $count : $start + $configs['page_list'];
     }
-    
+
     echo '<div class="table-list-file"><table class="list-file">';
 
     for ($i = $start; $i < $end; ++$i) {
-        $name  = $lists[$i]['name'];
-        $path  = $dir . '/' . $name;
-        $file = new SplFileInfo($path);
-        $perms = getChmod($path);
-        
-        if ($lists[$i]['is_app_dir']) {
+        $file = new SplFileInfo($lists[$i]);
+        $name = $file->getFilename();
+        $perms = getChmod($file->getPathname());
+
+        if (isAppDir($file->getPathname())) {
             $nameDisplay = '<i>' . $name . '</i>';
         } else {
             $nameDisplay = $name;
         }
-        
+
         if ($file->isLink()) {
             $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
         }
 
-        if ($lists[$i]['is_directory']) {            
+        if ($file->isDir()) {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name"><b>' . getFileLink($path) . '</b></td>
+                <td class="name"><b>' . getFileLink($file->getPathname()) . '</b></td>
                 <td></td>
-                <td><a href="folder_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="folder_chmod.php?dir=' . $file->getPathname() . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name">' . getFileLink($path) . '</td>
-                <td><span class="size">' . size(@filesize($dir . '/' . $name)) . '</span></td>
-                <td><a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td class="name">' . getFileLink($file->getPathname()) . '</td>
+                <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
+                <td><a href="file_chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
     }
     
+    echo '<tr>
+        <td><input id="file-select-all" type="checkbox" name="all" value="1" /></td>
+        <td><b><i>Total: ' . $count .'</i></b></td>
+    </tr>';
+
     echo '</table></div>';
     echo <<<'Z'
     <script>
@@ -121,11 +132,9 @@ if ($count <= 0) {
         });
     </script>
     Z;
-    
+
     echo '<div class="list">';
-    echo '<label><input id="file-select-all" type="checkbox" name="all" value="1" /> <strong class="form_checkbox_all">Chọn tất cả</strong></label>';
     echo '<div id="file-select-opt" style="display: none">
-        <hr>
         <button name="option" value="0" class="button"><img src="icon/copy.png"/> Sao chép</button>
         <button name="option" value="1" class="button"><img src="icon/move.png"/> Di chuyển</button>
         <button name="option" value="3" class="button"><img src="icon/zip.png"/> Zip</button>
@@ -135,8 +144,9 @@ if ($count <= 0) {
     </div>';
 
     if ($configs['page_list'] > 0 && $pages['total'] > 1) {
-        echo '<hr>' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => 'index.php?dir=' . $dirEncode, PAGE_URL_START => 'index.php?dir=' . $dirEncode . '&page_list='));
+        echo '<hr>' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => 'index.php?path=' . $path, PAGE_URL_START => 'index.php?path=' . $path . '&page_list='));
     }
+
     echo '</div>';
 }
 ?>
@@ -167,23 +177,23 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a href="create.php?dir=<?= $dirEncode . $pages['paramater_1'] ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="upload.php?dir=<?= $dirEncode . $pages['paramater_1'] ?>"><img src="icon/upload.png"/> Tải lên</a></li>
-    <li><a href="import.php?dir=<?= $dirEncode . $pages['paramater_1'] ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
-    <li><a href="find_in_folder.php?dir=<?= $dirEncode ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
-    <li><a href="scan_error_log.php?dir=<?= $dirEncode ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
-    <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($dir), '/') ?>">&bull; Webdav</a></li>
+    <li><a href="create.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="upload.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="import.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="find_in_folder.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="scan_error_log.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
+    <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($path), '/') ?>">&bull; Webdav</a></li>
     <li>
         <details>
-            <summary><i>__ Thư mục hiện tại __</i></summary>
+            <summary><i>[ Thư mục hiện tại ]</i></summary>
             <hr>
-            <a href="file.php?path=<?= $dir ?>" class="button"><img src="icon/info.png"/> Thông tin</a>
-            <a href="file.php?act=rename&path=<?= $dir . $pages['paramater_1'] ?>" class="button"><img src="icon/rename.png"/> Đổi tên</a>
-            <a href="folder_zip.php?dir=<?= dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
-            <a href="folder_copy.php?dir=<?= dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
-            <a href="folder_move.php?dir=<?= dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
-            <a href="folder_chmod.php?dir=<?= dirname($dir) . '&name=' . basename($dir) . $pages['paramater_1'] ?>" class="button"><img src="icon/access.png"/> Chmod</a>
-            <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars($dir) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
+            <a href="file.php?path=<?= $path ?>" class="button"><img src="icon/info.png"/> Thông tin</a>
+            <a href="file.php?act=rename&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/rename.png"/> Đổi tên</a>
+            <a href="folder_zip.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
+            <a href="folder_copy.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
+            <a href="folder_move.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
+            <a href="folder_chmod.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/access.png"/> Chmod</a>
+            <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars($path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
         </details>
     </li>
 </ul>

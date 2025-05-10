@@ -62,7 +62,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
         } elseif (!zipDir($dir . '/' . $name, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
-            goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
         }
 
         echo '</div>';

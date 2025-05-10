@@ -26,7 +26,7 @@
                 else if (!@chmod($dir . '/' . $name, intval($_POST['mode'], 8)))
                     echo 'Chmod thư mục thất bại';
                 else
-                    goURL('index.php?dir=' . $dirEncode . $pages['paramater_1']);
+                    goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
 
                 echo '</div>';
             }

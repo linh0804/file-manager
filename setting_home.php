@@ -7,7 +7,11 @@ require '.init.php';
 $home = $_POST['home'] ?? config()->get('home', '');
 
 if (isset($_POST['submit'])) {
-    config()->set('home', $home);
+    if ($home) {
+        config()->set('home', $home);
+    } else {
+        config()->remove('home');
+    }
     
     goURL('index.php');
 }

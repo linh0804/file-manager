@@ -1,10 +1,10 @@
 <?php
 
-use ngatngay\arr;
-use ngatngay\fs;
 use ngatngay\config;
+use ngatngay\fs;
 
-function config() {
+function config()
+{
     static $instance = null;
 
     if ($instance === null) {
@@ -17,11 +17,13 @@ function config() {
     return $instance;
 }
 
-function request() {
+function request()
+{
     return ngatngay\request();
 }
 
-function response(...$args) {
+function response(...$args)
+{
     return ngatngay\response(...$args);
 }
 
@@ -89,8 +91,8 @@ function getNewVersion()
 
     $remoteVersion = json_decode(@file_get_contents(remoteVersionFile), true);
 
-    cookie(['fm_check_update' => ($remoteVersion['version'] ?? localVersion)], ['expires' => time() + 3600*3]);
-    
+    cookie(['fm_check_update' => ($remoteVersion['version'] ?? localVersion)], ['expires' => time() + 3600 * 3]);
+
     return is_array($remoteVersion) && isset($remoteVersion['message'])
         ? $remoteVersion
         : false;
@@ -252,7 +254,7 @@ function rrms($entrys, $dir)
     foreach ($entrys as $e) {
         if (!fs::remove($dir . '/' . $e)) {
             return false;
-        }   
+        }
     }
     return true;
 }
@@ -413,7 +415,8 @@ function mergeFolder($source, $destination, $overwrite = true)
 }
 
 if (!function_exists('str_ends_with')) {
-    function str_ends_with($haystack, $needle) {
+    function str_ends_with($haystack, $needle)
+    {
         $length = strlen($needle);
         if ($length == 0) {
             return true;
@@ -423,7 +426,8 @@ if (!function_exists('str_ends_with')) {
 }
 
 // chi dung de doc tat ca file
-function readFullDir($path, $excludes = []) {
+function readFullDir($path, $excludes = [])
+{
     $directory = new RecursiveDirectoryIterator(
         $path,
         FilesystemIterator::UNIX_PATHS
@@ -471,10 +475,10 @@ function zips($dir, $entrys, $file, $isDelete = false)
     foreach ($entrys as $entry) {
         $path = "$dir/$entry";
         $zip->add($path, $dir);
-        
+
         if (is_dir($path)) {
             $files = readFullDir($path);
-            
+
             foreach ($files as $value) {
                 $zip->add($value->getPathname(), $dir);
             }
@@ -681,11 +685,11 @@ function substring($str, $offset, $length = -1, $ellipsis = '')
     return $str;
 }
 
-function printPath($path, $isHrefEnd = false)
+function printPath(string $path, bool $isHrefEnd = false)
 {
-    $html = null;
+    $html = '';
 
-    if ($path != null && $path != '/' && strpos($path, '/') !== false) {
+    if ($path && $path != '/' && strpos($path, '/') !== false) {
         $array = explode('/', preg_replace('|^/(.*?)$|', '\1', $path));
         $item  = null;
         $url   = null;
@@ -699,7 +703,7 @@ function printPath($path, $isHrefEnd = false)
             }
 
             if ($key < count($array) - 1 || ($key == count($array) - 1 && $isHrefEnd)) {
-                $html .= '<span class="path_seperator">/</span><a href="index.php?dir=' . rawurlencode($url . $item) . '">';
+                $html .= '<span class="path_seperator">/</span><a href="index.php?path=' . rawurlencode($url . $item) . '">';
             } else {
                 $html .= '<span class="path_seperator">/</span>';
             }
@@ -794,7 +798,8 @@ function runCommand($command)
 
 
 // file
-function printFileActions(SplFileInfo $file) {
+function printFileActions(SplFileInfo $file)
+{
     global $pages, $formats, $dirEncode;
 
     $path = $file->getPathname();
@@ -814,22 +819,23 @@ function printFileActions(SplFileInfo $file) {
           <a href="view_code.php?dir=' . $dirEncode . '&name=' . $name . '" class="button"><img src="icon/columns.png"/> Xem code</a> ';
     }
 
-    echo '<a href="file_download.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    
+    echo '<a href="file_download.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    
         <a href="file.php?act=rename&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
         <a href="file_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
         <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
         <a href="file_chmod.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
         <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
-        <a href="file.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
+        <a href="file.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
     </div>';
-    
-    echo '<a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '" style="">
+
+    echo '<a href="index.php?path=' . dirname($path) . $pages['paramater_1'] . '" style="">
         <img src="icon/back.png"> 
         <strong class="back">Trở lại</strong>
     </a>';
 }
 
-function printFolderActions() {
+function printFolderActions()
+{
     global $name, $pages, $formats, $dirEncode;
 
     echo '<div class="title">Chức năng</div>
@@ -839,10 +845,10 @@ function printFolderActions() {
         <li><img src="icon/copy.png"/> <a href="folder_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sao chép</a></li>
         <li><img src="icon/move.png"/> <a href="folder_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>
         <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . $dirEncode . '%2F' . $name . '" class="button"><img src="icon/delete.png"/> Xóa</button>
-        <li><img src="icon/list.png"/> <a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
     </ul>';
-    
-    echo '<a href="index.php?dir=' . $dirEncode . $pages['paramater_1'] . '" style="">
+
+    echo '<a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '" style="">
         <img src="icon/back.png"> 
         <strong class="back">Trở lại</strong>
     </a>';
@@ -879,20 +885,22 @@ function cookie(
     }
 }
 
-function sortNatural(&$array) {
-    usort($array, function($a, $b) {
+function sortNatural(&$array)
+{
+    usort($array, function ($a, $b) {
         // Nếu cả hai chuỗi đều bắt đầu bằng ký tự đặc biệt hoặc đều không bắt đầu bằng ký tự đặc biệt
         if ((ctype_alnum($a[0]) && ctype_alnum($b[0])) || (!ctype_alnum($a[0]) && !ctype_alnum($b[0]))) {
             // So sánh không phân biệt hoa thường theo kiểu tự nhiên
             return strnatcasecmp($a, $b);
         }
-        
+
         // Đưa chuỗi bắt đầu bằng ký tự đặc biệt lên trước
         return ctype_alnum($a[0]) ? 1 : -1;
     });
 }
 
-function getIcon($type, $name) {
+function getIcon($type, $name)
+{
     global $formats;
     $file = new SplFileInfo($name);
 
@@ -902,13 +910,13 @@ function getIcon($type, $name) {
         if (in_array($nameIcon, icons['folders'])) {
             $icon = $nameIcon;
         }
-        
+
         return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>';
     }
-    
+
     if ($type === 'file') {
         $icon = 'file';
-        
+
         if (in_array($file->getExtension(), icons['files'])) {
             $icon = $file->getExtension();
         } elseif (in_array($file->getExtension(), $formats['archive'])) {
@@ -920,12 +928,13 @@ function getIcon($type, $name) {
         } elseif (in_array($file->getExtension(), $formats['image'])) {
             $icon = 'image';
         }
-        
+
         return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg">';
     }
 }
 
-function showBack() {
+function show_back()
+{
     echo '<a href="javascript:history.back()">
       <img src="icon/back.png"> 
       <strong class="back">Trở lại</strong>
@@ -946,13 +955,14 @@ function ableFormatCode($type)
     ]);
 }
 
-function getListDirIndex(string $dir): array {
+function getListDirIndex(string $dir): array
+{
     $handler = @scandir($dir);
 
     if (!is_array($handler)) {
         return [];
     }
-    
+
     $lists = [];
     $folders = [];
     $files = [];
@@ -994,14 +1004,15 @@ function getListDirIndex(string $dir): array {
     return $lists;
 }
 
-function getFileLink($path) {
+function getFileLink($path)
+{
     global $formats, $pages;
-    
+    $path = str_replace('//', '/', $path);
     $file = new \SplFileInfo($path);
-    $fileDir = $file->isDir() ? $path : dirname($path);
+    $fileDir = $file->isDir() ? $file->getPathname() : dirname($file->getPathname());
     $name = $file->getFilename();
     $isEdit = false;
-    
+
     $fileIcon = getIcon($file->isDir() ? 'folder' : 'file', $name);
 
     if ($file->isFile()) {
@@ -1012,7 +1023,7 @@ function getFileLink($path) {
         } elseif (isFormatUnknown($name)) {
             $isEdit = true;
         }
-        
+
         if (strtolower($file->getFilename()) == 'error_log' || $isEdit) {
             $fileLink = 'edit_text.php?path=' . base64_encode($file->getPathname());
         } elseif (in_array($file->getExtension(), $formats['zip'])) {
@@ -1023,32 +1034,98 @@ function getFileLink($path) {
     } else {
         $fileLink = 'file.php?act=rename&path=' . $path . $pages['paramater_1'];
     }
+
     $fileIcon = sprintf('<a href="%s">%s</a>', $fileLink, $fileIcon);
-        if (isAppDir($path)) {
-            $nameDisplay = '<i>' . $name . '</i>';
-        } else {
-            $nameDisplay = $name;
-        }
-        
-        if ($file->isLink()) {
-            $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
-        }
-        
+
+    if (isAppDir($path)) {
+        $nameDisplay = '<i>' . $name . '</i>';
+    } else {
+        $nameDisplay = $name;
+    }
+
+    if ($file->isLink()) {
+        $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
+    }
+
     return sprintf(
         '%s <a href="%s">%s</a>',
         $fileIcon,
-        $file->isDir() ? 'index.php?dir=' . rawurlencode($fileDir) : 'file.php?dir=' . $fileDir . '&name=' . $name,
+        $file->isDir() ? 'index.php?path=' . $fileDir : 'file.php?path=' . $path,
         $nameDisplay
     );
 }
 
-function edit_recent_add($path) {
+function edit_recent_add($path)
+{
     $old = config()->get('edit_recent', []);
     $old[] = $path;
     $old = array_unique($old);
     $old = array_reverse($old);
     $old = array_slice($old, 0, 100);
     config()->set('edit_recent', $old);
+}
+
+function check_path(string $path, string $type = '')
+{
+    extract($GLOBALS);
+
+    if ($type == 'file') {
+        $name = 'Tập tin';
+        
+        if (@is_file($path)) {
+            return;
+        }
+    } else if ($type == 'folder') {
+        $name = 'Thư mục';
+        
+        if (@is_dir($path)) {
+            return;
+        }
+    } else {
+        $name = 'Đường dẫn';
+        
+        if (@file_exists($path)) {
+            return;
+        }
+    }
+
+    $title = 'Lỗi - ' . $path;
+
+    require 'header.php';
+
+    echo '<div class="title">' . printPath($path, true) . '</div>';
+    echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
+    echo '<br>';
+
+    show_back();
+
+    require 'footer.php';
+    exit;
+}
+
+function isInOpenBasedir(string $path): bool
+{
+    $openBasedirs = ini_get('open_basedir');
+    if (empty($openBasedirs)) {
+        // Không có giới hạn open_basedir
+        return true;
+    }
+
+    $path = realpath($path);
+    if ($path === false) {
+        return false;
+    }
+
+    $baseDirs = explode(PATH_SEPARATOR, $openBasedirs);
+
+    foreach ($baseDirs as $baseDir) {
+        $baseDir = realpath($baseDir);
+        if ($baseDir !== false && str_starts_with($path, $baseDir)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 require 'auth.fn.php';

@@ -13,8 +13,98 @@ $path = (string) request()->get('path');
 $path = rawurldecode($path);
 
 check_path($path);
+$file = new SplFileInfo($path);
 
 switch ($action) {
+    case 'download':
+        check_path($path, 'file');
+
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: inline; filename=' . basename($path));
+        header('Content-Length: ' . filesize($path));
+        readfile($path);
+        
+        break;
+    case 'copy':
+    $title = 'Sao chép tập tin';
+
+require 'header.php';
+
+echo '<div class="title">' . $title . '</div>';
+
+    $dir = dirname($path);
+    $name = basename($path);
+    
+    $newName = $_POST['name'] ?? $name;
+    $newDir = $_POST['dir'] ?? $dir;
+    $newPath = "$newDir/$newName";
+ 
+    if (isset($_POST['submit'])) {        
+        echo '<div class="notice_failure">';
+
+        if (empty($newDir) || empty($newName)) {
+            echo 'Chưa nhập đầy đủ thông tin';
+        } elseif (file_exists($newPath)) {
+            echo 'Tệp đã tồn tại';
+        } elseif (!@copy($dir . '/' . $name, $newPath)) {
+            echo 'Sao chép tập tin thất bại';
+        } else {
+            goURL('index.php?path=' . $dir . $pages['paramater_1']);
+        }
+
+        echo '</div>';
+    }
+
+    echo '<div class="list">
+        <span class="bull">&bull;</span><span>' . printPath($dir . '/' . $name) . '</span><hr/>
+        <form action="" method="post">
+            <span class="bull">&bull;</span>Đường dẫn tập tin mới:<br/>
+            <input type="text" name="dir" value="' . htmlspecialchars($newDir) . '" size="18"/><br/>
+            <input type="text" name="name" value="' . htmlspecialchars($newName) . '" size="18"/><br/>
+            <input type="submit" name="submit" value="Sao chép"/>
+        </form>
+    </div>';
+
+    printFileActions($file);
+
+require 'footer.php';
+        break;
+        
+    case 'chmod':
+        $title = 'Chmod tập tin';
+        $error = '';
+
+        if (request()->is_method('post')) {
+            $error .= '<div class="notice_failure">';
+        
+            if (empty($_POST['mode']))
+                $error .= 'Chưa nhập đầy đủ thông tin';
+            else if (!@chmod($path, intval($_POST['mode'], 8)))
+                $error .= 'Chmod tập tin thất bại';
+            else
+                goURL('index.php?path=' . dirname($path) . $pages['paramater_1']);
+        
+            $error .= '</div>';
+        }
+
+        require 'header.php';
+        
+        echo '<div class="title">' . $title . '</div>';        
+        echo $error;
+        echo '<div class="list">
+            <span class="bull">&bull;</span><span>' . printPath($path) . '</span><hr/>
+            <form action="" method="post">
+                <span class="bull">&bull;</span>Chế độ:<br/>
+                <input type="text" name="mode" value="' . (isset($_POST['mode']) ? $_POST['mode'] : getChmod($path)) . '" size="18"/><br/>
+                <input type="submit" name="submit" value="Chmod"/>
+            </form>
+        </div>';
+        
+        printFileActions($file);
+        
+        require 'footer.php';
+        break;
+
     case 'rename':
         $error = '';
         $name = request()->post('name', basename($path));
@@ -141,7 +231,7 @@ switch ($action) {
         }
 
         echo '<li><span class="bull">&bull; </span><strong>Định dạng</strong>: <span>' . ($format == null ? 'Không rõ' : $format) . '</span></li>
-            <li><span class="bull">&bull; </span><strong>Ngày sửa</strong>: <span>' . @date('d.m.Y - H:i', filemtime($path)) . '</span></li>';
+            <li><span class="bull">&bull; </span><strong>Ngày sửa</strong>: <span>' . @date('d.m.Y - H:i:s', filemtime($path)) . '</span></li>';
         echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($file->getOwner())['name']) . '</span></li>';
         echo '</ul>';
 

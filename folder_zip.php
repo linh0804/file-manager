@@ -4,34 +4,6 @@ define('ACCESS', true);
 
 include_once '.init.php';
 
-function zipDir($path, $file, $isDelete = false)
-{
-    if (@is_file($file)) {
-        @unlink($file);
-    }
-
-    $zip = new Zip();
-
-    if ($zip->open($file, ZipArchive::CREATE) === true) {
-        $path = realpath($path);
-        $files = readFullDir($path);
-
-        foreach ($files as $name => $file) { 
-            $filePath = $file->getRealPath();          
-            $zip->add($filePath, $path . DIRECTORY_SEPARATOR);        
-        }
-
-        $zip->close();
-
-        if ($isDelete) {
-            removeDir($path);  
-        }
-
-        return true;
-    }
-
-    return false;
-}
 
 $title = 'Nén zip thư mục';
 

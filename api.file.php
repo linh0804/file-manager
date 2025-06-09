@@ -15,6 +15,14 @@ if (!request()->is_method('post')) {
 }
 
 switch ($action) {
+    case 'calc':
+        if (!file_exists($path)) {
+            response(['status' => false,'msg' => 'file not found'])->send();
+        }
+        
+        response(['status' => true,'msg' => fs::readable_size(fs::size($path))])->send();
+        break;
+
     case 'delete':
         $isDelete = fs::remove($path);
 

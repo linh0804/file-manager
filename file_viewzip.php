@@ -5,32 +5,28 @@ define('ACCESS', true);
 require '.init.php';
 
 $title = 'Xem tập tin nén';
-$format = getFormat($name);
 
-if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
-    include_once 'header.php';
+check_path($path, 'file');
 
-    echo '<div class="title">' . $title . '</div>
-    <div class="list"><span>Đường dẫn không tồn tại</span></div>
-    <div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
-    </ul>';
-} else if (!in_array($format, array('zip', 'jar'))) {
+$file = new \SplFileInfo($path);
+$dir = dirname($file->getPathname());
+$name = $file->getFilename();
+$format = $file->getExtension();
+
+if (!in_array($format, array('zip', 'jar'))) {
     include_once 'header.php';
 
     echo '<div class="title">' . $title . '</div>
     <div class="list"><span>Tập tin không phải zip</span></div>
-    <div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
+    <div class="title">Chức năng</div>';
+    
+    show_back();
 } else {
     $title .= ':' . $name;
 
     require 'header.php';
 
-    $path = isset($_GET['path']) && !empty($_GET['path']) ? processPathZip($_GET['path']) : null;
+    $path = isset($_GET['path_zip']) && !empty($_GET['path_zip']) ? processPathZip($_GET['path_zip']) : null;
     $dir = processDirectory($dir);
     $format = getFormat($name);
     $zip = new ZipArchive;
@@ -109,7 +105,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
         if ($path != null && strpos($path, '/') !== false) {
             $array = explode('/', preg_replace('|^/(.*?)$|', '\1', $path));
-            $html = '/<a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $root . '</a>';
+            $html = '/<a href="file_viewzip.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>';
             $item = null;
             $url = null;
 
@@ -122,7 +118,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
                 }
 
                 if ($key < count($array) - 1)
-                    $html .= '/<a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . '&path=' . rawurlencode($url . $item) . $pages['paramater_1'] . '">';
+                    $html .= '/<a href="file_viewzip.php?path=' . $file->getPathname() . '&path_zip=' . rawurlencode($url . $item) . $pages['paramater_1'] . '">';
                 else
                     $html .= '/';
 
@@ -140,7 +136,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             if ($path == null)
                 $html = '/' . $root;
             else
-                $html = '/<a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">' . $root . '</a>/' . $path;
+                $html = '/<a href="file_viewzip.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>/' . $path;
         }
 
         echo '<div class="title">' . $html . '</div>';

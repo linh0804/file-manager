@@ -31,7 +31,7 @@ if (isLogin) {
     <div class="title">Bookmark</div>
     <ul class="list">';
 
-    if (!empty($path) && is_dir($path)) {
+    if (!empty($path) && @is_dir($path)) {
         $menuToggle .= '<li>
         <img src="icon/create.png" />
         <a href="index.php?add_bookmark=' . $path . '">

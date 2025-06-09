@@ -101,6 +101,8 @@ function redirect(url) {
 }
 
 function fileAjax(data, success) {
+  NProgress.start();
+
   $.ajax({
     url: 'api.file.php',
     method: 'post',
@@ -109,6 +111,8 @@ function fileAjax(data, success) {
     error: function () {
       alert("Lỗi server!");
     }
+  }).always(function () {
+    NProgress.done();
   });
 }
 
@@ -129,3 +133,38 @@ function fileAjaxDelete(element) {
     }
   });
 }
+
+function file_actions(path, data) {
+    // data(entries[], int option)
+    const actionUrl = 'action.php?dir=' . path;
+    const $form = $('<form>', {
+        method: 'POST',
+        action: actionUrl
+    }).css('display', 'none');
+
+    $.each(data.entries, function (i, value) {
+        $('<input>', {
+            type: 'hidden',
+            name: 'entry[]',
+            value: value
+        }).appendTo($form);
+    });
+
+    $('<input>', {
+        type: 'hidden',
+        name: 'option',
+        value: data.act
+    }).appendTo($form);
+
+    $('body').append($form);
+    $form.submit();
+}
+
+$('.btn-calc-size').on('click', function () {
+    let e = $(this);
+    fileAjax(e.data(), function (res) {
+    e.html(res.msg)
+});
+
+})
+

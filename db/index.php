@@ -2,4 +2,5 @@
 
 isset($_COOKIE["fm_php"]) or exit;
 
-require 'adminer-en';
+error_reporting(0);
+require 'admin';

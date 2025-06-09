@@ -24,12 +24,12 @@ require 'header.php';
 
 echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars($path) . '" style="color: pink">[copy]</span></div>';
 
-echo '<div class="list">
-  <a href="index.php?path=' . dirname($path) . '">
+echo '<a href="index.php?path=' . dirname($path) . '">
+  <div class="list">
     <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
     <strong class="back">...</strong>
-  </a>
-</div>';
+  </div>
+</a>';
 
 if (isAppDir($path)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';
@@ -106,15 +106,15 @@ if ($count <= 0) {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name"><b>' . getFileLink($file->getPathname()) . '</b></td>
-                <td></td>
-                <td><a href="folder_chmod.php?dir=' . $file->getPathname() . '&name=' . $name . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td><span data-action="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
+                <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name">' . getFileLink($file->getPathname()) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
-                <td><a href="file_chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
     }
@@ -192,7 +192,7 @@ if ($count <= 0) {
             <a href="folder_zip.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
             <a href="folder_copy.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
             <a href="folder_move.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
-            <a href="folder_chmod.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/access.png"/> Chmod</a>
+            <a href="file.php?act=chmod&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/access.png"/> Chmod</a>
             <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars($path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
         </details>
     </li>

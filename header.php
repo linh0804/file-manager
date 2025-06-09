@@ -15,6 +15,9 @@ $menuToggle = '';
     <link rel="icon" type="image/x-icon" href="icon/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     
     <script src="https://cdn.ngatngay.net/js/helper/dist/jquery.js"></script>
@@ -56,7 +59,7 @@ $menuToggle = '';
 
 <div id="container">
 
-<?php if (isLogin && version_compare((string) cookie('fm_check_update'), (string) localVersion, '>')) { ?>
+<?php if (isLogin && version_compare((string) remoteVersion, (string) localVersion, '>')) { ?>
     <div class="tips" style="margin-top: 0 !important">
         <img src="icon/tips.png" alt="">
         Có phiên bản mới! <a href="reinstall.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!

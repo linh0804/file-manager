@@ -12,17 +12,13 @@ $dir = dirname($file->getPathname());
 $name = basename($file->getPathname());
 $title = 'Sửa tập tin';
 
+check_path($path, 'file');
+
 require 'header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if (!$file->isFile()) {
-    echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
-    <div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
-    </ul>';
-} else if (!isFormatText($name) && !isFormatUnknown($name)) {
+if (!isFormatText($name) && !isFormatUnknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">

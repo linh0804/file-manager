@@ -57,7 +57,7 @@ show_back();
   
   const files = [];
   let uploading = 0;
-    
+
   $('#buttonChoose').on('click', function (e) {
     e.preventDefault();
     $('#files').val('');
@@ -101,6 +101,8 @@ show_back();
         alert("Đang upload!")
         return
     }
+    
+    NProgress.start();
     
     $('.fileUpload').each(function() {
         let e = $(this);
@@ -149,6 +151,10 @@ show_back();
 
     xhr.onloadend = () => {
         uploading--
+        
+        if (uploading == 0) {
+            NProgress.done();
+        }
     }
 
     xhr.send(formData)

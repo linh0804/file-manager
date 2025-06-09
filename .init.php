@@ -6,10 +6,8 @@ defined('ACCESS') or exit('Not access');
 
 @ini_set('display_errors', true);
 @ini_set('memory_limit', -1);
-@ini_set('max_execution_time', 0);
-@ini_set('log_errors', 'On');
-@ini_set('error_log', __DIR__ . '/error_log');
-@ini_set('opcache.enable', false);
+@ini_set('max_execution_time', 300);
+@ini_set('opcache.revalidate_freq', 0);
 
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);

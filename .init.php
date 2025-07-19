@@ -1,6 +1,6 @@
 <?php
 
-use function ngatngay\request;
+use ngatngay\http\request;
 
 defined('ACCESS') or exit('Not access');
 
@@ -11,6 +11,8 @@ defined('ACCESS') or exit('Not access');
 
 error_reporting(E_ALL);
 mysqli_report(MYSQLI_REPORT_ERROR);
+
+ob_start();
 
 // no cache
 header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
@@ -327,7 +329,7 @@ function decodePath($path)
     $path = str_replace('\\', '/', $path);
 }
 
-$path = rawurldecode((string) request()->get('path'));
+$path = rawurldecode((string) request::get('path'));
 $file = new SplFileInfo($path);
 
 // referer
@@ -358,10 +360,10 @@ function removeRefererParam(string $url): string {
     return $cleanUrl;
 }
 
-$referer_qs = base64_encode(removeRefererParam(request()->get_uri()));
+$referer_qs = base64_encode(removeRefererParam(request::uri()));
 define('referer_qs', 'referer=' . $referer_qs);
 
-$referer = (string) request()->get('referer');
+$referer = (string) request::get('referer');
 define('referer', base64_decode($referer));
 
 // bookmark

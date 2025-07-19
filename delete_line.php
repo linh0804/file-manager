@@ -96,7 +96,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
     $isGO = false;
 
-    if (isset($_POST['go']) && !empty($_POST['line']) && preg_match('#\\b[0-9]+\\b#', $_POST['line'])) {
+    if (isset($_POST['go']) && !empty($_POST['line']) && preg_match('#\\b[0-9]+\\b#', (string) $_POST['line'])) {
         $li = intval($_POST['line']);
 
         if ($li >= 0 && $li <= $count - 1) {

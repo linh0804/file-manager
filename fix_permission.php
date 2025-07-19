@@ -1,6 +1,6 @@
 <?php
 
-use function ngatngay\request;
+use ngatngay\http\request;
 
 define('ACCESS', true);
 
@@ -35,10 +35,10 @@ echo '<div class="list">
    Công cụ này đã được sinh ra ^^!
 </div>';
 
-$folder = (string) request()->post('folder', $dir);
-$own = (string) request()->post('own', get_current_user());
-$folder_mode = (string) request()->post('folder_mode', 755);
-$file_mode = (string) request()->post('file_mode', 644);
+$folder = (string) request::post('folder', $dir);
+$own = (string) request::post('own', get_current_user());
+$folder_mode = (string) request::post('folder_mode', 755);
+$file_mode = (string) request::post('file_mode', 644);
 
 echo '<div class="list">';
 

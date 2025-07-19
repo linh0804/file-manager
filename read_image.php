@@ -4,7 +4,7 @@ const ACCESS = true;
 
 include '.init.php';
 
-$path = !empty($_GET['path']) ? rawurldecode($_GET['path']) : '';
+$path = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : '';
 
 if (
     isLogin

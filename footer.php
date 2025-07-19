@@ -43,8 +43,8 @@ if (isLogin) {
     foreach ($bookmarks as $bookmark) {
         $menuToggle .= '<li>
 
-        <a href="index.php?path=' . rawurlencode($bookmark) . '">
-            ' . htmlspecialchars(rtrim(dirname($bookmark), '/')) . '/<b>' . htmlspecialchars(basename($bookmark)) . '</b>
+        <a href="index.php?path=' . rawurlencode((string) $bookmark) . '">
+            ' . htmlspecialchars(rtrim(dirname((string) $bookmark), '/')) . '/<b>' . htmlspecialchars(basename((string) $bookmark)) . '</b>
         </a>
         <a href="index.php?delete_bookmark=' . $bookmark . '">
             <span style="color: red">[X]</span>
@@ -59,8 +59,8 @@ if (isLogin) {
     
     foreach (config()->get('edit_recent', []) as $i) {
         $menuToggle .= '<li>
-            <a href="edit_text.php?path=' . base64_encode($i) . '">
-            ' . htmlspecialchars(rtrim(dirname($i), '/')) . '/<b>' . htmlspecialchars(basename($i)) . '</b>
+            <a href="edit_text.php?path=' . base64_encode((string) $i) . '">
+            ' . htmlspecialchars(rtrim(dirname((string) $i), '/')) . '/<b>' . htmlspecialchars(basename((string) $i)) . '</b>
             </a>
         </li>';
     }

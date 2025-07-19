@@ -1,5 +1,7 @@
 <?php
 
+use ngatngay\http\request;
+
 define('ACCESS', true);
 
 require '.init.php';
@@ -8,8 +10,8 @@ if (!isLogin) {
     goURL('login.php');
 }
 
-$action = request()->get('act');
-$path = (string) request()->get('path');
+$action = request::get('act');
+$path = (string) request::get('path');
 $path = rawurldecode($path);
 
 check_path($path);
@@ -59,8 +61,8 @@ echo '<div class="title">' . $title . '</div>';
         <span class="bull">&bull;</span><span>' . printPath($dir . '/' . $name) . '</span><hr/>
         <form action="" method="post">
             <span class="bull">&bull;</span>Đường dẫn tập tin mới:<br/>
-            <input type="text" name="dir" value="' . htmlspecialchars($newDir) . '" size="18"/><br/>
-            <input type="text" name="name" value="' . htmlspecialchars($newName) . '" size="18"/><br/>
+            <input type="text" name="dir" value="' . htmlspecialchars((string) $newDir) . '" size="18"/><br/>
+            <input type="text" name="name" value="' . htmlspecialchars((string) $newName) . '" size="18"/><br/>
             <input type="submit" name="submit" value="Sao chép"/>
         </form>
     </div>';
@@ -74,7 +76,7 @@ require 'footer.php';
         $title = 'Chmod tập tin';
         $error = '';
 
-        if (request()->is_method('post')) {
+        if (request::is_method('post')) {
             $error .= '<div class="notice_failure">';
         
             if (empty($_POST['mode']))
@@ -107,11 +109,11 @@ require 'footer.php';
 
     case 'rename':
         $error = '';
-        $name = request()->post('name', basename($path));
+        $name = request::post('name', basename($path));
         $newPath = dirname($path) . '/' . $name;
         $title = 'Đổi tên tập tin';
         
-        if (request()->has_post('submit')) {    
+        if (request::has_post('submit')) {    
             $error .= '<div class="notice_failure">';
 
             if (empty($name)) {
@@ -179,7 +181,7 @@ require 'footer.php';
         
             echo '<ul class="info">';
             echo '<li class="not_ellipsis"><span class="bull">&bull; </span><strong>Đường dẫn</strong>: <span>' . printPath($dir, true) . '</span></li>';
-            echo '<li><span class="bull">&bull; </span><strong>Tên</strong>: <span>' . basename($dir) . '</span></li>';
+            echo '<li><span class="bull">&bull; </span><strong>Tên</strong>: <span>' . basename((string) $dir) . '</span></li>';
             echo '<li><span class="bull">&bull; </span><strong>Kích thước thư mục</strong>: <span>' . size(filesize($dir)) . '</span></li>';
             echo '<li><span class="bull">&bull; </span><strong>Dung lượng thư mục</strong>: <span>' . size($dir_size) . ' (' . $dir_size . ' byte)</span></li>';
             echo '<li><span class="bull">&bull; </span><strong>Chmod</strong>: <span>' . getChmod($dir) . '</span></li>';

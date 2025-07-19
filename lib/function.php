@@ -1,5 +1,7 @@
 <?php
 
+use function ngatngay\response as response2;
+use function ngatngay\redirect;
 use ngatngay\config;
 use ngatngay\fs;
 
@@ -17,19 +19,14 @@ function config()
     return $instance;
 }
 
-function request()
-{
-    return ngatngay\request();
-}
-
 function response(...$args)
 {
-    return ngatngay\response(...$args);
+    return response2(...$args);
 }
 
 function isAppFile($dir)
 {
-    return stripos($dir, REALPATH) === 0;
+    return stripos((string) $dir, REALPATH) === 0;
 }
 function isAppDir($dir)
 {
@@ -107,20 +104,20 @@ function hasNewVersion()
 
 function goURL($url)
 {
-    ngatngay\redirect($url);
+    redirect($url);
 }
 
 
 function getPasswordEncode($pass)
 {
-    return md5(md5(trim($pass)));
+    return md5(md5(trim((string) $pass)));
 }
 
 
 function getFormat($name)
 {
-    return strrchr($name, '.') !== false
-        ? strtolower(str_replace('.', '', strrchr($name, '.')))
+    return strrchr((string) $name, '.') !== false
+        ? strtolower(str_replace('.', '', strrchr((string) $name, '.')))
         : '';
 }
 
@@ -134,7 +131,7 @@ function isFormatText($name)
         return false;
     }
 
-    return in_array($format, $formats['text']) || in_array($format, $formats['other']) || in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source']);
+    return in_array($format, $formats['text']) || in_array($format, $formats['other']) || in_array(strtolower(strpos((string) $name, '.') !== false ? substr((string) $name, 0, strpos((string) $name, '.')) : $name), $formats['source']);
 }
 
 function isFormatUnknown($name)
@@ -158,10 +155,10 @@ function isFormatUnknown($name)
 
 function str_replace_first($needle, $replace, $haystack)
 {
-    $pos = strpos($haystack, $needle);
+    $pos = strpos((string) $haystack, (string) $needle);
 
     if ($pos !== false) {
-        return substr_replace($haystack, $replace, $pos, strlen($needle));
+        return substr_replace($haystack, $replace, $pos, strlen((string) $needle));
     }
 
     return $haystack;
@@ -221,7 +218,7 @@ function processName($var)
 
 function isNameError($var)
 {
-    return strpos($var, '\\') !== false || strpos($var, '/') !== false;
+    return strpos((string) $var, '\\') !== false || strpos((string) $var, '/') !== false;
 }
 
 function removeDir($path)
@@ -267,7 +264,7 @@ function copydir($old, $new, $isParent = true)
 
     if ($handler !== false) {
         if ($isParent && $old != '/') {
-            $arr = explode('/', $old);
+            $arr = explode('/', (string) $old);
             $end = $new = $new . '/' . end($arr);
 
             if (@is_file($end) || (!@is_dir($end) && !@mkdir($end))) {
@@ -329,7 +326,7 @@ function movedir($old, $new, $isParent = true)
 
     if ($handler !== false) {
         if ($isParent && $old != '/') {
-            $s   = explode('/', $old);
+            $s   = explode('/', (string) $old);
             $end = $new = $new . '/' . end($s);
 
             if (@is_file($end) || (!@is_dir($end) && !@mkdir($end))) {
@@ -419,11 +416,11 @@ function mergeFolder($source, $destination, $overwrite = true)
 if (!function_exists('str_ends_with')) {
     function str_ends_with($haystack, $needle)
     {
-        $length = strlen($needle);
+        $length = strlen((string) $needle);
         if ($length == 0) {
             return true;
         }
-        return (substr($haystack, -$length) === $needle);
+        return (substr((string) $haystack, -$length) === $needle);
     }
 }
 
@@ -647,7 +644,7 @@ function countStringArray($array, $search, $isLowerCase = false)
     if ($array != null && is_array($array)) {
         foreach ($array as $entry) {
             if ($isLowerCase) {
-                $entry = strtolower($entry);
+                $entry = strtolower((string) $entry);
             }
 
             if ($entry == $search) {
@@ -667,7 +664,7 @@ function isInArray($array, $search, $isLowerCase)
 
     foreach ($array as $entry) {
         if ($isLowerCase) {
-            $entry = strtolower($entry);
+            $entry = strtolower((string) $entry);
         }
 
         if ($entry == $search) {
@@ -680,8 +677,8 @@ function isInArray($array, $search, $isLowerCase)
 
 function substring($str, $offset, $length = -1, $ellipsis = '')
 {
-    if ($str != null && strlen($str) > $length - $offset) {
-        $str = ($length == -1 ? substr($str, $offset) : substr($str, $offset, $length)) . $ellipsis;
+    if ($str != null && strlen((string) $str) > $length - $offset) {
+        $str = ($length == -1 ? substr((string) $str, $offset) : substr((string) $str, $offset, $length)) . $ellipsis;
     }
 
     return $str;
@@ -692,7 +689,7 @@ function printPath(string $path, bool $isHrefEnd = false)
     $html = '';
 
     if ($path && $path != '/' && strpos($path, '/') !== false) {
-        $array = explode('/', preg_replace('|^/(.*?)$|', '\1', $path));
+        $array = explode('/', (string) preg_replace('|^/(.*?)$|', '\1', $path));
         $item  = null;
         $url   = null;
 
@@ -752,7 +749,7 @@ function isFunctionDisable($func)
     $list = @ini_get('disable_functions');
 
     if (empty($list) == false) {
-        $func = strtolower(trim($func));
+        $func = strtolower(trim((string) $func));
         $list = explode(',', $list);
 
         foreach ($list as $e) {
@@ -824,7 +821,7 @@ function cookie(
         $option = is_array($option) ? $option : [];
 
         foreach ($cookie as $key => $value) {
-            setcookie($key, $value, $option);
+            setcookie($key, (string) $value, $option);
         }
     }
 }
@@ -833,13 +830,13 @@ function sortNatural(&$array)
 {
     usort($array, function ($a, $b) {
         // Nếu cả hai chuỗi đều bắt đầu bằng ký tự đặc biệt hoặc đều không bắt đầu bằng ký tự đặc biệt
-        if ((ctype_alnum($a[0]) && ctype_alnum($b[0])) || (!ctype_alnum($a[0]) && !ctype_alnum($b[0]))) {
+        if ((ctype_alnum((string) $a[0]) && ctype_alnum((string) $b[0])) || (!ctype_alnum((string) $a[0]) && !ctype_alnum((string) $b[0]))) {
             // So sánh không phân biệt hoa thường theo kiểu tự nhiên
             return strnatcasecmp($a, $b);
         }
 
         // Đưa chuỗi bắt đầu bằng ký tự đặc biệt lên trước
-        return ctype_alnum($a[0]) ? 1 : -1;
+        return ctype_alnum((string) $a[0]) ? 1 : -1;
     });
 }
 
@@ -850,7 +847,7 @@ function getIcon($type, $name)
 
     if ($type === 'folder') {
         $icon = 'folder';
-        $nameIcon = trim($name, '.');
+        $nameIcon = trim((string) $name, '.');
         if (in_array($nameIcon, icons['folders'])) {
             $icon = $nameIcon;
         }
@@ -952,7 +949,7 @@ function getFileLink($path)
 {
     global $formats, $pages;
     $path = str_replace('//', '/', $path);
-    $file = new \SplFileInfo($path);
+    $file = new SplFileInfo($path);
     $fileDir = $file->isDir() ? $file->getPathname() : dirname($file->getPathname());
     $name = $file->getFilename();
     $isEdit = false;

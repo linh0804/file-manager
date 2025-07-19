@@ -1,7 +1,7 @@
 <?php
 
 use ngatngay\fs;
-use function ngatngay\request;
+use ngatngay\http\request;
 
 define('ACCESS', true);
 
@@ -13,8 +13,8 @@ $error = '';
 $title = 'Giải nén tập tin';
 $file = new SplFileInfo($path);
 $format = $file->getExtension();
-$path_unzip = request()->post('path_unzip', dirname($path));
-$is_delete = request()->has_post('is_delete');
+$path_unzip = request::post('path_unzip', dirname((string) $path));
+$is_delete = request::has_post('is_delete');
 
 require 'header.php';
 
@@ -24,7 +24,7 @@ if (!in_array($format, array('zip', 'jar'))) {
     echo '<div class="list"><span>Tập tin không phải zip</span></div>';
     show_back();
 } else {
-    if (request()->is_method('post')) {
+    if (request::is_method('post')) {
         $error .= '<div class="notice_failure">';
 
         if (empty($path_unzip)) {
@@ -42,7 +42,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     fs::remove($path);
                 }
 
-                goURL('index.php?path=' . dirname($path) . $pages['paramater_1']);
+                goURL('index.php?path=' . dirname((string) $path) . $pages['paramater_1']);
             } else {
                 $error .= 'Giải nén tập tin lỗi';
             }

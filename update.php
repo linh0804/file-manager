@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
         $select = $_POST['select'];
         echo '<div class="list">';
         foreach ($select as $value) {
-            $name = explode('/', $value);
+            $name = explode('/', (string) $value);
             $lastElement = array_pop($name);
             $folder = __DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace('/'. $lastElement, '', $value);
             $save = __DIR__ . str_replace('/'. $lastElement, '', $value);

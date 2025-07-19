@@ -38,10 +38,10 @@ $command = $_POST['command'] ?? '';
 echo '<div class="list">
   <form method="post">
     <span>Thư mục:</span><br />
-    <input type="text" name="folder" value="' . htmlspecialchars($folder) . '" /><br />
+    <input type="text" name="folder" value="' . htmlspecialchars((string) $folder) . '" /><br />
 
     <span>Lệnh:</span><br />
-    <input type="text" name="command" value="' . htmlspecialchars($command) . '" /><br />
+    <input type="text" name="command" value="' . htmlspecialchars((string) $command) . '" /><br />
 
    <input type="submit" name="submit" value="OK" />
   </form>
@@ -61,21 +61,21 @@ if (isset($_POST['submit'])) {
 
     if (isset($res) && $res !== false) {
         echo 'Lệnh:';
-        echo '<pre>' . htmlspecialchars($command) . '</pre>';
+        echo '<pre>' . htmlspecialchars((string) $command) . '</pre>';
 
         if ($res['err']) {
             echo 'Lỗi:';
-            echo '<pre style="color: red">' . htmlspecialchars($res['err']) . '</pre>';
+            echo '<pre style="color: red">' . htmlspecialchars((string) $res['err']) . '</pre>';
         }
 
         echo 'Code:';
-        echo '<pre style="color: blue">' . htmlspecialchars($res['code']) . '</pre>';
+        echo '<pre style="color: blue">' . htmlspecialchars((string) $res['code']) . '</pre>';
 
         echo 'Kết quả:';
-        echo '<pre id="output">' . htmlspecialchars($res['out']) . '</pre>';
+        echo '<pre id="output">' . htmlspecialchars((string) $res['out']) . '</pre>';
 
         echo 'Thư mục thực thi:';
-        echo '<pre>' . htmlspecialchars($folder) . '</pre>';
+        echo '<pre>' . htmlspecialchars((string) $folder) . '</pre>';
     } else {
         echo 'Không thể thực thi lệnh!';
     }

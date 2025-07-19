@@ -67,8 +67,8 @@ if (isset($_POST['submit'])) {
     // for composer.phar
     putenv('COMPOSER_HOME=~/.composer');
     
-    if (substr($command, 0, 9) === "composer ") {
-        $command = substr($command, 9 - strlen($command));
+    if (substr((string) $command, 0, 9) === "composer ") {
+        $command = substr((string) $command, 9 - strlen((string) $command));
     }
 
     $command = sprintf(
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
     echo '<hr />';
 
     echo 'Thư mục:';
-    echo '<pre>' . htmlspecialchars($folder) . '</pre>';
+    echo '<pre>' . htmlspecialchars((string) $folder) . '</pre>';
 
     echo 'Lệnh:';
     echo '<pre>' . htmlspecialchars($command) . '</pre>';

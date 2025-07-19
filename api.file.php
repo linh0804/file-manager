@@ -1,16 +1,17 @@
 <?php
 
-namespace ngatngay;
+use ngatngay\http\request;
+use ngatngay\fs;
 
 define('ACCESS', 1);
 
 require __DIR__ . '/.init.php';
 
-$action = request()->post('action');
-$path = (string) request()->post('path');
+$action = request::post('action');
+$path = (string) request::post('path');
 $path = rawurldecode($path);
 
-if (!request()->is_method('post')) {
+if (!request::is_method('post')) {
     response(['status' => false,'msg' => 'method error'])->send();
 }
 

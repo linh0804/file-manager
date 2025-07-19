@@ -12,7 +12,7 @@ if (!isLogin) {
 }
 
 $path = isset($_GET['path']) ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
-$title = 'Danh sách - ' . basename($path);
+$title = 'Danh sách - ' . basename((string) $path);
 
 if (!isset($_GET['path'])) {
     goURL('index.php?path=' . $path);
@@ -22,9 +22,9 @@ check_path($path);
 
 require 'header.php';
 
-echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars($path) . '" style="color: pink">[copy]</span></div>';
+echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars((string) $path) . '" style="color: pink">[copy]</span></div>';
 
-echo '<a href="index.php?path=' . dirname($path) . '">
+echo '<a href="index.php?path=' . dirname((string) $path) . '">
   <div class="list">
     <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
     <strong class="back">...</strong>
@@ -182,18 +182,18 @@ if ($count <= 0) {
     <li><a href="import.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
     <li><a href="find_in_folder.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="scan_error_log.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
-    <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars($path), '/') ?>">&bull; Webdav</a></li>
+    <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars((string) $path), '/') ?>">&bull; Webdav</a></li>
     <li>
         <details>
             <summary><i>[ Thư mục hiện tại ]</i></summary>
             <hr>
             <a href="file.php?path=<?= $path ?>" class="button"><img src="icon/info.png"/> Thông tin</a>
             <a href="file.php?act=rename&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/rename.png"/> Đổi tên</a>
-            <a href="folder_zip.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
-            <a href="folder_copy.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
-            <a href="folder_move.php?dir=<?= dirname($path) . '&name=' . basename($path) . '&' . referer_qs ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
+            <a href="folder_zip.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
+            <a href="folder_copy.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
+            <a href="folder_move.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
             <a href="file.php?act=chmod&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/access.png"/> Chmod</a>
-            <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars($path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
+            <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars((string) $path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
         </details>
     </li>
 </ul>

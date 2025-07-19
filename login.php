@@ -25,13 +25,13 @@ if (!ableLogin()) {
 
 if (isset($_POST['submit'])) {
     $notice   = '<div class="notice_failure">';
-    $username = addslashes($_POST['username']);
-    $password = addslashes($_POST['password']);
+    $username = addslashes((string) $_POST['username']);
+    $password = addslashes((string) $_POST['password']);
 
     if ($username == null || $password == null) {
         $notice .= 'Chưa nhập đầy đủ thông tin';
     } elseif (
-        strtolower($username) != strtolower($configs['username'])
+        strtolower($username) != strtolower((string) $configs['username'])
         || getPasswordEncode($password) != $configs['password']
     ) {
         $notice .= 'Sai tài khoản hoặc mật khẩu.';
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
         $notice .= ' Bạn còn ' . (LOGIN_MAX - getLoginFail()) . ' lần thử!';
     } else {
         removeLoginFail();
-        setcookie(FM_COOKIE_NAME, getPasswordEncode($password), time() + 3600 * 24 * 365);
+        setcookie(FM_COOKIE_NAME, (string) getPasswordEncode($password), time() + 3600 * 24 * 365);
 
         goURL('index.php');
     }

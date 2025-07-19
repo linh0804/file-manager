@@ -24,8 +24,8 @@ require_once 'header.php';
 echo '<div class="title">' . $title . '</div>';
 
 $dir = processDirectory($dir);
-$folder1 = isset($_POST['folder1']) ? rtrim(processDirectory($_POST['folder1']), '/') : '';
-$folder2 = isset($_POST['folder2']) ? rtrim(processDirectory($_POST['folder2']), '/') : '';
+$folder1 = isset($_POST['folder1']) ? rtrim((string) processDirectory($_POST['folder1']), '/') : '';
+$folder2 = isset($_POST['folder2']) ? rtrim((string) processDirectory($_POST['folder2']), '/') : '';
 $exclude = isset($_POST['exclude']) ? $_POST['exclude'] : '.git/' . PHP_EOL . 'node_modules/' . PHP_EOL . 'vendor/';
 
 echo '<div class="list">
@@ -37,7 +37,7 @@ echo '<div class="list">
         <input type="text" name="folder2" value="' . htmlspecialchars($folder2) . '" style="width: 80%" /><br />
 
         Loại trừ theo biểu thức:<br />
-        <textarea name="exclude" rows="5" style="width: 60%">' . htmlspecialchars($exclude) . '</textarea><br />
+        <textarea name="exclude" rows="5" style="width: 60%">' . htmlspecialchars((string) $exclude) . '</textarea><br />
         <p style="font-size: small">
             Thư mục thì thêm / vào sau tên: <b>vendor/</b><br />
             Chỉ hỗ trợ loại trừ 1 cấp! Như: "vendor/" gồm("*/vendor/"). Không hỗ trợ "abc/vendor/".
@@ -48,7 +48,7 @@ echo '<div class="list">
 </div>';
 
 if (isset($_POST['submit'])) {
-    $excludes = explode(PHP_EOL, $exclude);
+    $excludes = explode(PHP_EOL, (string) $exclude);
 
     $files1 = [];
     $files1_only = [];
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 
         echo '<li>
             <span class="bull">&bull;</span> '
-            . ltrim($file, '/')
+            . ltrim((string) $file, '/')
             . ' [<a href="file.php?path=' . $full_path . '">1</a>]
         </li>';
     }
@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
 
         echo '<li>
             <span class="bull">&bull;</span> '
-            . ltrim($file, '/')
+            . ltrim((string) $file, '/')
             . ' [<a href="file.php?path=' . $full_path . '">2</a>]
         </li>';
     }
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 
         echo '<li>
             <span class="bull">&bull;</span> '
-            . ltrim($file, '/')
+            . ltrim((string) $file, '/')
             . ' [<a href="file.php?path=' . $full_path1 . '">1</a>]'
             . ' [<a href="file.php?path=' . $full_path2 . '">2</a>]
         </li>';

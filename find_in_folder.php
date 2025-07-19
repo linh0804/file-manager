@@ -54,10 +54,10 @@ echo '<div class="list">
     <span>' . printPath($dir, true) . '</span><hr/>
     <form method="post">
         Nội dung tìm kiếm:<br />
-        <input type="text" name="search" value="' . htmlspecialchars($search) . '" style="width: 80%" /><br />
+        <input type="text" name="search" value="' . htmlspecialchars((string) $search) . '" style="width: 80%" /><br />
         
         Thay thế:<br />
-        <input type="text" name="replace" value="' . htmlspecialchars($replace) . '" style="width: 80%" /><br />
+        <input type="text" name="replace" value="' . htmlspecialchars((string) $replace) . '" style="width: 80%" /><br />
 
         <label>
         <input type="checkbox" name="case" ' . ($case ? 'checked="checked"' : '') . ' />
@@ -80,7 +80,7 @@ echo '<div class="list">
         </label>
 
         Loại trừ theo biểu thức:<br />
-        <textarea name="exclude" rows="5">' . htmlspecialchars($exclude) . '</textarea><br />
+        <textarea name="exclude" rows="5">' . htmlspecialchars((string) $exclude) . '</textarea><br />
         <p style="font-size: small">
             VD: "vendor/", "system/vendor/", "style.css",...
         </p>
@@ -90,12 +90,12 @@ echo '<div class="list">
 
 if (isset($_POST['submit'])) {
     $error = false;
-    $excludes = explode(PHP_EOL, $exclude);
+    $excludes = explode(PHP_EOL, (string) $exclude);
 
     if (empty($search)) {
         echo $error = '<div class="notice_failure">Chưa nhập nội dung!</div>';
     }
-    
+
     if ($error === false) {
         $files = readFullDir($dir, $excludes);
         $files_search_count = 0;
@@ -112,11 +112,11 @@ if (isset($_POST['submit'])) {
 
             // xử lý loại tìm kiếm
             if ($only_dir) {
-                $search = ltrim($search, '/');
+                $search = ltrim((string) $search, '/');
                 if (!$file->isDir()) {
                     continue;
                 }
-                
+
                 // phân biệt chữ hoa
                 if ($case) {
                     $haveSearch = strpos($file_path_sort, $search);
@@ -131,7 +131,7 @@ if (isset($_POST['submit'])) {
                     echo '<div class="item">';
                     echo '<div class="item-title">';
                     echo '<span class="bull">&bull;</span>
-                        <a style="color: red" target="_blank" href="index.php?path=' . rawurlencode($file_path) . '">'
+                        <a style="color: red" target="_blank" href="index.php?path=' . rawurlencode((string) $file_path) . '">'
                             . htmlspecialchars($file_path_sort)
                         . '</a>';
                     echo '</div>';
@@ -140,11 +140,11 @@ if (isset($_POST['submit'])) {
 
                 continue;
             } else if ($only_file) {
-                $search = ltrim($search, '/');
+                $search = ltrim((string) $search, '/');
                 if (!$file->isFile()) {
                     continue;
                 }
-                
+
                 // phân biệt chữ hoa
                 if ($case) {
                     $haveSearch = strpos($file_path_sort, $search);
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
                     echo '</div>';
                     echo '</div>';
                 }
-                
+
                 continue;
             } else {
             	// tìm trong file
@@ -194,9 +194,9 @@ if (isset($_POST['submit'])) {
 
                 // phân biệt chữ hoa
                 if ($case) {
-                    $haveSearch = strpos($line, $search);
+                    $haveSearch = strpos((string) $line, (string) $search);
                 } else {
-                    $haveSearch = stripos($line, $search);
+                    $haveSearch = stripos((string) $line, (string) $search);
                 }
 
                 // tìm thấy
@@ -210,7 +210,7 @@ if (isset($_POST['submit'])) {
                         echo '<div class="item">';
                         echo '<div class="item-title">';
                         echo '<span class="bull">&bull;</span>
-                            <a style="color: red" target="_blank" href="edit_text.php?path=' . base64_encode($file_path) . '">'
+                            <a style="color: red" target="_blank" href="edit_text.php?path=' . base64_encode((string) $file_path) . '">'
                                 . htmlspecialchars($file_path_sort)
                             . '</a>';
                         echo '</div>';
@@ -222,19 +222,19 @@ if (isset($_POST['submit'])) {
                         . (
                             $case
                             ? str_replace(
-                                htmlspecialchars($search),
-                                '<span style="background-color: yellow">' . htmlspecialchars($search) . '</span>',
-                                htmlspecialchars($line)
+                                htmlspecialchars((string) $search),
+                                '<span style="background-color: yellow">' . htmlspecialchars((string) $search) . '</span>',
+                                htmlspecialchars((string) $line)
                             )
                             : preg_replace(
-                                '#(' . preg_quote(htmlspecialchars($search)) . ')#i',
+                                '#(' . preg_quote(htmlspecialchars((string) $search)) . ')#i',
                                 '<span style="background-color: yellow">${1}</span>',
-                                htmlspecialchars($line)
+                                htmlspecialchars((string) $line)
                             )
                         )
                     . '</div>';
                 } // end tìm thấy
-                
+
                 if ($fileObj->eof() && $display) {
                     if ($replaceCheck) {
                         $content = file_get_contents($fileObj->getRealPath());

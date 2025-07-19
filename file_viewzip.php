@@ -8,7 +8,7 @@ $title = 'Xem tập tin nén';
 
 check_path($path, 'file');
 
-$file = new \SplFileInfo($path);
+$file = new SplFileInfo($path);
 $dir = dirname($file->getPathname());
 $name = $file->getFilename();
 $format = $file->getExtension();
@@ -103,15 +103,15 @@ if (!in_array($format, array('zip', 'jar'))) {
         array_splice($sorts, 0, count($sorts));
         unset($sorts);
 
-        if ($path != null && strpos($path, '/') !== false) {
-            $array = explode('/', preg_replace('|^/(.*?)$|', '\1', $path));
+        if ($path != null && strpos((string) $path, '/') !== false) {
+            $array = explode('/', (string) preg_replace('|^/(.*?)$|', '\1', (string) $path));
             $html = '/<a href="file_viewzip.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>';
             $item = null;
             $url = null;
 
             foreach ($array AS $key => $entry) {
                 if ($key === 0) {
-                    $seperator = preg_match('|^\/(.*?)$|', $path) ? '/' : null;
+                    $seperator = preg_match('|^\/(.*?)$|', (string) $path) ? '/' : null;
                     $item = $seperator . $entry;
                 } else {
                     $item = '/' . $entry;
@@ -146,10 +146,10 @@ if (!in_array($format, array('zip', 'jar'))) {
         </li>';
 
         if ($path != null) {
-            $back = strrchr($path, '/');
+            $back = strrchr((string) $path, '/');
 
             if ($back !== false)
-                $back = 'file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . '&path=' . rawurlencode(substr($path, 0, strlen($path) - strlen($back))) . $pages['paramater_1'];
+                $back = 'file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . '&path=' . rawurlencode(substr((string) $path, 0, strlen((string) $path) - strlen($back))) . $pages['paramater_1'];
             else
                 $back = 'file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'];
 

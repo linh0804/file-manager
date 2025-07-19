@@ -284,14 +284,14 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
 
                     echo '<div class="notice_failure">Tên ' . $entryLabel . ' <strong class="' . $entryCss . '_name_rename_action">' . $entry[$k] . '</strong> <strong>=></strong> <strong class="' . $entryCss . '_name_rename_action">' . $e . '</strong> không hợp lệ</div>';
                     break;
-                } elseif (countStringArray($modifier, strtolower($e), true) > 1 && $e != $entry[$k]) {
+                } elseif (countStringArray($modifier, strtolower((string) $e), true) > 1 && $e != $entry[$k]) {
                     $isFailed   = true;
                     $entryLabel = is_dir($entryPath) ? 'thư mục' : 'tập tin';
                     $entryCss   = is_dir($entryPath) ? 'folder' : 'file';
 
                     echo '<div class="notice_failure">Tên ' . $entryLabel . ' <strong class="' . $entryCss . '_name_rename_action">' . $entry[$k] . '</strong> <strong>=></strong> <strong class="' . $entryCss . '_name_rename_action">' . $e . '</strong> này đã tồn tại ở một khung nhập khác</div>';
                     break;
-                } elseif (!isInArray($entry, strtolower($e), true) && file_exists($dir . '/' . $e)) {
+                } elseif (!isInArray($entry, strtolower((string) $e), true) && file_exists($dir . '/' . $e)) {
                     $isFailed   = true;
                     $entryLabel = is_dir($entryPath) ? 'thư mục' : 'tập tin';
                     $entryCss   = is_dir($entryPath) ? 'folder' : 'file';

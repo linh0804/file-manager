@@ -23,14 +23,14 @@ $pageFileEditLine = $configs['page_file_edit_line'];
 $pageDatabaseListRows = $configs['page_database_list_rows'];
 
 if (isset($_POST['submit'])) {
-    $username = addslashes($_POST['username']);
-    $passwordO = addslashes($_POST['password_o']);
-    $passwordN = addslashes($_POST['password_n']);
-    $verifyN = addslashes($_POST['verify_n']);
-    $pageList = intval(addslashes($_POST['page_list']));
-    $pageFileEdit = intval(addslashes($_POST['page_file_edit']));
-    $pageFileEditLine = intval(addslashes($_POST['page_file_edit_line']));
-    $pageDatabaseListRows = addslashes($_POST['page_database_list_rows']);
+    $username = addslashes((string) $_POST['username']);
+    $passwordO = addslashes((string) $_POST['password_o']);
+    $passwordN = addslashes((string) $_POST['password_n']);
+    $verifyN = addslashes((string) $_POST['verify_n']);
+    $pageList = intval(addslashes((string) $_POST['page_list']));
+    $pageFileEdit = intval(addslashes((string) $_POST['page_file_edit']));
+    $pageFileEditLine = intval(addslashes((string) $_POST['page_file_edit_line']));
+    $pageDatabaseListRows = addslashes((string) $_POST['page_database_list_rows']);
 
     if (empty($username)) {
         echo '<div class="notice_failure">Chưa nhập tên đăng nhập</div>';
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
             $pageList = $configs['page_list'];
             $pageFileEdit = $configs['page_file_edit'];
             $pageFileEditLine = $configs['page_file_edit_line'];
-            $pageDatabaseListRows = addslashes($_POST['page_database_list_rows']);
+            $pageDatabaseListRows = addslashes((string) $_POST['page_database_list_rows']);
 
             echo '<div class="notice_succeed">Lưu thành công</div>';
         } else {

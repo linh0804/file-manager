@@ -58,9 +58,9 @@ if (
         
         echo '<li>
             <span class="bull">&bull;</span>
-            <a style="color: red" href="edit_text.php?path=' . base64_encode($file->getPathname()) . '" target="_blank">'
+            <a style="color: red" href="edit_text.php?path=' . base64_encode((string) $file->getPathname()) . '" target="_blank">'
             . htmlspecialchars(ltrim(
-                str_replace_first($dir, '', $file->getPathname())
+                (string) str_replace_first($dir, '', $file->getPathname())
             , '/'))
             . '</a> (' . size($file->getSize()) . ')
             </li>';

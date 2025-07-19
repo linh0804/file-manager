@@ -29,13 +29,13 @@ function highlightStringWithLineNumbers($code) {
 }
 
 function detectCodeType($code) {
-    if (strpos($code, "<?php") !== false || strpos($code, "<?=") !== false) {
+    if (strpos((string) $code, "<?php") !== false || strpos((string) $code, "<?=") !== false) {
         return "php";
-    } elseif (strpos($code, "const ") !== false || strpos($code, "var ") !== false || strpos($code, "function ") !== false || strpos($code, "document.") !== false) {
+    } elseif (strpos((string) $code, "const ") !== false || strpos((string) $code, "var ") !== false || strpos((string) $code, "function ") !== false || strpos((string) $code, "document.") !== false) {
         return "javascript";
-    } elseif (strpos($code, "background-color") !== false || strpos($code, "background") !== false || strpos($code, "-wekit-") !== false) {
+    } elseif (strpos((string) $code, "background-color") !== false || strpos((string) $code, "background") !== false || strpos((string) $code, "-wekit-") !== false) {
         return "css";
-    } elseif (strpos($code, "{\"") !== false && strpos($code, "\"}") !== false && strpos($code, "\":\"") !== false){
+    } elseif (strpos((string) $code, "{\"") !== false && strpos((string) $code, "\"}") !== false && strpos((string) $code, "\":\"") !== false){
         return "json";
     } else {
         return "html";

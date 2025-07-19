@@ -12,7 +12,7 @@ class Zip extends ZipArchive {
         $pathRelative = $path;
 
         if ($relative) {
-            $pathRelative = substr($path, strlen($relative));
+            $pathRelative = substr($path, strlen((string) $relative));
         }
     
         if ($file->isFile()) {

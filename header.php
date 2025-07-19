@@ -7,7 +7,7 @@ $menuToggle = '';
 <html lang="vi">
 
 <head>
-    <title><?= htmlspecialchars($title) ?></title>
+    <title><?= htmlspecialchars((string) $title) ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

@@ -1,10 +1,12 @@
 <?php
 
+use ngatngay\http\request;
+
 define('ACCESS', true);
 
 require '.init.php';
 
-$path = base64_decode((string) request()->get('path'));
+$path = base64_decode((string) request::get('path'));
 $file = new SplFileInfo($path);
 $dir = dirname($file->getPathname());
 $name = basename($file->getPathname());
@@ -35,7 +37,7 @@ $path = $dir . '/' . $name;
 $content = isset($_POST['content']) ? $_POST['content'] : '';
 
 if (isset($_POST['format'])) {
-    $formatType = trim($_POST['format']);
+    $formatType = trim((string) $_POST['format']);
 
     switch ($formatType) {
         case 'php':

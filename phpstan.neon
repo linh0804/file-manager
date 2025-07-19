@@ -6,7 +6,7 @@ parameters:
     excludePaths:
         - node_modules/
         - vendor/
-        - css/
+        - css/ (?)
         - db/
         - tmp/
         - icon/

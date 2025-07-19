@@ -47,10 +47,10 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
 
                     if (!isURL($_POST['url'][$i])) {
                         echo '<div class="notice_failure">URL <strong class="url_import">' . $_POST['url'][$i] . '</strong> không hợp lệ</div>';
-                    } elseif ($curl->download($_POST['url'][$i], $dir . '/' . basename($_POST['url'][$i]))) {
-                        echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename($_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . size(filesize($dir . '/' . basename($_POST['url'][$i]))) . '</span> thành công</div>';
+                    } elseif ($curl->download($_POST['url'][$i], $dir . '/' . basename((string) $_POST['url'][$i]))) {
+                        echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . size(filesize($dir . '/' . basename((string) $_POST['url'][$i]))) . '</span> thành công</div>';
                     } else {
-                        echo '<div class="notice_failure">Nhập khẩu tập tin <strong class="file_name_import">' . basename($_POST['url'][$i]) . '</strong> thất bại</div>';
+                        echo '<div class="notice_failure">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong> thất bại</div>';
                     }
                 }
             }

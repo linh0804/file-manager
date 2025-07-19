@@ -26,7 +26,7 @@ echo '<div class="list">';
 
 echo '<form method="post">
     <span>Thư mục:</span><br />
-    <input type="text" name="home" value="' . htmlspecialchars($home) . '" /><br />
+    <input type="text" name="home" value="' . htmlspecialchars((string) $home) . '" /><br />
 
    <input type="submit" name="submit" value="OK" />
 </form>';

@@ -6,7 +6,7 @@ defined('ACCESS') or exit('Not access');
 
 @ini_set('display_errors', true);
 @ini_set('memory_limit', -1);
-@ini_set('max_execution_time', 300);
+@ini_set('max_execution_time', 3600);
 @ini_set('opcache.revalidate_freq', 0);
 
 error_reporting(E_ALL);
@@ -52,13 +52,6 @@ require rootPath . '/vendor/autoload.php';
 require rootPath . '/lib/function.php';
 require rootPath . '/lib/zip.class.php';
 
-// tải tài nguyên
-$icon = rootPath . '/json/icon.json';
-if (!file_exists($icon)) {
-    file_put_contents($icon, file_get_contents('https://cdn.ngatngay.net/icon/atom.json'));
-}
-define('icons', json_decode(file_get_contents($icon), true));
-
 // tạo tmp nếu chưa có
 {
     $tmp_dir = rootPath . '/tmp';
@@ -69,15 +62,18 @@ define('icons', json_decode(file_get_contents($icon), true));
     }
 
     if (!file_exists($tmp_file)) {
-        file_put_contents(
-            $tmp_file,
-            'deny from all'
-        );
+        file_put_contents($tmp_file, 'Require all denied');
     }
 
     unset($tmp_dir);
     unset($tmp_file);
 }
+
+// tải tài nguyên
+define('icons', [
+'files' => load_json_remote('https://static.ngatngay.net/atom-icon/files/__struct__.json'),
+'folders' => load_json_remote('https://static.ngatngay.net/atom-icon/folders/__struct__.json')
+]);
 
 // cau hinh
 const PATH_CONFIG = rootPath . '/config.inc.php';

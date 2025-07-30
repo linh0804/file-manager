@@ -20,7 +20,8 @@ $menuToggle = '';
 
     <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     
-    <script src="https://cdn.ngatngay.net/js/helper/dist/jquery.js"></script>
+    <script src="https://static.ngatngay.net/jquery/jquery.js"></script>
+    <script src="https://static.ngatngay.net/jquery/jquery.time_ago.js"></script>
     <script src="<?= asset('js/script.js') ?>" defer></script>
 </head>
 

@@ -848,17 +848,17 @@ function getIcon($type, $name)
     if ($type === 'folder') {
         $icon = 'folder';
         $nameIcon = trim((string) $name, '.');
-        if (in_array($nameIcon, icons['folders'])) {
+        if (in_array($nameIcon . '.svg', icons['folders'])) {
             $icon = $nameIcon;
         }
 
-        return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/folders/' . $icon . '.svg"/>';
+        return '<img src="https://static.ngatngay.net/atom-icon/folders/' . $icon . '.svg"/>';
     }
 
     if ($type === 'file') {
         $icon = 'file';
 
-        if (in_array($file->getExtension(), icons['files'])) {
+        if (in_array($file->getExtension() . '.svg', icons['files'])) {
             $icon = $file->getExtension();
         } elseif (in_array($file->getExtension(), $formats['archive'])) {
             $icon = 'archive';
@@ -870,7 +870,7 @@ function getIcon($type, $name)
             $icon = 'image';
         }
 
-        return '<img src="https://cdn.ngatngay.net/icon/atom/assets/icons/files/' . $icon . '.svg">';
+        return '<img src="https://static.ngatngay.net/atom-icon/files/' . $icon . '.svg">';
     }
 }
 
@@ -1069,6 +1069,16 @@ function isInOpenBasedir(string $path): bool
     }
 
     return false;
+}
+
+function load_json_remote(string $url) {
+    $cache = rootPath . '/tmp/' . md5($url);
+
+    if (!file_exists($cache) || !filesize($cache)) {
+        file_put_contents($cache, file_get_contents($url));
+    }
+    
+    return json_decode(file_get_contents($cache), true);
 }
 
 require 'auth.fn.php';

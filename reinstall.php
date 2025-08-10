@@ -1,5 +1,8 @@
 <?php
+
 namespace app;
+
+use ngatngay\zip;
 
 define('ACCESS', true);
 
@@ -12,7 +15,7 @@ if (isset($_POST['submit'])) {
     $file = 'tmp/manager-reinstall.zip';
 
     if (import(remoteFile, $file)) {
-        $zip = new ZipArchive;
+        $zip = new zip;
 
         if ($zip->open($file) === true) {
             $zip->extractTo(__DIR__);

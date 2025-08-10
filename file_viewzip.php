@@ -68,9 +68,9 @@ if (!in_array($format, array('zip', 'jar'))) {
         foreach ($lists AS $entry) {
             $filename = $entry['filename'];
 
-            if (strpos($filename, '/') === false && $base == null) {
+            if (strpos((string) $filename, '/') === false && $base == null) {
                 $arrays['files'][$filename] = array('path' => $filename, 'name' => $filename, 'folder' => false, 'size' => $entry['size']);
-            } else if (preg_match('#(' . $base . '(.+?))(/|$)+#', $filename, $matches)) {
+            } else if (preg_match('#(' . $base . '(.+?))(/|$)+#', (string) $filename, $matches)) {
                 if ($matches[3] == '/' && !isset($arrays['folders'][$matches[2]]))
                     $arrays['folders'][$matches[2]] = array('path' => $matches[1], 'name' => $matches[2], 'folder' => true);
                 else if ($matches[3] != '/' && !$entry['folder'])
@@ -166,7 +166,7 @@ if (!in_array($format, array('zip', 'jar'))) {
             echo '<li class="normal"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></li>';
         } else {
             foreach ($arrays AS $key => $value) {
-                $pathEncode = rawurlencode($value['path']);
+                $pathEncode = rawurlencode((string) $value['path']);
 
                 if ($value['folder']) {
                     echo '<li class="folder">

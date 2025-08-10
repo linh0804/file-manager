@@ -1,5 +1,4 @@
 <?php
-namespace app;
 
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;

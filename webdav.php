@@ -6,6 +6,7 @@ use Sabre\DAV\Server;
 use Sabre\DAV\FS\Directory;
 use Sabre\DAV\Auth\Plugin;
 use ngatngay\http\request;
+use Throwable;
 
 define('ACCESS', true);
 define('LOGIN', true);

@@ -2,6 +2,7 @@
 namespace app;
 
 use ngatngay\http\request;
+use SplFileInfo;
 
 defined('ACCESS') or exit('Not access');
 
@@ -51,7 +52,6 @@ define('baseUrl', requestScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost')
 // load thu vien
 require rootPath . '/vendor/autoload.php';
 require rootPath . '/lib/function.php';
-require rootPath . '/lib/zip.class.php';
 
 // tạo tmp nếu chưa có
 {

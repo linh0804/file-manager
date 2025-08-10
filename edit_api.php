@@ -2,6 +2,7 @@
 namespace app;
 
 use ngatngay\http\request;
+use SplFileInfo;
 
 define('ACCESS', true);
 

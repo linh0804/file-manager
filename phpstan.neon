@@ -11,7 +11,6 @@ parameters:
         - tmp/
         - icon/
         - js/
-        - json/
     ignoreErrors:
         -
             identifier: variable.undefined

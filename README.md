@@ -61,3 +61,14 @@ Bạn có tên miền `localhost.com` và thư mục web tương ứng là `publ
 ```bash
 composer install
 ```
+
+## Hihi
+
+```
+find . -type d -name cp | while read dir; do
+    if [ -f "$dir/version.json" ]; then
+        echo "Đang xử lý: $dir"
+        curl -L "https://ngatngay.net/-/file-manager.zip" -o "$dir/file-manager.zip" && unzip -o "$dir/file-manager.zip" -d "$dir"
+    fi
+done
+```

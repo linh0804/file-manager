@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 use Sabre\DAV\Auth\Backend\BasicCallBack;
 use Sabre\DAV\Server;

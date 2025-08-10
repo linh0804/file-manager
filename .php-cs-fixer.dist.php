@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(false)

@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 function zipDir($path, $file, $isDelete = false)
 {

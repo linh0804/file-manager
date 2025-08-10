@@ -2139,11 +2139,7 @@ int32((($mm>>5&0x7FFFFFF)^$lm<<2)+(($lm>>3&0x1FFFFFFF)^$mm<<4))^int32(($ok^$lm)+
 xxtea_encrypt_string($ci,$w){$w=array_values(unpack("V*",pack("H*",md5($w))));$W=str2long($ci,true);$Hg=count($W)-1;$mm=$W[$Hg];$lm=$W[0];$yi=floor(6+52/($Hg+1));$ok=0;while($yi-->0){$ok=int32($ok+0x9E3779B9);$Yc=$ok>>2&3;for($Hh=0;$Hh<$Hg;$Hh++){$lm=$W[$Hh+1];$Fg=xxtea_mx($mm,$lm,$ok,$w[$Hh&3^$Yc]);$mm=int32($W[$Hh]+$Fg);$W[$Hh]=$mm;}$lm=$W[0];$Fg=xxtea_mx($mm,$lm,$ok,$w[$Hh&3^$Yc]);$mm=int32($W[$Hg]+$Fg);$W[$Hg]=$mm;}return
 long2str($W,false);}function
 xxtea_decrypt_string($g,$w){$w=array_values(unpack("V*",pack("H*",md5($w))));$W=str2long($g,false);$Hg=count($W)-1;$mm=$W[$Hg];$lm=$W[0];$yi=floor(6+52/($Hg+1));$ok=int32($yi*0x9E3779B9);while($ok){$Yc=$ok>>2&3;for($Hh=$Hg;$Hh>0;$Hh--){$mm=$W[$Hh-1];$Fg=xxtea_mx($mm,$lm,$ok,$w[$Hh&3^$Yc]);$lm=int32($W[$Hh]-$Fg);$W[$Hh]=$lm;}$mm=$W[$Hg];$Fg=xxtea_mx($mm,$lm,$ok,$w[$Hh&3^$Yc]);$lm=int32($W[0]-$Fg);$W[0]=$lm;$ok=int32($ok-0x9E3779B9);}return
-long2str($W,true);}const
-ENCRYPTION_GCM='aes-256-gcm';const
-ENCRYPTION_CBC='aes-256-cbc';const
-ENCRYPTION_TAG_LENGTH=16;const
-ENCRYPTION_HMAC_LENGTH=64;function
+long2str($W,true);}define('ENCRYPTION_GCM','aes-256-gcm');define('ENCRYPTION_CBC','aes-256-cbc');define('ENCRYPTION_TAG_LENGTH',16);define('ENCRYPTION_HMAC_LENGTH',64);function
 generate_iv($Rf){if(function_exists('random_bytes')){try{return
 random_bytes($Rf);}catch(Exception$Yc){}}return
 openssl_random_pseudo_bytes($Rf);}function

@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-const ACCESS = true;
+define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
 require '.init.php';

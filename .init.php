@@ -77,32 +77,32 @@ define('icons', [
 ]);
 
 // cau hinh
-const PATH_CONFIG = rootPath . '/config.inc.php';
+define('PATH_CONFIG', rootPath . '/config.inc.php');
 
 define('pathConfig', rootPath . '/config.inc.php');
 define('pathDatabase', rootPath . '/config.db.inc.php');
 
-const LOGIN_USERNAME_DEFAULT = 'Admin';
-const LOGIN_PASSWORD_DEFAULT = '12345';
+define('LOGIN_USERNAME_DEFAULT', 'Admin');
+define('LOGIN_PASSWORD_DEFAULT', '12345');
 
-const LOGIN_LOCK = 'login_fail';
-const LOGIN_MAX = 5;
+define('LOGIN_LOCK', 'login_fail');
+define('LOGIN_MAX', 5);
 
-const PAGE_LIST_DEFAULT = 1000;
-const PAGE_FILE_EDIT_DEFAULT = 1000000;
-const PAGE_FILE_EDIT_LINE_DEFAULT = 100;
-const PAGE_DATABASE_LIST_ROWS_DEFAULT = 100;
+define('PAGE_LIST_DEFAULT', 1000);
+define('PAGE_FILE_EDIT_DEFAULT', 1000000);
+define('PAGE_FILE_EDIT_LINE_DEFAULT', 100);
+define('PAGE_DATABASE_LIST_ROWS_DEFAULT', 100);
 
-const PAGE_NUMBER      = 7;
-const PAGE_URL_DEFAULT = 'default';
-const PAGE_URL_START   = 'start';
-const PAGE_URL_END     = 'end';
+define('PAGE_NUMBER', 7);
+define('PAGE_URL_DEFAULT', 'default');
+define('PAGE_URL_START', 'start');
+define('PAGE_URL_END', 'end');
 
-const DEVELOPMENT          = false;
-const NAME_SUBSTR          = 1000;
-const NAME_SUBSTR_ELLIPSIS = '...';
+define('DEVELOPMENT', false);
+define('NAME_SUBSTR', 1000);
+define('NAME_SUBSTR_ELLIPSIS', '...');
 
-const FM_COOKIE_NAME = 'fm_php';
+define('FM_COOKIE_NAME', 'fm_php');
 
 { // lay thong tin phien ban hien tai
     $version = json_decode(

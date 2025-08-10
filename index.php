@@ -3,8 +3,8 @@ namespace app;
 
 use ngatngay\fs;
 
-const ACCESS = true;
-const INDEX  = true;
+define('ACCESS', true);
+define('INDEX', true);
 
 require '.init.php';
 

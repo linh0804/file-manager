@@ -7,8 +7,8 @@ use Sabre\DAV\FS\Directory;
 use Sabre\DAV\Auth\Plugin;
 use ngatngay\http\request;
 
-const ACCESS = true;
-const LOGIN  = true;
+define('ACCESS', true);
+define('LOGIN', true);
 
 require '.init.php';
 

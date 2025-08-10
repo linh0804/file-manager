@@ -3,7 +3,7 @@ namespace app;
 
 use ngatngay\http\curl;
 
-const ACCESS = true;
+define('ACCESS', true);
 
 require '.init.php';
 

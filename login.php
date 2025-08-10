@@ -1,8 +1,8 @@
 <?php
 namespace app;
 
-const ACCESS = true;
-const LOGIN  = true;
+define('ACCESS', true);
+define('LOGIN', true);
 
 require '.init.php';
 

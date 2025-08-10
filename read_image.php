@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-const ACCESS = true;
+define('ACCESS', true);
 
 include '.init.php';
 

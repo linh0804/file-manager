@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 class Zip extends ZipArchive {
     public function add($path, $relative = null)

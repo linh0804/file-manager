@@ -1,4 +1,7 @@
-<?php define('ACCESS', true);
+<?php
+namespace app;
+
+define('ACCESS', true);
 
     include_once '.init.php';
 

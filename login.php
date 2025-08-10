@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 const ACCESS = true;
 const LOGIN  = true;

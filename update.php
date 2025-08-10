@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 exit('cho nguoi bao tri');
 

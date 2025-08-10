@@ -1,5 +1,7 @@
 <?php
-  class Update {         
+namespace app;
+
+class Update {         
     public function __construct() {    
          
     }

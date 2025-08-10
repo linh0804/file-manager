@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 use ngatngay\fs;
 

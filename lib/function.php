@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 use function ngatngay\response as response2;
 use function ngatngay\redirect;

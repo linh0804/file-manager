@@ -1,6 +1,9 @@
 <?php
 namespace app;
 
+use SplFileInfo;
+use ZipArchive;
+
 define('ACCESS', true);
 
 require '.init.php';

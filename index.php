@@ -2,6 +2,7 @@
 namespace app;
 
 use ngatngay\fs;
+use SplFileInfo;
 
 define('ACCESS', true);
 define('INDEX', true);

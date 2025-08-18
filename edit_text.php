@@ -81,10 +81,8 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
     echo '<div id="code_check_message" class="list"></div>';
  ?>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          recent_add('<?= $file->getPathname() ?>');
-        });
+    <script>        
+        var local_storage = nightmare.local_storage;
 
         const codeCheckMessageElement = document.getElementById("code_check_message");
         const codeCheckPHPElement = document.getElementById("code_check_php");
@@ -224,12 +222,18 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
                 editorElement.setAttribute("wrap", "off");
                 editorElement.setAttribute("style", "white-space: nowrap");
             }
-            $.lsData.set('file_manager.edit.wrap', this.checked);
+            local_storage.set('file_manager.edit.wrap', this.checked ? "1" : "");
         });
-        if ($.lsData.get('file_manager.edit.wrap')) {
+
+console.log(typeof local_storage.get('file_manager.edit.wrap'));
+        if (local_storage.get('file_manager.edit.wrap')) {
             $('#code_wrap').prop('checked', true);
             editorElement.removeAttribute("wrap");
             editorElement.removeAttribute("style");
+        } else {
+            $('#code_wrap').prop('checked', false);
+            editorElement.setAttribute("wrap", "off");
+            editorElement.setAttribute("style", "white-space: nowrap");
         }
         
         document.addEventListener("keydown", function(event) {

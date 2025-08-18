@@ -1,13 +1,17 @@
 <?php
 namespace app;
 
+use SplFileInfo;
+use ngatngay\zip;
+use ZipArchive;
+
 function zipDir($path, $file, $isDelete = false)
 {
     if (@is_file($file)) {
         @unlink($file);
     }
 
-    $zip = new Zip();
+    $zip = new zip();
 
     if ($zip->open($file, ZipArchive::CREATE) === true) {
         $path = realpath($path);

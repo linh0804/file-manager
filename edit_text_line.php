@@ -1,6 +1,8 @@
 <?php
 namespace app;
 
+use SplFileInfo;
+
 define('ACCESS', true);
 
 require '.init.php';

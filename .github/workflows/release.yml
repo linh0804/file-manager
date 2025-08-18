@@ -8,7 +8,7 @@ on:
 
 jobs:
   release:
-    if: false
+    #if: false
     runs-on: ubuntu-latest
     permissions: write-all
 

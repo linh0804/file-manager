@@ -4,6 +4,12 @@ PHP File Manager
 
 ## Cài đặt nhanh
 
+### Cài đặt bằng lệnh
+
+```bash
+curl -Ls https://static.ngatngay.net/php/file-manager/install.sh | bash -s -- "tên_thư_mục"
+```
+
 ### Termux
 
 ```
@@ -17,18 +23,6 @@ Tạo một file php, dán code ở [file này](https://static.ngatngay.net/php/
 ### Cài đặt thủ công (FTP, SSH, File Manager,...)
 
 Hoặc tải file zip ở Release về, giải nén vào 1 thư mục.
-
-### Cài đặt bằng lệnh
-
-Bản full (cài sẵn mấy công cụ như WebDAV):
-
-```bash
-mkdir file-manager
-cd file-manager
-
-wget https://static.ngatngay.net/php/file-manager/release.zip
-unzip file-manager-full.zip
-```
 
 ## Lưu ý cài đặt
 

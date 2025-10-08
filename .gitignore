@@ -1,0 +1,16 @@
+.idea/
+node_modules/
+vendor/
+
+tmp/*
+!tmp/.htaccess
+
+.config.php
+error_log
+config.inc.php
+
+composer.phar
+composer.lock
+
+build_local.sh
+

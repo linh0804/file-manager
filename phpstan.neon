@@ -1,0 +1,18 @@
+parameters:
+    phpVersion: 80100
+    level: 2
+    paths:
+        - .
+    excludePaths:
+        - node_modules/
+        - vendor/
+        - css/ (?)
+        - db/
+        - tmp/
+        - icon/
+        - js/
+    ignoreErrors:
+        -
+            identifier: variable.undefined
+        -
+            identifier: constant.notFound

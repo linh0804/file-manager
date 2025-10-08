@@ -1,0 +1,27 @@
+<?php
+
+// Doan ma cai dat file manager
+// Yeu cau: ext-zip
+
+$fileUrl = 'https://static.ngatngay.net/php/file-manager/release.zip';
+$name = uniqid('manager-', true);
+$filePath = "$name/$name.zip";
+$fileDir = dirname($filePath);
+
+mkdir($fileDir);
+
+file_put_contents(
+    $filePath,
+    file_get_contents($fileUrl)
+);
+
+$zip = new ZipArchive();
+$zip->open($filePath);
+$zip->extractTo($fileDir);
+$zip->close();
+
+echo $fileDir . PHP_EOL;
+
+@unlink(__FILE__);
+@header("Location: $fileDir");
+@exit();

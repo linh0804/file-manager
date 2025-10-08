@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    paths:
+      - "version.json"
+    workflow_dispatch:
+
+jobs:
+  release:
+    #if: false
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v4
+
+      - name: php version
+        run: |
+          php -v
+
+      - name: get version
+        run: |
+          VERSION=$(cat version.json | jq -r ".version")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: zip full
+        run: |
+          wget https://getcomposer.org/download/latest-stable/composer.phar
+          php composer.phar install --no-dev
+          bash build.sh
+
+      - name: bump tag
+        uses: anothrNick/github-tag-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_TAG: ${{ env.VERSION }}
+
+      - name: bump release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          generate_release_notes: true
+          files: |
+            release.zip
+
+      - uses: stefanzweifel/git-auto-commit-action@v5

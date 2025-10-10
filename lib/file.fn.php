@@ -41,7 +41,7 @@ function printFileActions(SplFileInfo $file)
     $path = $file->getPathname();
     $name = $file->getFilename();
     $ext = $file->getExtension();
-
+    $dir = dirname($path);
     echo '<div class="title">Chức năng</div>
     <div class="list">';
 
@@ -50,9 +50,9 @@ function printFileActions(SplFileInfo $file)
           <a href="file_unzip.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/unzip.png"/> Giải nén</a> ';
     } elseif (isFormatText($name) || isFormatUnknown($name)) {
         echo '<a href="edit_text.php?path=' . base64_encode($path) . '" class="button"><img src="icon/edit.png"/> Sửa văn bản</a>
-          <a href="edit_code.php?dir=' . $dirEncode . '&name=' . $name . '" class="button"><img src="icon/edit_text_line.png"/> Sửa code</a>
-          <a href="edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/edit_text_line.png"/> Sửa theo dòng</a>
-          <a href="view_code.php?dir=' . $dirEncode . '&name=' . $name . '" class="button"><img src="icon/columns.png"/> Xem code</a> ';
+          <a href="edit_code.php?dir=' . $dir . '&name=' . basename($name) . '" class="button"><img src="icon/edit_text_line.png"/> Sửa code</a>
+          <a href="edit_text_line.php?dir=' . $dir . '&name=' . basename($name) . $pages['paramater_1'] . '" class="button"><img src="icon/edit_text_line.png"/> Sửa theo dòng</a>
+          <a href="view_code.php?dir=' . $dir . '&name=' . basename($name) . '" class="button"><img src="icon/columns.png"/> Xem code</a> ';
     }
 
     echo '<a href="file.php?act=download&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    

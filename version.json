@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 1,
-    "patch": 16,
-    "version": "1.1.16",
-    "message": "hot fix"
+    "patch": 17,
+    "version": "1.1.17",
+    "message": "update js"
 }

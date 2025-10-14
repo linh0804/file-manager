@@ -860,7 +860,7 @@ function getIcon($type, $name)
             $icon = $nameIcon;
         }
 
-        return '<img src="https://static.ngatngay.net/atom-icon/folders/' . $icon . '.svg"/>';
+        return '<img src="https://static.ngatngay.net/icon/atom/folders/' . $icon . '.svg"/>';
     }
 
     if ($type === 'file') {
@@ -878,7 +878,7 @@ function getIcon($type, $name)
             $icon = 'image';
         }
 
-        return '<img src="https://static.ngatngay.net/atom-icon/files/' . $icon . '.svg">';
+        return '<img src="https://static.ngatngay.net/icon/atom/files/' . $icon . '.svg">';
     }
 }
 

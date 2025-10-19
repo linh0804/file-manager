@@ -11,7 +11,7 @@ use Throwable;
 define('ACCESS', true);
 define('LOGIN', true);
 
-require '.init.php';
+require '_init.php';
 
 $path_info = (string) request::server('path_info');
 $path = @is_dir($path_info) ? $path_info : dirname($path_info);

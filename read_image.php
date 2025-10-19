@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-include '.init.php';
+include '_init.php';
 
 $path = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : '';
 

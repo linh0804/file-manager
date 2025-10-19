@@ -4,7 +4,7 @@ namespace app;
 define('ACCESS', true);
 define('LOGIN', true);
 
-require '.init.php';
+require '_init.php';
 
 if (isLogin) {
     goURL('index.php');

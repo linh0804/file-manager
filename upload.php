@@ -5,7 +5,7 @@ use function ngatngay\response;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Tải lên tập tin';
 

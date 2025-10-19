@@ -40,10 +40,7 @@ function isAppDir($dir)
 {
     return isAppFile($dir);
 }
-function isInstallAsRoot($dir)
-{
-    return isAppFile($dir);
-}
+
 
 function createConfig(
     $username = LOGIN_USERNAME_DEFAULT,
@@ -904,55 +901,6 @@ function ableFormatCode($type)
     ]);
 }
 
-function getListDirIndex(string $dir): array
-{
-    $handler = @scandir($dir);
-
-    if (!is_array($handler)) {
-        return [];
-    }
-
-    $lists = [];
-    $folders = [];
-    $files = [];
-
-    foreach ($handler as $entry) {
-        if ($entry == '.' || $entry == '..') {
-            continue;
-        }
-
-        if (is_dir($dir . '/' . $entry)) {
-            $folders[] = $entry;
-        } else {
-            $files[] = $entry;
-        }
-    }
-
-    if (count($folders) > 0) {
-        sortNatural($folders);
-        foreach ($folders as $entry) {
-            $lists[] = [
-                'name' => $entry,
-                'is_directory' => true,
-                'is_app_dir' => isAppDir($dir . '/' . $entry)
-            ];
-        }
-    }
-
-    if (count($files) > 0) {
-        sortNatural($files);
-        foreach ($files as $entry) {
-            $lists[] = [
-                'name' => $entry,
-                'is_directory' => false,
-                'is_app_dir' => isAppDir($dir . '/' . $entry)
-            ];
-        }
-    }
-
-    return $lists;
-}
-
 function getFileLink($path)
 {
     global $formats, $pages;
@@ -1052,31 +1000,6 @@ function check_path(string $path, string $type = '')
 
     require 'footer.php';
     exit;
-}
-
-function isInOpenBasedir(string $path): bool
-{
-    $openBasedirs = ini_get('open_basedir');
-    if (empty($openBasedirs)) {
-        // Không có giới hạn open_basedir
-        return true;
-    }
-
-    $path = realpath($path);
-    if ($path === false) {
-        return false;
-    }
-
-    $baseDirs = explode(PATH_SEPARATOR, $openBasedirs);
-
-    foreach ($baseDirs as $baseDir) {
-        $baseDir = realpath($baseDir);
-        if ($baseDir !== false && str_starts_with($path, $baseDir)) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 function load_json_remote(string $url, string $path = '') {

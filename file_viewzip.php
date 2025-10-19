@@ -6,7 +6,7 @@ use ZipArchive;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Xem tập tin nén';
 
@@ -217,7 +217,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         echo '</ul>';
     }
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

@@ -6,7 +6,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $path = base64_decode((string) request::get('path'));
 $file = new SplFileInfo($path);
@@ -251,7 +251,7 @@ console.log(typeof local_storage.get('file_manager.edit.wrap'));
     </style>
 
 <?php
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

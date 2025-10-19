@@ -7,7 +7,7 @@ use SplFileInfo;
 define('ACCESS', true);
 define('INDEX', true);
 
-require '.init.php';
+require '_init.php';
 
 if (!isLogin) {
     goURL('login.php');

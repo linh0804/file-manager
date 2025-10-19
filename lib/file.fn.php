@@ -34,7 +34,7 @@ function zipDir($path, $file, $isDelete = false)
     return false;
 }
 
-function printFileActions(SplFileInfo $file)
+function print_file_actions(SplFileInfo $file)
 {
     global $pages, $formats, $dirEncode;
 

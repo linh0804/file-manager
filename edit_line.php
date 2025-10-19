@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Sửa dòng';
 $page = array('current' => 0, 'paramater_0' => null, 'paramater_1' => null);
@@ -168,7 +168,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <span>Ấn tiếp tục để lưu lại ở lại trang và ấn lưu để lưu lại và quay về danh sách dòng</span>
     </div>';
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

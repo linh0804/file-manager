@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-include_once '.init.php';
+include_once '_init.php';
 
 
 $title = 'Nén zip thư mục';

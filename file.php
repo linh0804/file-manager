@@ -6,7 +6,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 if (!isLogin) {
     goURL('login.php');
@@ -69,7 +69,7 @@ echo '<div class="title">' . $title . '</div>';
         </form>
     </div>';
 
-    printFileActions($file);
+    print_file_actions($file);
 
 require 'footer.php';
         break;
@@ -104,7 +104,7 @@ require 'footer.php';
             </form>
         </div>';
         
-        printFileActions($file);
+        print_file_actions($file);
         
         require 'footer.php';
         break;
@@ -239,7 +239,7 @@ require 'footer.php';
         echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($file->getOwner())['name']) . '</span></li>';
         echo '</ul>';
 
-        printFileActions($file);
+        print_file_actions($file);
     
         require 'footer.php';
 }

@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $home = $_POST['home'] ?? config()->get('home', '');
 

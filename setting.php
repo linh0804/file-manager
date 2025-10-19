@@ -4,7 +4,7 @@ namespace app;
 define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Cài đặt';
 $ref   = $_POST['ref'] ?? (isset($_SERVER['HTTP_REFFRER']) ? $_SERVER['HTTP_REFERER'] : null);

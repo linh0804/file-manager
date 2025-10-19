@@ -5,7 +5,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Sửa tập tin theo dòng';
 $page = array('current' => 0, 'total' => 1, 'paramater_0' => null, 'paramater_1' => null);
@@ -108,7 +108,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <span>Khuyên bạn nên sửa dạng văn bản, dạng sửa này xử lý khá nhiều trong một lần request</span>
     </div>';
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

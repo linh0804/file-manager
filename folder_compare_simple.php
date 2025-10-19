@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require_once '.init.php';
+require_once '_init.php';
 
 function is_duplicate_file($file1, $file2)
 {

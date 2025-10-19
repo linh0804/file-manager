@@ -5,7 +5,7 @@ use ngatngay\http\request;
 
 define('ACCESS', true);
 
-require_once '.init.php';
+require_once '_init.php';
 
 $title = 'Sửa quyền file/thư mục';
 

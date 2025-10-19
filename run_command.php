@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $function = 'exec';
 if (!function_exists($function)) {

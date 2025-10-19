@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-    include_once '.init.php';
+    include_once '_init.php';
 
     if (isLogin) {
         $title = 'Sao chép thư mục';

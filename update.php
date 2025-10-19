@@ -6,7 +6,7 @@ exit('cho nguoi bao tri');
 define('ACCESS', true);
 define('alwaysCheckUpdate', true);
 
-require_once '.init.php';
+require_once '_init.php';
 require_once 'update.class.php';
 
 define('FORMATS', $formats);

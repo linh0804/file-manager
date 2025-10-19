@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title  = 'Hành động';
 $entry  = $_POST['entry'] ?? [];

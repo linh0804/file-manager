@@ -7,7 +7,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $path = base64_decode((string) request::get('path'));
 $file = new SplFileInfo($path);

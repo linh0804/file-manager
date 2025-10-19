@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Xóa dòng';
 $page = array('current' => 0, 'paramater_0' => null, 'paramater_1' => null);
@@ -167,7 +167,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <span>Ấn tiếp tục để xóa và ở lại trang, ấn xóa để xóa và quay về danh sách dòng</span>
     </div>';
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

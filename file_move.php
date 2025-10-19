@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Di chuyển tập tin';
 
@@ -46,7 +46,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         </form>
     </div>';
     
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

@@ -6,7 +6,7 @@ use ngatngay\zip;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Cài đặt lại Manager!!!';
 $error = '';

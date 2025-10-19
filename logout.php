@@ -3,7 +3,7 @@ namespace app;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 setcookie(FM_COOKIE_NAME, '', 0);
 

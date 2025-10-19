@@ -5,7 +5,7 @@ use ngatngay\fs;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Tìm error_log';
 

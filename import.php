@@ -5,7 +5,7 @@ use ngatngay\http\curl;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 if (!isLogin) {
     goURL('login.php');

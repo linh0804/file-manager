@@ -6,7 +6,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 $title = 'Xem tập tin';
 $themes = ['a11y-light','a11y-dark','vs','xcode','github-dark-dimmed','github'];
@@ -174,7 +174,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     });
     </script>';
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

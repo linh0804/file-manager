@@ -6,7 +6,7 @@ use ngatngay\fs;
 
 define('ACCESS', 1);
 
-require __DIR__ . '/.init.php';
+require __DIR__ . '/_init.php';
 
 $action = request::post('action');
 $path = (string) request::post('path');

@@ -8,7 +8,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 check_path($path, 'file');
 
@@ -66,7 +66,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         </form>
     </div>';
     
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

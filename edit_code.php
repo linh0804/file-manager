@@ -5,7 +5,7 @@ use SplFileInfo;
 
 define('ACCESS', true);
 
-require '.init.php';
+require '_init.php';
 
 if (!isLogin) {
     goURL('login.php');
@@ -258,7 +258,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         });
     </script>';
 
-    printFileActions($file);
+    print_file_actions($file);
 }
 
 require 'footer.php';

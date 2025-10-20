@@ -79,9 +79,6 @@ define('icons', [
 // cau hinh
 define('PATH_CONFIG', rootPath . '/config.inc.php');
 
-define('pathConfig', rootPath . '/config.inc.php');
-define('pathDatabase', rootPath . '/config.db.inc.php');
-
 define('LOGIN_USERNAME_DEFAULT', 'Admin');
 define('LOGIN_PASSWORD_DEFAULT', '12345');
 
@@ -98,7 +95,6 @@ define('PAGE_URL_DEFAULT', 'default');
 define('PAGE_URL_START', 'start');
 define('PAGE_URL_END', 'end');
 
-define('DEVELOPMENT', false);
 define('NAME_SUBSTR', 1000);
 define('NAME_SUBSTR_ELLIPSIS', '...');
 
@@ -244,7 +240,6 @@ $script = str_replace('\\', '/', $script);
 
 define('IS_INSTALL_ROOT_DIRECTORY', $script == '.' || $script == '/');
 define('IS_ACCESS_FILE_IN_FILE_MANAGER', defined('INDEX') && isset($_GET['not']));
-define('DIRECTORY_FILE_MANAGER', strpos($script, '/') !== false ? @substr($script, strrpos($script, '/') + 1) : null);
 define('PATH_FILE_MANAGER', str_replace('\\', '/', strtolower($_SERVER['DOCUMENT_ROOT'] . $script)));
 define('NAME_DIRECTORY_INSTALL_FILE_MANAGER', !IS_INSTALL_ROOT_DIRECTORY ? preg_replace('#(/+|/\+)(.+?)#s', '$2', $script) : null);
 define('PARENT_PATH_FILE_MANAGER', substr(PATH_FILE_MANAGER, 0, strlen(PATH_FILE_MANAGER) - (NAME_DIRECTORY_INSTALL_FILE_MANAGER == null ? 0 : strlen(NAME_DIRECTORY_INSTALL_FILE_MANAGER) + 1)));
@@ -267,18 +262,6 @@ if (
     && NOT_PERMISSION
 ) {
     //goURL('index.php?not');
-}
-
-if (!empty($dir)) {
-    define(
-        'IS_ACCESS_PARENT_PATH_FILE_MANAGER',
-        strtolower(processDirectory($dir)) == strtolower(processDirectory(PARENT_PATH_FILE_MANAGER))
-    );
-} else {
-    define(
-        'IS_ACCESS_PARENT_PATH_FILE_MANAGER',
-        strtolower(processDirectory(PARENT_PATH_FILE_MANAGER)) == strtolower(processDirectory($_SERVER['DOCUMENT_ROOT']))
-    );
 }
 
 function isPathNotPermission($path, $isUseName = false): bool

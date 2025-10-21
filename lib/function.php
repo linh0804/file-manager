@@ -831,17 +831,13 @@ function cookie(
     }
 }
 
-function sortNatural(&$array)
-{
-    usort($array, function ($a, $b) {
-        // Nếu cả hai chuỗi đều bắt đầu bằng ký tự đặc biệt hoặc đều không bắt đầu bằng ký tự đặc biệt
-        if ((ctype_alnum((string) $a[0]) && ctype_alnum((string) $b[0])) || (!ctype_alnum((string) $a[0]) && !ctype_alnum((string) $b[0]))) {
-            // So sánh không phân biệt hoa thường theo kiểu tự nhiên
-            return strnatcasecmp($a, $b);
-        }
-
-        // Đưa chuỗi bắt đầu bằng ký tự đặc biệt lên trước
-        return ctype_alnum((string) $a[0]) ? 1 : -1;
+function sortNatural(&$items) {
+    usort($items, function($a, $b) {
+        $a_is_letter = ctype_alpha($a[0]);
+        $b_is_letter = ctype_alpha($b[0]);
+        return $a_is_letter === $b_is_letter
+            ? strnatcmp($a, $b)
+            : ($a_is_letter ? 1 : -1);
     });
 }
 

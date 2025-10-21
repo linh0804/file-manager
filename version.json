@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 1,
-    "patch": 18,
-    "version": "1.1.18",
-    "message": "fix icon"
+    "patch": 19,
+    "version": "1.1.19",
+    "message": "fix sort file"
 }

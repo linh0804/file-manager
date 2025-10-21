@@ -54,7 +54,7 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>'.
-                ($isExecute && strtolower((string) getFormat($name)) == 'php' ? '<input type="checkbox" id="code_check_php"/> Kiểm tra lỗi' : '') . '
+                ($isExecute && strtolower((string) getFormat($name)) == 'php' ? '<label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>' : '') . '
                 <div style="display: inline-block; float: right">'
                     . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
                     . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>

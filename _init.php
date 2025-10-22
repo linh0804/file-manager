@@ -38,7 +38,6 @@ header('Pragma: no-cache');
     }
 }
 
-define('REALPATH', realpath('./'));
 define('rootPath', __DIR__);
 
 define('isBuiltinServer', php_sapi_name() === 'cli-server');
@@ -65,9 +64,6 @@ require rootPath . '/lib/function.php';
     if (!file_exists($tmp_file)) {
         file_put_contents($tmp_file, 'Require all denied');
     }
-
-    unset($tmp_dir);
-    unset($tmp_file);
 }
 
 // tải tài nguyên

@@ -109,6 +109,7 @@ if ($count <= 0) {
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name"><b>' . getFileLink($file->getPathname()) . '</b></td>
                 <td><span data-action="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
+                <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
@@ -116,6 +117,7 @@ if ($count <= 0) {
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name">' . getFileLink($file->getPathname()) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
+                <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
@@ -185,19 +187,7 @@ if ($count <= 0) {
     <li><a href="find_in_folder.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="scan_error_log.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
     <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars((string) $path), '/') ?>">&bull; Webdav</a></li>
-    <li>
-        <details>
-            <summary><i>[ Thư mục hiện tại ]</i></summary>
-            <hr>
-            <a href="file.php?path=<?= $path ?>" class="button"><img src="icon/info.png"/> Thông tin</a>
-            <a href="file.php?act=rename&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/rename.png"/> Đổi tên</a>
-            <a href="folder_zip.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/zip.png"/> Nén zip</a>
-            <a href="folder_copy.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/copy.png"/> Sao chép</a>
-            <a href="folder_move.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>" class="button"><img src="icon/move.png"/> Di chuyển</a>
-            <a href="file.php?act=chmod&path=<?= $path . '&' . referer_qs ?>" class="button"><img src="icon/access.png"/> Chmod</a>
-            <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars((string) $path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button>
-        </details>
-    </li>
+    <li><img src="icon/info.png"/> <a href="file.php?path=<?= $path ?>">Thông tin</a></li>
 </ul>
 
 <?php require 'footer.php' ?>

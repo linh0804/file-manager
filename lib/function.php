@@ -34,7 +34,7 @@ function response(...$args)
 
 function isAppFile($dir)
 {
-    return stripos((string) $dir, REALPATH) === 0;
+    return stripos((string) $dir, rootPath) === 0;
 }
 function isAppDir($dir)
 {

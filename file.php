@@ -192,7 +192,18 @@ require 'footer.php';
             echo '<li><span class="bull">&bull; </span><strong>Tổng số file</strong>: <span>' . $total_file . '</span></li>';
             echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($dirInfo->getOwner())['name']) . '</span></li>';
             echo '</ul>';
-        
+?>
+
+<ul class="list">
+    <li><img src="icon/rename.png"/> <a href="file.php?act=rename&path=<?= $path . '&' . referer_qs ?>">Đổi tên</a></li>
+    <li><img src="icon/zip.png"/> <a href="folder_zip.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>">Nén zip</a></li>
+    <li><img src="icon/copy.png"/> <a href="folder_copy.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>">Sao chép</a></li>
+    <li><img src="icon/move.png"/> <a href="folder_move.php?dir=<?= dirname((string) $path) . '&name=' . basename((string) $path) . '&' . referer_qs ?>">Di chuyển</a></li>
+    <li><img src="icon/access.png"/> <a href="file.php?act=chmod&path=<?= $path . '&' . referer_qs ?>">Chmod</a></li>
+    <li><button onclick="fileAjaxDelete(this)" data-action="delete" data-path="<?= htmlspecialchars((string) $path) ?>" class="button"><img src="icon/delete.png"/> Xóa</button></li>
+</ul>
+
+<?php
             echo '<a href="javascript:history.back()" style="">
               <img src="icon/back.png"> 
               <strong class="back">Trở lại</strong>

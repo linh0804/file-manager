@@ -46,7 +46,7 @@ function detectCodeType($code) {
     }
 }
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -177,4 +177,4 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

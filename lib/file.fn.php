@@ -58,7 +58,7 @@ function print_file_actions(SplFileInfo $file)
     echo '<a href="file.php?act=download&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    
         <a href="file.php?act=rename&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
         <a href="file.php?act=copy&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
-        <a href="file_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
+        <a href="move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
         <a href="file.php?act=chmod&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
         <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
         <a href="file.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>

@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 
             @unlink($file);
 
-            goURL('index.php');
+            redirect('index.php');
         } else {
             $error = '<div class="list">Lỗi</div>';
         }
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -48,4 +48,4 @@ if ($error) {
     </div>';
 }
 
-require 'footer.php';
+require '_footer.php';

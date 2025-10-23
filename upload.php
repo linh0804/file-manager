@@ -32,7 +32,7 @@ if (isset($_FILES['file'])) {
 
 $action = 'upload.php?path=' . $path;
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -162,4 +162,4 @@ show_back();
   }
 </script>
 
-<?php require 'footer.php';
+<?php require '_footer.php';

@@ -7,20 +7,20 @@ define('LOGIN', true);
 require '_init.php';
 
 if (isLogin) {
-    goURL('index.php');
+    redirect('index.php');
 }
 
 $title = 'Đăng nhập';
 $notice = null;
 
 if (!ableLogin()) {
-    require 'header.php';
+    require '_header.php';
     echo '<div class="title">' . $title . '</div>';
     echo '<div class="notice_failure">
         Khoá đăng nhập, vào thư mục manager sửa file .config.php, sửa "' . LOGIN_LOCK . '" = 0 để mở khoá! Hoặc xoá nó đi để reset!!! =)))<br><br>
         Hoặc bạn có thể đăng nhập lại sau "30 phút" tính từ lần đăng nhập "cuối cùng"!
     </div>';
-    require 'footer.php';
+    require '_footer.php';
     exit;
 }
 
@@ -44,13 +44,13 @@ if (isset($_POST['submit'])) {
         removeLoginFail();
         setcookie(FM_COOKIE_NAME, (string) getPasswordEncode($password), time() + 3600 * 24 * 365);
 
-        goURL('index.php');
+        redirect('index.php');
     }
 
     $notice .= '</div>';
 }
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 echo $notice;
@@ -86,4 +86,4 @@ echo '<div class="list">
     </form>
 </div>';
 
-require 'footer.php';
+require '_footer.php';

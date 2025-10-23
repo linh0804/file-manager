@@ -10,7 +10,7 @@ $title = 'Cài đặt';
 $ref   = $_POST['ref'] ?? (isset($_SERVER['HTTP_REFFRER']) ? $_SERVER['HTTP_REFERER'] : null);
 $ref   = $ref != $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ? $ref : null;
 
-require_once 'header.php';
+require_once '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -132,4 +132,4 @@ echo '<a href="javascript:history.back()" style="">
     <strong class="back">Trở lại</strong>
 </a>';
 
-require 'footer.php';
+require '_footer.php';

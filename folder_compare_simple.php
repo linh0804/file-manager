@@ -20,7 +20,7 @@ function is_duplicate_file($file1, $file2)
 
 $title = 'So sánh thư mục';
 
-require_once 'header.php';
+require_once '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -193,4 +193,4 @@ echo '<div class="title">Chức năng</div>
     <li><img src="icon/list.png"/> <a href="index.php">Danh sách</a></li>
 </ul>';
 
-require_once 'footer.php';
+require_once '_footer.php';

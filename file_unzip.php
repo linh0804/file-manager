@@ -19,7 +19,7 @@ $format = $file->getExtension();
 $path_unzip = request::post('path_unzip', dirname((string) $path));
 $is_delete = request::has_post('is_delete');
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -45,7 +45,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     fs::remove($path);
                 }
 
-                goURL('index.php?path=' . dirname((string) $path) . $pages['paramater_1']);
+                redirect('index.php?path=' . dirname((string) $path) . $pages['paramater_1']);
             } else {
                 $error .= 'Giải nén tập tin lỗi';
             }
@@ -69,4 +69,4 @@ if (!in_array($format, array('zip', 'jar'))) {
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

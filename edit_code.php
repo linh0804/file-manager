@@ -8,12 +8,12 @@ define('ACCESS', true);
 require '_init.php';
 
 if (!isLogin) {
-    goURL('login.php');
+    redirect('login.php');
 }
 
 $title = 'Sửa tập tin dạng Code';
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="tips" style="margin-top: 0 !important">
     <img src="icon/tips.png" alt="">
@@ -261,5 +261,5 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';
 

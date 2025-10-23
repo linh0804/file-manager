@@ -31,7 +31,7 @@ function remove_dir($dir = null)
 
 $title = 'Cập nhật';
 
-require_once 'header.php';
+require_once '_header.php';
 
 $zip = new ZipArchive();
 $update = new Update();
@@ -43,7 +43,7 @@ $remoteVersion = getNewVersion();
 
 if ($remoteVersion === false) {
     echo '<div class="list">Lỗi máy chủ cập nhật!</div>';
-    require_once 'footer.php';
+    require_once '_footer.php';
     exit();
 }
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
         || $_POST['token'] != $_SESSION['token']
     ) {
         unset($_SESSION['token']);
-        goURL('update.php');
+        redirect('update.php');
     }
 
     if(!isset($_POST['select']) && !isset($_POST['all'])) {
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
                 unlink($file)
                 && @rename($thisver .'/'. REMOTE_DIR_IN_ZIP, $thisver .'/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER)
             ) {
-                goURL('index.php');
+                redirect('index.php');
             }
         }
     }
@@ -280,4 +280,4 @@ if (isset($_POST['submit'])) {
     }
 }
 
-require_once 'footer.php';
+require_once '_footer.php';

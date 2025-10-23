@@ -10,19 +10,19 @@ define('INDEX', true);
 require '_init.php';
 
 if (!isLogin) {
-    goURL('login.php');
+    redirect('login.php');
 }
 
 $path = isset($_GET['path']) ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
 $title = 'Danh sách - ' . basename((string) $path);
 
 if (!isset($_GET['path'])) {
-    goURL('index.php?path=' . $path);
+    redirect('index.php?path=' . $path);
 }
 
 check_path($path);
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars((string) $path) . '" style="color: pink">[copy]</span></div>';
 
@@ -80,7 +80,7 @@ if ($count <= 0) {
         $pages['total'] = ceil($count / $configs['page_list']);
 
         if ($pages['total'] <= 0 || $pages['current'] > $pages['total']) {
-            goURL('index.php?path=' . $path . ($pages['total'] <= 0 ? null : '&page_list=' . $pages['total']));
+            redirect('index.php?path=' . $path . ($pages['total'] <= 0 ? null : '&page_list=' . $pages['total']));
         }
 
         $start = ($pages['current'] * $configs['page_list']) - $configs['page_list'];
@@ -190,4 +190,4 @@ if ($count <= 0) {
     <li><img src="icon/info.png"/> <a href="file.php?path=<?= $path ?>">Thông tin</a></li>
 </ul>
 
-<?php require 'footer.php' ?>
+<?php require '_footer.php' ?>

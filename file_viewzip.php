@@ -18,7 +18,7 @@ $name = $file->getFilename();
 $format = $file->getExtension();
 
 if (!in_array($format, array('zip', 'jar'))) {
-    include_once 'header.php';
+    require_once '_header.php';
 
     echo '<div class="title">' . $title . '</div>
     <div class="list"><span>Tập tin không phải zip</span></div>
@@ -28,7 +28,7 @@ if (!in_array($format, array('zip', 'jar'))) {
 } else {
     $title .= ':' . $name;
 
-    require 'header.php';
+    require '_header.php';
 
     $path = isset($_GET['path_zip']) && !empty($_GET['path_zip']) ? processPathZip($_GET['path_zip']) : null;
     $dir = processDirectory($dir);
@@ -220,4 +220,4 @@ if (!in_array($format, array('zip', 'jar'))) {
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

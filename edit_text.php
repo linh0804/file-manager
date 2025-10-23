@@ -16,7 +16,7 @@ $title = 'Sửa tập tin';
 
 check_path($path, 'file');
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -254,4 +254,4 @@ console.log(typeof local_storage.get('file_manager.edit.wrap'));
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

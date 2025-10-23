@@ -136,7 +136,7 @@ function fileAjaxDelete(element) {
 
 function file_actions(path, data) {
     // data(entries[], int option)
-    const actionUrl = 'action.php?dir=' . path;
+    const actionUrl = 'action.php?dir=' + path;
     const $form = $('<form>', {
         method: 'POST',
         action: actionUrl

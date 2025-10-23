@@ -10,7 +10,7 @@ $page = array('current' => 0, 'paramater_0' => null, 'paramater_1' => null);
 $page['current'] = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $page['current'] = $page['current'] <= 0 ? 1 : $page['current'];
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -86,7 +86,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
             $notice = '<div class="notice_succeed">Xóa thành công</div>';
 
             if (isset($_POST['delete'])) {
-                goURL('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . $page['paramater_1'] . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
+                redirect('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . $page['paramater_1'] . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
             }
         } else {
             $notice = '<div class="notice_failure">Xóa thất bại</div>';
@@ -107,11 +107,11 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     if ($line < 0) {
-        goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=0'  . $page['paramater_1']);
+        redirect('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=0'  . $page['paramater_1']);
     }
 
     if ($line > $count - 1) {
-        goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line='  . ($count - 1) . $page['paramater_1']);
+        redirect('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line='  . ($count - 1) . $page['paramater_1']);
     }
 
     $page['current'] = $line + 1 > $configs['page_file_edit_line'] ? ceil(($line + 1) / $configs['page_file_edit_line']) : 1;
@@ -122,7 +122,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     if ($isGO) {
-        goURL('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $line . $page['paramater_1']);
+        redirect('delete_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '&line=' . $line . $page['paramater_1']);
     }
 
     $url = array('action' => null, 'prev' => null, 'next' => null);
@@ -170,4 +170,4 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

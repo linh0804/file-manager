@@ -14,12 +14,12 @@ if (isset($_POST['submit'])) {
         config()->remove('home');
     }
     
-    goURL('index.php');
+    redirect('index.php');
 }
 
 $title = 'Sửa Trang chủ';
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -34,4 +34,4 @@ echo '<form method="post">
 
 echo '</div>';
 
-require 'footer.php';
+require '_footer.php';

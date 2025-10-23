@@ -12,7 +12,7 @@ if (!function_exists($function)) {
 
 $title = 'Chạy lệnh hệ thống';
 
-require 'header.php';
+require '_header.php';
 
 echo '<style>
   input[type="text"] {
@@ -84,4 +84,4 @@ if (isset($_POST['submit'])) {
     echo '</div>';
 }
 
-require 'footer.php';
+require '_footer.php';

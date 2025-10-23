@@ -26,12 +26,12 @@ if (isset($_POST['submit'])) {
             if (!@mkdir($newDir))
                 $error .= 'Tạo thư mục thất bại';
             else
-                goURL('index.php?path=' . $path . $pages['paramater_1']);
+                redirect('index.php?path=' . $path . $pages['paramater_1']);
         } else if (intval($_POST['type']) === 1) {
             if (@file_put_contents($newDir, '') === false)
                 $error .= 'Tạo tập tin thất bại';
             else
-                goURL('index.php?path=' . $path . $pages['paramater_1']);
+                redirect('index.php?path=' . $path . $pages['paramater_1']);
         } else {
             $error .= 'Lựa chọn không hợp lệ';
         }
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
     $error .= '</div>';
 }
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -59,4 +59,4 @@ echo '<div class="list">
 
 show_back();
 
-require 'footer.php';
+require '_footer.php';

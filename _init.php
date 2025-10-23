@@ -226,7 +226,7 @@ if (
     !isLogin
     && !defined('LOGIN')
 ) {
-    goURL('login.php');
+    redirect('login.php');
 }
 
 // kiem tra nguoi dung
@@ -257,7 +257,7 @@ if (
     && !defined('LOGIN')
     && NOT_PERMISSION
 ) {
-    //goURL('index.php?not');
+    //redirect('index.php?not');
 }
 
 function isPathNotPermission($path, $isUseName = false): bool
@@ -288,10 +288,10 @@ unset($script);
 if (IS_INSTALL_ROOT_DIRECTORY) {
     $title = 'Lỗi File Manager';
 
-    include_once 'header.php';
+    require_once '_header.php';
     echo '<div class="title">Lỗi File Manager</div>
         <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!</div>';
-    include_once 'footer.php';
+    require_once '_footer.php';
     exit();
 }
 
@@ -349,12 +349,12 @@ if (!empty($add_bookmark)) {
 
     if (is_dir($add_bookmark)) {
         bookmark_add($add_bookmark);
-        goURL('index.php?path=' . $add_bookmark);
+        redirect('index.php?path=' . $add_bookmark);
     }
 }
 
 $delete_bookmark = isset($_GET['delete_bookmark']) ? trim($_GET['delete_bookmark']) : '';
 if (!empty($delete_bookmark)) {
     bookmark_delete(rawurldecode($delete_bookmark));
-    goURL('index.php');
+    redirect('index.php');
 }

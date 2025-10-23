@@ -3,12 +3,12 @@ namespace app;
 
 define('ACCESS', true);
 
-include_once '_init.php';
+require_once '_init.php';
 
 
 $title = 'Nén zip thư mục';
 
-include_once 'header.php';
+require_once '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -35,7 +35,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
         } elseif (!zipDir($dir . '/' . $name, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
-            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
+            redirect('index.php?path=' . $dirEncode . $pages['paramater_1']);
         }
 
         echo '</div>';
@@ -56,4 +56,4 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
     printFolderActions();
 }
 
-include_once 'footer.php';
+require_once '_footer.php';

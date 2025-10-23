@@ -7,7 +7,7 @@ require '_init.php';
 
 $title = 'Di chuyển thư mục';
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -32,7 +32,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
         else if (!movedir($dir . '/' . $name, processDirectory($_POST['path'])))
             echo 'Di chuyển thư mục thất bại';
         else
-            goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
+            redirect('index.php?path=' . $dirEncode . $pages['paramater_1']);
 
         echo '</div>';
     }
@@ -49,4 +49,4 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';

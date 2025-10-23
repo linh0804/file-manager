@@ -8,12 +8,12 @@ define('ACCESS', true);
 require '_init.php';
 
 if (!isLogin) {
-    goURL('login.php');
+    redirect('login.php');
 }
 
 $title = 'Tải lên tập tin';
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -78,4 +78,4 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
     show_back();
 }
 
-require 'footer.php';
+require '_footer.php';

@@ -9,7 +9,7 @@ require '_init.php';
 
 $title = 'Tìm error_log';
 
-require 'header.php';
+require '_header.php';
 
 echo '<style>
 	ul.info > li {
@@ -96,4 +96,4 @@ if (
     show_back();
 }
 
-require 'footer.php';
+require '_footer.php';

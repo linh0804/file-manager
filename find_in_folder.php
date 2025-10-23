@@ -17,7 +17,7 @@ $only_dir  = isset($_POST['only_dir'])  ? (bool) $_POST['only_dir']  : false;
 $only_file = isset($_POST['only_file']) ? (bool) $_POST['only_file'] : false;
 $exclude = isset($_POST['exclude']) ? $_POST['exclude'] : $excludeDirDefault;
 
-require 'header.php';
+require '_header.php';
 
 echo '<style>
 #find_list {
@@ -262,4 +262,4 @@ if (isset($_POST['submit'])) {
 
 show_back();
 
-require 'footer.php';
+require '_footer.php';

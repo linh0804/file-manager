@@ -12,7 +12,7 @@ $page = array('current' => 0, 'total' => 1, 'paramater_0' => null, 'paramater_1'
 $page['current'] = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $page['current'] = $page['current'] <= 0 ? 1 : $page['current'];
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -71,11 +71,11 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     }
 
     if ($page['current'] < 0 && $configs['page_file_edit_line'] > 0) {
-        goURL('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1']);
+        redirect('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1']);
     }
 
     if ($page['current'] > $page['total'] && $configs['page_file_edit_line'] > 0) {
-        goURL('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . ($page['total'] > 1 ? '&page=' . $page['total'] : null));
+        redirect('edit_text_line.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . ($page['total'] > 1 ? '&page=' . $page['total'] : null));
     }
 
     echo '<div class="list">
@@ -111,5 +111,5 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     print_file_actions($file);
 }
 
-require 'footer.php';
+require '_footer.php';
 

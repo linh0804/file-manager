@@ -3,12 +3,12 @@ namespace app;
 
 define('ACCESS', true);
 
-    include_once '_init.php';
+    require_once '_init.php';
 
     if (isLogin) {
         $title = 'Sao chép thư mục';
 
-        include_once 'header.php';
+        require_once '_header.php';
 
         echo '<div class="title">' . $title . '</div>';
 
@@ -33,7 +33,7 @@ define('ACCESS', true);
                 else if (!copydir($dir . '/' . $name, processDirectory($_POST['path'])))
                     echo 'Sao chép thư mục thất bại';
                 else
-                    goURL('index.php?path=' . $dirEncode . $pages['paramater_1']);
+                    redirect('index.php?path=' . $dirEncode . $pages['paramater_1']);
 
                 echo '</div>';
             }
@@ -50,9 +50,9 @@ define('ACCESS', true);
             printFolderActions();
         }
 
-        include_once 'footer.php';
+        require_once '_footer.php';
     } else {
-        goURL('login.php');
+        redirect('login.php');
     }
 
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 define('ACCESS', true);
@@ -7,11 +8,8 @@ require '_init.php';
 
 $title = 'Checkhealth';
 ?>
-<?php require 'header.php' ?>
 
-<div class="title"><?= $title ?></div>
-
-<div class="list">
+<?php require '_header.php' ?>
 
 <style>
     table, th, td {
@@ -21,20 +19,24 @@ $title = 'Checkhealth';
   padding: 8px;
     }
 </style>
-<table>
-    <tr>
-        <td>PHP</td>
-        <td><?= phpversion() ?></td>
-    </td>
-    <tr>
-        <td>Composer</td>
-        <td><?php var_export(file_exists('composer.phar')) ?></td>
-    </td>
-    <tr>
-        <td>Prettier</td>
-        <td><?php var_export((bool) shell_exec("command -v prettier")) ?></td>
-    </td>
-</table>
+
+<div class="title"><?= $title ?></div>
+
+<div class="list">
+    <table>
+        <tr>
+            <td>PHP</td>
+            <td><?= phpversion() ?></td>
+        </td>
+        <tr>
+            <td>Composer</td>
+            <td><?php var_export(file_exists('composer.phar')) ?></td>
+        </td>
+        <tr>
+            <td>Prettier</td>
+            <td><?php var_export((bool) shell_exec("command -v prettier")) ?></td>
+        </td>
+    </table>
 </div>
 
-<?php require 'footer.php' ?>
+<?php require '_footer.php' ?>

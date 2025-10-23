@@ -6,11 +6,14 @@ define('ACCESS', true);
 require '_init.php';
 
 $title  = 'Hành động';
+$path = (string) request::get('path');
 $entry  = $_POST['entry'] ?? [];
 $option = isset($_POST['option']) ? intval($_POST['option']) : -1;
 
+checkpath($path);
+
 if ($dir == null || !is_dir(processDirectory($dir))) {
-    require_once '_header.php';
+    require_once '_header.php'; 
 
     echo '<div class="title">' . $title . '</div>
         <div class="list"><span>Đường dẫn không tồn tại</span></div>

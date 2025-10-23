@@ -7,4 +7,4 @@ require '_init.php';
 
 setcookie(FM_COOKIE_NAME, '', 0);
 
-goURL('index.php');
+redirect('index.php');

@@ -4,7 +4,6 @@ namespace app;
 use RecursiveCallbackFilterIterator;
 use ZipArchive;
 use function ngatngay\response as response2;
-use function ngatngay\redirect;
 use ngatngay\config;
 use ngatngay\fs;
 use ngatngay\zip;
@@ -41,6 +40,10 @@ function isAppDir($dir)
     return isAppFile($dir);
 }
 
+function redirect($url) {
+    header('Location: ' . $url);
+    exit;
+}
 
 function createConfig(
     $username = LOGIN_USERNAME_DEFAULT,
@@ -104,12 +107,6 @@ function getNewVersion()
 function hasNewVersion()
 {
     return localVersion !== remoteVersion;
-}
-
-
-function goURL($url)
-{
-    redirect($url);
 }
 
 
@@ -864,6 +861,7 @@ function getIcon($type, $name)
         } elseif (in_array($file->getExtension(), $formats['archive'])) {
             $icon = 'archive';
         } elseif (in_array($file->getExtension(), $formats['audio'])) {
+            $icon = 'audio';
         } elseif (in_array($file->getExtension(), $formats['font'])) {
         } elseif (in_array($file->getExtension(), $formats['binary'])) {
         } elseif (in_array($file->getExtension(), $formats['document'])) {
@@ -955,7 +953,7 @@ function edit_recent_add($path)
 
     array_unshift($old, $path);
 
-    $old = array_slice($old, 0, 50);
+    $old = array_slice($old, 0, 20);
 
     config()->set('edit_recent', $old);
 }
@@ -964,29 +962,21 @@ function check_path(string $path, string $type = '')
 {
     extract($GLOBALS);
 
+    if (@file_exists($path)) {
+        return;
+    }
+
     if ($type == 'file') {
         $name = 'Tập tin';
-        
-        if (@is_file($path)) {
-            return;
-        }
     } else if ($type == 'folder') {
         $name = 'Thư mục';
-        
-        if (@is_dir($path)) {
-            return;
-        }
     } else {
         $name = 'Đường dẫn';
-        
-        if (@file_exists($path)) {
-            return;
-        }
     }
 
     $title = 'Lỗi - ' . $path;
 
-    require 'header.php';
+    require '_header.php';
 
     echo '<div class="title">' . printPath($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
@@ -994,7 +984,7 @@ function check_path(string $path, string $type = '')
 
     show_back();
 
-    require 'footer.php';
+    require '_footer.php';
     exit;
 }
 

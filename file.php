@@ -9,7 +9,7 @@ define('ACCESS', true);
 require '_init.php';
 
 if (!isLogin) {
-    goURL('login.php');
+    redirect('login.php');
 }
 
 $action = request::get('act');
@@ -32,7 +32,7 @@ switch ($action) {
     case 'copy':
     $title = 'Sao chép tập tin';
 
-require 'header.php';
+require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
@@ -53,7 +53,7 @@ echo '<div class="title">' . $title . '</div>';
         } elseif (!@copy($dir . '/' . $name, $newPath)) {
             echo 'Sao chép tập tin thất bại';
         } else {
-            goURL('index.php?path=' . $dir . $pages['paramater_1']);
+            redirect('index.php?path=' . $dir . $pages['paramater_1']);
         }
 
         echo '</div>';
@@ -71,7 +71,7 @@ echo '<div class="title">' . $title . '</div>';
 
     print_file_actions($file);
 
-require 'footer.php';
+require '_footer.php';
         break;
         
     case 'chmod':
@@ -86,12 +86,12 @@ require 'footer.php';
             else if (!@chmod($path, intval($_POST['mode'], 8)))
                 $error .= 'Chmod tập tin thất bại';
             else
-                goURL('index.php?path=' . dirname($path) . $pages['paramater_1']);
+                redirect('index.php?path=' . dirname($path) . $pages['paramater_1']);
         
             $error .= '</div>';
         }
 
-        require 'header.php';
+        require '_header.php';
         
         echo '<div class="title">' . $title . '</div>';        
         echo $error;
@@ -106,7 +106,7 @@ require 'footer.php';
         
         print_file_actions($file);
         
-        require 'footer.php';
+        require '_footer.php';
         break;
 
     case 'rename':
@@ -127,13 +127,13 @@ require 'footer.php';
             } elseif (!rename($path, $newPath)) {
                 $error .= 'Thay đổi thất bại';
             } else {
-                goURL('index.php?path=' . dirname($path) . $pages['paramater_1']);
+                redirect('index.php?path=' . dirname($path) . $pages['paramater_1']);
             }
 
             $error .= '</div>';
         }
 
-        require 'header.php';
+        require '_header.php';
 
         echo '<div class="title">' . $title . '</div>';       
         
@@ -150,7 +150,7 @@ require 'footer.php';
 
         show_back();
     
-        require 'footer.php';
+        require '_footer.php';
         break;
 
     default:
@@ -158,7 +158,7 @@ require 'footer.php';
         if (is_dir($path)) {
             $title = 'Thông tin thư mục';
 
-            require 'header.php';
+            require '_header.php';
             
             echo '<div class="title">' . $title . '</div>';
             
@@ -209,14 +209,14 @@ require 'footer.php';
               <strong class="back">Trở lại</strong>
             </a>';
                     
-            require 'footer.php';            
+            require '_footer.php';            
             exit;
         }
 
         // file info
         $title = 'Thông tin tập tin';
         
-        require 'header.php';
+        require '_header.php';
 
         echo '<div class="title">' . $title . '</div>';
 
@@ -252,5 +252,5 @@ require 'footer.php';
 
         print_file_actions($file);
     
-        require 'footer.php';
+        require '_footer.php';
 }

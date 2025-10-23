@@ -19,7 +19,7 @@ if (!file_exists('composer.phar')) {
 
 $title = 'Chạy lệnh Composer';
 
-require_once 'header.php';
+require_once '_header.php';
 
 echo '<style>
     input[type="text"] {
@@ -99,4 +99,4 @@ if (isset($_POST['submit'])) {
 
 echo '</div>';
 
-require_once 'footer.php';
+require_once '_footer.php';

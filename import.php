@@ -17,14 +17,14 @@ require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || !is_dir(processDirectory($dir))) {
+if ($dir == null || !is_dir(process_directory($dir))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
             <div class="title">Chức năng</div>
             <ul class="list">
                 <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
             </ul>';
 } else {
-    $dir = processDirectory($dir);
+    $dir = process_directory($dir);
 
     if (isset($_POST['submit'])) {
         $isEmpty = true;
@@ -46,7 +46,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
 
                     $_POST['url'][$i] = $_POST['url'][$i];
 
-                    if (!isURL($_POST['url'][$i])) {
+                    if (!is_url($_POST['url'][$i])) {
                         echo '<div class="notice_failure">URL <strong class="url_import">' . $_POST['url'][$i] . '</strong> không hợp lệ</div>';
                     } elseif ($curl->download($_POST['url'][$i], $dir . '/' . basename((string) $_POST['url'][$i]))) {
                         echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . size(filesize($dir . '/' . basename((string) $_POST['url'][$i]))) . '</span> thành công</div>';
@@ -59,7 +59,7 @@ if ($dir == null || !is_dir(processDirectory($dir))) {
     }
 
     echo '<div class="list">
-        <span>' . printPath($dir, true) . '</span><hr/>
+        <span>' . print_path($dir, true) . '</span><hr/>
         <form action="import.php?dir=' . $dirEncode . $pages['paramater_1'] . '" method="post">
             <span class="bull">&bull; </span>URL 1:<br/>
             <input type="text" name="url[]" size="18"/><br/>

@@ -12,27 +12,27 @@ require_once '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name))) {
+if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $name))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
     </ul>';
 } else {
-    $dir = processDirectory($dir);
+    $dir = process_directory($dir);
 
     if (isset($_POST['submit'])) {
         echo '<div class="notice_failure">';
 
         if (empty($_POST['name']) || empty($_POST['path'])) {
             echo 'Chưa nhập đầy đủ thông tin';
-        } elseif (isset($_POST['is_delete']) && processDirectory($_POST['path']) == $dir . '/' . $name) {
+        } elseif (isset($_POST['is_delete']) && process_directory($_POST['path']) == $dir . '/' . $name) {
             echo 'Nếu chọn xóa thư mục bạn không thể lưu tập tin nén ở đó';
-        } elseif (isNameError($_POST['name'])) {
+        } elseif (is_name_error($_POST['name'])) {
             echo 'Tên tập tin zip không hợp lệ';
-        } elseif (file_exists(processDirectory($_POST['path'] . '/' . processName($_POST['name'])))) {
+        } elseif (file_exists(process_directory($_POST['path'] . '/' . process_name($_POST['name'])))) {
             echo 'Tập tin đã tồn tại, vui lòng đổi tên!';
-        } elseif (!zipDir($dir . '/' . $name, processDirectory($_POST['path'] . '/' . processName($_POST['name'])), isset($_POST['is_delete']) == 1)) {
+        } elseif (!zip_dir($dir . '/' . $name, process_directory($_POST['path'] . '/' . process_name($_POST['name'])), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
             redirect('index.php?path=' . $dirEncode . $pages['paramater_1']);
@@ -42,7 +42,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
     }
 
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . printPath($dir . '/' . $name, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . print_path($dir . '/' . $name, true) . '</span><hr/>
         <form action="folder_zip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
             <input type="text" name="name" value="' . (isset($_POST['name']) ? $_POST['name'] : $name . '.zip') . '" size="18"/><br/>
@@ -53,7 +53,7 @@ if ($dir == null || $name == null || !is_dir(processDirectory($dir . '/' . $name
         </form>
     </div>';
     
-    printFolderActions();
+    print_actions($dir . '/' . $name);
 }
 
 require_once '_footer.php';

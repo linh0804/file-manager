@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         $error .= 'Chưa nhập đầy đủ thông tin';
     } else if (file_exists($newDir)) {
         $error .= 'Tên đã tồn tại dạng thư mục hoặc tập tin';
-    } else if (isNameError($_POST['name'])) {
+    } else if (is_name_error($_POST['name'])) {
         $error .= 'Tên không hợp lệ';
     } else {
         if (intval($_POST['type']) === 0) {
@@ -47,7 +47,7 @@ echo '<div class="title">' . $title . '</div>';
 echo $error;
 
 echo '<div class="list">
-    <span>' . printPath($path, true) . '</span><hr/>
+    <span>' . print_path($path, true) . '</span><hr/>
     <form action="" method="post">
         <span class="bull">&bull; </span>Tên:<br/>
         <input type="text" name="name" value="' . ($_POST['name'] ?? null) . '" size="18"/><br/>

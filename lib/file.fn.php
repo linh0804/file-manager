@@ -1,11 +1,36 @@
 <?php
+
 namespace app;
 
-use SplFileInfo;
+use ngatngay\http\request;
 use ngatngay\zip;
+use SplFileInfo;
 use ZipArchive;
 
-function zipDir($path, $file, $isDelete = false)
+function get_path()
+{
+    return (string) request::get('path');
+}
+
+function get_entries()
+{
+    $entries = [];
+    $entry = request::post('entry');
+
+    if (is_array($entry)) {
+        foreach ($entry as $e) {
+            if (empty($e)) {
+                continue;
+            }
+
+            $entries[] = $e;
+        }
+    }
+
+    return $entries;
+}
+
+function zip_dir($path, $file, $isDelete = false)
 {
     if (@is_file($file)) {
         @unlink($file);
@@ -15,17 +40,17 @@ function zipDir($path, $file, $isDelete = false)
 
     if ($zip->open($file, ZipArchive::CREATE) === true) {
         $path = realpath($path);
-        $files = readFullDir($path);
+        $files = read_full_dir($path);
 
-        foreach ($files as $name => $file) { 
-            $filePath = $file->getRealPath();          
-            $zip->add($filePath, $path . DIRECTORY_SEPARATOR);        
+        foreach ($files as $name => $file) {
+            $filePath = $file->getRealPath();
+            $zip->add($filePath, $path . DIRECTORY_SEPARATOR);
         }
 
         $zip->close();
 
         if ($isDelete) {
-            removeDir($path);  
+            remove_dir($path);
         }
 
         return true;
@@ -34,58 +59,54 @@ function zipDir($path, $file, $isDelete = false)
     return false;
 }
 
-function print_file_actions(SplFileInfo $file)
+function print_actions($filename)
 {
     global $pages, $formats, $dirEncode;
 
+    $file = new SplFileInfo($filename);
     $path = $file->getPathname();
     $name = $file->getFilename();
     $ext = $file->getExtension();
     $dir = dirname($path);
-    echo '<div class="title">Chức năng</div>
-    <div class="list">';
 
-    if (in_array($ext, $formats['zip'])) {
-        echo '<a href="file_viewzip.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/unzip.png"/> Xem</a>
-          <a href="file_unzip.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/unzip.png"/> Giải nén</a> ';
-    } elseif (isFormatText($name) || isFormatUnknown($name)) {
-        echo '<a href="edit_text.php?path=' . base64_encode($path) . '" class="button"><img src="icon/edit.png"/> Sửa văn bản</a>
-          <a href="edit_code.php?dir=' . $dir . '&name=' . basename($name) . '" class="button"><img src="icon/edit_text_line.png"/> Sửa code</a>
-          <a href="edit_text_line.php?dir=' . $dir . '&name=' . basename($name) . $pages['paramater_1'] . '" class="button"><img src="icon/edit_text_line.png"/> Sửa theo dòng</a>
-          <a href="view_code.php?dir=' . $dir . '&name=' . basename($name) . '" class="button"><img src="icon/columns.png"/> Xem code</a> ';
+    echo '<div class="title">Chức năng</div>';
+    echo '<ul class="list">';
+
+    if ($file->isFile()) {
+        if (in_array($ext, $formats['zip'])) {
+            echo '<li><img src="icon/unzip.png"/> <a href="file_viewzip.php?path=' . $path . $pages['paramater_1'] . '">Xem</a></li>
+              <li><img src="icon/unzip.png"/> <a href="file_unzip.php?path=' . $path . $pages['paramater_1'] . '">Giải nén</a></li>';
+        } elseif (is_format_text($name) || is_format_unknown($name)) {
+            echo '<li><img src="icon/edit.png"/> <a href="edit_text.php?path=' . base64_encode($path) . '">Sửa văn bản</a></li>
+              <li><img src="icon/edit_text_line.png"/> <a href="edit_code.php?dir=' . $dir . '&name=' . basename($name) . '">Sửa code</a></li>
+              <li><img src="icon/edit_text_line.png"/> <a href="edit_text_line.php?dir=' . $dir . '&name=' . basename($name) . $pages['paramater_1'] . '">Sửa theo dòng</a></li>
+              <li><img src="icon/columns.png"/> <a href="view_code.php?dir=' . $dir . '&name=' . basename($name) . '">Xem code</a></li>';
+        }
+        echo '<li><img src="icon/download.png"/> <a href="download.php?path=' . $path . '">Tải về</a></li>';
+    } else {
+        echo '<li><img src="icon/zip.png"/> <a href="folder_zip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Nén zip</a></li>';
     }
 
-    echo '<a href="file.php?act=download&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/download.png"/> Tải về</a>    
-        <a href="file.php?act=rename&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</a>
-        <a href="file.php?act=copy&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</a>
-        <a href="move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</a>
-        <a href="file.php?act=chmod&path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</a>
-        <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . htmlspecialchars($path) . '" class="button"><img src="icon/delete.png"/> Xóa</button>
-        <a href="file.php?path=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/info.png"/> Thông tin</a>
-    </div>';
+    echo '<li><img src="icon/rename.png"/> <a href="rename.php?path=' . $path . $pages['paramater_1'] . '">Đổi tên</a></li>';
+    echo '<li><img src="icon/copy.png"/> <a href="file.php?act=copy&path=' . $path . $pages['paramater_1'] . '">Sao chép</a></li>';
+    echo '<li><img src="icon/move.png"/> <a href="move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>';
+    echo '<li><img src="icon/access.png"/> <a href="chmod.php?path=' . $path . $pages['paramater_1'] . '">Chmod</a></li>';
+    echo '<li><img src="icon/delete.png"/> <a href="delete.php?path=' . $path . $pages['paramater_1'] . '">Xóa</a></li>';
 
-    echo '<a href="index.php?path=' . dirname($path) . $pages['paramater_1'] . '" style="">
-        <img src="icon/back.png"> 
-        <strong class="back">Trở lại</strong>
-    </a>';
+    echo '<li><img src="icon/info.png"/> <a href="file.php?path=' . $path . $pages['paramater_1'] . '">Thông tin</a></li>';
+    echo '<li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>';
+    echo '</ul>';
+
+    show_back();
 }
 
-function printFolderActions()
+function t_file_type($filename)
 {
-    global $name, $pages, $formats, $dirEncode;
-
-    echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/zip.png"/> <a href="folder_zip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Nén zip</a></li>
-        <li><img src="icon/rename.png"/> <a href="file.php?act=rename&path=' . $dirEncode . '%2F' . $name . $pages['paramater_1'] . '">Đổi tên</a></li>
-        <li><img src="icon/copy.png"/> <a href="folder_copy.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Sao chép</a></li>
-        <li><img src="icon/move.png"/> <a href="folder_move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '">Di chuyển</a></li>
-        <button onclick="fileAjaxDelete(this)" data-action="delete" data-path="' . $dirEncode . '%2F' . $name . '" class="button"><img src="icon/delete.png"/> Xóa</button>
-        <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
-
-    echo '<a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '" style="">
-        <img src="icon/back.png"> 
-        <strong class="back">Trở lại</strong>
-    </a>';
+    if (is_file($filename)) {
+        return 'tập tin';
+    }
+    if (is_dir($filename)) {
+        return 'thư mục';
+    }
+    return '(unknown)';
 }

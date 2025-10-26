@@ -15,7 +15,7 @@ class Update {
         return false;
       }
     }   
-    public function compareAll($dir, $dirOne,$types, $number = 0) {
+    public function compare_all($dir, $dirOne,$types, $number = 0) {
       $start = $number == 0 ? 0 : ($number + 10);
       $number = ($number + 10);     
       $out = '';
@@ -47,10 +47,10 @@ class Update {
         $link = $dir . '/'. $value;
         $linkOne = $dirOne . '/'. $value;
         if(is_dir($link)) {
-          $check = $this->checkDir($linkOne, $types);
+          $check = $this->check_dir($linkOne, $types);
           $isUpdate = '';
           if($types == 2) {
-            if($this->fileFolderUpdate($link, $linkOne)) {
+            if($this->file_folder_update($link, $linkOne)) {
               $isUpdate = '<font color="Brown">[new or updated files]</font>';
             }
           }
@@ -68,9 +68,9 @@ class Update {
           if($types == 2) {
             $checkbox = '<input type="checkbox" name="select[]" value="'. str_replace(__DIR__,'',$dirOne) .'/'. $value .'" /> ';
           }
-          $check = $this->checkFile($link,$linkOne, $types);
+          $check = $this->check_file($link,$linkOne, $types);
           $icon   = 'unknown';
-          $type   = getFormat($value);
+          $type   = get_format($value);
           $isEdit = false;
           if (in_array($type, FORMATS['other'])) {
             $icon = $type;
@@ -92,7 +92,7 @@ class Update {
           } elseif (in_array(strtolower(strpos($value, '.') !== false ? substr($value, 0, strpos($value, '.')) : $value), FORMATS['source'])) {
             $icon   = strtolower(strpos($value, '.') !== false ? substr($value, 0, strpos($value, '.')) : $value);
             $isEdit = true;
-          } elseif (isFormatUnknown($value)) {
+          } elseif (is_format_unknown($value)) {
             $icon   = 'unknown';
             $isEdit = true;
           }
@@ -114,19 +114,19 @@ class Update {
           $file .= '</div></div>';  
         }
         $out .= $folder . $file;
-        if(is_dir($link)) $out .= $this->compareAll($link, $linkOne, $types, $number);
+        if(is_dir($link)) $out .= $this->compare_all($link, $linkOne, $types, $number);
       }    
       return $out;
     }
-    public function fileFolderUpdate($dir, $dirOne) {      
+    public function file_folder_update($dir, $dirOne) {      
       $scan = scandir($dir);
       $scan = array_diff($scan, ['.', '..','tmp','config.inc.php','config.db.inc.php']);
       foreach($scan as $value) {     
         if(is_dir($dir .'/'. $value)) {
-          return $this->fileFolderUpdate($dir.'/'. $value, $dirOne.'/'. $value);
+          return $this->file_folder_update($dir.'/'. $value, $dirOne.'/'. $value);
         }   
         if(file_exists($dir .'/'. $value)) {
-          $check = $this->checkFile($dir .'/'. $value, $dirOne .'/'. $value, 2);
+          $check = $this->check_file($dir .'/'. $value, $dirOne .'/'. $value, 2);
           if($check == 2 || $check == 3) {
             return true;
           }
@@ -134,7 +134,7 @@ class Update {
       }
       return false;
     }
-    public function checkFile($dir, $dirOne , $type){
+    public function check_file($dir, $dirOne , $type){
       $thisver = is_dir(__DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER) ? __DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace(__DIR__,'',$dir) : $dir;
       if($type == 2 && is_dir(__DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER)) $dirOne = __DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace(__DIR__,'',$dirOne);;
       $value = file_get_contents($dir);
@@ -167,7 +167,7 @@ class Update {
       }
       return 2;
     }
-    public function checkDir($dir,$type){
+    public function check_dir($dir,$type){
       if($type == 1 && is_dir(__DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER)) {
         $thisver = __DIR__ .'/tmp/thisversion/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER . str_replace(__DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER,'',$dir);
         if(!is_dir($thisver))

@@ -24,9 +24,9 @@ require_once '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-$dir = processDirectory($dir);
-$folder1 = isset($_POST['folder1']) ? rtrim((string) processDirectory($_POST['folder1']), '/') : '';
-$folder2 = isset($_POST['folder2']) ? rtrim((string) processDirectory($_POST['folder2']), '/') : '';
+$dir = process_directory($dir);
+$folder1 = isset($_POST['folder1']) ? rtrim((string) process_directory($_POST['folder1']), '/') : '';
+$folder2 = isset($_POST['folder2']) ? rtrim((string) process_directory($_POST['folder2']), '/') : '';
 $exclude = isset($_POST['exclude']) ? $_POST['exclude'] : '.git/' . PHP_EOL . 'node_modules/' . PHP_EOL . 'vendor/';
 
 echo '<div class="list">
@@ -72,12 +72,12 @@ if (isset($_POST['submit'])) {
     }
 
     // lay het file thu muc 1
-    foreach(readFullDir($folder1, $excludes) as $file) {
+    foreach(read_full_dir($folder1, $excludes) as $file) {
         $files1[] = str_replace_first($folder1, '', $file->getPathname());
     }
 
     // lay het file thu muc 2
-    foreach(readFullDir($folder2, $excludes) as $file) {
+    foreach(read_full_dir($folder2, $excludes) as $file) {
         $files2[] = str_replace_first($folder2, '', $file->getPathname());
     }
 

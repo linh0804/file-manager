@@ -39,7 +39,7 @@ $thisver = __DIR__ .'/tmp/thisversion';
 
 echo '<div class="title">' . $title . '</div>';
 
-$remoteVersion = getNewVersion();
+$remoteVersion = get_new_version();
 
 if ($remoteVersion === false) {
     echo '<div class="list">Lỗi máy chủ cập nhật!</div>';
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
     }
 
     if(isset($_POST['all'])) {
-        mergeFolder(__DIR__ . '/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER, __DIR__);
+        merge_folder(__DIR__ . '/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER, __DIR__);
         @remove_dir(__DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
         @remove_dir($thisver .'/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
 
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 } else {
     @remove_dir(__DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
 
-    if (!hasNewVersion()) {
+    if (!has_new_version()) {
         echo '<div class="list">
             Bạn đang sử dụng phiên bản manager mới nhất!<br />
         </div>';
@@ -173,14 +173,14 @@ if (isset($_POST['submit'])) {
     echo '<td style="width: 50%; border-right:1px solid red;text-align:left;margin: 0; vertical-align: top;">';
     echo '<div style="overflow-x: scroll; height:100%; ">';
     echo '<b style="margin-left: 5px">Bản hiện tại</b><br /><br />';
-    echo $update->compareAll($old, $new, 1);
+    echo $update->compare_all($old, $new, 1);
     echo '</div>';
     echo '</td>';
 
     echo '<td style="width: 50%; border-left:1px solid red;text-align:left;margin: 0; vertical-align: top;">';
     echo '<div style="overflow-x: scroll; height:100%;">';
     echo '<b style="margin-left: 10px">Bản mới</b><br /><br />';
-    echo $update->compareAll($new, $old, 2);
+    echo $update->compare_all($new, $old, 2);
     echo '</div>';
     echo '</td>';
 
@@ -192,19 +192,19 @@ if (isset($_POST['submit'])) {
     </div>';
 
     echo '<script>
-        function isHidden(e) {
+        function is_hidden(e) {
             return e.style.display == "none";
         }
 
-        function hiddenFileSame() {
+        function hidden_file_same() {
             // an het file trung
             const fileSames = document.getElementsByClassName("fileSame");
             for (let i = 0; i < fileSames.length; i++) {
-                fileSames[i].style.display = isHidden(fileSames[i]) ? "block" : "none";
+                fileSames[i].style.display = is_hidden(fileSames[i]) ? "block" : "none";
             }
         }
         
-        function updateFolder() {
+        function update_folder() {
             // lap qua cac folder
             const folder = document.getElementsByClassName("folder");
 
@@ -218,7 +218,7 @@ if (isset($_POST['submit'])) {
                 const files = folder[i].getElementsByClassName("file");
 
                 for (let j = 0; j < files.length; j++) {
-                    if (!isHidden(files[j])) {
+                    if (!is_hidden(files[j])) {
                         allNone = false;
                         break;
                     }
@@ -233,11 +233,11 @@ if (isset($_POST['submit'])) {
         }
         
         // fix thu muc trong        
-        updateFolder();
+        update_folder();
 
         const hidden_same = () => {
-            hiddenFileSame();
-            updateFolder();
+            hidden_file_same();
+            update_folder();
         
             // button
             var button = document.querySelector("#hidden_file");

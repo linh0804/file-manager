@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 use ngatngay\fs;
@@ -13,8 +14,9 @@ if (!isLogin) {
     redirect('login.php');
 }
 
-$path = isset($_GET['path']) ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
-$title = 'Danh sách - ' . basename((string) $path);
+$path = get_path();
+$path = $path ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
+$title = 'Danh sách - ' . basename($path);
 
 if (!isset($_GET['path'])) {
     redirect('index.php?path=' . $path);
@@ -24,7 +26,7 @@ check_path($path);
 
 require '_header.php';
 
-echo '<div class="title">' . printPath($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars((string) $path) . '" style="color: pink">[copy]</span></div>';
+echo '<div class="title">' . print_path($path, true) . ' <span class="copyButton" data-copy="' . htmlspecialchars((string) $path) . '" style="color: pink">[copy]</span></div>';
 
 echo '<a href="index.php?path=' . dirname((string) $path) . '">
   <div class="list">
@@ -33,7 +35,7 @@ echo '<a href="index.php?path=' . dirname((string) $path) . '">
   </div>
 </a>';
 
-if (isAppDir($path)) {
+if (is_app_dir($path)) {
     echo '<div class="notice_failure">Bạn đang xem thư mục của File Manager!</div>';
 }
 
@@ -49,7 +51,7 @@ $folders = [];
 $files = [];
 
 foreach ($handler as $entry) {
-    if ($entry == '.' || $entry == '..') {
+    if ($entry === '.' || $entry === '..') {
         continue;
     }
 
@@ -62,8 +64,8 @@ foreach ($handler as $entry) {
     }
 }
 
-sortNatural($folders);
-sortNatural($files);
+sort_natural($folders);
+sort_natural($files);
 
 $lists = array_merge($folders, $files);
 $count = count($lists);
@@ -92,9 +94,9 @@ if ($count <= 0) {
     for ($i = $start; $i < $end; ++$i) {
         $file = new SplFileInfo($lists[$i]);
         $name = $file->getFilename();
-        $perms = getChmod($file->getPathname());
+        $perms = get_chmod($file->getPathname());
 
-        if (isAppDir($file->getPathname())) {
+        if (is_app_dir($file->getPathname())) {
             $nameDisplay = '<i>' . $name . '</i>';
         } else {
             $nameDisplay = $name;
@@ -107,18 +109,18 @@ if ($count <= 0) {
         if ($file->isDir()) {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name"><b>' . getFileLink($file->getPathname()) . '</b></td>
+                <td class="name"><b>' . get_file_link($file->getPathname()) . '</b></td>
                 <td><span data-action="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
                 <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name">' . getFileLink($file->getPathname()) . '</td>
+                <td class="name">' . get_file_link($file->getPathname()) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
                 <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="file.php?act=chmod&path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
     }
@@ -157,7 +159,7 @@ if ($count <= 0) {
 
 <script>
     $('#file-select-all').on('change', function () {
-        onCheckItem();
+        on_check_item();
 
         if (this.checked) {
             $('#file-select-opt').show();
@@ -187,7 +189,7 @@ if ($count <= 0) {
     <li><a href="find_in_folder.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="scan_error_log.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
     <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars((string) $path), '/') ?>">&bull; Webdav</a></li>
-    <li><img src="icon/info.png"/> <a href="file.php?path=<?= $path ?>">Thông tin</a></li>
+    <li><a href="file.php?path=<?= $path ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 
 <?php require '_footer.php' ?>

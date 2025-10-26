@@ -31,13 +31,13 @@ function response(...$args)
     return response2(...$args);
 }
 
-function isAppFile($dir)
+function is_app_file($dir)
 {
     return stripos((string) $dir, rootPath) === 0;
 }
-function isAppDir($dir)
+function is_app_dir($dir)
 {
-    return isAppFile($dir);
+    return is_app_file($dir);
 }
 
 function redirect($url) {
@@ -45,7 +45,7 @@ function redirect($url) {
     exit;
 }
 
-function createConfig(
+function create_config(
     $username = LOGIN_USERNAME_DEFAULT,
     $password = LOGIN_PASSWORD_DEFAULT,
     $pageList = PAGE_LIST_DEFAULT,
@@ -56,7 +56,7 @@ function createConfig(
 ) {
     $content = "<?php if (!defined('ACCESS')) die('Not access'); else \$configs = array(";
     $content .= "'username' => '$username', ";
-    $content .= "'password' => '" . ($isEncodePassword ? getPasswordEncode($password) : $password) . "', ";
+    $content .= "'password' => '" . ($isEncodePassword ? get_password_encode($password) : $password) . "', ";
     $content .= "'page_list' => '$pageList', ";
     $content .= "'page_file_edit' => '$pageFileEdit', ";
     $content .= "'page_file_edit_line' => '$pageFileEditLine',";
@@ -88,7 +88,7 @@ function createConfig(
     return true;
 }
 
-function getNewVersion()
+function get_new_version()
 {
     $last_update = (int) config()->get('last_update');
     $in_update = time() > ($last_update + 3600 * 6);
@@ -104,30 +104,30 @@ function getNewVersion()
         ? $remoteVersion
         : false;
 }
-function hasNewVersion()
+function has_new_version()
 {
     return localVersion !== remoteVersion;
 }
 
 
-function getPasswordEncode($pass)
+function get_password_encode($pass)
 {
     return md5(md5(trim((string) $pass)));
 }
 
 
-function getFormat($name)
+function get_format($name)
 {
     return strrchr((string) $name, '.') !== false
         ? strtolower(str_replace('.', '', strrchr((string) $name, '.')))
         : '';
 }
 
-function isFormatText($name)
+function is_format_text($name)
 {
     global $formats;
 
-    $format = getFormat($name);
+    $format = get_format($name);
 
     if ($format == null) {
         return false;
@@ -136,11 +136,11 @@ function isFormatText($name)
     return in_array($format, $formats['text']) || in_array($format, $formats['other']) || in_array(strtolower(strpos((string) $name, '.') !== false ? substr((string) $name, 0, strpos((string) $name, '.')) : $name), $formats['source']);
 }
 
-function isFormatUnknown($name)
+function is_format_unknown($name)
 {
     global $formats;
 
-    $format = getFormat($name);
+    $format = get_format($name);
 
     if ($format == null) {
         return true;
@@ -166,13 +166,13 @@ function str_replace_first($needle, $replace, $haystack)
     return $haystack;
 }
 
-function isURL($url)
+function is_url($url)
 {
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
 
-function processDirectory($var, $seSlash = false)
+function process_directory($var, $seSlash = false)
 {
     if (empty($var)) {
         return '';
@@ -194,7 +194,7 @@ function processDirectory($var, $seSlash = false)
     return $var;
 }
 
-function processPathZip($var)
+function process_path_zip($var)
 {
     if (empty($var)) {
         $var = '';
@@ -210,7 +210,7 @@ function processPathZip($var)
     return $var;
 }
 
-function processName($var)
+function process_name($var)
 {
     $var = str_replace('/', '', $var);
     $var = str_replace('\\', '', $var);
@@ -218,12 +218,12 @@ function processName($var)
     return $var;
 }
 
-function isNameError($var)
+function is_name_error($var)
 {
     return strpos((string) $var, '\\') !== false || strpos((string) $var, '/') !== false;
 }
 
-function removeDir($path)
+function remove_dir($path)
 {
     $handler = scandir($path);
 
@@ -233,7 +233,7 @@ function removeDir($path)
                 $pa = $path . '/' . $entry;
 
                 if (is_dir($pa)) {
-                    if (!removeDir($pa)) {
+                    if (!remove_dir($pa)) {
                         return false;
                     }
                 } else {
@@ -385,7 +385,7 @@ function moves($entrys, $dir, $path)
 }
 
 
-function mergeFolder($source, $destination, $overwrite = true)
+function merge_folder($source, $destination, $overwrite = true)
 {
     if (!is_dir($source)) {
         return false; // Source is not a directory
@@ -403,7 +403,7 @@ function mergeFolder($source, $destination, $overwrite = true)
             $dst_file = $destination . '/' . $file;
 
             if (is_dir($src_file)) {
-                mergeFolder($src_file, $dst_file);
+                merge_folder($src_file, $dst_file);
             } else {
                 copy($src_file, $dst_file); // Overwrite existing files
             }
@@ -427,7 +427,7 @@ if (!function_exists('str_ends_with')) {
 }
 
 // chi dung de doc tat ca file
-function readFullDir($path, $excludes = [])
+function read_full_dir($path, $excludes = [])
 {
     $directory = new RecursiveDirectoryIterator(
         $path,
@@ -478,7 +478,7 @@ function zips($dir, $entrys, $file, $isDelete = false)
         $zip->add($path, $dir);
 
         if (is_dir($path)) {
-            $files = readFullDir($path);
+            $files = read_full_dir($path);
 
             foreach ($files as $value) {
                 $zip->add($value->getPathname(), $dir);
@@ -625,7 +625,7 @@ function page($current, $total, $url)
     return $html;
 }
 
-function getChmod($path)
+function get_chmod($path)
 {
     $perms = @fileperms($path);
 
@@ -639,7 +639,7 @@ function getChmod($path)
     return $perms;
 }
 
-function countStringArray($array, $search, $isLowerCase = false)
+function count_string_array($array, $search, $isLowerCase = false)
 {
     $count = 0;
 
@@ -658,7 +658,7 @@ function countStringArray($array, $search, $isLowerCase = false)
     return $count;
 }
 
-function isInArray($array, $search, $isLowerCase)
+function is_in_array($array, $search, $isLowerCase)
 {
     if ($array == null || !is_array($array)) {
         return false;
@@ -686,7 +686,7 @@ function substring($str, $offset, $length = -1, $ellipsis = '')
     return $str;
 }
 
-function printPath(string $path, bool $isHrefEnd = false)
+function print_path(string $path, bool $isHrefEnd = true)
 {
     $html = '';
 
@@ -721,7 +721,7 @@ function printPath(string $path, bool $isHrefEnd = false)
     return $html;
 }
 
-function getPathPHP()
+function get_path_php()
 {
     if ($path = getenv('PATH')) {
         $array = @explode(strpos($path, ':') !== false ? ':' : PATH_SEPARATOR, $path);
@@ -741,12 +741,12 @@ function getPathPHP()
 
     return 'php';
 }
-function isFunctionExecEnable()
+function is_function_exec_enable()
 {
     return function_exists('exec')
-        && isFunctionDisable('exec') == false;
+        && is_function_disable('exec') == false;
 }
-function isFunctionDisable($func)
+function is_function_disable($func)
 {
     $list = @ini_get('disable_functions');
 
@@ -763,7 +763,7 @@ function isFunctionDisable($func)
 
     return false;
 }
-function runCommand($command)
+function run_command($command)
 {
     $descriptorspec = [
         0 => ["pipe", "r"],  // stdin
@@ -797,38 +797,12 @@ function runCommand($command)
     }
 }
 
-function debug($o)
-{
-    echo '<pre>';
-    var_dump($o);
-    echo '</pre>';
-}
-
 function asset($asset)
 {
     return $asset . '?' .  filemtime($asset);
 }
 
-function cookie(
-    $cookie,
-    $option = null
-) {
-    // get
-    if (is_string($cookie)) {
-        return isset($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : $option;
-    }
-
-    // set
-    if (is_array($cookie)) {
-        $option = is_array($option) ? $option : [];
-
-        foreach ($cookie as $key => $value) {
-            setcookie($key, (string) $value, $option);
-        }
-    }
-}
-
-function sortNatural(&$items) {
+function sort_natural(&$items) {
     usort($items, function($a, $b) {
         $a_is_letter = ctype_alpha($a[0]);
         $b_is_letter = ctype_alpha($b[0]);
@@ -838,7 +812,7 @@ function sortNatural(&$items) {
     });
 }
 
-function getIcon($type, $name)
+function get_icon($type, $name)
 {
     global $formats;
     $file = new SplFileInfo($name);
@@ -881,7 +855,7 @@ function show_back()
     </a>';
 }
 
-function ableFormatCode($type)
+function able_format_code($type)
 {
     return in_array($type, [
         'php',
@@ -895,7 +869,7 @@ function ableFormatCode($type)
     ]);
 }
 
-function getFileLink($path)
+function get_file_link($path)
 {
     global $formats, $pages;
     $path = str_replace('//', '/', $path);
@@ -904,14 +878,14 @@ function getFileLink($path)
     $name = $file->getFilename();
     $isEdit = false;
 
-    $fileIcon = getIcon($file->isDir() ? 'folder' : 'file', $name);
+    $fileIcon = get_icon($file->isDir() ? 'folder' : 'file', $name);
 
     if ($file->isFile()) {
         if (in_array($file->getExtension(), $formats['text'])) {
             $isEdit = true;
         } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
             $isEdit = true;
-        } elseif (isFormatUnknown($name)) {
+        } elseif (is_format_unknown($name)) {
             $isEdit = true;
         }
 
@@ -920,15 +894,15 @@ function getFileLink($path)
         } elseif (in_array($file->getExtension(), $formats['zip'])) {
             $fileLink = 'file_unzip.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
         } else {
-            $fileLink = 'file.php?act=rename&path=' . $path . $pages['paramater_1'];
+            $fileLink = 'rename.php?path=' . $path . $pages['paramater_1'];
         }
     } else {
-        $fileLink = 'file.php?act=rename&path=' . $path . $pages['paramater_1'];
+        $fileLink = 'rename.php?path=' . $path . $pages['paramater_1'];
     }
 
     $fileIcon = sprintf('<a href="%s">%s</a>', $fileLink, $fileIcon);
 
-    if (isAppDir($path)) {
+    if (is_app_dir($path)) {
         $nameDisplay = '<i>' . $name . '</i>';
     } else {
         $nameDisplay = $name;
@@ -958,7 +932,7 @@ function edit_recent_add($path)
     config()->set('edit_recent', $old);
 }
 
-function check_path(string $path, string $type = '')
+function check_path($path, $type = '')
 {
     extract($GLOBALS);
 
@@ -978,7 +952,7 @@ function check_path(string $path, string $type = '')
 
     require '_header.php';
 
-    echo '<div class="title">' . printPath($path, true) . '</div>';
+    echo '<div class="title">' . print_path($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
     echo '<br>';
 
@@ -1000,6 +974,43 @@ function load_json_remote(string $url, string $path = '') {
     }
     
     return json_decode(file_get_contents($cache), true);
+}
+
+function get_req_referer() {
+    return !empty($_GET['referer']) ? @base64_decode($_GET['referer']) : '';
+}
+
+function get_self_referer() {
+    return @base64_encode($_SERVER['REQUEST_URI']);
+}
+
+function form_err($err) {
+    if (empty($err)) {
+        return '';
+    }
+
+    return '<div class="notice_failure">' . is_array($err) ? $err[0] : $err . '</div>';
+}
+
+function form_entries() {
+    $entries = get_entries();
+    $html = '<ul class="list">';
+
+    foreach ($entries as $entry) {
+        $isFolder = is_dir($entry);
+
+        $html .= '<input type="hidden" name="entry[]" value="' . $entry . '">';
+        $html .= '<li>'
+            . get_icon($isFolder ? 'folder' : 'file', $entry) . ' '
+            . ($isFolder
+                ? '<strong class="folder_name">' . $entry . '</strong>'
+                : '<span class="file_name">' . $entry . '</span>'
+            ) . '</li>';
+    }
+
+    $html .= '</ul>';
+
+    return $html;
 }
 
 require 'auth.fn.php';

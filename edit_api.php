@@ -23,18 +23,18 @@ if (!isset($_POST['requestApi'])) {
     goto end_request;
 }
 
-if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
+if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $name))) {
     $data['message'] = 'Đường dẫn không tồn tại';
     goto end_request;
 }
 
-if (!isFormatText($name) && !isFormatUnknown($name)) {
+if (!is_format_text($name) && !is_format_unknown($name)) {
     $data['message'] = 'Tập tin này không phải dạng văn bản';
     goto end_request;
 }
 
 // thông tin file
-$dir = processDirectory($dir);
+$dir = process_directory($dir);
 $path = $dir . '/' . $name;
 
 $content = isset($_POST['content']) ? $_POST['content'] : '';
@@ -79,7 +79,7 @@ if (isset($_POST['format'])) {
                 '--tab-width=4',
                 '--quote-props=preserve'
             ];
-            $res = runCommand('prettier ' . implode(' ', $opt) . ' ' . $path);
+            $res = run_command('prettier ' . implode(' ', $opt) . ' ' . $path);
             $data['format'] = $res['out'] ?: $content;
             $data['error'] = $res['err'];
 
@@ -114,10 +114,10 @@ if (file_put_contents($path, $content) !== false) {
 
     if ($checkPHP) {
         $error_syntax = 'Lưu thành công! Không thể kiểm tra lỗi';
-        $isExecute = isFunctionExecEnable();
+        $isExecute = is_function_exec_enable();
 
         if ($isExecute) {
-            @exec(getPathPHP() . ' -c -f -l ' . $path, $output, $value);
+            @exec(get_path_php() . ' -c -f -l ' . $path, $output, $value);
 
             if ($value == -1) {
             } elseif ($value == 255 || count($output) == 3) {

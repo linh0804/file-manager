@@ -4,9 +4,9 @@ namespace app;
 defined('ACCESS') or exit('Not access');
 
 if (isLogin) {
-    if (getLoginFail()) {
+    if (get_login_fail()) {
         $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
-            fail login: <span style="color: red; font-weight: bold">' . getLoginFail() . '</span>
+            fail login: <span style="color: red; font-weight: bold">' . get_login_fail() . '</span>
         </div>';
     }
 

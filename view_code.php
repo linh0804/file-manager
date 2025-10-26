@@ -12,7 +12,7 @@ $title = 'Xem tập tin';
 $themes = ['a11y-light','a11y-dark','vs','xcode','github-dark-dimmed','github'];
 $coder = ['Auto','php','javascript','html','json','text'];
 
-function highlightStringWithLineNumbers($code) {
+function highlight_string_with_line_numbers($code) {
     $code = str_replace("\r\n", "\n", $code);
     $code = str_replace("\r", "\n", $code);
     $lines = explode("\n", $code);
@@ -32,7 +32,7 @@ function highlightStringWithLineNumbers($code) {
     );
 }
 
-function detectCodeType($code) {
+function detect_code_type($code) {
     if (strpos((string) $code, "<?php") !== false || strpos((string) $code, "<?=") !== false) {
         return "php";
     } elseif (strpos((string) $code, "const ") !== false || strpos((string) $code, "var ") !== false || strpos((string) $code, "function ") !== false || strpos((string) $code, "document.") !== false) {
@@ -50,24 +50,24 @@ require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
+if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $name))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
     </ul>';
-} else if (!isFormatText($name) && !isFormatUnknown($name)) {
+} else if (!is_format_text($name) && !is_format_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
     </ul>';
 } else {
-    $dir = processDirectory($dir);
+    $dir = process_directory($dir);
     $path = $dir . '/' . $name;
     $file = new SplFileInfo($path);
     $content = file_get_contents($path);
-    $hightlight = highlightStringWithLineNumbers($content);
+    $hightlight = highlight_string_with_line_numbers($content);
 
     echo '<link id="classHl" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css">
     <style>
@@ -108,7 +108,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     </style>';
 
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . print_path($dir, true) . '</span><hr/>
         <div class="ellipsis break-word">
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong>
         </div>
@@ -117,7 +117,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     echo '<div class="list" id="view_code">
         <div id="line_number">'. $hightlight['line'] .'</div>
         <div id="code_content">
-            <pre><code class="language-' . detectCodeType($content) .'">'
+            <pre><code class="language-' . detect_code_type($content) .'">'
                 . htmlspecialchars($content)
                 . $hightlight['text']
             . '</code></pre>
@@ -174,7 +174,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
     });
     </script>';
 
-    print_file_actions($file);
+    print_actions($file);
 }
 
 require '_footer.php';

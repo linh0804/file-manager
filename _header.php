@@ -71,25 +71,25 @@ $menuToggle = '';
 
 <script>
 // loader on load
-function showLoaderOnFetch() {
+function show_loader_on_fetch() {
     document.getElementById("loader-on-fetch").style.display = "block";
     document.querySelector('#boxOverlay').style.display = "block";
     document.body.style.overflowY = "hidden";
 }
-function hideLoaderOnFetch() {
+function hide_loader_on_fetch() {
     document.getElementById("loader-on-fetch").style.display = "none";
     document.querySelector('#boxOverlay').style.display = "none";
     document.body.style.overflowY = "auto";
 }
 const originalFetch = window.fetch;
 window.fetch = async function (...args) {
-    showLoaderOnFetch();
+    show_loader_on_fetch();
 
     try {
         const response = await originalFetch(...args);
         return response;
     } finally {
-        hideLoaderOnFetch();
+        hide_loader_on_fetch();
     }
 };
 </script>

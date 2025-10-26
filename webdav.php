@@ -19,18 +19,18 @@ $path = $path == '/' &&  $path_info ? '' : $path;
 $base_uri = request::server('script_name') . rtrim((string) $path, '/');
 
 $authBackend = new BasicCallBack(function ($username, $password) use ($configs) {
-    if (!ableLogin()) {
+    if (!able_login()) {
         return false;
     }
 
     if (
         strtolower((string) $username) === strtolower((string) $configs['username'])
-        && getPasswordEncode($password) === $configs['password']
+        && get_password_encode($password) === $configs['password']
     ) {
-        removeLoginFail();
+        remove_login_fail();
         return true;
     } else {
-        increaseLoginFail();
+        increase_login_fail();
     }
         
     return false;

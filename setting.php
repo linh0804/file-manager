@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
         echo '<div class="notice_failure">Chưa nhập tên đăng nhập</div>';
     } elseif (strlen($username) < 3) {
         echo '<div class="notice_failure">Tên đăng nhập phải lớn hơn 3 ký tự</div>';
-    } elseif (!empty($passwordO) && getPasswordEncode($passwordO) != $configs['password']) {
+    } elseif (!empty($passwordO) && get_password_encode($passwordO) != $configs['password']) {
         echo '<div class="notice_failure">Mật khẩu cũ không đúng</div>';
     } elseif (!empty($passwordO) && (empty($passwordN) || empty($verifyN))) {
         echo '<div class="notice_failure">Để thay đổi mật khẩu hãy nhập đủ hai mật khẩu</div>';
@@ -53,9 +53,9 @@ if (isset($_POST['submit'])) {
     ) {
         echo '<div class="notice_failure">Phân trang phải lớn hơn 0</div>';
     } else {
-        if (createConfig(
+        if (create_config(
             $username,
-            (!empty($passwordN) ? getPasswordEncode($passwordN) : $configs['password']),
+            (!empty($passwordN) ? get_password_encode($passwordN) : $configs['password']),
             $pageList,
             $pageFileEdit,
             $pageFileEditLine,

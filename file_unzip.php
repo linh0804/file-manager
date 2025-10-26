@@ -57,7 +57,7 @@ if (!in_array($format, array('zip', 'jar'))) {
     echo $error;
 
     echo '<div class="list">
-        <span class="bull">&bull;</span><span>' . printPath($path) . '</span><hr/>
+        <span class="bull">&bull;</span><span>' . print_path($path) . '</span><hr/>
         <form method="post">
             <span class="bull">&bull;</span>Đường dẫn giải nén:<br/>
             <textarea name="path" data-autoresize>' . $path_unzip . '</textarea><br/>
@@ -66,7 +66,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         </form>
     </div>';
     
-    print_file_actions($file);
+    print_actions($file);
 }
 
 require '_footer.php';

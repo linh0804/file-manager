@@ -13,7 +13,7 @@ if (isLogin) {
 $title = 'Đăng nhập';
 $notice = null;
 
-if (!ableLogin()) {
+if (!able_login()) {
     require '_header.php';
     echo '<div class="title">' . $title . '</div>';
     echo '<div class="notice_failure">
@@ -33,16 +33,16 @@ if (isset($_POST['submit'])) {
         $notice .= 'Chưa nhập đầy đủ thông tin';
     } elseif (
         strtolower($username) != strtolower((string) $configs['username'])
-        || getPasswordEncode($password) != $configs['password']
+        || get_password_encode($password) != $configs['password']
     ) {
         $notice .= 'Sai tài khoản hoặc mật khẩu.';
 
         // khoá đăng nhập sau 5 lần
-        increaseLoginFail();
-        $notice .= ' Bạn còn ' . (LOGIN_MAX - getLoginFail()) . ' lần thử!';
+        increase_login_fail();
+        $notice .= ' Bạn còn ' . (LOGIN_MAX - get_login_fail()) . ' lần thử!';
     } else {
-        removeLoginFail();
-        setcookie(FM_COOKIE_NAME, (string) getPasswordEncode($password), time() + 3600 * 24 * 365);
+        remove_login_fail();
+        setcookie(FM_COOKIE_NAME, (string) get_password_encode($password), time() + 3600 * 24 * 365);
 
         redirect('index.php');
     }
@@ -69,7 +69,7 @@ if (IS_CONFIG_UPDATE) {
 
 
 if (!is_file(PATH_CONFIG)) {
-    if (createConfig()) {
+    if (create_config()) {
         echo '<div class="notice_info">Tài khoản: <strong>' . LOGIN_USERNAME_DEFAULT . '</strong>, Mật khẩu: <strong>' . LOGIN_PASSWORD_DEFAULT . '</strong></div>';
     } else {
         echo '<div class="notice_failure">Tạo cấu hình thất bại, hãy thử lại</div>';

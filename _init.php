@@ -116,7 +116,7 @@ define('FM_COOKIE_NAME', 'fm_php');
     define('REMOTE_FILE', 'https://static.ngatngay.net/php/file-manager/release.zip');
     define('REMOTE_DIR_IN_ZIP', 'file-manager-main');
 
-    $version = getNewVersion();
+    $version = get_new_version();
     $remoteVersion = localVersion;
 
     if ($version !== false) {
@@ -244,8 +244,8 @@ if (
     IS_INSTALL_ROOT_DIRECTORY ||
     IS_ACCESS_FILE_IN_FILE_MANAGER ||
 
-    ($script != '.' && $script != '/' && isPathNotPermission(processDirectory($dir))) ||
-    ($script != '.' && $script != '/' && $name != null && isPathNotPermission(processDirectory($dir . '/' . $name)))
+    ($script != '.' && $script != '/' && is_path_not_permission(process_directory($dir))) ||
+    ($script != '.' && $script != '/' && $name != null && is_path_not_permission(process_directory($dir . '/' . $name)))
 ) {
     define('NOT_PERMISSION', true);
 } else {
@@ -260,7 +260,7 @@ if (
     //redirect('index.php?not');
 }
 
-function isPathNotPermission($path, $isUseName = false): bool
+function is_path_not_permission($path, $isUseName = false): bool
 {
     if (!empty($path)) {
         $reg  = $isUseName ? NAME_DIRECTORY_INSTALL_FILE_MANAGER : PATH_FILE_MANAGER;
@@ -295,11 +295,11 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
     exit();
 }
 
-function encodePath($path)
+function encode_path($path)
 {
     return base64_encode($path);
 }
-function decodePath($path)
+function decode_path($path)
 {
     //$path =
     $path = str_replace('\\', '/', $path);
@@ -309,7 +309,7 @@ $path = rawurldecode((string) request::get('path'));
 $file = new SplFileInfo($path);
 
 // referer
-function removeRefererParam(string $url): string {
+function remove_referer_param(string $url): string {
     // Parse URL
     $parts = parse_url($url);
 
@@ -336,7 +336,7 @@ function removeRefererParam(string $url): string {
     return $cleanUrl;
 }
 
-$referer_qs = base64_encode(removeRefererParam(request::uri()));
+$referer_qs = base64_encode(remove_referer_param(request::uri()));
 define('referer_qs', 'referer=' . $referer_qs);
 
 $referer = (string) request::get('referer');

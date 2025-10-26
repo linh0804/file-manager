@@ -2,32 +2,32 @@
 namespace app;
 
 // auth
-function getLoginFail()
+function get_login_fail()
 {
     $last_login = (int) config()->get(LOGIN_LOCK . '_time');
     $timeDifference = time() - $last_login;
 
     // reset 30 phut
     if ($timeDifference >= 1800) {
-        removeLoginFail();
+        remove_login_fail();
     }
 
     return (int) config()->get(LOGIN_LOCK);
 }
 
-function increaseLoginFail()
+function increase_login_fail()
 {
-    config()->set(LOGIN_LOCK, getLoginFail() + 1);
+    config()->set(LOGIN_LOCK, get_login_fail() + 1);
     config()->set(LOGIN_LOCK . '_time', time());
 }
 
-function removeLoginFail()
+function remove_login_fail()
 {
     config()->set(LOGIN_LOCK, 0);
     config()->set(LOGIN_LOCK . '_time', 0);
 }
 
-function ableLogin()
+function able_login()
 {
-    return getLoginFail() < LOGIN_MAX;
+    return get_login_fail() < LOGIN_MAX;
 }

@@ -14,13 +14,13 @@ require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $name))) {
+if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $name))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
     </ul>';
-} elseif (!isFormatText($name) && !isFormatUnknown($name)) {
+} elseif (!is_format_text($name) && !is_format_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
@@ -132,7 +132,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
 
     echo $notice;
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . print_path($dir, true) . '</span><hr/>
         <div class="ellipsis break-word">
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong>
         </div><hr/>
@@ -167,7 +167,7 @@ if ($dir == null || $name == null || !is_file(processDirectory($dir . '/' . $nam
         <span>Ấn tiếp tục để xóa và ở lại trang, ấn xóa để xóa và quay về danh sách dòng</span>
     </div>';
 
-    print_file_actions($file);
+    print_actions($file);
 }
 
 require '_footer.php';

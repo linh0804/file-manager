@@ -21,7 +21,7 @@ echo '<div class="title">' . $title . '</div>';
 
 if (
     $dir == null
-    || !is_dir(processDirectory($dir))
+    || !is_dir(process_directory($dir))
 ) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
@@ -29,16 +29,16 @@ if (
         <li><img src="icon/list.png"/> <a href="index.php' . $pages['paramater_0'] . '">Danh sách</a></li>
     </ul>';
 } else {
-    $dir = processDirectory($dir);
+    $dir = process_directory($dir);
 
     echo '<div class="list">';
-    echo '<span>' . printPath($dir, true) . '</span>';
+    echo '<span>' . print_path($dir, true) . '</span>';
     echo '</div>';
 
     echo '<div class="title">Danh sách error_log</div>';
     
     $have_error = false;
-    $files = readFullDir($dir, [
+    $files = read_full_dir($dir, [
         'vendor/',
         'node_modules/'
     ]);

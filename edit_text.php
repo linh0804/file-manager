@@ -20,7 +20,7 @@ require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-if (!isFormatText($name) && !isFormatUnknown($name)) {
+if (!is_format_text($name) && !is_format_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
@@ -28,14 +28,14 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
     </ul>';
 } else {
     $total = 0;
-    $dir = processDirectory($dir);
+    $dir = process_directory($dir);
     $content = file_get_contents($path);
-    $isExecute = isFunctionExecEnable();
+    $isExecute = is_function_exec_enable();
     $actionEdit = 'edit_api.php?path=' . base64_encode($path);
     edit_recent_add($path);
 
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . printPath($dir, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . print_path($dir, true) . '</span><hr/>
         <div class="ellipsis break-word">
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong><hr/>
         </div>
@@ -54,9 +54,9 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>'.
-                ($isExecute && strtolower((string) getFormat($name)) == 'php' ? '<label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>' : '') . '
+                ($isExecute && strtolower((string) get_format($name)) == 'php' ? '<label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>' : '') . '
                 <div style="display: inline-block; float: right">'
-                    . (ableFormatCode($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
+                    . (able_format_code($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
                     . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
                 </div>
             </div>
@@ -73,8 +73,8 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
                 <input type="text" id="replaceInput" name="replaceInput" value=""/>
             </div>
             <div class="input_action">                    
-                <button class="button" onclick="searchText()">Tìm kiếm</button>
-                <button class="button" onclick="replaceText()">Thay thế</button>
+                <button class="button" onclick="search_text()">Tìm kiếm</button>
+                <button class="button" onclick="replace_text()">Thay thế</button>
             </div>
         </div>';
     
@@ -94,7 +94,7 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
         var searchInput = document.getElementById("searchInput")
         var replaceInput = document.getElementById("replaceInput")
         
-        function searchText() {
+        function search_text() {
             let searchValue = searchInput.value
             let lines = editorElement.value.split("\n")
             let foundLines = [];
@@ -116,7 +116,7 @@ if (!isFormatText($name) && !isFormatUnknown($name)) {
                 alert(`Không tìm thấy!`);
             }
         }
-        function replaceText() {
+        function replace_text() {
             const content = editorElement.value;
             const searchValue = searchInput.value
             const replaceValue = replaceInput.value;
@@ -251,7 +251,7 @@ console.log(typeof local_storage.get('file_manager.edit.wrap'));
     </style>
 
 <?php
-    print_file_actions($file);
+    print_actions($file);
 }
 
 require '_footer.php';

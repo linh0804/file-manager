@@ -11,7 +11,7 @@ require '_header.php';
 
 echo '<div class="title">' . $title . '</div>';
 
-$processedDir = $dir ? processDirectory($dir) : null;
+$processedDir = $dir ? process_directory($dir) : null;
 $sourcePath = $processedDir ? $processedDir . '/' . $name : null;
 
 if ($processedDir === null || $name === null || !is_file($sourcePath)) {
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($requestedPath === '') {
         $message = 'Chưa nhập đầy đủ thông tin';
     } else {
-        $targetDir = processDirectory($requestedPath);
+        $targetDir = process_directory($requestedPath);
 
         if ($targetDir === $processedDir) {
             $message = 'Đường dẫn mới phải khác đường dẫn hiện tại';
@@ -53,7 +53,7 @@ if ($message !== null) {
 $defaultPath = $_POST['path'] ?? $processedDir;
 
 echo '<div class="list">
-    <span class="bull">&bull; </span><span>' . printPath($sourcePath) . '</span><hr/>
+    <span class="bull">&bull; </span><span>' . print_path($sourcePath) . '</span><hr/>
     <form action="move.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'] . '" method="post">
         <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
         <textarea name="path" data-autoresize>' . htmlspecialchars($defaultPath, ENT_QUOTES, 'UTF-8') . '</textarea><br/>
@@ -61,6 +61,6 @@ echo '<div class="list">
     </form>
 </div>';
 
-print_file_actions($file);
+print_actions($file);
 
 require '_footer.php';

@@ -37,7 +37,7 @@ require '_header.php';
 echo '<div class="title">' . $title . '</div>';
 
 echo '<div class="list">
-  <span>' . printPath($path, true) . '</span><hr/>
+  <span>' . print_path($path, true) . '</span><hr/>
   <form enctype="multipart/form-data">        
     <div id="fileList"></div>
     <input id="files" type="file" multiple style="display:none">

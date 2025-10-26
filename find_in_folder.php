@@ -52,7 +52,7 @@ echo '<style>
 echo '<div class="title">' . $title . '</div>';
 
 echo '<div class="list">
-    <span>' . printPath($dir, true) . '</span><hr/>
+    <span>' . print_path($dir, true) . '</span><hr/>
     <form method="post">
         Nội dung tìm kiếm:<br />
         <input type="text" name="search" value="' . htmlspecialchars((string) $search) . '" style="width: 80%" /><br />
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
     }
 
     if ($error === false) {
-        $files = readFullDir($dir, $excludes);
+        $files = read_full_dir($dir, $excludes);
         $files_search_count = 0;
 
         echo '<div id="find_list">';
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
             // lấy thông tin cần thiết
             $file_name = $file->getFilename();
             $file_path = $file->getPathname();
-            $file_path = processDirectory($file_path);
+            $file_path = process_directory($file_path);
             $file_path_sort = str_replace($dir, '', $file_path);
             $file_path_sort = ltrim($file_path_sort, '/');
 

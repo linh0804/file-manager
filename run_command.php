@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 
     // RUN
     if ($command) {
-        $res = runCommand($command);
+        $res = run_command($command);
     }
 
     if (isset($res) && $res !== false) {

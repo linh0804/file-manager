@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
     echo 'Thư mục: ';
     echo '<pre style="white-space: pre-wrap">' . htmlspecialchars($folder) . '</pre>';
 
-    $files = readFullDir($folder);
+    $files = read_full_dir($folder);
     $chown_fail = [];
     $file_fail = [];
 	$folder_fail = [];

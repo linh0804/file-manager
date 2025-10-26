@@ -30,9 +30,9 @@ if (!in_array($format, array('zip', 'jar'))) {
 
     require '_header.php';
 
-    $path = isset($_GET['path_zip']) && !empty($_GET['path_zip']) ? processPathZip($_GET['path_zip']) : null;
-    $dir = processDirectory($dir);
-    $format = getFormat($name);
+    $path = isset($_GET['path_zip']) && !empty($_GET['path_zip']) ? process_path_zip($_GET['path_zip']) : null;
+    $dir = process_directory($dir);
+    $format = get_format($name);
     $zip = new ZipArchive;
     $zip->open($dir . '/' . $name);
     $lists = [];
@@ -62,7 +62,7 @@ if (!in_array($format, array('zip', 'jar'))) {
     if (!$lists) {
         echo '<div class="title">' . $title . '</div>
         <div class="list">
-            <span>' . printPath($dir . '/' . $name) . '</span><hr/>
+            <span>' . print_path($dir . '/' . $name) . '</span><hr/>
             <span>Tập tin nén bị lỗi không mở được</span>
         </div>';
     } else {
@@ -146,7 +146,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         echo '<div class="title">' . $html . '</div>';
         echo '<ul class="list_file">';
         echo '<li class="normal">
-            <span>' . printPath($dir . '/' . $name) . '</span>
+            <span>' . print_path($dir . '/' . $name) . '</span>
         </li>';
 
         if ($path != null) {
@@ -180,7 +180,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     </li>';
                 } else {
                     $icon = 'unknown';
-                    $type = getFormat($value['name']);
+                    $type = get_format($value['name']);
 
                     if (in_array($type, $formats['other']))
                         $icon = $type;
@@ -217,7 +217,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         echo '</ul>';
     }
 
-    print_file_actions($file);
+    print_actions($file);
 }
 
 require '_footer.php';

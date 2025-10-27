@@ -2,7 +2,7 @@
     "repo": "file-manager-main",
     "major": 1,
     "minor": 1,
-    "patch": 23,
-    "version": "1.1.23",
-    "message": "fix unzip link"
+    "patch": 24,
+    "version": "1.1.24",
+    "message": "fix api"
 }

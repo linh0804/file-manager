@@ -1,4 +1,4 @@
-function onCheckItem() {
+function on_check_item() {
   for (let i = 0; i < document.form.elements.length; ++i) {
     if (document.form.elements[i].type === "checkbox") {
       document.form.elements[i].checked = document.form.all.checked === true;
@@ -7,7 +7,7 @@ function onCheckItem() {
 }
 
 // check cookie enable
-function checkCookiesEnabled() {
+function check_cookies_enabled() {
   document.cookie = "fm_testcookie=1";
 
   if (document.cookie.indexOf("fm_testcookie=") == -1) {
@@ -17,7 +17,7 @@ function checkCookiesEnabled() {
     document.cookie = "fm_testcookie=1; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 }
-checkCookiesEnabled();
+check_cookies_enabled();
 
 // scroll
 var scrollToTopTimeout = null;
@@ -85,7 +85,7 @@ $('.copyButton').click(function (e) {
 });
 
 // menu
-function toggleMenu() {
+function toggle_menu() {
     document.body.classList.toggle("has-menu");
 }
 
@@ -100,7 +100,7 @@ function redirect(url) {
   window.location.href = url;
 }
 
-function fileAjax(data, success) {
+function file_ajax(data, success) {
   NProgress.start();
 
   $.ajax({
@@ -116,14 +116,14 @@ function fileAjax(data, success) {
   });
 }
 
-function fileAjaxDelete(element) {
+function file_ajax_delete(element) {
   const data = $(element).data();
 
   if (!confirm(`Xác nhận xóa "${data.path}"?`)) {
     return;
   }
 
-  fileAjax(data, function (res) {
+  file_ajax(data, function (res) {
     if (res.msg) {
       alert(res.msg);
     }
@@ -135,8 +135,17 @@ function fileAjaxDelete(element) {
 }
 
 function file_actions(path, data) {
-    // data(entries[], int option)
-    const actionUrl = 'action.php?dir=' + path;
+    // data(entries[], int act)
+    const routeMap = {
+        0: 'copy_multi.php',
+        1: 'move_multi.php',
+        2: 'delete_multi.php',
+        3: 'zip_multi.php',
+        4: 'chmod_multi.php',
+        5: 'rename_multi.php'
+    };
+    const route = routeMap[data.act] || 'copy_multi.php';
+    const actionUrl = route + '?dir=' + path;
     const $form = $('<form>', {
         method: 'POST',
         action: actionUrl
@@ -150,11 +159,7 @@ function file_actions(path, data) {
         }).appendTo($form);
     });
 
-    $('<input>', {
-        type: 'hidden',
-        name: 'option',
-        value: data.act
-    }).appendTo($form);
+    // no need to send option when using dedicated endpoints
 
     $('body').append($form);
     $form.submit();
@@ -162,9 +167,8 @@ function file_actions(path, data) {
 
 $('.btn-calc-size').on('click', function () {
     let e = $(this);
-    fileAjax(e.data(), function (res) {
+    file_ajax(e.data(), function (res) {
     e.html(res.msg)
 });
 
 })
-

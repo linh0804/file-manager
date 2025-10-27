@@ -301,27 +301,6 @@ function copydir($old, $new, $isParent = true)
     return false;
 }
 
-function copys($entrys, $dir, $path)
-{
-    foreach ($entrys as $e) {
-        $pa = $dir . '/' . $e;
-
-        if (@is_file($pa)) {
-            if (!@copy($pa, $path . '/' . $e)) {
-                return false;
-            }
-        } elseif (@is_dir($pa)) {
-            if (!copydir($pa, $path)) {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 function movedir($old, $new, $isParent = true)
 {
     $handler = @scandir($old);
@@ -489,30 +468,6 @@ function zips($dir, $entrys, $file, $isDelete = false)
 
     if ($isDelete) {
         rrms($entrys, $dir);
-    }
-
-    return true;
-}
-
-function chmods($dir, $entrys, $folder, $file)
-{
-    $folder = intval($folder, 8);
-    $file   = intval($file, 8);
-
-    foreach ($entrys as $e) {
-        $path = $dir . '/' . $e;
-
-        if (@is_file($path)) {
-            if (!@chmod($path, $file)) {
-                return false;
-            }
-        } elseif (@is_dir($path)) {
-            if (!@chmod($path, $folder)) {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 
     return true;
@@ -686,7 +641,7 @@ function substring($str, $offset, $length = -1, $ellipsis = '')
     return $str;
 }
 
-function print_path(string $path, bool $isHrefEnd = true)
+function print_path(string $path, bool $isHrefEnd = false)
 {
     $html = '';
 

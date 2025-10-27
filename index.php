@@ -70,7 +70,7 @@ sort_natural($files);
 $lists = array_merge($folders, $files);
 $count = count($lists);
 
-echo '<form action="action.php?dir=' . $path . $pages['paramater_1'] . '" method="post" name="form">';
+echo '<form action="" method="post" name="form">';
 
 if ($count <= 0) {
     echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';
@@ -140,13 +140,13 @@ if ($count <= 0) {
     Z;
 
     echo '<div class="list">';
-    echo '<div id="file-select-opt" style="display: none">
-        <button name="option" value="0" class="button"><img src="icon/copy.png"/> Sao chép</button>
-        <button name="option" value="1" class="button"><img src="icon/move.png"/> Di chuyển</button>
-        <button name="option" value="3" class="button"><img src="icon/zip.png"/> Zip</button>
-        <button name="option" value="2" class="button"><img src="icon/delete.png"/> Xoá</button>
-        <button name="option" value="4" class="button"><img src="icon/access.png"/> Chmod</button>
-        <button name="option" value="5" class="button"><img src="icon/rename.png"/> Đổi tên</button>
+    echo '<div id="file-select-opt" style="display: block">
+        <button formaction="copy_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button formaction="move_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button formaction="zip_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button formaction="delete_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button formaction="chmod_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button formaction="rename_multi.php?dir=' . $path . $pages['paramater_1'] . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
     if ($configs['page_list'] > 0 && $pages['total'] > 1) {
@@ -162,12 +162,13 @@ if ($count <= 0) {
         on_check_item();
 
         if (this.checked) {
-            $('#file-select-opt').show();
+            //$('#file-select-opt').show();
         } else {
-            $('#file-select-opt').hide();
+          //  $('#file-select-opt').hide();
         }
     });
 
+/*
     $('input[name="entry[]"]').on('change', function() {
         if ($('input[name="entry[]"]:checked').length > 0) {
             $('#file-select-opt').show();
@@ -176,6 +177,7 @@ if ($count <= 0) {
            $('#file-select-all').prop('checked', false);
         }
     });
+    */
 </script>
 
 </form>

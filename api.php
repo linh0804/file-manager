@@ -9,40 +9,51 @@ define('ACCESS', 1);
 
 require '_init.php';
 
-$act = (string) request::get('act');
+$act = (string) request::post('act');
 
 switch ($act) {
-    case 'calc':
-        if (!file_exists($path)) {
-            response(['status' => false,'msg' => 'file not found'])->send();
-        }
 
-        /*
-            $dir = process_directory($path);
-    $dirInfo = new SplFileInfo($dir);
-    $files = read_full_dir($dir);
+case 'calc':
+    $path = (string) request::post('path');
 
-    $dir_size = 0;
-    $total_file = 0;
-    $total_dir = 0;
+    if (!file_exists($path)) {
+        response(['status' => false, 'msg' => 'file not found'])->send();
+    }
 
-    foreach ($files as $file) {
-        if ($file->isFile()) {
-            $total_file += 1;
-            $dir_size += $file->getSize();
-        }
+    $data = [
+        'total_file' => 0,
+        'total_dir' => 0,
+        'total_size' => 0,
+        'total_size_readable' => ''
+    ];
 
-        if ($file->isDir()) {
-            $total_dir += 1;
+    if (is_file($path)) {
+        $data['total_file'] = 1;
+        $data['total_size'] = filesize($path);
+    } else {
+        $files = read_full_dir($path);
+        foreach ($files as $file) {
+            if ($file->isFile()) {
+                $data['total_file']++;
+                $data['total_size'] += $file->getSize();
+            }
+            if ($file->isDir()) {
+                $data['total_dir']++;
+            }
         }
     }
-        */
-        response(['status' => true,'msg' => fs::readable_size(fs::size($path))])->send();
-        break;
+
+    $data['total_size_readable'] = fs::readable_size($data['total_size']);
+
+    response([
+        'status' => true,
+        'data' => $data
+    ])->send();
+    break;
 
     case 'search':
-        $q = (string) request::get('q');
-        $t = (string) request::get('t', 'all');
+        $q = (string) request::post('q');
+        $t = (string) request::post('t', 'all');
 
         $q = rtrim($q, '/');
 

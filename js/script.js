@@ -1,11 +1,3 @@
-function on_check_item() {
-    for (let i = 0; i < document.form.elements.length; ++i) {
-        if (document.form.elements[i].type === "checkbox") {
-            document.form.elements[i].checked = document.form.all.checked === true;
-        }
-    }
-}
-
 // check cookie enable
 function check_cookies_enabled() {
     document.cookie = "fm_testcookie=1";
@@ -104,7 +96,7 @@ function file_ajax(data, success) {
     NProgress.start();
 
     $.ajax({
-        url: "api.file.php",
+        url: "api.php",
         method: "post",
         data: data,
         success: success,
@@ -134,41 +126,10 @@ function file_ajax_delete(element) {
     });
 }
 
-function file_actions(path, data) {
-    // data(entries[], int act)
-    const routeMap = {
-        0: "copy_multi.php",
-        1: "move_multi.php",
-        2: "delete_multi.php",
-        3: "zip_multi.php",
-        4: "chmod_multi.php",
-        5: "rename_multi.php",
-    };
-    const route = routeMap[data.act] || "copy_multi.php";
-    const actionUrl = route + "?dir=" + path;
-    const $form = $("<form>", {
-        method: "POST",
-        action: actionUrl,
-    }).css("display", "none");
-
-    $.each(data.entries, function (i, value) {
-        $("<input>", {
-            type: "hidden",
-            name: "entry[]",
-            value: value,
-        }).appendTo($form);
-    });
-
-    // no need to send option when using dedicated endpoints
-
-    $("body").append($form);
-    $form.submit();
-}
-
 $(".btn-calc-size").on("click", function () {
     let e = $(this);
     file_ajax(e.data(), function (res) {
-        e.html(res.msg);
+        e.html(res.data.total_size_readable);
     });
 });
 

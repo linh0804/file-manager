@@ -110,7 +110,7 @@ if ($count <= 0) {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name"><b>' . get_file_link($file->getPathname()) . '</b></td>
-                <td><span data-action="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
+                <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
                 <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
@@ -159,25 +159,12 @@ if ($count <= 0) {
 
 <script>
     $('#file-select-all').on('change', function () {
-        on_check_item();
-
-        if (this.checked) {
-            //$('#file-select-opt').show();
-        } else {
-          //  $('#file-select-opt').hide();
+        for (let i = 0; i < document.form.elements.length; ++i) {
+            if (document.form.elements[i].type === "checkbox") {
+                document.form.elements[i].checked = document.form.all.checked === true;
+            }
         }
     });
-
-/*
-    $('input[name="entry[]"]').on('change', function() {
-        if ($('input[name="entry[]"]:checked').length > 0) {
-            $('#file-select-opt').show();
-        } else {
-           $('#file-select-opt').hide();
-           $('#file-select-all').prop('checked', false);
-        }
-    });
-    */
 </script>
 
 </form>

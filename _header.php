@@ -16,14 +16,17 @@ $menuToggle = '';
     <link rel="icon" type="image/x-icon" href="icon/icon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
 
+    <script src="https://static.ngatngay.net/js/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="https://static.ngatngay.net/js/jquery-ui/jquery-ui.min.css">
+    <script src="https://static.ngatngay.net/js/jquery-ui/jquery-ui.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
-    
-    <script src="https://static.ngatngay.net/js/jquery/jquery.js"></script>
+   
     <script src="https://static.ngatngay.net/js/nightmare/nightmare.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     <script src="<?= asset('js/script.js') ?>" defer></script>
 </head>
 

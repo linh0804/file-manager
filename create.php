@@ -56,7 +56,9 @@ echo '<div class="list">
         <input type="hidden" name="submit" value="1" />
     </form>
 </div>';
+?>
 
+<?php
 show_back();
 
 require '_footer.php';

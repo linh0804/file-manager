@@ -847,7 +847,7 @@ function get_file_link($path)
         if (strtolower($file->getFilename()) == 'error_log' || $isEdit) {
             $fileLink = 'edit_text.php?path=' . base64_encode($file->getPathname());
         } elseif (in_array($file->getExtension(), $formats['zip'])) {
-            $fileLink = 'file_unzip.php?dir=' . $fileDir . '&name=' . $name . $pages['paramater_1'];
+            $fileLink = 'unzip.php?path=' . $file->getPathname() . $pages['paramater_1'];
         } else {
             $fileLink = 'rename.php?path=' . $path . $pages['paramater_1'];
         }

@@ -11,17 +11,15 @@
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/lang-json": "^6.0.2",
     "@codemirror/lang-php": "^6.0.2",
-    "@codemirror/lang-sass": "^6.0.2",
     "@codemirror/lang-sql": "^6.10.0",
     "@codemirror/language": "^6.11.3",
     "@codemirror/search": "^6.5.11",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "6.38.6",
+    "@ddietr/codemirror-themes": "^1.5.2",
     "@lezer/highlight": "^1.2.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "cm6-theme-material-dark": "^0.2.0",
-    "codemirror": "^6.0.2",
     "rollup": "^4.52.5"
   },
   "packageManager": "pnpm@10.19.0"

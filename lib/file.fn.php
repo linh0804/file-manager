@@ -78,7 +78,7 @@ function print_actions($filename)
               <li><img src="icon/unzip.png"/> <a href="unzip.php?path=' . $path . $pages['paramater_1'] . '">Giải nén</a></li>';
         } elseif (is_format_text($name) || is_format_unknown($name)) {
             echo '<li><img src="icon/edit.png"/> <a href="edit_text.php?path=' . base64_encode($path) . '">Sửa văn bản</a></li>
-              <li><img src="icon/edit_text_line.png"/> <a href="edit_code.php?dir=' . $dir . '&name=' . basename($name) . '">Sửa code</a></li>
+              <li><img src="icon/edit_text_line.png"/> <a href="edit_code.php?path=' . $path . '">Sửa code</a></li>
               <li><img src="icon/edit_text_line.png"/> <a href="edit_text_line.php?dir=' . $dir . '&name=' . basename($name) . $pages['paramater_1'] . '">Sửa theo dòng</a></li>
               <li><img src="icon/columns.png"/> <a href="view_code.php?dir=' . $dir . '&name=' . basename($name) . '">Xem code</a></li>';
         }

@@ -10,10 +10,6 @@ define('INDEX', true);
 
 require '_init.php';
 
-if (!isLogin) {
-    redirect('login.php');
-}
-
 $path = get_path();
 $path = $path ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
 $title = 'Danh sách - ' . basename($path);

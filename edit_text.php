@@ -40,7 +40,7 @@ if (!is_format_text($name) && !is_format_unknown($name)) {
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong><hr/>
         </div>
         <div>
-            <a href="edit_code.php?dir=' . $dir . '&name=' . $name . '">
+            <a href="edit_code.php?path=' . $path . '">
                 <button class="button">Chế độ sửa code</button>
             </a><hr />
         </div>

@@ -1,39 +1,26 @@
-import { EditorView } from "codemirror"
-import { EditorState, Compartment } from "@codemirror/state"
+// core
+import { EditorView } from "@codemirror/view";
+import { EditorState, Compartment } from "@codemirror/state";
 
-import {
-    keymap,
-    lineNumbers,
-    highlightActiveLine,
-    highlightSpecialChars,
-    highlightActiveLineGutter,
-    drawSelection,
-    dropCursor
-} from "@codemirror/view"
-
-import { history, historyKeymap } from "@codemirror/commands"
-
-import {
-    bracketMatching,
-    foldGutter,
-    indentService
-} from "@codemirror/language"
-
-import { highlightSelectionMatches } from "@codemirror/search"
+// ext
+import { keymap, lineNumbers, highlightActiveLine, highlightSpecialChars, highlightActiveLineGutter } from "@codemirror/view";
+import { history, historyKeymap } from "@codemirror/commands";
+import { bracketMatching } from "@codemirror/language";
+import { highlightSelectionMatches } from "@codemirror/search";
 
 // theme
-import { materialDark } from "cm6-theme-material-dark"
+import { githubDark } from "@ddietr/codemirror-themes/github-dark";
 
 // lang
-import { css } from "@codemirror/lang-css"
-import { html } from "@codemirror/lang-html"
-import { javascript } from "@codemirror/lang-javascript"
-import { json } from "@codemirror/lang-json"
-import { php } from "@codemirror/lang-php"
-import { sql } from "@codemirror/lang-sql"
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
+import { php } from "@codemirror/lang-php";
+import { sql } from "@codemirror/lang-sql";
 
-const languageConf = new Compartment()
-const lineWrapConf = new Compartment()
+const languageConf = new Compartment();
+const lineWrapConf = new Compartment();
 
 const editor = new EditorView({
     state: EditorState.create({
@@ -46,19 +33,17 @@ const editor = new EditorView({
             highlightSelectionMatches(),
 
             history(),
-            drawSelection(),
-            dropCursor(),
+            // drawSelection(), // Đã xoá
 
-            foldGutter(),
+            //foldGutter(),
 
             lineNumbers(),
             highlightActiveLineGutter(),
             highlightActiveLine(),
             highlightSpecialChars(),
 
-            indentService.of(undefined),
+            //indentService.of(undefined),
             keymap.of([
-                /*
                 {
                     key: "Tab",
                     preventDefault: true,
@@ -68,20 +53,19 @@ const editor = new EditorView({
                             { scrollIntoView: true, userEvent: "input" }
                         ))
 
-                        return true
+                        return true;
                     }
                 },
-                */
-                ...historyKeymap
+                ...historyKeymap,
             ]),
 
             lineWrapConf.of([]),
             languageConf.of([]),
 
-            materialDark
-        ]    
+            githubDark,
+        ],
     }),
-    parent: document.querySelector("#editor")
+    parent: document.querySelector("#editor"),
 });
 
 // doi ngon ngu
@@ -90,31 +74,39 @@ codeLangElement.addEventListener("change", function () {
     var mode = codeLangElement.value;
 
     editor.dispatch({
-        effects: languageConf.reconfigure(
-            getLang(mode)
-        )
-    })
+        effects: languageConf.reconfigure(getLang(mode)),
+    });
 });
 
 // ngon ngu mac dinh
 editor.dispatch({
-    effects: languageConf.reconfigure(
-        getLang(codeLangElement.value)
-    )
-})
+    effects: languageConf.reconfigure(getLang(codeLangElement.value)),
+});
 
 function getLang(mode) {
     let lang = [];
 
     switch (mode) {
-        case 'html': lang = html(); break;
-        case 'css': lang = css(); break;
+        case "html":
+            lang = html();
+            break;
+        case "css":
+            lang = css();
+            break;
 
-        case 'javascript': lang = javascript(); break;
-        case 'json': lang = json(); break;
+        case "javascript":
+            lang = javascript();
+            break;
+        case "json":
+            lang = json();
+            break;
 
-        case 'php': lang = php(); break;
-        case 'sql': lang = sql(); break;
+        case "php":
+            lang = php();
+            break;
+        case "sql":
+            lang = sql();
+            break;
     }
 
     return lang;
@@ -130,8 +122,8 @@ codeWrapElement.addEventListener("change", function () {
     }
 
     editor.dispatch({
-        effects: lineWrapConf.reconfigure(wrap)
-    })
+        effects: lineWrapConf.reconfigure(wrap),
+    });
 });
 
 // xuat bien toan cau

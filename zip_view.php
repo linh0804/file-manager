@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 use SplFileInfo;
@@ -109,7 +110,7 @@ if (!in_array($format, array('zip', 'jar'))) {
 
         if ($path != null && strpos((string) $path, '/') !== false) {
             $array = explode('/', (string) preg_replace('|^/(.*?)$|', '\1', (string) $path));
-            $html = '/<a href="file_viewzip.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>';
+            $html = '/<a href="zip_view.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>';
             $item = null;
             $url = null;
 
@@ -122,7 +123,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                 }
 
                 if ($key < count($array) - 1)
-                    $html .= '/<a href="file_viewzip.php?path=' . $file->getPathname() . '&path_zip=' . rawurlencode($url . $item) . $pages['paramater_1'] . '">';
+                    $html .= '/<a href="zip_view.php?path=' . $file->getPathname() . '&path_zip=' . rawurlencode($url . $item) . $pages['paramater_1'] . '">';
                 else
                     $html .= '/';
 
@@ -140,7 +141,7 @@ if (!in_array($format, array('zip', 'jar'))) {
             if ($path == null)
                 $html = '/' . $root;
             else
-                $html = '/<a href="file_viewzip.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>/' . $path;
+                $html = '/<a href="zip_view.php?path=' . $file->getPathname() . $pages['paramater_1'] . '">' . $root . '</a>/' . $path;
         }
 
         echo '<div class="title">' . $html . '</div>';
@@ -153,9 +154,9 @@ if (!in_array($format, array('zip', 'jar'))) {
             $back = strrchr((string) $path, '/');
 
             if ($back !== false)
-                $back = 'file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . '&path=' . rawurlencode(substr((string) $path, 0, strlen((string) $path) - strlen($back))) . $pages['paramater_1'];
+                $back = 'zip_view.php?path=' . $dir . '/' . $name . '&path_zip=' . rawurlencode(substr((string) $path, 0, strlen((string) $path) - strlen($back))) . $pages['paramater_1'];
             else
-                $back = 'file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . $pages['paramater_1'];
+                $back = 'zip_view.php?path=' . $dir . '/' . $name . $pages['paramater_1'];
 
             echo '<li class="normal">
                 <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
@@ -175,7 +176,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     echo '<li class="folder">
                         <div>
                             <img src="icon/folder.png" style="margin-left: 5px"/>
-                            <a href="file_viewzip.php?dir=' . $dirEncode . '&name=' . $name . '&path=' . $pathEncode . $pages['paramater_1'] . '">' . $value['name'] . '</a>
+                            <a href="zip_view.php?path=' . $dir . '/' . $name . '&path_zip=' . $pathEncode . $pages['paramater_1'] . '">' . $value['name'] . '</a>
                         </div>
                     </li>';
                 } else {

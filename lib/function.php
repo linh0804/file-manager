@@ -916,15 +916,15 @@ function check_path($path, $type = '')
 
     $title = 'Lỗi - ' . $path;
 
-    require 'header.php';
+    require rootPath . '/_header.php';
 
-    echo '<div class="title">' . printPath($path, true) . '</div>';
+    echo '<div class="title">' . print_path($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
     echo '<br>';
 
     show_back();
 
-    require 'footer.php';
+    require rootPath . '/_footer.php';
     exit;
 }
 

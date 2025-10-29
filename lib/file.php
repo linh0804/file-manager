@@ -110,7 +110,7 @@ function print_actions($filename)
 
     if ($file->isFile()) {
         if (in_array($ext, $formats['zip'])) {
-            echo '<li><img src="icon/unzip.png"/> <a href="file_viewzip.php?path=' . $path . $pages['paramater_1'] . '">Xem</a></li>
+            echo '<li><img src="icon/unzip.png"/> <a href="zip_view.php?path=' . $path . $pages['paramater_1'] . '">Xem</a></li>
               <li><img src="icon/unzip.png"/> <a href="unzip.php?path=' . $path . $pages['paramater_1'] . '">Giải nén</a></li>';
         } elseif (is_format_text($name) || is_format_unknown($name)) {
             echo '<li><img src="icon/edit.png"/> <a href="edit_text.php?path=' . base64_encode($path) . '">Sửa văn bản</a></li>

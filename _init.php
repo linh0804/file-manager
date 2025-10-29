@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 use ngatngay\http\request;
@@ -260,28 +261,6 @@ if (
     //redirect('index.php?not');
 }
 
-function is_path_not_permission($path, $isUseName = false): bool
-{
-    if (!empty($path)) {
-        $reg  = $isUseName ? NAME_DIRECTORY_INSTALL_FILE_MANAGER : PATH_FILE_MANAGER;
-        $reg  = $reg != null ? strtolower($reg) : null;
-        $path = str_replace('\\', '/', $path);
-        $path = strtolower($path);
-
-        if (preg_match('#^' . $reg . '$#si', $path)) {
-            return true;
-        } elseif (preg_match('#^' . $reg . '/(^\/+|^\\+)(.*?)$#si', $path)) {
-            return true;
-        } elseif (preg_match('#^' . $reg . '/(.*?)$#si', $path)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    return false;
-}
-
 unset($script);
 
 // Kiểm tra thư mục cài đặt
@@ -293,16 +272,6 @@ if (IS_INSTALL_ROOT_DIRECTORY) {
         <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!</div>';
     require_once '_footer.php';
     exit();
-}
-
-function encode_path($path)
-{
-    return base64_encode($path);
-}
-function decode_path($path)
-{
-    //$path =
-    $path = str_replace('\\', '/', $path);
 }
 
 $path = rawurldecode((string) request::get('path'));

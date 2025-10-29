@@ -1,5 +1,8 @@
 <?php
+
 namespace app;
+
+defined('ACCESS') or exit('Not access');
 
 // auth
 function get_login_fail()

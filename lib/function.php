@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 use RecursiveCallbackFilterIterator;
@@ -11,6 +12,8 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use FilesystemIterator;
+
+defined('ACCESS') or exit('Not access');
 
 function config()
 {
@@ -891,29 +894,37 @@ function check_path($path, $type = '')
 {
     extract($GLOBALS);
 
-    if (@file_exists($path)) {
-        return;
-    }
-
     if ($type == 'file') {
         $name = 'Tập tin';
+        
+        if (@is_file($path)) {
+            return;
+        }
     } else if ($type == 'folder') {
         $name = 'Thư mục';
+        
+        if (@is_dir($path)) {
+            return;
+        }
     } else {
         $name = 'Đường dẫn';
+        
+        if (@file_exists($path)) {
+            return;
+        }
     }
 
     $title = 'Lỗi - ' . $path;
 
-    require '_header.php';
+    require 'header.php';
 
-    echo '<div class="title">' . print_path($path, true) . '</div>';
+    echo '<div class="title">' . printPath($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
     echo '<br>';
 
     show_back();
 
-    require '_footer.php';
+    require 'footer.php';
     exit;
 }
 
@@ -968,6 +979,6 @@ function form_entries() {
     return $html;
 }
 
-require 'auth.fn.php';
-require 'bookmark.fn.php';
-require 'file.fn.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/bookmark.php';
+require __DIR__ . '/file.php';

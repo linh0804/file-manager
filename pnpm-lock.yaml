@@ -44,9 +44,7 @@ importers:
       '@ddietr/codemirror-themes':
         specifier: ^1.5.2
         version: 1.5.2
-      '@lezer/highlight':
-        specifier: ^1.2.3
-        version: 1.2.3
+    devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.3
         version: 16.0.3(rollup@4.52.5)

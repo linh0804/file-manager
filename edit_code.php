@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 use SplFileInfo;
@@ -66,22 +67,9 @@ $file = new SplFileInfo($path);
             height: 100%;
         }
         
-        .jjcm-gutters {
-            border-right: 1px solid #606f7a !important;
+        .cm-editor {
+            font-size: 13px;
         }
-        
-        /*
-        .cm-focused .cm-selectionBackground,
-        .cm-selectionBackground,
-        .cm-content ::selection {
-            background-color: #4a4a4a !important;
-        }
-
-        .cm-activeLine.cm-line::selection,
-        .cm-activeLine.cm-line ::selection {
-            background-color: #8a8a8a !important;
-        }
-        */
     </style>
 
     <div class="list">

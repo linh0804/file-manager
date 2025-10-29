@@ -3,10 +3,10 @@ import { EditorView } from "@codemirror/view";
 import { EditorState, Compartment } from "@codemirror/state";
 
 // ext
-import { keymap, lineNumbers, highlightActiveLine, highlightSpecialChars, highlightActiveLineGutter } from "@codemirror/view";
+import { keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter } from "@codemirror/view";
 import { history, historyKeymap } from "@codemirror/commands";
 import { bracketMatching } from "@codemirror/language";
-import { highlightSelectionMatches } from "@codemirror/search";
+import { highlightSelectionMatches } from "@codemirror/search"
 
 // theme
 import { githubDark } from "@ddietr/codemirror-themes/github-dark";
@@ -23,26 +23,25 @@ const languageConf = new Compartment();
 const lineWrapConf = new Compartment();
 
 const editor = new EditorView({
+    parent: document.querySelector("#editor"),
     state: EditorState.create({
         doc: document.querySelector("#content").value,
-
+        tabSize: 4,
         extensions: [
-            EditorState.allowMultipleSelections.of(false),
-
-            bracketMatching(),
+            lineNumbers(),
+            highlightActiveLine(),
+            highlightActiveLineGutter(),
             highlightSelectionMatches(),
 
             history(),
-            // drawSelection(), // Đã xoá
+            bracketMatching(),
+            EditorState.allowMultipleSelections.of(false),
 
-            //foldGutter(),
+            lineWrapConf.of([]),
+            languageConf.of([]),
 
-            lineNumbers(),
-            highlightActiveLineGutter(),
-            highlightActiveLine(),
-            highlightSpecialChars(),
-
-            //indentService.of(undefined),
+            githubDark,
+            
             keymap.of([
                 {
                     key: "Tab",
@@ -58,14 +57,8 @@ const editor = new EditorView({
                 },
                 ...historyKeymap,
             ]),
-
-            lineWrapConf.of([]),
-            languageConf.of([]),
-
-            githubDark,
         ],
-    }),
-    parent: document.querySelector("#editor"),
+    })
 });
 
 // doi ngon ngu

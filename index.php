@@ -107,7 +107,7 @@ if ($count <= 0) {
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name"><b>' . get_file_link($file->getPathname()) . '</b></td>
                 <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
-                <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
+                <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
@@ -115,7 +115,7 @@ if ($count <= 0) {
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
                 <td class="name">' . get_file_link($file->getPathname()) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
-                <td>' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
+                <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }

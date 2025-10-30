@@ -18,6 +18,12 @@ check_path($path, 'file');
 
 require '_header.php';
 
+echo '<style>
+    #code_check_message, #code_check_highlight {
+        display:none;
+    }
+</style>';
+
 echo '<div class="title">' . $title . '</div>';
 
 if (!is_format_text($name) && !is_format_unknown($name)) {
@@ -244,12 +250,6 @@ console.log(typeof local_storage.get('file_manager.edit.wrap'));
         })
     </script>
     
-    <style>
-        #code_check_message, #code_check_highlight {
-            display:none;
-        }
-    </style>
-
 <?php
     print_actions($file);
 }

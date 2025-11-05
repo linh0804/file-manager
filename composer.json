@@ -9,6 +9,9 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4"
+        },
+        "allow-plugins": {
+            "ngatngay/php-composer-plugin": true
         }
     }
 }

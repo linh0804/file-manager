@@ -74,7 +74,7 @@ if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $na
         pre code.hljs {
             line-height: 1.4;
             text-align: left;
-            font-size: 14px !important;
+            font-size: 13px !important;
             padding: 0 !important;
             padding-left: 4px !important;
             margin: 0;
@@ -83,7 +83,7 @@ if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $na
         .line {
             line-height: 1.4;
             font-family: monospace;
-            font-size:14px;
+            font-size:13px !important;
             padding-right: 5px;
             display: block;
             text-align: right; 

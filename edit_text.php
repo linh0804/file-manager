@@ -17,36 +17,37 @@ $title = 'Sửa tập tin';
 check_path($path, 'file');
 
 require '_header.php';
-
-echo '<style>
+?>
+<style>
     #code_check_message, #code_check_highlight {
         display:none;
     }
-</style>';
+</style>
 
-echo '<div class="title">' . $title . '</div>';
+<div class="title"><?= $title ?></div>
 
-if (!is_format_text($name) && !is_format_unknown($name)) {
-    echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
+<?php if (!is_format_text($name) && !is_format_unknown($name)): ?>
+    <div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="index.php?path=' . $dirEncode . $pages['paramater_1'] . '">Danh sách</a></li>
-    </ul>';
-} else {
+        <li><img src="icon/list.png"/> <a href="index.php?path=<?= $dirEncode . $pages['paramater_1'] ?>">Danh sách</a></li>
+    </ul>
+<?php else: ?>
+    <?php
     $total = 0;
     $dir = process_directory($dir);
     $content = file_get_contents($path);
     $isExecute = is_function_exec_enable();
     $actionEdit = 'edit_api.php?path=' . base64_encode($path);
     edit_recent_add($path);
-
-    echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . print_path($dir, true) . '</span><hr/>
+    ?>
+    <div class="list">
+        <span class="bull">&bull; </span><span><?= print_path($dir, true) ?></span><hr/>
         <div class="ellipsis break-word">
-            <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong><hr/>
+            <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
         </div>
         <div>
-            <a href="edit_code.php?path=' . $path . '">
+            <a href="edit_code.php?path=<?= $path ?>">
                 <button class="button">Chế độ sửa code</button>
             </a><hr />
         </div>
@@ -54,22 +55,26 @@ if (!is_format_text($name) && !is_format_unknown($name)) {
             <span class="bull">&bull; </span>Nội dung:
 
             <div class="parent_box_edit">
-                <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content">'. PHP_EOL . htmlspecialchars($content) . '</textarea>
+                <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
             </div>
             
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
-                <span style="margin-right: 12px"></span>'.
-                ($isExecute && strtolower((string) get_format($name)) == 'php' ? '<label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>' : '') . '
-                <div style="display: inline-block; float: right">'
-                    . (able_format_code($file->getExtension()) ? '<input type="button" id="code_highlight" value="Format"> ' : '')
-                    . '<label><input type="checkbox" id="code_wrap" /> Wrap</label>
+                <span style="margin-right: 12px"></span>
+                <?php if ($isExecute && strtolower((string) get_format($name)) == 'php'): ?>
+                    <label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>
+                <?php endif; ?>
+                <div style="display: inline-block; float: right">
+                    <?php if (able_format_code($file->getExtension())): ?>
+                        <input type="button" id="code_highlight" value="Format"> 
+                    <?php endif; ?>
+                    <label><input type="checkbox" id="code_wrap" /> Wrap</label>
                 </div>
             </div>
-        </form>';
-    echo '</div>';
+        </form>
+    </div>
     
-    echo '<div class="list">
+    <div class="list">
         <div class="search_replace search">
                 <span class="bull">&bull; </span>Tìm kiếm:<br/>
                 <input type="text" id="searchInput" name="searchInput" value=""/>
@@ -82,12 +87,11 @@ if (!is_format_text($name) && !is_format_unknown($name)) {
                 <button class="button" onclick="search_text()">Tìm kiếm</button>
                 <button class="button" onclick="replace_text()">Thay thế</button>
             </div>
-        </div>';
+        </div>
     
-    echo '<div id="code_check_message" class="list"></div>';
- ?>
+    <div id="code_check_message" class="list"></div>
     
-    <script>        
+    <script>
         var local_storage = nightmare.local_storage;
 
         const codeCheckMessageElement = document.getElementById("code_check_message");
@@ -133,7 +137,7 @@ if (!is_format_text($name) && !is_format_unknown($name)) {
             }
             //alert(typeof searchValue)
         
-            const searchValueR = searchValue.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const searchValueR = searchValue.replace(/[-\/\\^$*+?.()|[\\]{}]/g, '\\$&');
             const regex = new RegExp(searchValueR, "g");
             const matches = content.match(regex);
             const count = matches ? matches.length : 0;
@@ -252,6 +256,6 @@ console.log(typeof local_storage.get('file_manager.edit.wrap'));
     
 <?php
     print_actions($file);
-}
+endif;
 
 require '_footer.php';

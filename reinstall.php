@@ -2,7 +2,7 @@
 
 namespace app;
 
-use ngatngay\zip;
+use nightmare\zip;
 
 define('ACCESS', true);
 

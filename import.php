@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-use ngatngay\http\curl;
+use nightmare\http\curl;
 
 define('ACCESS', true);
 

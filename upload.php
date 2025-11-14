@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-use function ngatngay\response;
+use nightmare\http\response;
 
 define('ACCESS', true);
 
@@ -27,7 +27,7 @@ if (isset($_FILES['file'])) {
         }
     }   
     
-    response($data)->send();
+    (new response($data))->send();
 }
 
 $action = 'upload.php?path=' . $path;

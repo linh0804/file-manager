@@ -4,10 +4,10 @@ namespace app;
 
 use RecursiveCallbackFilterIterator;
 use ZipArchive;
-use function ngatngay\response as response2;
-use ngatngay\config;
-use ngatngay\fs;
-use ngatngay\zip;
+use nightmare\http\http;
+use nightmare\config;
+use nightmare\fs;
+use nightmare\zip;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -31,7 +31,7 @@ function config()
 
 function response(...$args)
 {
-    return response2(...$args);
+    return http::response(...$args);
 }
 
 function is_app_file($dir)

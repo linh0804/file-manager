@@ -2,7 +2,7 @@
 
 namespace app;
 
-use ngatngay\http\request;
+use nightmare\http\request;
 use SplFileInfo;
 
 define('ACCESS', true);

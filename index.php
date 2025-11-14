@@ -2,7 +2,7 @@
 
 namespace app;
 
-use ngatngay\fs;
+use nightmare\fs;
 use SplFileInfo;
 
 define('ACCESS', true);

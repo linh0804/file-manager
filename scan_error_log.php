@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-use ngatngay\fs;
+use nightmare\fs;
 
 define('ACCESS', true);
 

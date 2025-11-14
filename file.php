@@ -2,7 +2,7 @@
 
 namespace app;
 
-use ngatngay\http\request;
+use nightmare\http\request;
 use SplFileInfo;
 
 define('ACCESS', true);
@@ -55,8 +55,10 @@ if ($file->isDir()) {
 
 echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($file->getOwner())['name']) . '</span></li>';
 echo '<li><span class="bull">&bull; </span><strong>Chmod</strong>: <span>' . get_chmod($file) . '</span></li>';
-echo '<li><span class="bull">&bull; </span><strong>Ngày sửa</strong>: <span>' . @date('d.m.Y - H:i', filemtime($file)) . '</span></li>';
-    
+
+echo '<li><span class="bull">&bull; </span><strong>Ngày tạo</strong>: <span>' . date('d.m.Y - H:i:s', $file->getCTime()) . '</span></li>';
+echo '<li><span class="bull">&bull; </span><strong>Ngày sửa</strong>: <span>' . date('d.m.Y - H:i:s', $file->getMTime()) . '</span></li>';
+
 echo '</ul>';
 
 print_actions($path);

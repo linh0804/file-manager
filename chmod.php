@@ -2,7 +2,7 @@
 
 namespace app;
 
-use ngatngay\http\request;
+use nightmare\http\request;
 
 define('ACCESS', true);
 

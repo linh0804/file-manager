@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 defined('ACCESS') or exit('Not access');
@@ -33,7 +34,7 @@ $menuToggle = '';
 <body>
 
 <?php
-    if (isLogin) {
+    if (IS_LOGIN) {
     	if (isset($_GET['dev'])) {
     	    setcookie('dev', 1, time() + 86400 + 365);
     	}
@@ -42,18 +43,18 @@ $menuToggle = '';
     	}
     }
 ?>
-<?php if (isLogin && isset($_COOKIE['dev'])) { ?>
+<?php if (IS_LOGIN && isset($_COOKIE['dev'])) { ?>
 	<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
 <?php } ?>
 
 <div id="header">
     <ul>
-        <?php if (isLogin) { ?>
+        <?php if (IS_LOGIN) { ?>
             <button id="nav-menu">&#9776;</button>
         <?php } ?>
         <li><a href="index.php"><img src="icon/home.png" /></a></li>
-        <?php if (isLogin) { ?>
+        <?php if (IS_LOGIN) { ?>
             <li><a href="db/"><img src="icon/database.png"/></a></li>
             <li><a href="setting.php"><img src="icon/setting.png" /></a></li>
             <li><a href="logout.php"><img src="icon/exit.png" /></a></li>
@@ -65,7 +66,7 @@ $menuToggle = '';
 
 <div id="container">
 
-<?php if (isLogin && version_compare((string) remoteVersion, (string) localVersion, '>')) { ?>
+<?php if (IS_LOGIN && HAS_NEW_VERSION) { ?>
     <div class="tips" style="margin-top: 0 !important">
         <img src="icon/tips.png" alt="">
         Có phiên bản mới! <a href="reinstall.php"><span style="font-weight: bold; font-style: italic">Cập nhật</span></a> ngay!

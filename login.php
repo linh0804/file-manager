@@ -6,7 +6,7 @@ define('LOGIN', true);
 
 require '_init.php';
 
-if (isLogin) {
+if (IS_LOGIN) {
     redirect('index.php');
 }
 

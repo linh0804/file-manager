@@ -5,7 +5,7 @@ define('ACCESS', true);
 
     require_once '_init.php';
 
-    if (isLogin) {
+    if (IS_LOGIN) {
         $title = 'Sao chép thư mục';
 
         require_once '_header.php';

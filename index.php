@@ -168,12 +168,12 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a href="create.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="upload.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/upload.png"/> Tải lên</a></li>
-    <li><a href="import.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
-    <li><a href="find_in_folder.php?path=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
-    <li><a href="scan_error_log.php?dir=<?= $path . '&' . referer_qs ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
-    <li><a href="#" class="copyButton" data-copy="<?= baseUrl . '/webdav.php/' . ltrim(htmlspecialchars((string) $path), '/') ?>">&bull; Webdav</a></li>
+    <li><a href="create.php?path=<?= $path . '&' . REFERER_QS ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="upload.php?path=<?= $path . '&' . REFERER_QS ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="import.php?dir=<?= $path . '&' . REFERER_QS ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="find_in_folder.php?path=<?= $path . '&' . REFERER_QS ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="scan_error_log.php?dir=<?= $path . '&' . REFERER_QS ?>"><img src="icon/search.png"/> Tìm <b style="color:red">error_log</b></a></li>
+    <li><a href="#" class="copyButton" data-copy="<?= BASE_URL . '/webdav.php/' . ltrim(htmlspecialchars((string) $path), '/') ?>">&bull; Webdav</a></li>
     <li><a href="file.php?path=<?= $path ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 

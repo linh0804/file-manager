@@ -39,7 +39,7 @@ $thisver = __DIR__ .'/tmp/thisversion';
 
 echo '<div class="title">' . $title . '</div>';
 
-$remoteVersion = get_new_version();
+$remoteVersion = false;
 
 if ($remoteVersion === false) {
     echo '<div class="list">Lỗi máy chủ cập nhật!</div>';
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 } else {
     @remove_dir(__DIR__ .'/tmp/'. NAME_DIRECTORY_INSTALL_FILE_MANAGER);
 
-    if (!has_new_version()) {
+    if (!HAS_NEW_VERSION) {
         echo '<div class="list">
             Bạn đang sử dụng phiên bản manager mới nhất!<br />
         </div>';

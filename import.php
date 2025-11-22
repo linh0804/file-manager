@@ -7,7 +7,7 @@ define('ACCESS', true);
 
 require '_init.php';
 
-if (!isLogin) {
+if (!IS_LOGIN) {
     redirect('login.php');
 }
 

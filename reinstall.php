@@ -14,7 +14,7 @@ $error = '';
 if (isset($_POST['submit'])) {
     $file = 'tmp/manager-reinstall.zip';
 
-    if (import(remoteFile, $file)) {
+    if (import(REMOTE_FILE_URL, $file)) {
         $zip = new zip;
 
         if ($zip->open($file) === true) {

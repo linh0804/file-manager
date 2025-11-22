@@ -125,7 +125,7 @@ echo '<li>
 </li>';
 echo '</ul>';
 
-echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(rootPath) . '</div>';
+echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(ROOT_PATH) . '</div>';
 
 echo '<a href="javascript:history.back()" style="">
     <img src="icon/back.png"> 

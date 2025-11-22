@@ -1,6 +1,6 @@
 parameters:
-    phpVersion: 80100
-    level: 2
+    phpVersion: 70400
+    level: 3
     paths:
         - .
     excludePaths:
@@ -16,3 +16,7 @@ parameters:
             identifier: variable.undefined
         -
             identifier: constant.notFound
+        -
+            identifier: smaller.invalid
+        -
+            identifier: offsetAccess.notFound

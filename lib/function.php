@@ -5,6 +5,7 @@ namespace app;
 use RecursiveCallbackFilterIterator;
 use ZipArchive;
 use nightmare\http\http;
+use nightmare\http\curl;
 use nightmare\config;
 use nightmare\fs;
 use nightmare\zip;
@@ -22,7 +23,7 @@ function config()
     if ($instance === null) {
         $instance = new config([
             'driver' => 'php_file',
-            'file' => rootPath . '/.config.php'
+            'file' => ROOT_PATH . '/.config.php'
         ]);
     }
 
@@ -36,7 +37,7 @@ function response(...$args)
 
 function is_app_file($dir)
 {
-    return stripos((string) $dir, rootPath) === 0;
+    return stripos((string) $dir, ROOT_PATH) === 0;
 }
 function is_app_dir($dir)
 {
@@ -91,27 +92,16 @@ function create_config(
     return true;
 }
 
-function get_new_version()
-{
-    $last_update = (int) config()->get('last_update');
-    $in_update = time() > ($last_update + 3600 * 6);
-
-    if (!$in_update && !defined('alwaysCheckUpdate')) {
+function is_in_root() {
+    if (empty($_SERVER['DOCUMENT_ROOT'])) {
         return false;
     }
 
-    $remoteVersion = json_decode(@file_get_contents(remoteVersionFile), true);
-    config()->set('last_update', time());
+    $document_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
+    $current_dir = rtrim(ROOT_PATH, '/');
 
-    return is_array($remoteVersion) && isset($remoteVersion['message'])
-        ? $remoteVersion
-        : false;
+    return $current_dir === $document_root;
 }
-function has_new_version()
-{
-    return localVersion !== remoteVersion;
-}
-
 
 function get_password_encode($pass)
 {
@@ -172,6 +162,13 @@ function str_replace_first($needle, $replace, $haystack)
 function is_url($url)
 {
     return filter_var($url, FILTER_VALIDATE_URL);
+}
+
+function download_file($filename, $url) {
+    $curl = new curl();
+    $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
+    $curl->setOpt(CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36');
+    return $curl->download($url, $filename);
 }
 
 
@@ -778,7 +775,7 @@ function get_icon($type, $name)
     if ($type === 'folder') {
         $icon = 'folder';
         $nameIcon = trim((string) $name, '.');
-        if (in_array($nameIcon . '.svg', icons['folders'])) {
+        if (in_array($nameIcon . '.svg', ICONS['folders'])) {
             $icon = $nameIcon;
         }
 
@@ -788,7 +785,7 @@ function get_icon($type, $name)
     if ($type === 'file') {
         $icon = 'file';
 
-        if (in_array($file->getExtension() . '.svg', icons['files'])) {
+        if (in_array($file->getExtension() . '.svg', ICONS['files'])) {
             $icon = $file->getExtension();
         } elseif (in_array($file->getExtension(), $formats['archive'])) {
             $icon = 'archive';
@@ -916,7 +913,7 @@ function check_path($path, $type = '')
 
     $title = 'Lỗi - ' . $path;
 
-    require rootPath . '/_header.php';
+    require ROOT_PATH . '/_header.php';
 
     echo '<div class="title">' . print_path($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
@@ -924,15 +921,15 @@ function check_path($path, $type = '')
 
     show_back();
 
-    require rootPath . '/_footer.php';
+    require ROOT_PATH . '/_footer.php';
     exit;
 }
 
 function load_json_remote(string $url, string $path = '') {
     if ($path) {
-        $cache = rootPath . '/' . trim($path, '/');
+        $cache = ROOT_PATH . '/' . trim($path, '/');
     } else {
-        $cache = rootPath . '/tmp/' . md5($url);
+        $cache = ROOT_PATH . '/tmp/' . md5($url);
     }
 
     if (!file_exists($cache) || !filesize($cache)) {

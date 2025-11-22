@@ -2,7 +2,9 @@
 
 namespace app;
 
+use nightmare\http\http;
 use nightmare\http\request;
+use nightmare\json;
 use SplFileInfo;
 
 defined('ACCESS') or exit('Not access');
@@ -22,40 +24,25 @@ header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
 
-// Check require function
-{
-    $require = [
-        'curl_init',
-        'filter_var',
-        'json_encode',
-        'json_decode',
-        'getenv'
-    ];
+// constants
+define('ROOT_PATH', __DIR__);
+define('TMP_PATH', __DIR__ . '/tmp');
 
-    foreach ($require as $function) {
-        if (!function_exists($function)) {
-            exit($function . '() not found');
-        }
-    }
-}
+define('IS_BUILTIN_SERVER', php_sapi_name() === 'cli-server');
 
-define('rootPath', __DIR__);
+define('IS_HTTPS', isset($_SERVER['HTTPS']));
+define('REQUEST_SCHEME', IS_HTTPS ? 'https' : 'http');
 
-define('isBuiltinServer', php_sapi_name() === 'cli-server');
-
-define('isHttps', isset($_SERVER['HTTPS']));
-define('requestScheme', isHttps ? 'https' : 'http');
-
-define('baseFolder', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
-define('baseUrl', requestScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . (isBuiltinServer ? '' : '/' . baseFolder));
+define('BASE_FOLDER', basename(dirname($_SERVER['SCRIPT_FILENAME'])));
+define('BASE_URL', REQUEST_SCHEME . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . (IS_BUILTIN_SERVER ? '' : '/' . BASE_FOLDER));
 
 // load thu vien
-require rootPath . '/vendor/autoload.php';
-require rootPath . '/lib/function.php';
+require ROOT_PATH . '/vendor/autoload.php';
+require ROOT_PATH . '/lib/function.php';
 
 // tạo tmp nếu chưa có
 {
-    $tmp_dir = rootPath . '/tmp';
+    $tmp_dir = ROOT_PATH . '/tmp';
     $tmp_file = $tmp_dir . '/.htaccess';
 
     if (!is_dir($tmp_dir)) {
@@ -68,13 +55,13 @@ require rootPath . '/lib/function.php';
 }
 
 // tải tài nguyên
-define('icons', [
+define('ICONS', [
     'files' => load_json_remote('https://static.ngatngay.net/atom-icon/files/__struct__.json', 'icon/icon_files.json'),
     'folders' => load_json_remote('https://static.ngatngay.net/atom-icon/folders/__struct__.json', 'icon/icon_folders.json')
 ]);
 
 // cau hinh
-define('PATH_CONFIG', rootPath . '/config.inc.php');
+define('PATH_CONFIG', ROOT_PATH . '/config.inc.php');
 
 define('LOGIN_USERNAME_DEFAULT', 'Admin');
 define('LOGIN_PASSWORD_DEFAULT', '12345');
@@ -97,34 +84,35 @@ define('NAME_SUBSTR_ELLIPSIS', '...');
 
 define('FM_COOKIE_NAME', 'fm_php');
 
-{ // lay thong tin phien ban hien tai
-    $version = json_decode(
-        file_get_contents(rootPath . '/version.json'),
-        true
-    );
+{
+    // lay thong tin phien ban hien tai
+    $version = json::decode_file(ROOT_PATH . '/version.json');
 
     define('VERSION_MAJOR', $version['major']);
     define('VERSION_MINOR', $version['minor']);
     define('VERSION_PATCH', $version['patch']);
-    define('localVersion', $version['version']);
+    define('LOCAL_VERSION', $version['version']);
 
-    unset($version);
-}
-
-{ // lay phien ban moi
-    define('remoteVersionFile', 'https://static.ngatngay.net/php/file-manager/release.json');
-    define('remoteFile', 'https://static.ngatngay.net/php/file-manager/release.zip');
+    // lay phien ban moi
+    define('REMOTE_VERSION_FILE', 'https://static.ngatngay.net/php/file-manager/release.json');
+    define('REMOTE_FILE_URL', 'https://static.ngatngay.net/php/file-manager/release.zip');
     define('REMOTE_FILE', 'https://static.ngatngay.net/php/file-manager/release.zip');
     define('REMOTE_DIR_IN_ZIP', 'file-manager-main');
 
-    $version = get_new_version();
-    $remoteVersion = localVersion;
+    // check định kỳ 6 tiếng
+    define('REMOTE_VERSION_API', 'https://static.ngatngay.net/php/file-manager/release.json');
+    $tmp = TMP_PATH . '/_version.json';
 
-    if ($version !== false) {
-        $remoteVersion = $version['version'];
+    if (
+        !file_exists($tmp)
+        || (file_exists($tmp) && filemtime($tmp) < (time() - 6*3600))
+    ) {
+        @download_file($tmp, REMOTE_VERSION_API);
     }
-
-    define('remoteVersion', $remoteVersion);
+    
+    $remote_version = @json::decode_file($tmp);
+    define('REMOTE_VERSION', empty($remote_version) ? LOCAL_VEREION : $remote_version['version']);
+    define('HAS_NEW_VERSION', version_compare((string) REMOTE_VERSION, (string) LOCAL_VERSION, '>'));
 }
 
 $configs = [];
@@ -162,6 +150,7 @@ if (is_file(PATH_CONFIG)) {
 
 if (count($configs) == 0) {
     setcookie(FM_COOKIE_NAME, '', 0);
+    redirect('/');
 }
 
 if (
@@ -194,6 +183,7 @@ if (!IS_CONFIG_UPDATE && (
 
 if (IS_CONFIG_UPDATE || IS_CONFIG_ERROR) {
     setcookie(FM_COOKIE_NAME, '', 0);
+    redirect('/');
 }
 
 if (
@@ -221,50 +211,17 @@ $isLogin = isset($_COOKIE[FM_COOKIE_NAME])
     && $_COOKIE[FM_COOKIE_NAME]
     === $configs['password'];
 
-define('isLogin', $isLogin);
+define('IS_LOGIN', $isLogin);
 
 if (
-    !isLogin
+    !IS_LOGIN
     && !defined('LOGIN')
 ) {
     redirect('login.php');
 }
 
-// kiem tra nguoi dung
-$script = function_exists('getenv') ? getenv('SCRIPT_NAME') : $_SERVER['SCRIPT_NAME'];
-$script = strpos($script, '/') !== false ? dirname($script) : '';
-$script = str_replace('\\', '/', $script);
-
-define('IS_INSTALL_ROOT_DIRECTORY', $script == '.' || $script == '/');
-define('IS_ACCESS_FILE_IN_FILE_MANAGER', defined('INDEX') && isset($_GET['not']));
-define('PATH_FILE_MANAGER', str_replace('\\', '/', strtolower($_SERVER['DOCUMENT_ROOT'] . $script)));
-define('NAME_DIRECTORY_INSTALL_FILE_MANAGER', !IS_INSTALL_ROOT_DIRECTORY ? preg_replace('#(/+|/\+)(.+?)#s', '$2', $script) : null);
-define('PARENT_PATH_FILE_MANAGER', substr(PATH_FILE_MANAGER, 0, strlen(PATH_FILE_MANAGER) - (NAME_DIRECTORY_INSTALL_FILE_MANAGER == null ? 0 : strlen(NAME_DIRECTORY_INSTALL_FILE_MANAGER) + 1)));
-
-if (
-    IS_INSTALL_ROOT_DIRECTORY ||
-    IS_ACCESS_FILE_IN_FILE_MANAGER ||
-
-    ($script != '.' && $script != '/' && is_path_not_permission(process_directory($dir))) ||
-    ($script != '.' && $script != '/' && $name != null && is_path_not_permission(process_directory($dir . '/' . $name)))
-) {
-    define('NOT_PERMISSION', true);
-} else {
-    define('NOT_PERMISSION', false);
-}
-
-if (
-    !defined('INDEX')
-    && !defined('LOGIN')
-    && NOT_PERMISSION
-) {
-    //redirect('index.php?not');
-}
-
-unset($script);
-
 // Kiểm tra thư mục cài đặt
-if (IS_INSTALL_ROOT_DIRECTORY) {
+if (is_in_root()) {
     $title = 'Lỗi File Manager';
 
     require_once '_header.php';
@@ -306,10 +263,10 @@ function remove_referer_param(string $url): string {
 }
 
 $referer_qs = base64_encode(remove_referer_param(request::uri()));
-define('referer_qs', 'referer=' . $referer_qs);
+define('REFERER_QS', 'referer=' . $referer_qs);
 
 $referer = (string) request::get('referer');
-define('referer', base64_decode($referer));
+define('REFERER', base64_decode($referer));
 
 // bookmark
 $add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';

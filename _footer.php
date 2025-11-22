@@ -3,7 +3,7 @@ namespace app;
 
 defined('ACCESS') or exit('Not access');
 
-if (isLogin) {
+if (IS_LOGIN) {
     if (get_login_fail()) {
         $menuToggle .= '<div class="list" style="font-size: small; font-style: italic">
             fail login: <span style="color: red; font-weight: bold">' . get_login_fail() . '</span>
@@ -81,7 +81,7 @@ if (isLogin) {
 echo '</div>';
 
 echo '<div id="footer">
-    <span>Version: ' . localVersion . '</span>
+    <span>Version: ' . LOCAL_VERSION . '</span>
     <br><a href="https://github.com/linh0804/file-manager">Github</a>
 </div>';
 

@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 
     $command = sprintf(
         'cd %s && %s %s/composer.phar %s 2>&1',
-        process_directory($folder), $php, rootPath, $command
+        process_directory($folder), $php, ROOT_PATH, $command
     );
 
     if ($command) {

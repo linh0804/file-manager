@@ -2,17 +2,17 @@
 
 namespace app;
 
-use RecursiveCallbackFilterIterator;
-use ZipArchive;
-use nightmare\http\http;
-use nightmare\http\curl;
+use FilesystemIterator;
 use nightmare\config;
 use nightmare\fs;
+use nightmare\http\curl;
+use nightmare\http\http;
 use nightmare\zip;
+use RecursiveCallbackFilterIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use FilesystemIterator;
+use ZipArchive;
 
 defined('ACCESS') or exit('Not access');
 
@@ -44,7 +44,8 @@ function is_app_dir($dir)
     return is_app_file($dir);
 }
 
-function redirect($url) {
+function redirect($url)
+{
     header('Location: ' . $url);
     exit;
 }
@@ -92,7 +93,14 @@ function create_config(
     return true;
 }
 
-function is_in_root() {
+function is_in_root()
+{
+    $sapi = php_sapi_name();
+
+    if ($sapi === 'cli' || $sapi === 'cli-server') {
+        return false;
+    }
+
     if (empty($_SERVER['DOCUMENT_ROOT'])) {
         return false;
     }
@@ -164,7 +172,8 @@ function is_url($url)
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-function download_file($filename, $url) {
+function download_file($filename, $url)
+{
     $curl = new curl();
     $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
     $curl->setOpt(CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36');
@@ -757,8 +766,9 @@ function asset($asset)
     return $asset . '?' .  filemtime($asset);
 }
 
-function sort_natural(&$items) {
-    usort($items, function($a, $b) {
+function sort_natural(&$items)
+{
+    usort($items, function ($a, $b) {
         $a_is_letter = ctype_alpha($a[0]);
         $b_is_letter = ctype_alpha($b[0]);
         return $a_is_letter === $b_is_letter
@@ -893,19 +903,19 @@ function check_path($path, $type = '')
 
     if ($type == 'file') {
         $name = 'Tập tin';
-        
+
         if (@is_file($path)) {
             return;
         }
     } else if ($type == 'folder') {
         $name = 'Thư mục';
-        
+
         if (@is_dir($path)) {
             return;
         }
     } else {
         $name = 'Đường dẫn';
-        
+
         if (@file_exists($path)) {
             return;
         }
@@ -925,7 +935,8 @@ function check_path($path, $type = '')
     exit;
 }
 
-function load_json_remote(string $url, string $path = '') {
+function load_json_remote(string $url, string $path = '')
+{
     if ($path) {
         $cache = ROOT_PATH . '/' . trim($path, '/');
     } else {
@@ -935,19 +946,22 @@ function load_json_remote(string $url, string $path = '') {
     if (!file_exists($cache) || !filesize($cache)) {
         file_put_contents($cache, file_get_contents($url));
     }
-    
+
     return json_decode(file_get_contents($cache), true);
 }
 
-function get_req_referer() {
+function get_req_referer()
+{
     return !empty($_GET['referer']) ? @base64_decode($_GET['referer']) : '';
 }
 
-function get_self_referer() {
+function get_self_referer()
+{
     return @base64_encode($_SERVER['REQUEST_URI']);
 }
 
-function form_err($err) {
+function form_err($err)
+{
     if (empty($err)) {
         return '';
     }
@@ -955,7 +969,8 @@ function form_err($err) {
     return '<div class="notice_failure">' . is_array($err) ? $err[0] : $err . '</div>';
 }
 
-function form_entries() {
+function form_entries()
+{
     $entries = get_entries();
     $html = '<ul class="list">';
 
@@ -965,7 +980,8 @@ function form_entries() {
         $html .= '<input type="hidden" name="entry[]" value="' . $entry . '">';
         $html .= '<li>'
             . get_icon($isFolder ? 'folder' : 'file', $entry) . ' '
-            . ($isFolder
+            . (
+                $isFolder
                 ? '<strong class="folder_name">' . $entry . '</strong>'
                 : '<span class="file_name">' . $entry . '</span>'
             ) . '</li>';

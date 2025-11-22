@@ -226,7 +226,7 @@ if (is_in_root()) {
 
     require_once '_header.php';
     echo '<div class="title">Lỗi File Manager</div>
-        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!</div>';
+        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!<br><br><i><b>' . __DIR__ . '</b></i></div>';
     require_once '_footer.php';
     exit();
 }

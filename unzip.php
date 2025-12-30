@@ -60,7 +60,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         <span class="bull">&bull;</span><span>' . print_path($path) . '</span><hr/>
         <form method="post">
             <span class="bull">&bull;</span>Đường dẫn giải nén:<br/>
-            <textarea name="path" data-autoresize>' . $path_unzip . '</textarea><br/>
+            <textarea name="path_unzip" data-autoresize>' . $path_unzip . '</textarea><br/>
             <input type="checkbox" name="is_delete" value="1"' . ($is_delete ? ' checked="checked"' : '') . '/> Xóa tập tin zip<br/>
             <input type="submit" name="submit" value="Giải nén"/>
         </form>

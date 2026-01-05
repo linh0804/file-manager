@@ -150,7 +150,6 @@ if (is_file(PATH_CONFIG)) {
 
 if (count($configs) == 0) {
     setcookie(FM_COOKIE_NAME, '', 0);
-    redirect('/');
 }
 
 if (
@@ -183,7 +182,6 @@ if (!IS_CONFIG_UPDATE && (
 
 if (IS_CONFIG_UPDATE || IS_CONFIG_ERROR) {
     setcookie(FM_COOKIE_NAME, '', 0);
-    redirect('/');
 }
 
 if (

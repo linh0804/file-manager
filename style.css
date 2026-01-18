@@ -533,7 +533,7 @@ div.parent_box_edit {
 }
 
 textarea.box_edit, div#editor {
-    height: 70vh;
+    height: 65vh;
 }
 
 textarea.box_edit, textarea.box_edit_normal {

@@ -78,20 +78,16 @@ $file = new SplFileInfo($path);
             <span class="bull">&bull;</span>
             Tập tin:
             <strong class="file_name_edit"><?= $name ?></strong><hr />
-            <div>
+            <div class="code_action">
+                <select id="code_lang">
+                    <?php foreach ($codeType as $cType => $cValue): ?>
+                        <option value="<?= $cType ?>" <?= $codeLang === $cType ? 'selected="selected"' : '' ?>>Mode: <?= $cValue ?></option>
+                    <?php endforeach; ?>
+                </select>
+
                 <a href="edit_text.php?path=<?= base64_encode($file->getPathname()) ?>">
                     <button class="button">Chế độ sửa văn bản</button>
                 </a>
-                <button onclick="full_screen()" class="button">F11</button>
-            <hr />
-            </div>
-            <div class="code_action">
-                Loại code:
-                <select id="code_lang">
-                    <?php foreach ($codeType as $cType => $cValue): ?>
-                        <option value="<?= $cType ?>" <?= $codeLang === $cType ? 'selected="selected"' : '' ?>><?= $cValue ?></option>
-                    <?php endforeach; ?>
-                </select>
             </div>
             <hr/>
         </div>
@@ -209,29 +205,6 @@ $file = new SplFileInfo($path);
                 }
             })
         })
-
-        // full screen
-        function full_screen() {
-            if (!document.fullscreenElement) {
-                editorElement.requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
-                })
-            } else {
-                document.exitFullscreen()
-            }
-        }
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "F11") {
-                event.preventDefault()
-                full_screen();
-            }
-
-            if (event.key === "Escape") {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen()
-                }
-            }
-        });
     </script>
 <?php
 endif;

@@ -19,8 +19,4 @@ This repository is a mostly flat PHP application (file manager) served from the 
 - PHP style follows PSR-12 with 4-space indentation (`.php-cs-fixer.dist.php`).
 - Keep procedural page scripts in root with snake_case file names (for example: edit_text.php, delete_multi.php).
 - Keep shared logic in `lib/` and avoid duplicating helpers across page scripts.
-- JS build config is in `rollup.config.js`; edit source files, not generated bundles.
 
-## Testing Guidelines
-
-## Commit & Pull Request Guidelines

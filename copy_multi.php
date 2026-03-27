@@ -65,12 +65,10 @@ if ($dir == null || !is_dir(process_directory($dir))) {
     $entryHtmlList = '<ul class="list">';
 
     foreach ($entry as $e) {
-        $isFolder = is_dir($dir . '/' . $e);
+        $f = new \SplFileInfo($dir . '/' . $e);
+
         $entryCheckbox .= '<input type="hidden" name="entry[]" value="' . $e . '" checked="checked"/>';
-        $entryHtmlList .= '<li>'
-            . get_icon($isFolder ? 'folder' : 'file', $e) . ' '
-            . ($isFolder ? '<strong class="folder_name">' . $e . '</strong>' : '<span class="file_name">' . $e . '</span>') .
-            '</li>';
+        $entryHtmlList .= '<li>' . file_get_display_link($f) . '</li>';
     }
 
     $entryHtmlList .= '</ul>';

@@ -14,9 +14,9 @@ if (IS_LOGIN) {
     $menuToggle .= '<div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/search.png"/> <a href="folder_compare_simple.php">So sánh thư mục</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="run_command.php?dir=' . $path . '">Chạy lệnh</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="run_composer.php?dir=' . $path . '">Chạy lệnh Composer</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="fix_permission.php?dir=' . $path . '">Fix chown/chmod</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="run_command.php?path=' . rawurlencode((string) $path) . '">Chạy lệnh</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="run_composer.php?path=' . rawurlencode((string) $path) . '">Chạy lệnh Composer</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="fix_permission.php?path=' . rawurlencode((string) $path) . '">Fix chown/chmod</a></li>
         <li><img src="icon/home.png"/> <a href="setting_home.php">Sửa Trang chủ</a></li>
         <li><img src="icon/mime/php.png"/> <a href="phpinfo.php">phpinfo()</a></li>
     </ul>';
@@ -26,7 +26,7 @@ if (IS_LOGIN) {
     $menuToggle .= '<style>
     ul.list li {
         white-space: normal;
-        font-size: small;
+        font-size: 12px;
     }
     </style>
     <div class="title">Bookmark</div>

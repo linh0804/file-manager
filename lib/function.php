@@ -834,57 +834,6 @@ function able_format_code($type)
     ]);
 }
 
-function get_file_link($path)
-{
-    global $formats, $pages;
-    $path = str_replace('//', '/', $path);
-    $file = new SplFileInfo($path);
-    $fileDir = $file->isDir() ? $file->getPathname() : dirname($file->getPathname());
-    $name = $file->getFilename();
-    $isEdit = false;
-
-    $fileIcon = get_icon($file->isDir() ? 'folder' : 'file', $name);
-
-    if ($file->isFile()) {
-        if (in_array($file->getExtension(), $formats['text'])) {
-            $isEdit = true;
-        } elseif (in_array(strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name), $formats['source'])) {
-            $isEdit = true;
-        } elseif (is_format_unknown($name)) {
-            $isEdit = true;
-        }
-
-        if (strtolower($file->getFilename()) == 'error_log' || $isEdit) {
-            $fileLink = 'edit_text.php?path=' . base64_encode($file->getPathname());
-        } elseif (in_array($file->getExtension(), $formats['zip'])) {
-            $fileLink = 'unzip.php?path=' . $file->getPathname() . $pages['paramater_1'];
-        } else {
-            $fileLink = 'rename.php?path=' . $path . $pages['paramater_1'];
-        }
-    } else {
-        $fileLink = 'rename.php?path=' . $path . $pages['paramater_1'];
-    }
-
-    $fileIcon = sprintf('<a href="%s">%s</a>', $fileLink, $fileIcon);
-
-    if (is_app_dir($path)) {
-        $nameDisplay = '<i>' . $name . '</i>';
-    } else {
-        $nameDisplay = $name;
-    }
-
-    if ($file->isLink()) {
-        $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
-    }
-
-    return sprintf(
-        '%s <a href="%s">%s</a>',
-        $fileIcon,
-        $file->isDir() ? 'index.php?path=' . $fileDir : 'file.php?path=' . $path,
-        $nameDisplay
-    );
-}
-
 function edit_recent_add($path)
 {
     $old = config()->get('edit_recent', []);

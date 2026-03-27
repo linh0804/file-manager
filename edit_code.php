@@ -36,11 +36,11 @@ $file = new SplFileInfo($path);
     </ul>
 <?php else:
     $content = file_get_contents($path);
-    $actionEdit = 'edit_api.php?path=' . base64_encode($path);
-    $fileExt = get_format($name);
+    $action_edit = 'edit_api.php?path=' . base64_encode($path);
+    $file_ext = get_format($name);
 
-    $codeLang = 'text';
-    $codeType = [
+    $code_lang = 'text';
+    $code_type = [
         'text' => 'Text',
         'php' => 'PHP',
         'javascript' => 'JavaScript',
@@ -51,15 +51,15 @@ $file = new SplFileInfo($path);
         'json' => 'JSON'
     ];
 
-    $forCM = [
+    $codemirror_format_map = [
         'mjs' => 'javascript',
         'js' => 'javascript',
         'scss' => 'sass'
     ];
 
-    $fileExtForCM = array_key_exists($fileExt, $forCM) ? $forCM[$fileExt] : $fileExt;
-    if (array_key_exists($fileExtForCM, $codeType)) {
-        $codeLang = $fileExtForCM;
+    $file_ext_for_codemirror = array_key_exists($file_ext, $codemirror_format_map) ? $codemirror_format_map[$file_ext] : $file_ext;
+    if (array_key_exists($file_ext_for_codemirror, $code_type)) {
+        $code_lang = $file_ext_for_codemirror;
     }
     ?>
     <style type="text/css" media="screen">
@@ -80,8 +80,8 @@ $file = new SplFileInfo($path);
             <strong class="file_name_edit"><?= $name ?></strong><hr />
             <div class="code_action">
                 <select id="code_lang">
-                    <?php foreach ($codeType as $cType => $cValue): ?>
-                        <option value="<?= $cType ?>" <?= $codeLang === $cType ? 'selected="selected"' : '' ?>>Mode: <?= $cValue ?></option>
+                    <?php foreach ($code_type as $code_type_key => $code_type_value): ?>
+                        <option value="<?= $code_type_key ?>" <?= $code_lang === $code_type_key ? 'selected="selected"' : '' ?>>Mode: <?= $code_type_value ?></option>
                     <?php endforeach; ?>
                 </select>
 
@@ -103,7 +103,7 @@ $file = new SplFileInfo($path);
                 <input type="checkbox" id="code_check_php" /> Kiểm tra lỗi PHP
 
                 <span style="float: right">
-                    <?php if (able_format_code($fileExt)): ?>
+                    <?php if (able_format_code($file_ext)): ?>
                         <button class="button" id="code_format">Format</button>
                     <?php endif; ?>
                     <label><input type="checkbox" id="code_wrap" /> Wrap</label>
@@ -116,29 +116,29 @@ $file = new SplFileInfo($path);
     <script>window.EditContext = false</script>
     <script src="<?= asset('js/edit_code.bundle.js') ?>"></script>
     <script>
-        const codeCheckMessageElement = document.getElementById("code_check_message")
-        const codeCheckPHPElement = document.getElementById("code_check_php")
-        const codeFormElement = document.getElementById("code_form")
-        const editorElement = document.getElementById("editor")
+        const code_check_message_element = document.getElementById("code_check_message")
+        const code_check_php_element = document.getElementById("code_check_php")
+        const code_form_element = document.getElementById("code_form")
+        const editor_element = document.getElementById("editor")
 
         // auto focus
         document.addEventListener("DOMContentLoaded", function() {
-            editorElement.scrollIntoView({ behavior: "smooth" })
+            editor_element.scrollIntoView({ behavior: "smooth" })
         })
 
-        function save() {
+        function save_code() {
             var data = new FormData();
             data.append("requestApi", 1);
             data.append("content", editor.state.doc.toString());
 
-            codeCheckMessageElement.innerHTML = "";
-            if (codeCheckPHPElement.checked) {
+            code_check_message_element.innerHTML = "";
+            if (code_check_php_element.checked) {
                 data.append("check", 1);
             } else {
                 data.append("check", 0);
             }
 
-            fetch("<?= $actionEdit ?>", {
+            fetch("<?= $action_edit ?>", {
                 method: "POST",
                 body: data,
                 cache: "no-cache"
@@ -153,20 +153,20 @@ $file = new SplFileInfo($path);
                 alert(data.message)
 
                 if (data.error) {
-                    codeCheckMessageElement.innerHTML = data.error;
+                    code_check_message_element.innerHTML = data.error;
                 }
             });
         }
 
-        codeFormElement.addEventListener("submit", function (event) {
+        code_form_element.addEventListener("submit", function (event) {
             event.preventDefault();
-            save()
+            save_code()
         })
 
         document.addEventListener("keydown", function(event) {
             if (event.ctrlKey && event.key === "s") {
                 event.preventDefault()
-                save()
+                save_code()
             }
         })
 
@@ -181,7 +181,7 @@ $file = new SplFileInfo($path);
             data.append("format", "<?= $file->getExtension() ?>");
             data.append("content", editor.state.doc.toString());
 
-            fetch("<?= $actionEdit ?>", {
+            fetch("<?= $action_edit ?>", {
                 method: "POST",
                 body: data,
                 cache: "no-cache"

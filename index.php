@@ -92,20 +92,10 @@ if ($count <= 0) {
         $name = $file->getFilename();
         $perms = get_chmod($file->getPathname());
 
-        if (is_app_dir($file->getPathname())) {
-            $nameDisplay = '<i>' . $name . '</i>';
-        } else {
-            $nameDisplay = $name;
-        }
-
-        if ($file->isLink()) {
-            $nameDisplay = '<span style="color:darkcyan">' . $nameDisplay . '</span>';
-        }
-
         if ($file->isDir()) {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name"><b>' . get_file_link($file->getPathname()) . '</b></td>
+                <td class="name"><b>' . file_get_display_link($file) . '</b></td>
                 <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
                 <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
@@ -113,7 +103,7 @@ if ($count <= 0) {
         } else {
             echo '<tr>
                 <td><input type="checkbox" name="entry[]" value="' . $name . '"/></td>
-                <td class="name">' . get_file_link($file->getPathname()) . '</td>
+                <td class="name">' . file_get_display_link($file) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
                 <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="chmod.php?path=' . $file->getPathname() . $pages['paramater_1'] . '" class="chmod">' . $perms . '</a></td>
@@ -127,13 +117,6 @@ if ($count <= 0) {
     </tr>';
 
     echo '</table></div>';
-    echo <<<'Z'
-    <script>
-        $("table.list-file tr").click(function () {
-            $(this).addClass("active").siblings().removeClass("active");
-        });
-    </script>
-    Z;
 
     echo '<div class="list">';
     echo '<div id="file-select-opt" style="display: block">
@@ -154,6 +137,10 @@ if ($count <= 0) {
 ?>
 
 <script>
+    $("table.list-file tr").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+
     $('#file-select-all').on('change', function () {
         for (let i = 0; i < document.form.elements.length; ++i) {
             if (document.form.elements[i].type === "checkbox") {

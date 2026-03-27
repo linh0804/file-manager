@@ -146,3 +146,57 @@ function t_file_type($filename)
     }
     return '(unknown)';
 }
+
+function file_get_display_link($file)
+{
+    global $formats, $pages;
+
+    $path = $file->getPathname();
+    $file_dir = $file->isDir() ? $file->getPathname() : dirname($file->getPathname());
+    $name = $file->getFilename();
+    $is_edit = false;
+
+    $file_icon = get_icon($file->isDir() ? 'folder' : 'file', $name);
+
+    if ($file->isFile()) {
+        if (in_array($file->getExtension(), $formats['text'])) {
+            $is_edit = true;
+        } elseif (in_array(
+            strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name),
+            $formats['source']
+        )) {
+            $is_edit = true;
+        } elseif (is_format_unknown($name)) {
+            $is_edit = true;
+        }
+
+        if (strtolower($file->getFilename()) === 'error_log' || $is_edit) {
+            $file_link = 'edit_text.php?path=' . base64_encode($file->getPathname());
+        } elseif (in_array($file->getExtension(), $formats['zip'])) {
+            $file_link = 'unzip.php?path=' . $file->getPathname() . $pages['paramater_1'];
+        } else {
+            $file_link = 'rename.php?path=' . $path . $pages['paramater_1'];
+        }
+    } else {
+        $file_link = 'rename.php?path=' . $path . $pages['paramater_1'];
+    }
+
+    $file_icon = sprintf('<a href="%s">%s</a>', $file_link, $file_icon);
+
+    if (is_app_dir($path)) {
+        $name_display = '<span style="color: red !important">' . $name . '</span>';
+    } else {
+        $name_display = $name;
+    }
+
+    if ($file->isLink()) {
+        $name_display = '<span style="color:darkcyan">' . $name_display . '</span>';
+    }
+
+    return sprintf(
+        '%s <a href="%s">%s</a>',
+        $file_icon,
+        $file->isDir() ? 'index.php?path=' . $file_dir : 'file.php?path=' . $path,
+        $name_display
+    );
+}

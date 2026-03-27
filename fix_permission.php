@@ -36,7 +36,8 @@ echo '<div class="list">
    Công cụ này đã được sinh ra ^^!
 </div>';
 
-$folder = (string) request::post('folder', $dir);
+$requestPath = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : (string) $dir;
+$folder = (string) request::post('folder', $requestPath);
 $own = (string) request::post('own', get_current_user());
 $folder_mode = (string) request::post('folder_mode', 755);
 $file_mode = (string) request::post('file_mode', 644);

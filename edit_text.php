@@ -52,8 +52,6 @@ require '_header.php';
             </a><hr />
         </div>
         <form action="javascript:void(0)" id="code_form" method="post">
-            <span class="bull">&bull; </span>Nội dung:
-
             <div class="parent_box_edit">
                 <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
             </div>

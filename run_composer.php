@@ -40,7 +40,8 @@ echo '<style>
 
 echo '<div class="title">' . $title . '</div>';
 
-$folder = $_POST['folder'] ?? $dir;
+$requestPath = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : (string) $dir;
+$folder = $_POST['folder'] ?? $requestPath;
 $php = $_POST['php'] ?? 'php';
 $command = $_POST['command'] ?? 'composer update';
 

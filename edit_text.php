@@ -46,7 +46,7 @@ require '_header.php';
         </div>
         <div>
             <a href="edit_code.php?path=<?= $path ?>">
-                <button class="button">Chế độ sửa code</button>
+                <button class="button">[Code Mode]</button>
             </a><hr />
         </div>
         <form action="javascript:void(0)" id="code_form" method="post">

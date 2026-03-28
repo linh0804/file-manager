@@ -1,7 +1,5 @@
 <?php
 
-
-
 define('ACCESS', true);
 
 require '_init.php';
@@ -84,7 +82,7 @@ $file = new SplFileInfo($path);
                 </select>
 
                 <a href="edit_text.php?path=<?= base64_encode($file->getPathname()) ?>">
-                    <button class="button">Chế độ sửa văn bản</button>
+                    <button class="button">[Text Mode]</button>
                 </a>
             </div>
             <hr/>

@@ -1,6 +1,5 @@
 <?php
 
-
 use nightmare\config;
 use nightmare\fs;
 use nightmare\http\curl;
@@ -892,16 +891,6 @@ function load_json_remote(string $url, string $path = '')
     return json_decode(file_get_contents($cache), true);
 }
 
-function get_req_referer()
-{
-    return !empty($_GET['referer']) ? @base64_decode($_GET['referer']) : '';
-}
-
-function get_self_referer()
-{
-    return @base64_encode($_SERVER['REQUEST_URI']);
-}
-
 function form_err($err)
 {
     if (empty($err)) {
@@ -911,28 +900,6 @@ function form_err($err)
     return '<div class="notice_failure">' . is_array($err) ? $err[0] : $err . '</div>';
 }
 
-function form_entries()
-{
-    $entries = get_entries();
-    $html = '<ul class="list">';
-
-    foreach ($entries as $entry) {
-        $isFolder = is_dir($entry);
-
-        $html .= '<input type="hidden" name="entry[]" value="' . $entry . '">';
-        $html .= '<li>'
-            . get_icon($isFolder ? 'folder' : 'file', $entry) . ' '
-            . (
-                $isFolder
-                ? '<strong class="folder_name">' . $entry . '</strong>'
-                : '<span class="file_name">' . $entry . '</span>'
-            ) . '</li>';
-    }
-
-    $html .= '</ul>';
-
-    return $html;
-}
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/bookmark.php';

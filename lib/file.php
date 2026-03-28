@@ -1,20 +1,9 @@
 <?php
 
-
 use nightmare\http\request;
 use nightmare\zip;
 
 defined('ACCESS') or exit('Not access');
-
-function encode_path($path)
-{
-    return base64_encode($path);
-}
-function decode_path($path)
-{
-    //$path =
-    $path = str_replace('\\', '/', $path);
-}
 
 function get_path()
 {
@@ -38,30 +27,6 @@ function get_entries()
 
     return $entries;
 }
-
-
-function is_path_not_permission($path, $isUseName = false): bool
-{
-    if (!empty($path)) {
-        $reg  = $isUseName ? NAME_DIRECTORY_INSTALL_FILE_MANAGER : PATH_FILE_MANAGER;
-        $reg  = $reg != null ? strtolower($reg) : null;
-        $path = str_replace('\\', '/', $path);
-        $path = strtolower($path);
-
-        if (preg_match('#^' . $reg . '$#si', $path)) {
-            return true;
-        } elseif (preg_match('#^' . $reg . '/(^\/+|^\\+)(.*?)$#si', $path)) {
-            return true;
-        } elseif (preg_match('#^' . $reg . '/(.*?)$#si', $path)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    return false;
-}
-
 
 function zip_dir($path, $file, $isDelete = false)
 {

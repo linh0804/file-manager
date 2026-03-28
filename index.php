@@ -88,7 +88,7 @@ if ($count <= 0) {
     for ($i = $start; $i < $end; ++$i) {
         $file = new SplFileInfo($lists[$i]);
         $name = $file->getFilename();
-        $perms = get_chmod($file->getPathname());
+        $perms = file_get_chmod($file->getPathname());
 
         if ($file->isDir()) {
             echo '<tr>

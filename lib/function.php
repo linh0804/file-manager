@@ -582,7 +582,7 @@ function page($current, $total, $url)
     return $html;
 }
 
-function get_chmod($path)
+function file_get_chmod($path)
 {
     $perms = @fileperms($path);
 

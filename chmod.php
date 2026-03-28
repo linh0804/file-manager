@@ -11,7 +11,7 @@ $path = get_path();
 check_path($path);
 
 $title = 'Chmod tập tin';
-$mode = request::post('mode', get_chmod($path));
+$mode = request::post('mode', file_get_chmod($path));
 $error = '';
 
 if (request::is_method('post')) {

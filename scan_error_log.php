@@ -1,5 +1,4 @@
 <?php
-namespace app;
 
 use nightmare\fs;
 

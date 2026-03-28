@@ -1,6 +1,5 @@
 <?php
 
-namespace app;
 
 defined('ACCESS') or exit('Not access');
 

@@ -1,8 +1,6 @@
 <?php
 
-namespace app;
 
-use SplFileInfo;
 
 define('ACCESS', true);
 

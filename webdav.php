@@ -1,12 +1,10 @@
 <?php
-namespace app;
 
 use Sabre\DAV\Auth\Backend\BasicCallBack;
 use Sabre\DAV\Server;
 use Sabre\DAV\FS\Directory;
 use Sabre\DAV\Auth\Plugin;
 use nightmare\http\request;
-use Throwable;
 
 define('ACCESS', true);
 define('LOGIN', true);

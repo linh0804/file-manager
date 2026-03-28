@@ -1,8 +1,6 @@
 <?php
-namespace app;
 
 use nightmare\http\request;
-use SplFileInfo;
 
 define('ACCESS', true);
 

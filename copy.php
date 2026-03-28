@@ -1,6 +1,5 @@
 <?php
 
-namespace app;
 
 use nightmare\http\request;
 

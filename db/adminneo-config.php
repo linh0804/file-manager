@@ -1,6 +1,5 @@
 <?php
 
-namespace app;
 
 return [
     'hiddenDatabases' => '__system',

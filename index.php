@@ -1,9 +1,7 @@
 <?php
 
-namespace app;
 
 use nightmare\fs;
-use SplFileInfo;
 
 define('ACCESS', true);
 define('INDEX', true);

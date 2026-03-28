@@ -1,5 +1,4 @@
 <?php
-namespace app;
 
 isset($_COOKIE["fm_php"]) or exit;
 

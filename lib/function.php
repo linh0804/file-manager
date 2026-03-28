@@ -1,18 +1,11 @@
 <?php
 
-namespace app;
 
-use FilesystemIterator;
 use nightmare\config;
 use nightmare\fs;
 use nightmare\http\curl;
 use nightmare\http\http;
 use nightmare\zip;
-use RecursiveCallbackFilterIterator;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
-use ZipArchive;
 
 defined('ACCESS') or exit('Not access');
 

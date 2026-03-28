@@ -1,5 +1,4 @@
 <?php
-namespace app;
 
 class Update {         
     public function __construct() {    

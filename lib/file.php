@@ -1,11 +1,8 @@
 <?php
 
-namespace app;
 
 use nightmare\http\request;
 use nightmare\zip;
-use SplFileInfo;
-use ZipArchive;
 
 defined('ACCESS') or exit('Not access');
 

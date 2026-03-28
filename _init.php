@@ -1,11 +1,9 @@
 <?php
 
-namespace app;
 
 use nightmare\http\http;
 use nightmare\http\request;
 use nightmare\json;
-use SplFileInfo;
 
 defined('ACCESS') or exit('Not access');
 

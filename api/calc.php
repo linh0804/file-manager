@@ -2,11 +2,10 @@
 
 namespace app;
 
+defined('ACCESS') or exit('Not access');
+
 use nightmare\fs;
 use nightmare\http\request;
-
-define('ACCESS', 1);
-require __DIR__ . '/../_init.php';
 
 $path = (string) request::post('path');
 

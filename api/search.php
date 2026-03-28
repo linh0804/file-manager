@@ -2,10 +2,9 @@
 
 namespace app;
 
-use nightmare\http\request;
+defined('ACCESS') or exit('Not access');
 
-define('ACCESS', 1);
-require __DIR__ . '/../_init.php';
+use nightmare\http\request;
 
 $q = (string) request::post('q');
 $t = (string) request::post('t', 'all');
@@ -16,11 +15,9 @@ if (empty($q)) {
     $q = '/';
 }
 
-// Nếu $q là thư mục thật => scan nó
 if (is_dir($q)) {
     $dir = $q;
 } else {
-    // Ngược lại scan thư mục cha
     $dir = dirname($q);
     if ($dir === '/' || $dir === '.') {
         $dir = '/';
@@ -28,7 +25,10 @@ if (is_dir($q)) {
 }
 
 if (!is_dir($dir)) {
-    return [];
+    response([
+        'status' => true,
+        'data' => []
+    ])->send();
 }
 
 $items = scandir($dir);

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+curl -L \
+    "https://static.nightmare.top/app/file-manager-php/release.zip" \
+    -o ./tmp_app_update.zip
+
+unzip -o ./tmp_app_update.zip -d .
+

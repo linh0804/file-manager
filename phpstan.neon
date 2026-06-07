@@ -1,0 +1,21 @@
+parameters:
+    phpVersion: 70400
+    level: 3
+    paths:
+        - .
+    excludePaths:
+        - node_modules/
+        - vendor/
+        - css/ (?)
+        - db/
+        - icon/
+        - js/
+    ignoreErrors:
+        -
+            identifier: variable.undefined
+        -
+            identifier: constant.notFound
+        -
+            identifier: smaller.invalid
+        -
+            identifier: offsetAccess.notFound

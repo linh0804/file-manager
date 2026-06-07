@@ -1,0 +1,65 @@
+#!/bin/bash
+set -e
+
+# Cập nhật và cài PHP
+echo "Đang cập nhật apt và cài đặt php-cli..."
+apt update -qq
+apt install -y php-cli php-mysql php-sqlite3 php-curl
+
+# Thư mục cài đặt
+INSTALL_DIR="/root/.file-manager-php"
+mkdir -p "$INSTALL_DIR"
+
+# Tạo tên file tạm NGẮN bằng timestamp
+TEMP_ZIP="/tmp/file-manager-$(date +%s).zip"
+
+# Tải và giải nén
+echo "Đang tải và giải nén file-manager..."
+curl -L "https://static.nightmare.top/app/file-manager-php/release.zip" -o "$TEMP_ZIP"
+unzip -o "$TEMP_ZIP" -d "$INSTALL_DIR"
+rm -f "$TEMP_ZIP"
+
+echo "Cài đặt hoàn tất trong: $INSTALL_DIR"
+
+# ==================== SYSTEMD SERVICE - IM LẶNG HOÀN TOÀN ====================
+SERVICE_FILE="/etc/systemd/system/file-manager-php.service"
+
+cat <<EOF > "$SERVICE_FILE"
+[Unit]
+Description=File Manager PHP
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=$INSTALL_DIR
+
+Environment=PHP_CLI_SERVER_WORKERS=8
+
+ExecStart=/usr/bin/php -q -S 0.0.0.0:9811 -t .
+
+Restart=always
+RestartSec=3
+
+# Tắt hoàn toàn mọi output và log
+StandardOutput=null
+StandardError=null
+StandardInput=null
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Áp dụng service
+echo "Đang thiết lập và khởi động service..."
+systemctl daemon-reload
+systemctl enable --now file-manager-php.service
+
+echo ""
+echo "=== Kiểm tra service ==="
+systemctl status file-manager-php.service --no-pager
+
+echo ""
+echo "🌐 Truy cập: http://[IP_VPS]:9811"
+

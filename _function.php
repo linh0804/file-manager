@@ -1115,7 +1115,7 @@ class fm_config
     public function __construct(string $config_file)
     {
         $this->config_file = $config_file;
-        $this->prefix = "<?php defined('ACCESS') or exit; ?>\n";
+        $this->prefix = "<?php defined('ACCESS') or exit; ?>";
         $this->init();
     }
 

@@ -30,11 +30,7 @@ if (!is_format_text($name) && !is_format_unknown($name)) {
     goto end_request;
 }
 
-// thông tin file
-$dir = process_directory($dir);
-$curr_path = $dir . '/' . $name;
-
-$content = isset($_POST['content']) ? $_POST['content'] : '';
+$content = $_POST['content'] ?? '';
 
 if (isset($_POST['format'])) {
     $format_type = trim((string) $_POST['format']);
@@ -125,9 +121,8 @@ if (file_put_contents($curr_path, $content) !== false) {
 
             if ($value == -1) {
             } elseif ($value == 255 || count($output) == 3) {
-                $error_syntax = 'Lưu thành công! Có lỗi!';
-
                 $data['error'] = $output[1];
+                $error_syntax = 'Lưu thành công! Có lỗi!';
             } else {
                 $error_syntax = 'Lưu thành công! Không có lỗi';
             }

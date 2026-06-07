@@ -129,7 +129,7 @@ require SITE_HEADER;
 
             function saveCode() {
                 var data = new FormData();
-                data.append("requestApi", 1);
+                data.append("request_api", 1);
                 data.append("content", editor.state.doc.toString());
 
                 codeCheckMessageElement.innerHTML = "";
@@ -171,7 +171,7 @@ require SITE_HEADER;
                 }
 
                 var data = new FormData();
-                data.append("requestApi", 1);
+                data.append("request_api", 1);
                 data.append("format", format);
                 data.append("content", editor.state.doc.toString());
 

@@ -1,13 +1,12 @@
 <?php
 
-
 use nightmare\http\request;
 
 define('ACCESS', true);
 
 require __DIR__ . '/_init.php';
 
-$curr_path = base64_decode((string) request::get('path'));
+$curr_path = get_curr_path();
 $file = new SplFileInfo($curr_path);
 $dir = dirname($file->getPathname());
 $name = basename($file->getPathname());
@@ -17,11 +16,11 @@ $data = [
     'message' => 'error'
 ];
 
-if (!isset($_POST['requestApi'])) {
+if (!isset($_POST['request_api'])) {
     goto end_request;
 }
 
-if ($dir == null || $name == null || !is_file(process_directory($dir . '/' . $name))) {
+if (empty($dir) || empty($name) || !is_file(process_directory($dir . '/' . $name))) {
     $data['message'] = 'Đường dẫn không tồn tại';
     goto end_request;
 }

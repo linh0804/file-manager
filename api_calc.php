@@ -33,6 +33,7 @@ if (is_file($curr_path)) {
             $data['total_file']++;
             $data['total_size'] += $file->getSize();
         }
+
         if ($file->isDir()) {
             $data['total_dir']++;
         }

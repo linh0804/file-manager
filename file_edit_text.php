@@ -79,7 +79,7 @@ require SITE_HEADER;
 
         function save() {
             var data = new FormData();
-            data.append("requestApi", 1);
+            data.append("request_api", 1);
             data.append("content", editorElement.value);
             codeCheckMessageElement.style.display = "none";
             codeCheckMessageElement.innerHTML = "";
@@ -122,7 +122,7 @@ require SITE_HEADER;
             }
 
             var data = new FormData();
-            data.append("requestApi", 1);
+            data.append("request_api", 1);
             data.append("format", "<?= $curr_file->getExtension() ?>");
             data.append("content", editorElement.value);
 

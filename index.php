@@ -187,7 +187,7 @@ if ($count <= 0) {
         $.get("api_update.php", function(html) {
             $("#app-index-updater").html(html);
         });
-    }, 2000);
+    }, 1000);
 </script>
 
 <?php require SITE_FOOTER ?>

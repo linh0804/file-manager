@@ -1,5 +1,7 @@
 <?php
 
+use nightmare\zip;
+
 function multi_zip($dir, $entrys, $file, $isDelete = false)
 {
     if (@is_file($file)) {

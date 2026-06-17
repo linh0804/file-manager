@@ -1121,11 +1121,15 @@ class fm_config
 
     public function init(): void
     {
+        $tmp = dirname($this->config_file) . '/.env.tmp.php';
+        if (is_file($tmp)) {
+            @unlink($tmp);
+        }
+
         $content = (string) @file_get_contents($this->config_file);
 
         if (strncmp($content, $this->prefix, strlen($this->prefix)) !== 0) {
             $this->configs = [];
-            $this->save();
             return;
         }
 
@@ -1137,7 +1141,9 @@ class fm_config
     public function save(): void
     {
         $content = $this->prefix . json_encode($this->configs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        file_put_contents($this->config_file, $content);
+        $tmp = dirname($this->config_file) . '/.env.tmp.php';
+        file_put_contents($tmp, $content, LOCK_EX);
+        rename($tmp, $this->config_file);
     }
 
     public function get(string $key, $default = null)

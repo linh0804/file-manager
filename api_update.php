@@ -3,17 +3,14 @@
 use nightmare\json;
 
 define('ACCESS', true);
-
 require __DIR__ . '/_init.php';
 
-$last = (int) config()->get('app_update_last');
 $tmp_update_json = __DIR__ . '/tmp_app_update';
+$last = (int) @filemtime($tmp_update_json);
 
 if ($last >= (time() - 24 * 3600)) {
     exit();
 }
-
-config()->set('app_update_last', time());
 
 if (!file_import($tmp_update_json, REMOTE_VERSION_URL, 15)) {
     exit('<div class="tips">get version info error</div>');

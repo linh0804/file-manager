@@ -30,7 +30,6 @@ require SITE_HEADER;
     $content = file_get_contents($curr_path);
     $is_execute = is_function_exec_enable();
     $action_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_path)]);
-    fm_file_edit_recent::add($curr_path);
     ?>
     <div class="list">
         <span class="bull">&bull; </span><span><?= print_path($dir, true) ?></span><hr/>
@@ -163,7 +162,9 @@ require SITE_HEADER;
             }
         })
     </script>
-    
+
+    <script>app_edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
+
 <?php
     print_actions($curr_file);
 endif;

@@ -42,7 +42,6 @@ if ($is_text) {
         $code_lang = $file_ext_for_codemirror;
     }
 
-    fm_file_edit_recent::add($curr_path);
 }
 
 require SITE_HEADER;
@@ -201,6 +200,7 @@ require SITE_HEADER;
             });
         })();
     </script>
+    <script>app_edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
 <?php
 endif;
 

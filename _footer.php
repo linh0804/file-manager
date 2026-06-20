@@ -57,17 +57,7 @@ if (IS_LOGIN) {
 
     // filelist
     $site_sidebar .= '<div class="title">Sửa gần đây</div>';
-    $site_sidebar .= '<div class="list" id="fm_edit_recent_list">';
-    
-    foreach (fm_file_edit_recent::get() as $i) {
-        $site_sidebar .= '<div style="font-size: 12px; font-style: italic; border-bottom: 1px dotted #ddd; padding: 4px">
-            <a href="' . action_link('file', ['act' => 'edit_text', 'path' => (string) $i]) . '">
-            ' . htmlspecialchars(rtrim(dirname((string) $i), '/')) . '/<b>' . htmlspecialchars(basename((string) $i)) . '</b>
-            </a>
-        </div>';
-    }
-    
-    $site_sidebar .= '</div>';
+    $site_sidebar .= '<div class="list" id="fm_edit_recent_list"></div>';
     // end filelist
 
     $site_sidebar .= '<div class="list" style="font-size: small; font-style: italic">
@@ -92,6 +82,8 @@ echo '<div
 
 echo '<div id="menu-overlay"></div>
     <div id="box-overlay"></div>';
+
+echo '<script>app_edit_recent.render("fm_edit_recent_list");</script>';
 
 echo '</div>
 </body>

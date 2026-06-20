@@ -1082,33 +1082,6 @@ class fm_bookmark
     }
 }
 
-class fm_file_edit_recent
-{
-    public static function get(): array
-    {
-        return config()->get('edit_recent', []);
-    }
-
-    private static function save(array $data): void
-    {
-        config()->set('edit_recent', $data);
-    }
-
-    public static function add($path): void
-    {
-        $old = self::get();
-        $old = array_values(array_diff($old, [$path]));
-        array_unshift($old, $path);
-        $old = array_slice($old, 0, 20);
-        self::save($old);
-    }
-
-    public static function clear(): void
-    {
-        config()->set('edit_recent', []);
-    }
-}
-
 class fm_config
 {
     private array $configs = [];

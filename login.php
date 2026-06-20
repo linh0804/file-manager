@@ -56,8 +56,10 @@ echo $notice;
 if (IS_CONFIG_ERROR) {
     echo '<div class="notice_failure">Cấu hình bị lỗi sẽ đưa về mặc định</div>';
 
-    config()->set('username', LOGIN_USERNAME_DEFAULT);
-    config()->set('password', auth_encode_pwd(LOGIN_PASSWORD_DEFAULT));
+    config()->set([
+        'username' => LOGIN_USERNAME_DEFAULT,
+        'password' => auth_encode_pwd(LOGIN_PASSWORD_DEFAULT),
+    ]);
 
     echo '<div class="notice_info">Tài khoản: <strong>' . LOGIN_USERNAME_DEFAULT . '</strong>, Mật khẩu: <strong>' . LOGIN_PASSWORD_DEFAULT . '</strong></div>';
 }

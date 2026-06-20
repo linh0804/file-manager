@@ -1061,7 +1061,7 @@ class fm_bookmark
 
     private static function save(array $data): void
     {
-        config()->set('bookmarks', $data);
+        config()->set(['bookmarks' => $data]);
     }
 
     public static function add($path): void
@@ -1127,9 +1127,9 @@ class fm_config
         return $this->configs[$key] ?? $default;
     }
 
-    public function set(string $key, $value): void
+    public function set(array $data): void
     {
-        $this->configs[$key] = $value;
+        $this->configs = array_merge($this->configs, $data);
         $this->save();
     }
 

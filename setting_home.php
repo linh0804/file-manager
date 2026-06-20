@@ -8,7 +8,7 @@ $home = $_POST['home'] ?? config()->get('home', '');
 
 if (isset($_POST['submit'])) {
     if ($home) {
-        config()->set('home', $home);
+        config()->set(['home' => $home]);
     } else {
         config()->unset('home');
     }

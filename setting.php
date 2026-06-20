@@ -32,8 +32,10 @@ if (isset($_POST['submit'])) {
     } elseif (!empty($password_o) && strlen($password_n) < 5) {
         echo '<div class="notice_failure">Mật khẩu phải lớn hơn 5 ký tự</div>';
     } else {
-        config()->set('username', $username);
-        config()->set('password', !empty($password_n) ? auth_encode_pwd($password_n) : config()->get('password'));
+        config()->set([
+            'username' => $username,
+            'password' => !empty($password_n) ? auth_encode_pwd($password_n) : config()->get('password'),
+        ]);
 
         $username = config()->get('username');
         $password_o = null;

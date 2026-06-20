@@ -39,27 +39,30 @@ function base64url_decode(string $data): string {
 //
 function get_login_fail()
 {
-    $last_login = (int) config()->get(LOGIN_LOCK_KEY . '_time');
-    $time_difference = time() - $last_login;
-
-    // reset 30 phut
-    if ($time_difference >= LOGIN_WAIT) {
-        reset_fail_login();
+    if (!is_file(LOGIN_LOCK_PATH)) {
+        return 0;
     }
 
-    return (int) config()->get(LOGIN_LOCK_KEY);
+    // auto-reset nếu đã hết thời gian chờ (dùng file mtime)
+    if (filemtime(LOGIN_LOCK_PATH) + LOGIN_WAIT < time()) {
+        @unlink(LOGIN_LOCK_PATH);
+        return 0;
+    }
+
+    return (int) file_get_contents(LOGIN_LOCK_PATH);
 }
 
 function increase_login_fail()
 {
-    config()->set(LOGIN_LOCK_KEY, get_login_fail() + 1);
-    config()->set(LOGIN_LOCK_KEY . '_time', time());
+    $count = get_login_fail() + 1;
+    file_put_contents(LOGIN_LOCK_PATH, (string) $count, LOCK_EX);
 }
 
 function reset_fail_login()
 {
-    config()->set(LOGIN_LOCK_KEY, 0);
-    config()->set(LOGIN_LOCK_KEY . '_time', 0);
+    if (is_file(LOGIN_LOCK_PATH)) {
+        unlink(LOGIN_LOCK_PATH);
+    }
 }
 
 function can_login()

@@ -41,8 +41,8 @@ if (IS_LOGIN) {
 
     <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     <script>const APP_NAME = '<?= APP_NAME ?>';</script>
+    <script src="<?= asset('js/app.js') ?>" defer></script>
     <script src="<?= asset('js/app_edit_recent.js') ?>"></script>
-    <script src="<?= asset('js/script.js') ?>" defer></script>
 </head>
 
 <body>

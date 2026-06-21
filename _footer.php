@@ -22,39 +22,6 @@ if (IS_LOGIN) {
         <li><img src="icon/mime/php.png"/> <a href="' . action_link('phpinfo') . '">phpinfo()</a></li>
     </ul>';
     
-    // bookmark
-    $bookmarks = array_reverse(fm_bookmark::get());
-    $site_sidebar .= '<style>
-    ul.list li {
-        white-space: normal;
-        font-size: 12px;
-    }
-    </style>
-    <div class="title">Bookmark</div>
-    <ul class="list">';
-
-    if (!empty($curr_path) && @is_dir($curr_path)) {
-        $site_sidebar .= '<li>
-        <img src="icon/create.png" />
-        <a href="' . action_link('index', ['add_bookmark' => $curr_path]) . '">
-            Thêm thư mục hiện tại
-        </a>
-        </li>';
-    }
-
-    foreach ($bookmarks as $bookmark) {
-        $site_sidebar .= '<li>
-
-        <a href="' . action_link('index', ['path' => $bookmark]) . '">
-            ' . htmlspecialchars(rtrim(dirname((string) $bookmark), '/')) . '/<b>' . htmlspecialchars(basename((string) $bookmark)) . '</b>
-        </a>
-        <a href="' . action_link('index', ['delete_bookmark' => $bookmark]) . '">
-            <span style="color: red">[X]</span>
-        </a>
-        </li>';
-    }
-    $site_sidebar .= '</ul>';
-
     // filelist
     $site_sidebar .= '<div class="title">Sửa gần đây</div>';
     $site_sidebar .= '<div class="list" id="fm_edit_recent_list"></div>';

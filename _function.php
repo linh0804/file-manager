@@ -1052,36 +1052,6 @@ function file_get_display_link($file)
 
 
 
-class fm_bookmark
-{
-    public static function get(): array
-    {
-        return config()->get('bookmarks', []);
-    }
-
-    private static function save(array $data): void
-    {
-        config()->set(['bookmarks' => $data]);
-    }
-
-    public static function add($path): void
-    {
-        $bookmarks = self::get();
-        $bookmarks[] = $path;
-        $bookmarks = array_unique($bookmarks);
-
-        self::save($bookmarks);
-    }
-
-    public static function delete($path): void
-    {
-        $bookmarks = self::get();
-        $bookmarks = array_diff($bookmarks, [$path]);
-
-        self::save($bookmarks);
-    }
-}
-
 class fm_config
 {
     private array $configs = [];

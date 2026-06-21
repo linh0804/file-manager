@@ -168,20 +168,4 @@ define('REFERER_QS', 'referer=' . $referer_qs);
 $referer = (string) request::get('referer');
 define('REFERER', base64_decode($referer));
 
-// bookmark
-$add_bookmark = isset($_GET['add_bookmark']) ? trim($_GET['add_bookmark']) : '';
-if (!empty($add_bookmark)) {
-    $add_bookmark = rawurldecode($add_bookmark);
-
-    if (is_dir($add_bookmark)) {
-        fm_bookmark::add($add_bookmark);
-        redirect(action_link('index', ['path' => $add_bookmark]));
-    }
-}
-
-$delete_bookmark = isset($_GET['delete_bookmark']) ? trim($_GET['delete_bookmark']) : '';
-if (!empty($delete_bookmark)) {
-    fm_bookmark::delete(rawurldecode($delete_bookmark));
-    redirect(action_link('index'));
-}
 

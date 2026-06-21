@@ -41,7 +41,6 @@ echo '<div id="app-footer">
     <br><br>[ <a href="' . action_link('logout') . '">Đăng Xuất</a> ]
 </div>';
 
-echo '<div id="nightmare-scrolltop"></div>';
 echo '<script>nightmare_scrolltop.init();</script>';
 
 echo '<div id="menu-overlay"></div>

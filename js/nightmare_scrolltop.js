@@ -4,7 +4,11 @@ var nightmare_scrolltop = {
         var last_scroll_top = window.scrollY || document.documentElement.scrollTop;
 
         var button = document.getElementById("nightmare-scrolltop");
-        if (!button) return;
+        if (!button) {
+            button = document.createElement("div");
+            button.id = "nightmare-scrolltop";
+            document.body.appendChild(button);
+        }
 
         button.style.transform = "rotate(180deg)";
 

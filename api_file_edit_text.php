@@ -25,7 +25,7 @@ if (empty($dir) || empty($name) || !is_file(process_directory($dir . '/' . $name
     goto end_request;
 }
 
-if (!is_format_text($name) && !is_format_unknown($name)) {
+if (!file_is_text($name) && !is_format_unknown($name)) {
     $data['message'] = 'Tập tin này không phải dạng văn bản';
     goto end_request;
 }

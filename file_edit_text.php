@@ -17,7 +17,7 @@ require SITE_HEADER;
 
 <div class="title"><?= $site_title ?></div>
 
-<?php if (!is_format_text($name) && !is_format_unknown($name)): ?>
+<?php if (!file_is_text($name) && !is_format_unknown($name)): ?>
     <div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">

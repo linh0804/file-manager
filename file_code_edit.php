@@ -7,7 +7,7 @@ $dir = dirname($curr_path);
 $name = basename($curr_path);
 $site_title = 'Sửa code - ' . $name;
 
-$is_text = is_format_text($name) || is_format_unknown($name);
+$is_text = file_is_text($name) || is_format_unknown($name);
 
 $content = null;
 $action_edit = null;

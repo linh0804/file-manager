@@ -1,4 +1,4 @@
-var app_edit_recent = (function () {
+var edit_recent = (function () {
     var KEY = APP_NAME + '_edit_recent';
     var MAX = 20;
 

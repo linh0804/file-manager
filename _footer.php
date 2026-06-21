@@ -50,7 +50,7 @@ echo '<div
 echo '<div id="menu-overlay"></div>
     <div id="box-overlay"></div>';
 
-echo '<script>app_edit_recent.render("fm_edit_recent_list");</script>';
+echo '<script>edit_recent.render("fm_edit_recent_list");</script>';
 
 echo '</div>
 </body>

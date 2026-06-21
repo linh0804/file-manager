@@ -200,7 +200,7 @@ require SITE_HEADER;
             });
         })();
     </script>
-    <script>app_edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
+    <script>edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
 <?php
 endif;
 

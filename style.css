@@ -680,50 +680,6 @@ div.list div.input_action input {
     margin-left: -1px;
 }
 
-.scroll-to-top {
-    box-sizing: content-box;
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    display: flex;
-    width: 37px;
-    height: 37px;
-    padding: 5px;
-    cursor: pointer;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s ease-in-out;
-    background-color: #000;
-    border-radius: 50%;
-}
-
-.scroll-to-top:hover {
-    opacity: 1;
-}
-
-.scroll-to-top-icon:before {
-    position: absolute;
-    top: 50%;
-    left: 40%;
-    display: block;
-    width: 20px;
-    height: 5px;
-    content: "";
-    background-color: #fff;
-    transform: translate(0, -50%) rotate(45deg);
-}
-
-.scroll-to-top-icon:after {
-    position: absolute;
-    top: 50%;
-    right: 40%;
-    display: block;
-    width: 20px;
-    height: 5px;
-    content: "";
-    background-color: #fff;
-    transform: translate(0, -50%) rotate(-45deg);
-}
 
 #nav-menu {
     padding: 5px 10px;

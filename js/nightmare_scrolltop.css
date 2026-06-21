@@ -1,0 +1,43 @@
+#nightmare-scrolltop {
+    box-sizing: content-box;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    width: 37px;
+    height: 37px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s ease-in-out;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+#nightmare-scrolltop:hover {
+    opacity: 1;
+}
+
+#nightmare-scrolltop:before {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    display: block;
+    width: 20px;
+    height: 5px;
+    content: "";
+    background-color: #fff;
+    transform: translate(0, -50%) rotate(45deg);
+}
+
+#nightmare-scrolltop:after {
+    position: absolute;
+    top: 50%;
+    right: 40%;
+    display: block;
+    width: 20px;
+    height: 5px;
+    content: "";
+    background-color: #fff;
+    transform: translate(0, -50%) rotate(-45deg);
+}

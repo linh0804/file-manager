@@ -168,7 +168,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Ấn tiếp tục để xóa và ở lại trang, ấn xóa để xóa và quay về danh sách dòng</span>
     </div>';
 
-    print_actions($file);
+    file_display_actions($file);
 }
 
 require SITE_FOOTER;

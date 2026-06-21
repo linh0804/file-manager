@@ -169,7 +169,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Ấn tiếp tục để lưu lại ở lại trang và ấn lưu để lưu lại và quay về danh sách dòng</span>
     </div>';
 
-    print_actions($file);
+    file_display_actions($file);
 }
 
 require SITE_FOOTER;

@@ -45,6 +45,6 @@ echo '<div class="list">
     </form>
 </div>';
 
-print_actions($curr_path);
+file_display_actions($curr_path);
 
 require SITE_FOOTER;

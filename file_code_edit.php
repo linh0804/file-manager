@@ -204,5 +204,5 @@ require SITE_HEADER;
 <?php
 endif;
 
-print_actions($file);
+file_display_actions($file);
 require SITE_FOOTER;

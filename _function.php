@@ -937,7 +937,7 @@ function zip_dir($path, $file, $isDelete = false)
     return false;
 }
 
-function print_actions($filename)
+function file_display_actions($filename)
 {
     global $pages;
 

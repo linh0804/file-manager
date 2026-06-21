@@ -43,6 +43,6 @@ require SITE_HEADER;
 
 <?php
 
-print_actions($curr_path);
+file_display_actions($curr_path);
 
 require SITE_FOOTER;

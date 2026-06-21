@@ -53,6 +53,6 @@ echo '<li><span class="bull">&bull; </span><strong>Ngày sửa</strong>: <span>'
 
 echo '</ul>';
 
-print_actions($curr_path);
+file_display_actions($curr_path);
 
 require SITE_FOOTER;

@@ -55,7 +55,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
         </form>
     </div>';
     
-    print_actions($dir . '/' . $name);
+    file_display_actions($dir . '/' . $name);
 }
 
 require SITE_FOOTER;

@@ -49,7 +49,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
     </div>';
 
     $file = new SplFileInfo($dir . '/' . $name);
-    print_actions($file);
+    file_display_actions($file);
 }
 
 require SITE_FOOTER;

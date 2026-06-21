@@ -44,6 +44,6 @@ require SITE_HEADER;
 <?php
 
 $file = new SplFileInfo($curr_path);
-print_actions($file);
+file_display_actions($file);
 
 require SITE_FOOTER;

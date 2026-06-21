@@ -112,7 +112,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Khuyên bạn nên sửa dạng văn bản, dạng sửa này xử lý khá nhiều trong một lần request</span>
     </div>';
 
-    print_actions($file);
+    file_display_actions($file);
 }
 
 require SITE_FOOTER;

@@ -143,7 +143,7 @@ function auth_encode_pwd($pass)
 }
 
 
-function get_file_ext($name)
+function file_get_ext($name)
 {
     return strrchr((string) $name, '.') !== false
         ? strtolower(str_replace('.', '', strrchr((string) $name, '.')))
@@ -152,7 +152,7 @@ function get_file_ext($name)
 
 function file_is_text($name)
 {
-    $format = get_file_ext($name);
+    $format = file_get_ext($name);
 
     if (in_array($format, COMMON_FILE_FORMAT['text']) || in_array($format, COMMON_FILE_FORMAT['other'])) {
         return true;
@@ -169,7 +169,7 @@ function file_is_text($name)
 
 function is_format_unknown($name)
 {
-    $format = get_file_ext($name);
+    $format = file_get_ext($name);
 
     if (empty($format)) {
         return true;
@@ -785,7 +785,7 @@ function get_file_icon(string $path): string
     }
 
     $name = basename($path);
-    $type = get_file_ext($name);
+    $type = file_get_ext($name);
     $icon = 'unknown';
 
     if (in_array($type, COMMON_FILE_FORMAT['other'])) {

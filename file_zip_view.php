@@ -26,7 +26,7 @@ if (!in_array($format, array('zip', 'jar'))) {
 
     $curr_path = isset($_GET['path_zip']) && !empty($_GET['path_zip']) ? process_path_zip($_GET['path_zip']) : null;
     $dir = process_directory($dir);
-    $format = get_file_ext($name);
+    $format = file_get_ext($name);
     $zip = new ZipArchive;
     $zip->open($dir . '/' . $name);
     $lists = [];

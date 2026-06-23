@@ -32,7 +32,7 @@ $codemirror_format_map = [
 if ($is_text) {
     $content = file_get_contents($curr_path);
     $action_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_path)]);
-    $file_ext = get_file_ext($name);
+    $file_ext = file_get_ext($name);
 
     $file_ext_for_codemirror = array_key_exists($file_ext, $codemirror_format_map)
         ? $codemirror_format_map[$file_ext]

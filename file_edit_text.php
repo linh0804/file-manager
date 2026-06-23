@@ -49,7 +49,7 @@ require SITE_HEADER;
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>
-                <?php if ($is_execute && get_file_ext($name) == 'php'): ?>
+                <?php if ($is_execute && file_get_ext($name) == 'php'): ?>
                     <label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>
                 <?php endif; ?>
                 <div style="display: inline-block; float: right">

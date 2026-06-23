@@ -7,7 +7,7 @@ $site_sidebar = '';
 $header_goto_path = '';
 
 if (IS_LOGIN) {
-    $header_goto_path = isset($path) && $path !== '' ? $path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
+    $header_goto_path = !empty($path) ? $path : '';
     $header_goto_path = (string) $header_goto_path;
 
     if ($header_goto_path !== '/') {

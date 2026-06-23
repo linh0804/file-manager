@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
         $error .= 'Chưa nhập đầy đủ thông tin';
     } else if (file_exists($newDir)) {
         $error .= 'Tên đã tồn tại dạng thư mục hoặc tập tin';
-    } else if (is_name_error($_POST['name'])) {
+    } else if (file_name_valid($_POST['name'])) {
         $error .= 'Tên không hợp lệ';
     } else {
         if (intval($_POST['type']) === 0) {

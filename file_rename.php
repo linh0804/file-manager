@@ -15,7 +15,7 @@ if (request::has_post('submit')) {
 
     if (empty($name)) {
         $error .= 'Chưa nhập đầy đủ thông tin';
-    } elseif (is_name_error($name)) {
+    } elseif (file_name_valid($name)) {
         $error .= 'Tên tập tin không hợp lệ';
     } elseif (file_exists($newPath)) {
         $error .= 'Tên tập tin đã tồn tại';

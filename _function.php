@@ -261,7 +261,7 @@ function process_name($var)
     return $var;
 }
 
-function is_name_error($var)
+function file_name_valid($var)
 {
     return strpos((string) $var, '\\') !== false || strpos((string) $var, '/') !== false;
 }

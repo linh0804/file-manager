@@ -30,7 +30,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
             echo 'Chưa nhập đầy đủ thông tin';
         } elseif (isset($_POST['is_delete']) && process_directory($_POST['path']) == $dir . '/' . $name) {
             echo 'Nếu chọn xóa thư mục bạn không thể lưu tập tin nén ở đó';
-        } elseif (is_name_error($_POST['name'])) {
+        } elseif (file_name_valid($_POST['name'])) {
             echo 'Tên tập tin zip không hợp lệ';
         } elseif (file_exists(process_directory($_POST['path'] . '/' . process_name($_POST['name'])))) {
             echo 'Tập tin đã tồn tại, vui lòng đổi tên!';

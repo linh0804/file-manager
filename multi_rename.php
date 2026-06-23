@@ -27,7 +27,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 
             echo '<div class="notice_failure">Không được để trống ô nào</div>';
             break;
-        } elseif (is_name_error($e)) {
+        } elseif (file_name_valid($e)) {
             $is_failed   = true;
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
             $entry_css   = is_dir($entry_path) ? 'folder' : 'file';

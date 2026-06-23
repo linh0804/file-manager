@@ -1,10 +1,6 @@
 <?php
 
-use nightmare\http\request;
-use nightmare\config;
 use nightmare\fs;
-use nightmare\http\curl;
-use nightmare\http\http;
 use nightmare\zip;
 
 define('ACCESS', true);
@@ -12,10 +8,6 @@ require __DIR__ . '/_init.php';
 
 function folder_zip($path, $file, $isDelete = false)
 {
-    if (@is_file($file)) {
-        @unlink($file);
-    }
-
     $zip = new zip();
 
     if ($zip->open($file, ZipArchive::CREATE) === true) {
@@ -47,7 +39,7 @@ require SITE_HEADER;
 
 echo '<div class="title">' . $site_title . '</div>';
 
-if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $name))) {
+if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
@@ -78,16 +70,20 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
 
     echo '<div class="list">
         <span class="bull">&bull; </span><span>' . print_path($dir . '/' . $name, true) . '</span><hr/>
+        
         <form action="' . action_link('folder_zip', ['dir' => $dir, 'name' => $name] + get_page_list_params()) . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
             <input type="text" name="name" value="' . (isset($_POST['name']) ? $_POST['name'] : $name . '.zip') . '" size="18"/><br/>
+
             <span class="bull">&bull; </span>Đường dẫn lưu:<br/>
             <input type="text" name="path" value="' . (isset($_POST['path']) ? $_POST['path'] : $dir) . '" size="18"/><br/>
+
             <input type="checkbox" name="is_delete" value="1"/> Xóa thư mục<br/>
+
             <input type="submit" name="submit" value="Nén"/>
         </form>
     </div>';
-    
+
     file_display_actions($dir . '/' . $name);
 }
 

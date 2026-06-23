@@ -30,7 +30,7 @@ function folder_zip($path, $file, $isDelete = false)
         $zip->close();
 
         if ($isDelete) {
-            remove_dir($path);
+            fs::remove($path);
         }
 
         return true;

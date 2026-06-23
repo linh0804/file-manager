@@ -266,33 +266,6 @@ function file_name_valid($var)
     return strpos((string) $var, '\\') !== false || strpos((string) $var, '/') !== false;
 }
 
-function remove_dir($path)
-{
-    $handler = scandir($path);
-
-    if ($handler !== false) {
-        foreach ($handler as $entry) {
-            if ($entry != '.' && $entry != '..') {
-                $pa = $path . '/' . $entry;
-
-                if (is_dir($pa)) {
-                    if (!remove_dir($pa)) {
-                        return false;
-                    }
-                } else {
-                    if (!unlink($pa)) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return is_dir($path) ? rmdir($path) : unlink($path);
-    }
-
-    return false;
-}
-
 function multi_remove($entrys, $dir)
 {
     foreach ($entrys as $e) {

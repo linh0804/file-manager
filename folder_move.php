@@ -4,47 +4,6 @@ define('ACCESS', true);
 
 require __DIR__ . '/_init.php';
 
-function movedir($old, $new, $isParent = true)
-{
-    $handler = @scandir($old);
-
-    if ($handler !== false) {
-        if ($isParent && $old != '/') {
-            $s   = explode('/', (string) $old);
-            $end = $new = $new . '/' . end($s);
-
-            if (@is_file($end) || (!@is_dir($end) && !@mkdir($end))) {
-                return false;
-            }
-        } elseif (!$isParent && !@is_dir($new) && !@mkdir($new)) {
-            return false;
-        }
-
-        foreach ($handler as $entry) {
-            if ($entry != '.' && $entry != '..') {
-                $paOld = $old . '/' . $entry;
-                $paNew = $new . '/' . $entry;
-
-                if (@is_file($paOld)) {
-                    if (!@rename($paOld, $paNew)) {
-                        return false;
-                    }
-                } elseif (@is_dir($paOld)) {
-                    if (!movedir($paOld, $paNew, false)) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        return @rmdir($old);
-    }
-
-    return false;
-}
-
 $dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
 $name = !empty($_GET['name']) ? $_GET['name'] : null;
 

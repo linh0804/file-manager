@@ -1,5 +1,26 @@
 <?php
 
+function multi_move($entrys, $dir, $path)
+{
+    foreach ($entrys as $e) {
+        $pa = $dir . '/' . $e;
+
+        if (@is_file($pa)) {
+            if (!@rename($pa, $path . '/' . $e)) {
+                return false;
+            }
+        } elseif (@is_dir($pa)) {
+            if (!movedir($pa, $path)) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 $site_title = 'Di chuyển';
 $curr_path = process_directory($curr_path);
 $entry_checkbox = '';
@@ -27,7 +48,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
         echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
     } elseif (!is_dir($_POST['path_new'])) {
         echo 'Đường dẫn mới không tồn tại';
-    } elseif (!moves($entries, $curr_path, process_directory($_POST['path_new']))) {
+    } elseif (!multi_move($entries, $curr_path, process_directory($_POST['path_new']))) {
         echo 'Di chuyển thất bại';
     } else {
         redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));

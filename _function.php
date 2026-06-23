@@ -318,25 +318,45 @@ function copydir($old, $new, $isParent = true)
     return false;
 }
 
-function moves($entrys, $dir, $path)
+function movedir($old, $new, $isParent = true)
 {
-    foreach ($entrys as $e) {
-        $pa = $dir . '/' . $e;
+    $handler = @scandir($old);
 
-        if (@is_file($pa)) {
-            if (!@rename($pa, $path . '/' . $e)) {
+    if ($handler !== false) {
+        if ($isParent && $old != '/') {
+            $s   = explode('/', (string) $old);
+            $end = $new = $new . '/' . end($s);
+
+            if (@is_file($end) || (!@is_dir($end) && !@mkdir($end))) {
                 return false;
             }
-        } elseif (@is_dir($pa)) {
-            if (!movedir($pa, $path)) {
-                return false;
-            }
-        } else {
+        } elseif (!$isParent && !@is_dir($new) && !@mkdir($new)) {
             return false;
         }
+
+        foreach ($handler as $entry) {
+            if ($entry != '.' && $entry != '..') {
+                $paOld = $old . '/' . $entry;
+                $paNew = $new . '/' . $entry;
+
+                if (@is_file($paOld)) {
+                    if (!@rename($paOld, $paNew)) {
+                        return false;
+                    }
+                } elseif (@is_dir($paOld)) {
+                    if (!movedir($paOld, $paNew, false)) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return @rmdir($old);
     }
 
-    return true;
+    return false;
 }
 
 

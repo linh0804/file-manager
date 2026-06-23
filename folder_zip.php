@@ -3,7 +3,7 @@
 define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
-function zip_dir($path, $file, $isDelete = false)
+function folder_zip($path, $file, $isDelete = false)
 {
     if (@is_file($file)) {
         @unlink($file);
@@ -60,7 +60,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
             echo 'Tên tập tin zip không hợp lệ';
         } elseif (file_exists(process_directory($_POST['path'] . '/' . process_name($_POST['name'])))) {
             echo 'Tập tin đã tồn tại, vui lòng đổi tên!';
-        } elseif (!zip_dir($dir . '/' . $name, process_directory($_POST['path'] . '/' . process_name($_POST['name'])), isset($_POST['is_delete']) == 1)) {
+        } elseif (!folder_zip($dir . '/' . $name, process_directory($_POST['path'] . '/' . process_name($_POST['name'])), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
             redirect(action_link('index', ['path' => $dir] + get_page_list_params()));

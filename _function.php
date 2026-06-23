@@ -167,7 +167,7 @@ function file_is_text($name)
     return in_array($basename, COMMON_FILE_FORMAT['source']);
 }
 
-function is_format_unknown($name)
+function file_is_unknown($name)
 {
     $format = file_get_ext($name);
 
@@ -898,7 +898,7 @@ function file_display_actions($filename)
         if (in_array($ext, COMMON_FILE_FORMAT['zip'])) {
             echo '<li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $path] + get_page_list_params()) . '">Xem</a></li>
               <li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'unzip', 'path' => $path] + get_page_list_params()) . '">Giải nén</a></li>';
-        } elseif (file_is_text($name) || is_format_unknown($name)) {
+        } elseif (file_is_text($name) || file_is_unknown($name)) {
             echo '<li><img src="icon/edit.png"/> <a href="' . action_link('file', ['act' => 'edit_text', 'path' => $path]) . '">Sửa văn bản</a></li>
               <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'code_edit', 'path' => $path]) . '">Sửa code</a></li>
                <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_text_line', 'path' => $path] + get_page_list_params()) . '">Sửa theo dòng</a></li>
@@ -952,7 +952,7 @@ function file_get_display_link($file)
             COMMON_FILE_FORMAT['source']
         )) {
             $is_edit = true;
-        } elseif (is_format_unknown($name)) {
+        } elseif (file_is_unknown($name)) {
             $is_edit = true;
         }
 

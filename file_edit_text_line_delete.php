@@ -20,7 +20,7 @@ if (!is_file(process_directory($curr_path))) {
     <ul class="list">
         <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
     </ul>';
-} elseif (!file_is_text($name) && !is_format_unknown($name)) {
+} elseif (!file_is_text($name) && !file_is_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">

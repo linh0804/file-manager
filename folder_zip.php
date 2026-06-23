@@ -1,14 +1,40 @@
 <?php
 
 define('ACCESS', true);
-
 require __DIR__ . '/_init.php';
+
+function zip_dir($path, $file, $isDelete = false)
+{
+    if (@is_file($file)) {
+        @unlink($file);
+    }
+
+    $zip = new zip();
+
+    if ($zip->open($file, ZipArchive::CREATE) === true) {
+        $path = realpath($path);
+        $files = read_full_dir($path);
+
+        foreach ($files as $name => $file) {
+            $filePath = $file->getRealPath();
+            $zip->add($filePath, $path . DIRECTORY_SEPARATOR);
+        }
+
+        $zip->close();
+
+        if ($isDelete) {
+            remove_dir($path);
+        }
+
+        return true;
+    }
+
+    return false;
+}
 
 $dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
 $name = !empty($_GET['name']) ? $_GET['name'] : null;
-
-
-$site_title = 'Nén zip thư mục';
+$site_title = 'Nén thư mục';
 
 require SITE_HEADER;
 

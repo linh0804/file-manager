@@ -908,35 +908,6 @@ function get_curr_path()
     return $path;
 }
 
-function zip_dir($path, $file, $isDelete = false)
-{
-    if (@is_file($file)) {
-        @unlink($file);
-    }
-
-    $zip = new zip();
-
-    if ($zip->open($file, ZipArchive::CREATE) === true) {
-        $path = realpath($path);
-        $files = read_full_dir($path);
-
-        foreach ($files as $name => $file) {
-            $filePath = $file->getRealPath();
-            $zip->add($filePath, $path . DIRECTORY_SEPARATOR);
-        }
-
-        $zip->close();
-
-        if ($isDelete) {
-            remove_dir($path);
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
 function file_display_actions($filename)
 {
     global $pages;

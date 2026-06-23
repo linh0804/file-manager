@@ -1,10 +1,9 @@
 <?php
 
-use nightmare\http\request;
 use nightmare\config;
 use nightmare\fs;
-use nightmare\http\curl;
 use nightmare\http\http;
+use nightmare\http\request;
 use nightmare\zip;
 
 defined('ACCESS') or exit;
@@ -24,11 +23,13 @@ function is_app_file($dir)
 // ========
 // base64url
 //
-function base64url_encode(string $data): string {
+function base64url_encode(string $data): string
+{
     return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
 
-function base64url_decode(string $data): string {
+function base64url_decode(string $data): string
+{
     return base64_decode(strtr($data, '-_', '+/'));
 }
 
@@ -417,7 +418,8 @@ function read_full_dir($path, $excludes = [])
     );
 }
 
-function file_import($path, $url, $timeout = 0) {
+function file_import($path, $url, $timeout = 0)
+{
     $fp = fopen($path, 'wb');
 
     if ($fp === false) {
@@ -455,7 +457,7 @@ function app_reinstall(): bool
             return false;
         }
 
-        $zip = new zip;
+        $zip = new zip();
 
         if ($zip->open($file) !== true) {
             return false;
@@ -1013,5 +1015,3 @@ class fm_config
     }
 
 }
-
-

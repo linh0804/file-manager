@@ -1,5 +1,12 @@
 <?php
 
+use nightmare\http\request;
+use nightmare\config;
+use nightmare\fs;
+use nightmare\http\curl;
+use nightmare\http\http;
+use nightmare\zip;
+
 define('ACCESS', true);
 require __DIR__ . '/_init.php';
 

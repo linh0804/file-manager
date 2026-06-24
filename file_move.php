@@ -37,7 +37,7 @@ if ($message !== null) {
 $default_path = $_POST['path_new'] ?? dirname($curr_path);
 
 echo '<div class="list">
-    <span class="bull">&bull; </span><span>' . print_path($curr_path) . '</span><hr/>
+    <span class="bull">&bull; </span><span>' . file_print_path($curr_path) . '</span><hr/>
     <form action="' . action_link('file', ['act' => 'move', 'path' => $curr_path] + get_page_list_params()) . '" method="post">
         <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
         <input type="text" name="path_new" value="' . htmlspecialchars($default_path, ENT_QUOTES, 'UTF-8') . '"/><br/>

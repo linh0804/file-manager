@@ -42,7 +42,7 @@ echo '<div class="title">' . $site_title . '</div>';
 echo $error;
 
 echo '<div class="list">
-    <span>' . print_path($curr_path, true) . '</span><hr/>
+    <span>' . file_print_path($curr_path, true) . '</span><hr/>
     <form action="" method="post">
         <span class="bull">&bull; </span>Tên:<br/>
         <input type="text" name="name" value="' . ($_POST['name'] ?? null) . '" size="18"/><br/>

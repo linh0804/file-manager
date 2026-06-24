@@ -47,7 +47,7 @@ echo '<style>
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
-    <span>' . print_path($dir, true) . '</span><hr/>
+    <span>' . file_print_path($dir, true) . '</span><hr/>
     <form method="post">
         Nội dung tìm kiếm:<br />
         <input type="text" name="search" value="' . htmlspecialchars((string) $search) . '" style="width: 80%" /><br />

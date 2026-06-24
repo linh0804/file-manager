@@ -75,7 +75,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 
 echo $entry_html_list;
 echo '<div class="list">
-        <span>' . print_path($curr_path, true) . '</span><hr/>
+        <span>' . file_print_path($curr_path, true) . '</span><hr/>
         <form action="' . action_link('multi', ['act' => 'zip', 'path' => $curr_path] + get_page_list_params()) . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
             <input type="text" name="name" value="' . ($_POST['name'] ?? 'archive.zip') . '" size="18"/><br/>

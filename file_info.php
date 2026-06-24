@@ -20,7 +20,7 @@ require SITE_HEADER;
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<ul class="info">';
-echo '<li class="not_ellipsis"><span class="bull">&bull; </span><strong>Đường dẫn</strong>: <span>' . print_path($file, $file->isDir() ? true : false) . '</span></li>';
+echo '<li class="not_ellipsis"><span class="bull">&bull; </span><strong>Đường dẫn</strong>: <span>' . file_print_path($file, $file->isDir() ? true : false) . '</span></li>';
 echo '<li><span class="bull">&bull; </span><strong>Tên</strong>: <span>' . basename((string) $file) . '</span></li>';
 
 if ($file->isFile()) {

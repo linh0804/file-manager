@@ -617,7 +617,7 @@ function is_in_array($array, $search, $isLowerCase)
     return false;
 }
 
-function print_path(string $path, bool $isHrefEnd = false)
+function file_print_path(string $path, bool $isHrefEnd = false)
 {
     $html = '';
 
@@ -821,7 +821,7 @@ function check_path($path, $type = '')
 
     require SITE_HEADER;
 
-    echo '<div class="title">' . print_path($path, true) . '</div>';
+    echo '<div class="title">' . file_print_path($path, true) . '</div>';
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
     echo '<br>';
 

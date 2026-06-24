@@ -32,7 +32,7 @@ require SITE_HEADER;
 <?= form_err($notice) ?>
 
 <div class="list">
-    <span class="bull">&bull;</span><span><?= print_path($dir . '/' . $name) ?></span><hr/>
+    <span class="bull">&bull;</span><span><?= file_print_path($dir . '/' . $name) ?></span><hr/>
     <form action="" method="post">
         <span class="bull">&bull;</span>Đường dẫn tập tin mới:<br/>
         <input type="text" name="dir" value="<?= htmlspecialchars((string) $new_dir) ?>" size="18"/><br/>

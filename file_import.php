@@ -38,7 +38,7 @@ require SITE_HEADER;
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
-    <span>' . print_path($curr_path, true) . '</span><hr/>
+    <span>' . file_print_path($curr_path, true) . '</span><hr/>
     <form action="' . action_link('file', ['act' => 'import', 'path' => $curr_path] + get_page_list_params()) . '" method="post">
         <span class="bull">&bull; </span>URL 1:<br/>
         <input type="text" name="url[]" size="18"/><br/>

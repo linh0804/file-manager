@@ -38,7 +38,7 @@ require SITE_HEADER;
 
 <?php
 
-echo '<div class="title">' . print_path($curr_path, true) . ' <span class="copy-button" data-copy="' . htmlspecialchars((string) $curr_path) . '" style="color: pink">[copy]</span></div>';
+echo '<div class="title">' . file_print_path($curr_path, true) . ' <span class="copy-button" data-copy="' . htmlspecialchars((string) $curr_path) . '" style="color: pink">[copy]</span></div>';
 
 echo '<a href="' . action_link('index', ['path' => dirname($curr_path)]) . '">
   <div class="list">

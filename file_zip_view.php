@@ -56,7 +56,7 @@ if (!in_array($format, array('zip', 'jar'))) {
     if (!$lists) {
         echo '<div class="title">' . $site_title . '</div>
         <div class="list">
-            <span>' . print_path($dir . '/' . $name) . '</span><hr/>
+            <span>' . file_print_path($dir . '/' . $name) . '</span><hr/>
             <span>Tập tin nén bị lỗi không mở được</span>
         </div>';
     } else {
@@ -140,7 +140,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         echo '<div class="title">' . $html . '</div>';
         echo '<ul class="list_file">';
         echo '<li class="normal">
-            <span>' . print_path($dir . '/' . $name) . '</span>
+            <span>' . file_print_path($dir . '/' . $name) . '</span>
         </li>';
 
         if ($curr_path != null) {

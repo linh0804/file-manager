@@ -30,7 +30,7 @@ require SITE_HEADER;
 
 <div class="list">
   <form method="post">
-    Xác nhận xoá <?= print_path($curr_path) ?>!!!<br><br>
+    Xác nhận xoá <?= file_print_path($curr_path) ?>!!!<br><br>
     <input type="submit" name="submit" value="Xoá"/>
   </form>
 </div>

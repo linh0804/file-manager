@@ -102,7 +102,7 @@ if (!is_file($curr_path)) {
     </style>';
 
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . print_path($dir, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . file_print_path($dir, true) . '</span><hr/>
         <div class="ellipsis break-word">
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit">' . $name . '</strong>
         </div>

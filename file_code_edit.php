@@ -68,7 +68,7 @@ require SITE_HEADER;
     </style>
 
     <div class="list">
-        <span><?= print_path($dir, true) ?></span><hr/>
+        <span><?= file_print_path($dir, true) ?></span><hr/>
         <div class="ellipsis break-word">
             <span class="bull">&bull;</span>
             Tập tin:

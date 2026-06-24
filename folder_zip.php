@@ -69,7 +69,7 @@ if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name)
     }
 
     echo '<div class="list">
-        <span class="bull">&bull; </span><span>' . print_path($dir . '/' . $name, true) . '</span><hr/>
+        <span class="bull">&bull; </span><span>' . file_print_path($dir . '/' . $name, true) . '</span><hr/>
         
         <form action="' . action_link('folder_zip', ['dir' => $dir, 'name' => $name] + get_page_list_params()) . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>

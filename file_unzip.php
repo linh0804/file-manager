@@ -52,7 +52,7 @@ if (!in_array($format, array('zip', 'jar'))) {
     echo $error;
 
     echo '<div class="list">
-        <span class="bull">&bull;</span><span>' . print_path($curr_path) . '</span><hr/>
+        <span class="bull">&bull;</span><span>' . file_print_path($curr_path) . '</span><hr/>
         <form method="post">
             <span class="bull">&bull;</span>Đường dẫn giải nén:<br/>
             <input type="text" name="path_unzip" value="' . $path_unzip . '"/><br/>

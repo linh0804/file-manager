@@ -36,7 +36,7 @@ require SITE_HEADER;
 <?= $error ?>
 
 <div class="list">
-  <span class="bull">&bull;</span><span><?= print_path($curr_path) ?></span><hr/>
+  <span class="bull">&bull;</span><span><?= file_print_path($curr_path) ?></span><hr/>
   <form method="post">
     <span class="bull">&bull;</span>Tên <?= file_type_name($curr_path) ?>:<br/>
     <input type="text" name="name" value="<?= $name ?>" /><br/>

@@ -34,7 +34,7 @@ require SITE_HEADER;
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
-  <span>' . print_path($curr_path, true) . '</span><hr/>
+  <span>' . file_print_path($curr_path, true) . '</span><hr/>
   <form enctype="multipart/form-data">        
     <div id="fileList"></div>
     <input id="files" type="file" multiple style="display:none">

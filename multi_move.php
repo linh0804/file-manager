@@ -59,7 +59,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 
 echo $entry_html_list;
 echo '<div class="list">
-        <span>' . print_path($curr_path, true) . '</span><hr/>
+        <span>' . file_print_path($curr_path, true) . '</span><hr/>
         <form action="' . action_link('multi', ['act' => 'move', 'path' => $curr_path] + get_page_list_params()) . '" method="post">
             <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
             <input type="text" name="path_new" value="' . ($_POST['path_new'] ?? $curr_path) . '"/><br/>

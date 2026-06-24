@@ -32,7 +32,7 @@ require SITE_HEADER;
 
 <div class="list">
     <span class="bull">&bull;</span>
-    <span><?= print_path($curr_path) ?></span><hr/>
+    <span><?= file_print_path($curr_path) ?></span><hr/>
     <form action="" method="post">
         <span class="bull">&bull;</span>
         Chế độ:<br/>

@@ -729,7 +729,7 @@ function sort_natural(&$items)
     });
 }
 
-function get_file_icon(string $path): string
+function file_get_icon(string $path): string
 {
     if (is_dir($path)) {
         return 'icon/folder.png';
@@ -767,7 +767,7 @@ function get_file_icon(string $path): string
 
 function get_file_icon_display(string $path): string
 {
-    return '<img src="' . get_file_icon($path) . '"/>';
+    return '<img src="' . file_get_icon($path) . '"/>';
 }
 
 function show_back()

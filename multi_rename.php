@@ -67,7 +67,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
             $entry_css   = is_dir($entry_path) ? 'folder' : 'file';
 
-            if (!@rename($entry_path . '-' . $rand, $curr_path . '/' . process_name($modifier[$k]))) {
+            if (!@rename($entry_path . '-' . $rand, $curr_path . '/' . $modifier[$k])) {
                 $is_succeed = false;
 
                 echo '<div class="notice_failure">Đổi tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $modifier[$k] . '</strong> thất bại</div>';

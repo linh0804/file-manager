@@ -57,9 +57,9 @@ if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name)
             echo 'Nếu chọn xóa thư mục bạn không thể lưu tập tin nén ở đó';
         } elseif (file_name_valid($_POST['name'])) {
             echo 'Tên tập tin zip không hợp lệ';
-        } elseif (file_exists(process_directory($_POST['path'] . '/' . process_name($_POST['name'])))) {
+        } elseif (file_exists(process_directory($_POST['path'] . '/' . $_POST['name']))) {
             echo 'Tập tin đã tồn tại, vui lòng đổi tên!';
-        } elseif (!folder_zip($dir . '/' . $name, process_directory($_POST['path'] . '/' . process_name($_POST['name'])), isset($_POST['is_delete']) == 1)) {
+        } elseif (!folder_zip($dir . '/' . $name, process_directory($_POST['path'] . '/' . $_POST['name']), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
             redirect(action_link('index', ['path' => $dir] + get_page_list_params()));

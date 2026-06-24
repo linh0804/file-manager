@@ -284,14 +284,6 @@ function process_path_zip($var)
     return $var;
 }
 
-function process_name($var)
-{
-    $var = str_replace('/', '', $var);
-    $var = str_replace('\\', '', $var);
-
-    return $var;
-}
-
 function file_name_valid($var)
 {
     return strpos((string) $var, '\\') !== false || strpos((string) $var, '/') !== false;
@@ -389,36 +381,6 @@ function movedir($old, $new, $isParent = true)
     return false;
 }
 
-
-function merge_folder($source, $destination, $overwrite = true)
-{
-    if (!is_dir($source)) {
-        return false; // Source is not a directory
-    }
-
-    if (!file_exists($destination)) {
-        mkdir($destination);
-    }
-
-    $dir = opendir($source);
-
-    while ($file = readdir($dir)) {
-        if ($file !== '.' && $file !== '..') {
-            $src_file = $source . '/' . $file;
-            $dst_file = $destination . '/' . $file;
-
-            if (is_dir($src_file)) {
-                merge_folder($src_file, $dst_file);
-            } else {
-                copy($src_file, $dst_file); // Overwrite existing files
-            }
-        }
-    }
-
-    closedir($dir);
-
-    return true;
-}
 
 if (!function_exists('str_ends_with')) {
     function str_ends_with($haystack, $needle)
@@ -1063,5 +1025,4 @@ class fm_config
         unset($this->configs[$key]);
         $this->save();
     }
-
 }

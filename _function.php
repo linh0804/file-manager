@@ -778,7 +778,7 @@ function show_back()
     </a>';
 }
 
-function can_format_code($type)
+function file_can_format_code($type)
 {
     return in_array($type, [
         'php',

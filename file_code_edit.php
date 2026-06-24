@@ -100,7 +100,7 @@ require SITE_HEADER;
                 <input type="checkbox" id="code_check_php" /> Kiểm tra lỗi PHP
 
                 <span style="float: right">
-                    <?php if (can_format_code($file_ext)): ?>
+                    <?php if (file_can_format_code($file_ext)): ?>
                         <button class="button" id="code_format">Format</button>
                     <?php endif; ?>
                     <label><input type="checkbox" id="code_wrap" /> Wrap</label>

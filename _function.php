@@ -128,12 +128,12 @@ function get_curr_uri_without_referer(): string
     return $path . '?' . http_build_query($params);
 }
 
-function get_curr_referer(): ?string
+function get_curr_referer(): string
 {
     $referer = request::get('_referer');
 
     if (empty($referer)) {
-        return null;
+        return '';
     }
 
     return base64url_decode($referer);

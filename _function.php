@@ -655,14 +655,14 @@ function print_path(string $path, bool $isHrefEnd = false)
 function function_can_use(...$func)
 {
     foreach ($func as $f) {
-        if (function_exists($f) == false || is_function_disable($f)) {
+        if (function_exists($f) == false || function_disabled($f)) {
             return false;
         }
     }
     return true;
 }
 
-function is_function_disable($func)
+function function_disabled($func)
 {
     $list = @ini_get('disable_functions');
 

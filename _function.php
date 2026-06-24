@@ -765,7 +765,7 @@ function file_get_icon(string $path): string
     return 'icon/mime/' . $icon . '.png';
 }
 
-function get_file_icon_display(string $path): string
+function file_get_icon_display(string $path): string
 {
     return '<img src="' . file_get_icon($path) . '"/>';
 }
@@ -920,7 +920,7 @@ function file_get_display_link($file)
     $name = $file->getFilename();
     $is_edit = false;
 
-    $file_icon = get_file_icon_display($path);
+    $file_icon = file_get_icon_display($path);
 
     if ($file->isFile()) {
         if (in_array(file_get_ext($name), COMMON_FILE_FORMAT['text'])) {

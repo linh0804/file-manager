@@ -175,7 +175,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                 } else {
                     echo '<li class="file">
                         <p>
-                            ' . get_file_icon_display($value['path']) . '
+                            ' . file_get_icon_display($value['path']) . '
                             <span>' . $value['name'] . '</span>
                         </p>
                         <p>

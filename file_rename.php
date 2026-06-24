@@ -6,7 +6,7 @@ defined('ACCESS') or exit;
 
 $error = '';
 $name = request::post('name', basename($curr_path));
-$newPath = dirname($curr_path) . '/' . $name;
+$new_path = dirname($curr_path) . '/' . $name;
 $site_title = 'Đổi tên ' . t_file_type($curr_path);
 
 if (request::has_post('submit')) {    
@@ -16,9 +16,9 @@ if (request::has_post('submit')) {
         $error .= 'Chưa nhập đầy đủ thông tin';
     } elseif (file_name_valid($name)) {
         $error .= 'Tên tập tin không hợp lệ';
-    } elseif (file_exists($newPath)) {
+    } elseif (file_exists($new_path)) {
         $error .= 'Tên tập tin đã tồn tại';
-    } elseif (!rename($curr_path, $newPath)) {
+    } elseif (!rename($curr_path, $new_path)) {
         $error .= 'Thay đổi thất bại';
     } else {
         redirect(action_link('index', ['path' => dirname($curr_path)] + get_page_list_params()));

@@ -770,14 +770,6 @@ function file_get_icon_display(string $path): string
     return '<img src="' . file_get_icon($path) . '"/>';
 }
 
-function show_back()
-{
-    echo '<a href="javascript:history.back()">
-      <img src="icon/back.png"> 
-      <strong class="back">Trở lại</strong>
-    </a>';
-}
-
 function file_can_format_code($path)
 {
     $ext = file_get_ext(basename($path));
@@ -968,6 +960,20 @@ function file_get_display_link($file)
 
 
 
+function show_back()
+{
+    $referer = get_curr_referer();
+
+    if (!empty($referer)) {
+        echo '<a href="' . htmlspecialchars($referer) . '">';
+    } else {
+        echo '<a href="javascript:history.back()">';
+    }
+
+    echo '<img src="icon/back.png"> 
+      <strong class="back">Trở lại</strong>
+    </a>';
+}
 
 
 

@@ -893,17 +893,6 @@ function file_display_actions($filename)
     show_back();
 }
 
-function file_type_name($filename)
-{
-    if (is_file($filename)) {
-        return 'tập tin';
-    }
-    if (is_dir($filename)) {
-        return 'thư mục';
-    }
-    return '(unknown)';
-}
-
 function file_get_display_link($file)
 {
     global $pages;

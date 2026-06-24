@@ -5,7 +5,7 @@ use nightmare\fs;
 defined('ACCESS') or exit;
 
 $file = new SplFileInfo($curr_path);
-$site_title = 'Thông tin ' . file_type_name($curr_path);
+$site_title = 'Thông tin ' . basename($curr_path);
 
 $format = file_get_ext(basename($curr_path));
 $isImage = false;

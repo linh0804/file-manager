@@ -7,7 +7,7 @@ defined('ACCESS') or exit;
 $error = '';
 $name = request::post('name', basename($curr_path));
 $new_path = dirname($curr_path) . '/' . $name;
-$site_title = 'Đổi tên ' . file_type_name($curr_path);
+$site_title = 'Đổi tên ' . basename($curr_path);
 
 if (request::has_post('submit')) {    
     $error .= '<div class="notice_failure">';
@@ -38,7 +38,7 @@ require SITE_HEADER;
 <div class="list">
   <span class="bull">&bull;</span><span><?= file_print_path($curr_path) ?></span><hr/>
   <form method="post">
-    <span class="bull">&bull;</span>Tên <?= file_type_name($curr_path) ?>:<br/>
+    <span class="bull">&bull;</span>Tên:<br/>
     <input type="text" name="name" value="<?= $name ?>" /><br/>
     <input type="submit" name="submit" value="Thay đổi"/>
   </form>

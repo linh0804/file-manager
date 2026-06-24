@@ -6,7 +6,7 @@ use nightmare\http\request;
 defined('ACCESS') or exit;
 
 $error = '';
-$site_title = 'Xoá ' . t_file_type($curr_path);
+$site_title = 'Xoá ' . file_type_name($curr_path);
 
 if (request::has_post('submit')) {    
     $error .= '<div class="notice_failure">';

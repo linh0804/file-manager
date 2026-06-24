@@ -903,7 +903,7 @@ function file_display_actions($filename)
     show_back();
 }
 
-function t_file_type($filename)
+function file_type_name($filename)
 {
     if (is_file($filename)) {
         return 'tập tin';

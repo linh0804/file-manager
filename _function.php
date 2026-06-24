@@ -102,11 +102,41 @@ function action_link(string $name, array $params = []): string
 {
     $link = $name . '.php';
 
-    if (empty($params)) {
-        return $link;
-    }
+    // Tự động thêm _referer: base64 URL hiện tại (đã loại bỏ _referer cũ nếu có)
+    $params['_referer'] = base64url_encode(get_curr_uri_without_referer());
 
     return $link . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+}
+
+function get_curr_uri_without_referer(): string
+{
+    $uri = request::uri('request');
+
+    $pos = strpos($uri, '?');
+    if ($pos === false) {
+        return $uri;
+    }
+
+    $path = substr($uri, 0, $pos);
+    parse_str(substr($uri, $pos + 1), $params);
+    unset($params['_referer']);
+
+    if (empty($params)) {
+        return $path;
+    }
+
+    return $path . '?' . http_build_query($params);
+}
+
+function get_curr_referer(): ?string
+{
+    $referer = request::get('_referer');
+
+    if (empty($referer)) {
+        return null;
+    }
+
+    return base64url_decode($referer);
 }
 
 function get_page_list_params(): array

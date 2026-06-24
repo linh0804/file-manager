@@ -28,7 +28,7 @@ require SITE_HEADER;
     $total = 0;
     $dir = process_directory($dir);
     $content = file_get_contents($curr_path);
-    $is_execute = is_function_exec_enable();
+    $is_execute = function_can_use('exec');
     $action_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_path)]);
     ?>
     <div class="list">

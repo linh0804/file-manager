@@ -652,12 +652,6 @@ function print_path(string $path, bool $isHrefEnd = false)
     return $html;
 }
 
-function is_function_exec_enable()
-{
-    return function_exists('exec')
-        && is_function_disable('exec') == false;
-}
-
 function function_can_use(...$func)
 {
     foreach ($func as $f) {

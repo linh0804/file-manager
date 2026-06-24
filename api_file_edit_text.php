@@ -114,7 +114,7 @@ if (file_put_contents($curr_path, $content) !== false) {
 
     if ($check_php) {
         $error_syntax = 'Lưu thành công! Không thể kiểm tra lỗi';
-        $is_execute = is_function_exec_enable();
+        $is_execute = function_can_use('exec');
 
         if ($is_execute) {
             @exec(PHP_BINARY . ' -c -f -l ' . $curr_path, $output, $value);

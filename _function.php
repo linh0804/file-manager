@@ -657,6 +657,17 @@ function is_function_exec_enable()
     return function_exists('exec')
         && is_function_disable('exec') == false;
 }
+
+function function_can_use(...$func)
+{
+    foreach ($func as $f) {
+        if (function_exists($f) == false || is_function_disable($f)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function is_function_disable($func)
 {
     $list = @ini_get('disable_functions');

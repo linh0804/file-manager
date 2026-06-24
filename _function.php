@@ -778,9 +778,10 @@ function show_back()
     </a>';
 }
 
-function file_can_format_code($type)
+function file_can_format_code($path)
 {
-    return in_array($type, [
+    $ext = file_get_ext(basename($path));
+    return in_array($ext, [
         'php',
         'html',
         'js',

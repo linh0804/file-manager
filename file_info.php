@@ -7,7 +7,7 @@ defined('ACCESS') or exit;
 $file = new SplFileInfo($curr_path);
 $site_title = 'Thông tin ' . t_file_type($curr_path);
 
-$format = $file->getExtension();
+$format = file_get_ext(basename($curr_path));
 $isImage = false;
 $pixel = null;
 

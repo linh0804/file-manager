@@ -9,7 +9,7 @@ $site_title = 'Xem tập tin nén';
 $file = new SplFileInfo($curr_path);
 $dir = dirname($file->getPathname());
 $name = $file->getFilename();
-$format = $file->getExtension();
+$format = file_get_ext(basename($curr_path));
 
 if (!in_array($format, array('zip', 'jar'))) {
     require SITE_HEADER;

@@ -8,7 +8,7 @@ defined('ACCESS') or exit;
 $error = '';
 $site_title = 'Giải nén tập tin';
 $file = new SplFileInfo($curr_path);
-$format = $file->getExtension();
+$format = file_get_ext(basename($curr_path));
 $path_unzip = request::post('path_unzip', dirname((string) $curr_path));
 $is_delete = request::has_post('is_delete');
 

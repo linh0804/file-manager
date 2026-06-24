@@ -869,7 +869,7 @@ function file_display_actions($filename)
     $file = new SplFileInfo($filename);
     $path = $file->getPathname();
     $name = $file->getFilename();
-    $ext = $file->getExtension();
+    $ext = file_get_ext($name);
     $dir = dirname($path);
 
     echo '<div class="title">Chức năng</div>';
@@ -926,7 +926,7 @@ function file_get_display_link($file)
     $file_icon = get_file_icon_display($path);
 
     if ($file->isFile()) {
-        if (in_array($file->getExtension(), COMMON_FILE_FORMAT['text'])) {
+        if (in_array(file_get_ext($name), COMMON_FILE_FORMAT['text'])) {
             $is_edit = true;
         } elseif (in_array(
             strtolower(strpos($name, '.') !== false ? substr($name, 0, strpos($name, '.')) : $name),
@@ -939,7 +939,7 @@ function file_get_display_link($file)
 
         if (strtolower($file->getFilename()) === 'error_log' || $is_edit) {
             $file_link = action_link('file', ['act' => 'edit_text', 'path' => $file->getPathname()]);
-        } elseif (in_array($file->getExtension(), COMMON_FILE_FORMAT['zip'])) {
+        } elseif (in_array(file_get_ext($name), COMMON_FILE_FORMAT['zip'])) {
             $file_link = action_link('file', ['act' => 'unzip', 'path' => $file->getPathname()] + get_page_list_params());
         } else {
             $file_link = action_link('file', ['act' => 'rename', 'path' => $path] + get_page_list_params());

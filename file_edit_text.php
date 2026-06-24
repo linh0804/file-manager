@@ -53,7 +53,7 @@ require SITE_HEADER;
                     <label><input type="checkbox" id="code_check_php"/> Kiểm tra lỗi</label>
                 <?php endif; ?>
                 <div style="display: inline-block; float: right">
-                    <?php if (can_format_code($curr_file->getExtension())): ?>
+                    <?php if (can_format_code(file_get_ext($name))): ?>
                         <input type="button" id="code_highlight" value="Format"> 
                     <?php endif; ?>
                     <label><input type="checkbox" id="code_wrap" /> Wrap</label>
@@ -122,7 +122,7 @@ require SITE_HEADER;
 
             var data = new FormData();
             data.append("request_api", 1);
-            data.append("format", "<?= $curr_file->getExtension() ?>");
+            data.append("format", "<?= file_get_ext($name) ?>");
             data.append("content", editorElement.value);
 
             fetch("<?= $action_edit ?>", {

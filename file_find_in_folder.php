@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (in_array($file->getExtension(), [
+                if (in_array(file_get_ext($file_name), [
                     'mp3',
                     'mp4',
                     'flac',

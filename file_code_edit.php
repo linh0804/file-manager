@@ -2,7 +2,6 @@
 
 defined('ACCESS') or exit;
 
-$file = new SplFileInfo($curr_path);
 $dir = dirname($curr_path);
 $name = basename($curr_path);
 $site_title = 'Sửa code - ' . $name;
@@ -204,5 +203,5 @@ require SITE_HEADER;
 <?php
 endif;
 
-file_display_actions($file);
+file_display_actions($curr_path);
 require SITE_FOOTER;

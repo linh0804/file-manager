@@ -49,7 +49,6 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     $path = $curr_path;
-    $file = $curr_file;
     $line = isset($_GET['line']) ? intval($_GET['line']) : 0;
     $lines = [];
     $content = null;
@@ -169,7 +168,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Ấn tiếp tục để lưu lại ở lại trang và ấn lưu để lưu lại và quay về danh sách dòng</span>
     </div>';
 
-    file_display_actions($file);
+    file_display_actions($curr_path);
 }
 
 require SITE_FOOTER;

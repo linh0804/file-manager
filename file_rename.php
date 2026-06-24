@@ -4,7 +4,6 @@ use nightmare\http\request;
 
 defined('ACCESS') or exit;
 
-$file = new SplFileInfo($curr_path);
 $error = '';
 $name = request::post('name', basename($curr_path));
 $newPath = dirname($curr_path) . '/' . $name;

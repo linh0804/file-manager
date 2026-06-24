@@ -48,8 +48,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
         </form>
     </div>';
 
-    $file = new SplFileInfo($dir . '/' . $name);
-    file_display_actions($file);
+    file_display_actions($dir . '/' . $name);
 }
 
 require SITE_FOOTER;

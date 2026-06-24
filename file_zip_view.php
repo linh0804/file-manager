@@ -189,7 +189,7 @@ if (!in_array($format, array('zip', 'jar'))) {
         echo '</ul>';
     }
 
-    file_display_actions($file);
+    file_display_actions($curr_path);
 }
 
 require SITE_FOOTER;

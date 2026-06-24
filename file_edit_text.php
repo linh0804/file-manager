@@ -166,7 +166,7 @@ require SITE_HEADER;
     <script>edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
 
 <?php
-    file_display_actions($curr_file);
+    file_display_actions($curr_path);
 endif;
 
 require SITE_FOOTER;

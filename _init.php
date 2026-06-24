@@ -119,6 +119,8 @@ if (!IS_LOGIN) {
     }
 }
 
+// Phân trang
+
 if (
     PAGE_SIZE > 0
     && isset($_GET['page_list'])

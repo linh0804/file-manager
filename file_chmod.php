@@ -43,7 +43,6 @@ require SITE_HEADER;
 
 <?php
 
-$file = new SplFileInfo($curr_path);
-file_display_actions($file);
+file_display_actions($curr_path);
 
 require SITE_FOOTER;

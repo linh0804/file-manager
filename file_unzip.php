@@ -61,6 +61,6 @@ if (!in_array($format, array('zip', 'jar'))) {
         </form>
     </div>';
     
-    file_display_actions($file);
+    file_display_actions($curr_path);
 }
 require SITE_FOOTER;

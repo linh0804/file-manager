@@ -168,7 +168,7 @@ if (!is_file($curr_path)) {
     });
     </script>';
 
-    file_display_actions($curr_file);
+    file_display_actions($curr_path);
 }
 
 require SITE_FOOTER;

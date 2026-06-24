@@ -34,7 +34,6 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     $path = $curr_path;
-    $file = $curr_file;
     $content = file_get_contents($path);
     $lines = [];
     $count = 0;
@@ -112,7 +111,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Khuyên bạn nên sửa dạng văn bản, dạng sửa này xử lý khá nhiều trong một lần request</span>
     </div>';
 
-    file_display_actions($file);
+    file_display_actions($curr_path);
 }
 
 require SITE_FOOTER;

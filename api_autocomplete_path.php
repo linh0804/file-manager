@@ -3,7 +3,6 @@
 use nightmare\http\request;
 
 define('ACCESS', true);
-
 require __DIR__ . '/_init.php';
 
 $curr_path = (string) request::post('path');

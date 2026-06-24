@@ -50,7 +50,6 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     $path = $curr_path;
-    $file = $curr_file;
     $line = isset($_GET['line']) ? intval($_GET['line']) : 0;
     $content = null;
     $notice = null;
@@ -168,7 +167,7 @@ if (!is_file(process_directory($curr_path))) {
         <span>Ấn tiếp tục để xóa và ở lại trang, ấn xóa để xóa và quay về danh sách dòng</span>
     </div>';
 
-    file_display_actions($file);
+    file_display_actions($curr_path);
 }
 
 require SITE_FOOTER;

@@ -29,7 +29,9 @@ require SITE_HEADER;
 
 <div class="title"><?= $site_title ?></div>
 
-<?= form_err($notice) ?>
+<?php if (!empty($notice)) { ?>
+    <div class="notice_failure"><?= $notice ?></div>
+<?php } ?>
 
 <div class="list">
     <span class="bull">&bull;</span><span><?= file_print_path($dir . '/' . $name) ?></span><hr/>

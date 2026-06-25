@@ -824,23 +824,6 @@ function check_path($path, $type = '')
     exit;
 }
 
-
-
-function form_err($err)
-{
-    if (empty($err)) {
-        return '';
-    }
-
-    return '<div class="notice_failure">' . is_array($err) ? $err[0] : $err . '</div>';
-}
-
-
-
-
-
-
-
 function get_curr_path()
 {
     $path = (string) request::get('path');

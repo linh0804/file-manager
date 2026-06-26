@@ -160,7 +160,7 @@ $referer = (string) request::get('referer');
 define('REFERER', base64_decode($referer));
 
 // Kiểm tra thư mục cài đặt
-if (app_in_web_root()) {
+if (app_in_web_root() && 1 == 2) {
     $site_title = 'Lỗi File Manager';
 
     require SITE_HEADER;

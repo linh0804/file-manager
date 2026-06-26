@@ -29,7 +29,7 @@ curl -s https://static.nightmare.top/app/file-manager-php/install_upgrade_sh | b
 ### Cài đặt cho Unix Systemd
 
 ```bash
-curl -Ls https://static.nightmare.top/app/file-manager-php/install_unix | bash -s -- "tên_thư_mục"
+curl -Ls https://static.nightmare.top/app/file-manager-php/install_unix | bash
 ```
 
 ### Termux

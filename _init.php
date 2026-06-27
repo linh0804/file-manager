@@ -35,8 +35,8 @@ define('APP_VERSION', $version['version']);
 // cau hinh
 define('LOGIN_USERNAME_DEFAULT', 'admin');
 define('LOGIN_PASSWORD_DEFAULT', '!!!123456789!!!');
-define('LOGIN_MAX', 5);
-define('LOGIN_WAIT', 1800);
+define('LOGIN_MAX', 10);
+define('LOGIN_WAIT', 3600);
 
 define('PAGE_SIZE', 200);
 define('PAGE_NUMBER', 10);

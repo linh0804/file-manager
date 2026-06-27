@@ -1,6 +1,6 @@
 rm -f release.zip
 
-zip -r -9 release.zip . \
+zip -q -r -9 release.zip . \
   -x ".*" \
   -x "*/.*" \
   -x "node_modules/*" \

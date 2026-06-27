@@ -184,7 +184,7 @@ if ($count <= 0) {
 
 <script>
     setTimeout(() => {
-        $.get("api_update.php", function(html) {
+        $.get("cron.php", function(html) {
             $("#app-index-updater").html(html);
         });
     }, 1000);

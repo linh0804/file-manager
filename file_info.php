@@ -8,7 +8,7 @@ $file = new SplFileInfo($curr_path);
 $site_title = 'Thông tin ' . basename($curr_path);
 
 $format = file_get_ext(basename($curr_path));
-$isImage = false;
+$is_image = false;
 $pixel = null;
 
 $dir_size = 0;
@@ -26,14 +26,14 @@ echo '<li><span class="bull">&bull; </span><strong>Tên</strong>: <span>' . base
 if ($file->isFile()) {
     if ($format && in_array($format, array('png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'))) {
         $pixel = getimagesize($curr_path);
-        $isImage = true;
+        $is_image = true;
 
         echo '<li><center><img src="' . action_link('file', ['act' => 'download_image', 'path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
     }
 
     echo '<li><span class="bull">&bull; </span><strong>Kích thước</strong>: <span>' . fs::readable_size($file->getSize()) . '</span></li>';
 
-    if ($isImage) {
+    if ($is_image) {
         echo '<li><span class="bull">&bull; </span><strong>Độ phân giải</strong>: <span>' . $pixel[0] . 'x' . $pixel[1] . '</span></li>';
     }
 }

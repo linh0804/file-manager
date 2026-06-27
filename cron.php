@@ -7,14 +7,15 @@ define('LOGIN_BYPASS_AUTO_REDIRECT', true);
 
 require __DIR__ . '/_init.php';
 
-$tmp_update_json = __DIR__ . '/tmp_app_update';
-$last = (int) @filemtime($tmp_update_json);
+// check cron
+$tmp_cron = APP_PATH . '/tmp_cron';
+$last = (int) @filemtime($tmp_cron);
 
 if ($last >= (time() - 24 * 3600)) {
     exit();
 }
 
-@touch($tmp_update_json);
+@touch($tmp_cron);
 
 // clean login fail
 foreach (glob(APP_PATH . '/tmp_login_*') ?: [] as $f) {
@@ -22,6 +23,8 @@ foreach (glob(APP_PATH . '/tmp_login_*') ?: [] as $f) {
 }
 
 // updater
+$tmp_update_json = __DIR__ . '/tmp_app_update';
+
 if (!file_import($tmp_update_json, REMOTE_VERSION_URL, 15)) {
     exit('<div class="tips">get version info error</div>');
 }

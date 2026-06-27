@@ -8,7 +8,7 @@ define('LOGIN_BYPASS_AUTO_REDIRECT', true);
 require __DIR__ . '/_init.php';
 
 // check cron
-$tmp_cron = APP_PATH . '/tmp_cron';
+$tmp_cron = __DIR__ . '/tmp_cron';
 $last = (int) @filemtime($tmp_cron);
 
 if ($last >= (time() - 24 * 3600)) {
@@ -18,7 +18,7 @@ if ($last >= (time() - 24 * 3600)) {
 @touch($tmp_cron);
 
 // clean login fail
-foreach (glob(APP_PATH . '/tmp_login_*') ?: [] as $f) {
+foreach (glob(__DIR__ . '/tmp_login_*') ?: [] as $f) {
     @unlink($f);
 }
 

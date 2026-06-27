@@ -72,6 +72,6 @@ echo '<ul class="list">
   <li><a href="' . action_link('reinstall') . '" class="button"><img src="icon/empty.png" alt=""/> Cài đặt lại!!!</a></li>
 </ul>';
 
-echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(APP_PATH) . '</div>';
+echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(__DIR__) . '</div>';
 
 require SITE_FOOTER;

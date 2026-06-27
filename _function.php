@@ -15,7 +15,7 @@ defined('ACCESS') or exit;
 //
 function is_app_file($dir)
 {
-    return stripos((string) $dir, APP_PATH) === 0;
+    return stripos((string) $dir, __DIR__) === 0;
 }
 
 
@@ -40,7 +40,7 @@ function base64url_decode(string $data): string
 //
 function auth_login_file()
 {
-    return APP_PATH . '/tmp_login_' . md5(request::ip());
+    return __DIR__ . '/tmp_login_' . md5(request::ip());
 }
 
 function auth_get_login_fail()
@@ -174,7 +174,7 @@ function app_in_web_root()
     }
 
     $document_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
-    $current_dir = rtrim(APP_PATH, '/');
+    $current_dir = rtrim(__DIR__, '/');
 
     return $current_dir === $document_root;
 }
@@ -481,7 +481,7 @@ function app_reinstall(): bool
         }
 
         try {
-            return $zip->extractTo(APP_PATH) === true;
+            return $zip->extractTo(__DIR__) === true;
         } finally {
             $zip->close();
         }

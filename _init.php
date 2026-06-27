@@ -21,15 +21,14 @@ header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
 
 // constants
-define('APP_PATH', __DIR__);
 define('APP_NAME', 'file_manager_' . md5(__FILE__));
-define('APP_CONFIG_FILE', APP_PATH . '/.env.php');
+define('APP_CONFIG_FILE', __DIR__ . '/.env.php');
 
 // load thu vien
-require APP_PATH . '/vendor/autoload.php';
-require APP_PATH . '/_function.php';
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/_function.php';
 
-$version = json::decode_file(APP_PATH . '/version.json');
+$version = json::decode_file(__DIR__ . '/version.json');
 define('APP_VERSION', $version['version']);
 
 // cau hinh
@@ -70,8 +69,8 @@ define('COMMON_FILE_EXCLUDES', [
 ]);
 
 define('SITE_TITLE', 'File Manager');
-define('SITE_HEADER', APP_PATH . '/_header.php');
-define('SITE_FOOTER', APP_PATH . '/_footer.php');
+define('SITE_HEADER', __DIR__ . '/_header.php');
+define('SITE_FOOTER', __DIR__ . '/_footer.php');
 
 $pages = array(
     'current' => 1,
@@ -163,7 +162,7 @@ if (app_in_web_root() && 1 == 2) {
 
     require SITE_HEADER;
     echo '<div class="title">Lỗi File Manager</div>
-        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!<br><br><i><b>' . APP_PATH . '</b></i></div>';
+        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!<br><br><i><b>' . __DIR__ . '</b></i></div>';
     require SITE_FOOTER;
     exit();
 }

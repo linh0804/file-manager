@@ -174,10 +174,10 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a href="<?= action_link('file', ['act' => 'create', 'path' => $curr_path]) . '&' . REFERER_QS ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'upload', 'path' => $curr_path]) . '&' . REFERER_QS ?>"><img src="icon/upload.png"/> Tải lên</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'import', 'path' => $curr_path]) . '&' . REFERER_QS ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) . '&' . REFERER_QS ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="<?= action_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="<?= action_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="<?= action_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="<?= action_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="<?= action_link('webdav') . '/' . ltrim((string) $curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>
     <li><a href="<?= action_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>

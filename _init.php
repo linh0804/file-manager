@@ -121,40 +121,7 @@ if (
     }
 }
 
-// referer
-function remove_referer_param(string $url): string
-{
-    // Parse URL
-    $parts = parse_url($url);
 
-    // Nếu không có query thì trả nguyên
-    if (!isset($parts['query'])) {
-        return $url;
-    }
-
-    // Parse các tham số query
-    parse_str($parts['query'], $queryParams);
-
-    // Xoá tham số 'referer'
-    unset($queryParams['referer']);
-
-    // Build lại query string
-    $newQuery = http_build_query($queryParams);
-
-    // Build lại URL
-    $cleanUrl = $parts['path'];
-    if ($newQuery) {
-        $cleanUrl .= '?' . $newQuery;
-    }
-
-    return $cleanUrl;
-}
-
-$referer_qs = base64_encode(remove_referer_param(request::uri()));
-define('REFERER_QS', 'referer=' . $referer_qs);
-
-$referer = (string) request::get('referer');
-define('REFERER', base64_decode($referer));
 
 if (!auth_can_login()) {
     exit('đăng nhập sai nhiều lần, cấm 1 giờ');

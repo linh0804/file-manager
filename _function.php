@@ -161,23 +161,7 @@ function get_page_list_params(): array
     return ['page_list' => $pages['current']];
 }
 
-function app_in_web_root()
-{
-    $sapi = php_sapi_name();
 
-    if ($sapi === 'cli' || $sapi === 'cli-server') {
-        return false;
-    }
-
-    if (empty($_SERVER['DOCUMENT_ROOT'])) {
-        return false;
-    }
-
-    $document_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
-    $current_dir = rtrim(__DIR__, '/');
-
-    return $current_dir === $document_root;
-}
 
 function file_get_ext($name)
 {

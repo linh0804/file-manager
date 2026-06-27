@@ -156,17 +156,6 @@ define('REFERER_QS', 'referer=' . $referer_qs);
 $referer = (string) request::get('referer');
 define('REFERER', base64_decode($referer));
 
-// Kiểm tra thư mục cài đặt
-if (app_in_web_root() && 1 == 2) {
-    $site_title = 'Lỗi File Manager';
-
-    require SITE_HEADER;
-    echo '<div class="title">Lỗi File Manager</div>
-        <div class="list">Bạn đang cài đặt File Manager trên thư mục gốc, hãy chuyển vào một thư mục khác!<br><br><i><b>' . __DIR__ . '</b></i></div>';
-    require SITE_FOOTER;
-    exit();
-}
-
 if (!auth_can_login()) {
     exit('đăng nhập sai nhiều lần, cấm 1 giờ');
 }

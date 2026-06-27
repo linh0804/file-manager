@@ -166,3 +166,7 @@ if (app_in_web_root() && 1 == 2) {
     require SITE_FOOTER;
     exit();
 }
+
+if (!auth_can_login()) {
+    exit('đăng nhập sai nhiều lần, cấm 1 giờ');
+}

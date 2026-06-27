@@ -11,10 +11,6 @@ $format = file_get_ext(basename($curr_path));
 $is_image = false;
 $pixel = null;
 
-$dir_size = 0;
-$total_file = 0;
-$total_dir = 0;
-
 require SITE_HEADER;
 
 echo '<div class="title">' . $site_title . '</div>';
@@ -36,13 +32,6 @@ if ($file->isFile()) {
     if ($is_image) {
         echo '<li><span class="bull">&bull; </span><strong>Độ phân giải</strong>: <span>' . $pixel[0] . 'x' . $pixel[1] . '</span></li>';
     }
-}
-
-if ($file->isDir()) {
-    echo '<li><span class="bull">&bull; </span><strong>Kích thước thư mục</strong>: <span>' . fs::readable_size(filesize($file)) . '</span></li>';
-    echo '<li><span class="bull">&bull; </span><strong>Dung lượng thư mục</strong>: <span>' . fs::readable_size($dir_size) . ' (' . $dir_size . ' byte)</span></li>';
-    echo '<li><span class="bull">&bull; </span><strong>Tổng số thư mục</strong>: <span>' . $total_dir . '</span></li>';    
-    echo '<li><span class="bull">&bull; </span><strong>Tổng số file</strong>: <span>' . $total_file . '</span></li>';
 }
 
 echo '<li><span class="bull">&bull; </span><strong>Owner</strong>: <span>' . (posix_getpwuid($file->getOwner())['name']) . '</span></li>';

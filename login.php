@@ -12,16 +12,6 @@ if (IS_LOGIN) {
 $site_title = 'Đăng nhập';
 $notice = null;
 
-if (!auth_can_login()) {
-    require SITE_HEADER;
-    echo '<div class="title">' . $site_title . '</div>';
-    echo '<div class="notice_failure">
-        Khoá đăng nhập, bạn có thể đăng nhập lại sau "' . LOGIN_WAIT . ' giây" tính từ bây giờ!
-    </div>';
-    require SITE_FOOTER;
-    exit;
-}
-
 if (isset($_POST['submit'])) {
     $notice   = '<div class="notice_failure">';
     $username = (string) $_POST['username'];

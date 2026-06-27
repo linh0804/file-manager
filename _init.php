@@ -123,6 +123,6 @@ if (
 
 
 
-if (!auth_can_login()) {
+if (!IS_LOGIN && !auth_can_login()) {
     exit('đăng nhập sai nhiều lần, cấm 1 giờ');
 }

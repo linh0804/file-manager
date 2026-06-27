@@ -12,7 +12,7 @@ if (IS_LOGIN) {
 $site_title = 'Đăng nhập';
 $notice = null;
 
-if (!can_login()) {
+if (!auth_can_login()) {
     require SITE_HEADER;
     echo '<div class="title">' . $site_title . '</div>';
     echo '<div class="notice_failure">
@@ -36,10 +36,10 @@ if (isset($_POST['submit'])) {
         $notice .= 'Sai tài khoản hoặc mật khẩu.';
 
         // khoá đăng nhập sau 5 lần
-        increase_login_fail();
-        $notice .= ' Bạn còn ' . (LOGIN_MAX - get_login_fail()) . ' lần thử!';
+        auth_increase_login_fail();
+        $notice .= ' Bạn còn ' . (LOGIN_MAX - auth_get_login_fail()) . ' lần thử!';
     } else {
-        reset_fail_login();
+        auth_reset_fail_login();
         setcookie(APP_NAME . '_auth', (string) auth_encode_pwd($password), time() + 3600 * 24 * 365);
 
         redirect(action_link('index'));

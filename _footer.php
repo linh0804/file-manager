@@ -5,9 +5,9 @@ defined('ACCESS') or exit;
 $curr_path = get_curr_path();
 
 if (IS_LOGIN) {
-    if (get_login_fail()) {
+    if (auth_get_login_fail()) {
         $site_sidebar .= '<div class="list" style="font-size: small; font-style: italic">
-            fail login: <span style="color: red; font-weight: bold">' . get_login_fail() . '</span>
+            fail login: <span style="color: red; font-weight: bold">' . auth_get_login_fail() . '</span>
         </div>';
     }
 

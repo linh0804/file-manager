@@ -38,7 +38,7 @@ function base64url_decode(string $data): string
 // ========
 // auth
 //
-function get_login_fail()
+function auth_get_login_fail()
 {
     if (!is_file(LOGIN_LOCK_PATH)) {
         return 0;
@@ -53,22 +53,27 @@ function get_login_fail()
     return (int) file_get_contents(LOGIN_LOCK_PATH);
 }
 
-function increase_login_fail()
+function auth_increase_login_fail()
 {
-    $count = get_login_fail() + 1;
+    $count = auth_get_login_fail() + 1;
     file_put_contents(LOGIN_LOCK_PATH, (string) $count, LOCK_EX);
 }
 
-function reset_fail_login()
+function auth_reset_fail_login()
 {
     if (is_file(LOGIN_LOCK_PATH)) {
         unlink(LOGIN_LOCK_PATH);
     }
 }
 
-function can_login()
+function auth_can_login()
 {
-    return get_login_fail() < LOGIN_MAX;
+    return auth_get_login_fail() < LOGIN_MAX;
+}
+
+function auth_encode_pwd($pass)
+{
+    return md5($pass);
 }
 
 
@@ -167,12 +172,6 @@ function app_in_web_root()
 
     return $current_dir === $document_root;
 }
-
-function auth_encode_pwd($pass)
-{
-    return md5($pass);
-}
-
 
 function file_get_ext($name)
 {

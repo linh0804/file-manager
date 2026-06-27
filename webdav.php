@@ -16,7 +16,7 @@ $curr_path = $curr_path == '/' &&  $path_info ? '' : $curr_path;
 $base_uri = ($_SERVER["SCRIPT_NAME"] ?? '') . rtrim((string) $curr_path, '/');
 
 $auth_backend = new BasicCallBack(function ($username, $password) {
-    if (!can_login()) {
+    if (!auth_can_login()) {
         return false;
     }
 
@@ -24,10 +24,10 @@ $auth_backend = new BasicCallBack(function ($username, $password) {
         strtolower((string) $username) === strtolower((string) config()->get('username'))
         && auth_encode_pwd($password) === config()->get('password')
     ) {
-        reset_fail_login();
+        auth_reset_fail_login();
         return true;
     } else {
-        increase_login_fail();
+        auth_increase_login_fail();
     }
 
     return false;

@@ -3,6 +3,8 @@
 use nightmare\json;
 
 define('ACCESS', true);
+define('LOGIN_BYPASS_AUTO_REDIRECT', true);
+
 require __DIR__ . '/_init.php';
 
 $tmp_update_json = __DIR__ . '/tmp_app_update';

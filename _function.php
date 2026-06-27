@@ -38,31 +38,37 @@ function base64url_decode(string $data): string
 // ========
 // auth
 //
+function auth_login_file()
+{
+    return APP_PATH . '/tmp_login_' . md5(request::ip());
+}
+
 function auth_get_login_fail()
 {
-    if (!is_file(LOGIN_LOCK_PATH)) {
+    $file = auth_login_file();
+    if (!is_file($file)) {
         return 0;
     }
 
-    // auto-reset nếu đã hết thời gian chờ (dùng file mtime)
-    if (filemtime(LOGIN_LOCK_PATH) + LOGIN_WAIT < time()) {
-        @unlink(LOGIN_LOCK_PATH);
+    if (filemtime($file) + 3600 < time()) {
+        @unlink($file);
         return 0;
     }
 
-    return (int) file_get_contents(LOGIN_LOCK_PATH);
+    return (int) file_get_contents($file);
 }
 
 function auth_increase_login_fail()
 {
     $count = auth_get_login_fail() + 1;
-    file_put_contents(LOGIN_LOCK_PATH, (string) $count, LOCK_EX);
+    file_put_contents(auth_login_file(), (string) $count, LOCK_EX);
 }
 
 function auth_reset_fail_login()
 {
-    if (is_file(LOGIN_LOCK_PATH)) {
-        unlink(LOGIN_LOCK_PATH);
+    $file = auth_login_file();
+    if (is_file($file)) {
+        unlink($file);
     }
 }
 

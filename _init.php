@@ -35,8 +35,6 @@ define('APP_VERSION', $version['version']);
 // cau hinh
 define('LOGIN_USERNAME_DEFAULT', 'admin');
 define('LOGIN_PASSWORD_DEFAULT', '!!!123456789!!!');
-
-define('LOGIN_LOCK_PATH', __DIR__ . '/tmp_app_login_fail');
 define('LOGIN_MAX', 5);
 define('LOGIN_WAIT', 1800);
 

@@ -32,6 +32,17 @@ cat > Caddyfile <<'EOF'
         num_threads 10
         max_threads 10
         max_requests 10000
+        
+        php_ini {
+            memory_limit 256M
+            max_execution_time 3600
+
+            max_input_vars 10000
+            max_file_uploads 1000
+            
+            post_max_size 10000M
+            upload_max_filesize 10000M
+        }
     }
 
     admin off

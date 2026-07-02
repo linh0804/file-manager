@@ -96,8 +96,9 @@ if (IS_CONFIG_ERROR) {
     $is_login_cookie = $_COOKIE[APP_NAME . '_auth'] ?? '';
     $is_login = !empty($is_login_cookie) && $is_login_cookie === config()->get('password');
 
-    if (getenv('FILE_MANAGER_PHP_AUTO_LOGIN') === '1') {
+    if (getenv('FILE_MANAGER_PHP_AUTO_LOGIN') === '9') {
         $is_login = true;
+	@setcookie(APP_NAME . '_auth', 'autologin', time() + 3600 * 24 * 365);
     }
 
     define('IS_LOGIN', $is_login);

@@ -19,7 +19,7 @@ cat << EOF > "$MANAGER_BIN"
 exec > /dev/null 2>&1
 CURRENT_DIR=\$PWD
 cd "$MANAGER_DIR"
-PHP_CLI_SERVER_WORKERS=4 nohup php -S "$MANAGER_ADDR" &> /dev/null &
+PHP_CLI_SERVER_WORKERS=4 FILE_MANAGER_PHP_AUTO_LOGIN=on nohup php -S "$MANAGER_ADDR" &> /dev/null &
 xdg-open "http://$MANAGER_ADDR/index.php?path=\$CURRENT_DIR"
 EOF
 

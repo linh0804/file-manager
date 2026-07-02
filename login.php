@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
         $notice .= ' Bạn còn ' . (LOGIN_MAX - auth_get_login_fail()) . ' lần thử!';
     } else {
         auth_reset_fail_login();
-        setcookie(APP_NAME . '_auth', (string) auth_encode_pwd($password), time() + 3600 * 24 * 365);
+        setcookie(APP_NAME . '_auth', (string) auth_encode_pwd($password), time() + 3600 * 24 * 365, '/');
 
         redirect(action_link('index'));
     }

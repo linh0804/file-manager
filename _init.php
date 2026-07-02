@@ -100,7 +100,7 @@ if (IS_CONFIG_ERROR) {
         $is_login = true;
         
         if (!$is_login_cookie) {
-            setcookie(APP_NAME . '_auth', 'autologin', time() + 3600 * 24 * 365);
+            setcookie(APP_NAME . '_auth', 'autologin', time() + 3600 * 24 * 365, '/');
         }
     }
 

@@ -93,12 +93,15 @@ if (
 if (IS_CONFIG_ERROR) {
     define('IS_LOGIN', false);
 } else {
-    $is_login_cookie = $_COOKIE[APP_NAME . '_auth'] ?? '';
-    $is_login = !empty($is_login_cookie) && $is_login_cookie === config()->get('password');
+    $is_login_cookie = isset($_COOKIE[APP_NAME . '_auth']);
+    $is_login = $is_login_cookie && $is_login_cookie === config()->get('password');
 
     if (getenv('FILE_MANAGER_PHP_AUTO_LOGIN') === 'on') {
         $is_login = true;
-        @setcookie(APP_NAME . '_auth', 'autologin', time() + 3600 * 24 * 365);
+        
+        if (!$is_login_cookie) {
+            setcookie(APP_NAME . '_auth', 'autologin', time() + 3600 * 24 * 365);
+        }
     }
 
     define('IS_LOGIN', $is_login);

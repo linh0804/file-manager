@@ -1,7 +1,7 @@
 # termux file manager install script (curl version)
 
-MANAGER_DIR="$HOME/.local/share/file-manager"
-MANAGER_ADDR="localhost:9753"
+MANAGER_DIR="$HOME/.local/share/file-manager-php"
+MANAGER_ADDR="localhost:19753"
 MANAGER_BIN="$PREFIX/bin/tfm"
 MANAGER_FILE="https://static.nightmare.top/app/file-manager-php/release.zip"
 

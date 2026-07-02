@@ -182,12 +182,4 @@ if ($count <= 0) {
     <li><a href="<?= action_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 
-<script>
-    setTimeout(() => {
-        $.get("cron.php", function(html) {
-            $("#app-index-updater").html(html);
-        });
-    }, 1000);
-</script>
-
 <?php require SITE_FOOTER ?>

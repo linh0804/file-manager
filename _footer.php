@@ -49,5 +49,14 @@ echo '<div id="menu-overlay"></div>
 echo '<script>edit_recent.render("fm_edit_recent_list");</script>';
 
 echo '</div>
+
+<script>
+    setTimeout(() => {
+        $.get("cron.php", function(html) {
+            $("#app-index-updater").html(html);
+        });
+    }, 1000);
+</script>
+
 </body>
 </html>';

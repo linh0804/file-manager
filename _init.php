@@ -94,7 +94,7 @@ if (IS_CONFIG_ERROR) {
     define('IS_LOGIN', false);
 } else {
     $is_login_cookie = isset($_COOKIE[APP_NAME . '_auth']);
-    $is_login = $is_login_cookie && $is_login_cookie === config()->get('password');
+    $is_login = $is_login_cookie && $_COOKIE[APP_NAME . '_auth'] === config()->get('password');
 
     if (getenv('FILE_MANAGER_PHP_AUTO_LOGIN') === 'on') {
         $is_login = true;

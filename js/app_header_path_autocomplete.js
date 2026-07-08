@@ -102,6 +102,7 @@
 
                 if (!String(ui.item.value).endsWith('/')) {
                     keep_open_after_select = false;
+                    window.location.href = 'file.php?act=info&path=' + encodeURIComponent(value);
                     return;
                 }
 

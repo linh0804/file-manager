@@ -128,40 +128,34 @@
 
         $input.autocomplete('instance')._renderItem = render_autocomplete_item;
     };
+    const get_paths = async (str) => {
+        try {
+            const response = await fm_fetch("api_autocomplete_path.php", {
+                method: 'POST',
+                body: new URLSearchParams({ path: str })
+            });
+            const res = await response.json();
+
+            return res.data;
+        } catch (error) {
+            return [];
+        }
+    };
     const load_autocomplete_data = async () => {
         const load_id = autocomplete_load_id + 1;
 
         autocomplete_load_id = load_id;
 
-        try {
-            const response = await fm_fetch("api_autocomplete_path.php", {
-                method: 'POST',
-                body: new URLSearchParams({
-                    path: input.value.trim()
-                })
-            });
+        const items = await get_paths(input.value.trim());
 
-            if (!response.ok) {
-                throw new Error('Autocomplete request failed');
-            }
+        if (load_id !== autocomplete_load_id) {
+            return;
+        }
 
-            const res = await response.json();
+        init_autocomplete(items);
 
-            if (load_id !== autocomplete_load_id) {
-                return;
-            }
-
-            init_autocomplete(Array.isArray(res.data) ? res.data : []);
-
-            if (!$form.hasClass('is-hidden')) {
-                $input.autocomplete('search', input.value);
-            }
-        } catch (error) {
-            if (load_id !== autocomplete_load_id) {
-                return;
-            }
-
-            init_autocomplete([]);
+        if (!$form.hasClass('is-hidden')) {
+            $input.autocomplete('search', input.value);
         }
     };
 

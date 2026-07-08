@@ -1,33 +1,32 @@
 (() => {
     const $input = $('#header-goto-path');
     const $form = $('#header-goto-path-form');
-    const toggle = document.getElementById('header-goto-path-toggle');
-    const input = document.getElementById('header-goto-path');
+    const $toggle = $('#header-goto-path-toggle');
 
-    if ($input.length === 0 || $form.length === 0 || toggle === null || input === null) {
+    if ($input.length === 0 || $form.length === 0 || $toggle.length === 0) {
         return;
     }
 
     let keep_open_after_select = false;
     let reopen_timer = null;
-    let last_slash_count = (input.value.match(/\//g) || []).length;
+    let last_slash_count = ($input.val().match(/\//g) || []).length;
     let autocomplete_load_id = 0;
 
-    if (toggle.getAttribute('data-status') === 'off') {
+    if ($toggle.attr('data-status') === 'off') {
         $form.removeClass('is-visible');
     }
 
     const move_caret_to_end = () => {
-        const length = input.value.length;
+        const el = $input[0];
 
-        input.focus();
+        el.focus();
 
         try {
-            input.setSelectionRange(length, length);
+            el.setSelectionRange(el.value.length, el.value.length);
         } catch (error) {
         }
 
-        input.scrollLeft = input.scrollWidth;
+        el.scrollLeft = el.scrollWidth;
     };
 
     const escape_html = (value) => $('<div>').text(value).html();
@@ -150,7 +149,7 @@
 
         autocomplete_load_id = load_id;
 
-        const items = await get_paths(input.value.trim());
+        const items = await get_paths($input.val().trim());
 
         if (load_id !== autocomplete_load_id) {
             return;
@@ -158,8 +157,8 @@
 
         init_autocomplete(items);
 
-        if (toggle.getAttribute('data-status') === 'on') {
-            $input.autocomplete('search', input.value);
+        if ($toggle.attr('data-status') === 'on') {
+            $input.autocomplete('search', $input.val());
         }
     };
 
@@ -175,17 +174,17 @@
     };
 
     const toggle_form = () => {
-        const is_off = toggle.getAttribute('data-status') === 'off';
+        const is_off = $toggle.attr('data-status') === 'off';
 
         if (is_off) {
-            toggle.setAttribute('data-status', 'on');
-            toggle.setAttribute('aria-expanded', 'true');
+            $toggle.attr('data-status', 'on');
+            $toggle.attr('aria-expanded', 'true');
             $form.addClass('is-visible');
             move_caret_to_end();
             load_autocomplete_data();
         } else {
-            toggle.setAttribute('data-status', 'off');
-            toggle.setAttribute('aria-expanded', 'false');
+            $toggle.attr('data-status', 'off');
+            $toggle.attr('aria-expanded', 'false');
             $form.removeClass('is-visible');
             clearTimeout(reopen_timer);
             reopen_timer = null;
@@ -197,9 +196,9 @@
         }
     };
 
-    toggle.addEventListener('click', toggle_form);
+    $toggle.on('click', toggle_form);
 
-    toggle.addEventListener('keydown', (event) => {
+    $toggle.on('keydown', (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') {
             return;
         }
@@ -214,7 +213,7 @@
     });
 
     $input.on('input', () => {
-        const slash_count = count_slashes(input.value);
+        const slash_count = count_slashes($input.val());
 
         if (slash_count === last_slash_count) {
             return;

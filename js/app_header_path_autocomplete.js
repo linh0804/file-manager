@@ -178,13 +178,11 @@
 
         if (is_off) {
             $toggle.attr('data-status', 'on');
-            $toggle.attr('aria-expanded', 'true');
             $form.addClass('is-visible');
             move_caret_to_end();
             load_autocomplete_data();
         } else {
             $toggle.attr('data-status', 'off');
-            $toggle.attr('aria-expanded', 'false');
             $form.removeClass('is-visible');
             clearTimeout(reopen_timer);
             reopen_timer = null;

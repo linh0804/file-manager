@@ -62,7 +62,7 @@ if (IS_LOGIN) {
             <li><a href="db/"><img src="icon/database.png"/></a></li>
             <li><a href="<?= action_link('setting') ?>"><img src="icon/setting.png" /></a></li>
             <li>
-                <img id="header-goto-path-toggle" src="icon/search.png" alt="Goto path" role="button" tabindex="0" aria-controls="header-goto-path-form" aria-expanded="false" data-status="off" />
+                <img id="header-goto-path-toggle" src="icon/search.png" alt="Goto path" role="button" tabindex="0" aria-controls="header-goto-path-form" data-status="off" />
             </li>
         <?php } ?>
     </ul>

@@ -1,0 +1,44 @@
+#header-goto-path-toggle {
+    display: block;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+#header-goto-path-form {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-top: 6px;
+}
+
+#header-goto-path-form.is-hidden {
+    display: none;
+}
+
+#header-goto-path-form #header-goto-path {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto !important;
+}
+
+#header-goto-path-form input[type=submit] {
+    flex: 0 0 auto;
+}
+
+.ui-autocomplete {
+    max-height: 240px;
+    max-width: 90%;
+    box-sizing: border-box;
+    padding-right: 4px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.ui-autocomplete .ui-menu-item,
+.ui-autocomplete .ui-menu-item-wrapper {
+    white-space: nowrap;
+}
+
+.autocomplete-match {
+    font-weight: bold;
+}

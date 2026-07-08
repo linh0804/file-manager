@@ -1,0 +1,225 @@
+(() => {
+    const $input = $('#header-goto-path');
+    const $form = $('#header-goto-path-form');
+    const toggle = document.getElementById('header-goto-path-toggle');
+    const input = document.getElementById('header-goto-path');
+
+    if ($input.length === 0 || $form.length === 0 || toggle === null || input === null) {
+        return;
+    }
+
+    let keep_open_after_select = false;
+    let reopen_timer = null;
+    let last_slash_count = (input.value.match(/\//g) || []).length;
+    let autocomplete_load_id = 0;
+
+    const move_caret_to_end = () => {
+        const length = input.value.length;
+
+        input.focus();
+
+        try {
+            input.setSelectionRange(length, length);
+        } catch (error) {
+        }
+
+        input.scrollLeft = input.scrollWidth;
+    };
+
+    const escape_html = (value) => $('<div>').text(value).html();
+    const escape_regex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const get_directory_prefix = (value) => {
+        const trimmed = value.trim();
+
+        if (trimmed === '' || trimmed.endsWith('/')) {
+            return trimmed;
+        }
+
+        const slash_index = trimmed.lastIndexOf('/');
+
+        if (slash_index === -1) {
+            return '';
+        }
+
+        return trimmed.slice(0, slash_index + 1);
+    };
+    const get_search_segment = (value) => {
+        const trimmed = value.trim();
+
+        if (trimmed.endsWith('/')) {
+            return '';
+        }
+
+        const slash_index = trimmed.lastIndexOf('/');
+
+        return slash_index === -1 ? trimmed : trimmed.slice(slash_index + 1);
+    };
+    const to_full_path = (value, item) => get_directory_prefix(value) + item;
+    const count_slashes = (value) => (value.match(/\//g) || []).length;
+    const filter_autocomplete_items = (items, keyword) => {
+        const normalized_keyword = keyword.toLowerCase();
+
+        if (normalized_keyword === '') {
+            return items;
+        }
+
+        return items.filter((item) => String(item).toLowerCase().includes(normalized_keyword));
+    };
+    const render_autocomplete_item = function (ul, item) {
+        const term = get_search_segment(this.term || '');
+        let label = escape_html(item.label || item.value || '');
+
+        if (term !== '') {
+            label = label.replace(
+                new RegExp(escape_regex(term), 'i'),
+                '<span class="autocomplete-match">$&</span>'
+            );
+        }
+
+        return $('<li>').append($('<div>').html(label)).appendTo(ul);
+    };
+    const has_autocomplete = () => Boolean($input.data('ui-autocomplete'));
+    const init_autocomplete = (items) => {
+        if (has_autocomplete()) {
+            $input.autocomplete('destroy');
+        }
+
+        $input.autocomplete({
+            source: function (request, response) {
+                response(filter_autocomplete_items(items, get_search_segment(request.term)));
+            },
+            minLength: 1,
+            focus: function (event) {
+                event.preventDefault();
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+
+                const value = to_full_path(this.value, ui.item.value);
+
+                $(this).val(value);
+                move_caret_to_end();
+
+                if (!String(ui.item.value).endsWith('/')) {
+                    keep_open_after_select = false;
+                    return;
+                }
+
+                keep_open_after_select = true;
+
+                const slash_count = count_slashes(value);
+
+                if (slash_count !== last_slash_count) {
+                    last_slash_count = slash_count;
+                    keep_open_after_select = false;
+                    load_autocomplete_data();
+                    return;
+                }
+            },
+            close: function () {
+                if (!keep_open_after_select || $(this).val() === '') {
+                    return;
+                }
+
+                reopen_autocomplete($(this).val());
+            }
+        });
+
+        $input.autocomplete('instance')._renderItem = render_autocomplete_item;
+    };
+    const load_autocomplete_data = async () => {
+        const load_id = autocomplete_load_id + 1;
+
+        autocomplete_load_id = load_id;
+
+        try {
+            const response = await fm_fetch("api_autocomplete_path.php", {
+                method: 'POST',
+                body: new URLSearchParams({
+                    path: input.value.trim()
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Autocomplete request failed');
+            }
+
+            const res = await response.json();
+
+            if (load_id !== autocomplete_load_id) {
+                return;
+            }
+
+            init_autocomplete(Array.isArray(res.data) ? res.data : []);
+
+            if (!$form.hasClass('is-hidden')) {
+                $input.autocomplete('search', input.value);
+            }
+        } catch (error) {
+            if (load_id !== autocomplete_load_id) {
+                return;
+            }
+
+            init_autocomplete([]);
+        }
+    };
+
+    const reopen_autocomplete = (value) => {
+        clearTimeout(reopen_timer);
+
+        reopen_timer = setTimeout(() => {
+            $input.autocomplete('search', value);
+            keep_open_after_select = false;
+            reopen_timer = null;
+            move_caret_to_end();
+        }, 0);
+    };
+
+    const toggle_form = () => {
+        const is_hidden = $form.hasClass('is-hidden');
+
+        $form.toggleClass('is-hidden', !is_hidden);
+        toggle.setAttribute('aria-expanded', is_hidden ? 'true' : 'false');
+
+        if (is_hidden) {
+            move_caret_to_end();
+        } else {
+            clearTimeout(reopen_timer);
+            reopen_timer = null;
+            keep_open_after_select = false;
+
+            if (has_autocomplete()) {
+                $input.autocomplete('close');
+            }
+        }
+    };
+
+    toggle.addEventListener('click', toggle_form);
+
+    toggle.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+        }
+
+        event.preventDefault();
+        toggle_form();
+    });
+
+    $input.on('focus', () => {
+        move_caret_to_end();
+        load_autocomplete_data();
+    });
+
+    $input.on('input', () => {
+        const slash_count = count_slashes(input.value);
+
+        if (slash_count === last_slash_count) {
+            return;
+        }
+
+        last_slash_count = slash_count;
+        load_autocomplete_data();
+    });
+
+    init_autocomplete([]);
+})();

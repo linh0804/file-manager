@@ -62,12 +62,12 @@ if (IS_LOGIN) {
             <li><a href="db/"><img src="icon/database.png"/></a></li>
             <li><a href="<?= action_link('setting') ?>"><img src="icon/setting.png" /></a></li>
             <li>
-                <img id="header-goto-path-toggle" src="icon/search.png" alt="Goto path" role="button" tabindex="0" aria-controls="header-goto-path-form" aria-expanded="false" />
+                <img id="header-goto-path-toggle" src="icon/search.png" alt="Goto path" role="button" tabindex="0" aria-controls="header-goto-path-form" aria-expanded="false" data-status="off" />
             </li>
         <?php } ?>
     </ul>
     <?php if (IS_LOGIN) { ?>
-        <form id="header-goto-path-form" class="is-hidden" action="<?= action_link('index') ?>" method="get">
+        <form id="header-goto-path-form" action="<?= action_link('index') ?>" method="get">
             <input id="header-goto-path" name="path" type="text" value="<?= htmlspecialchars($header_goto_path) ?>">
             <input type="submit" value="GO">
         </form>

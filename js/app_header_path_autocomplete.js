@@ -13,6 +13,10 @@
     let last_slash_count = (input.value.match(/\//g) || []).length;
     let autocomplete_load_id = 0;
 
+    if (toggle.getAttribute('data-status') === 'off') {
+        $form.removeClass('is-visible');
+    }
+
     const move_caret_to_end = () => {
         const length = input.value.length;
 
@@ -154,7 +158,7 @@
 
         init_autocomplete(items);
 
-        if (!$form.hasClass('is-hidden')) {
+        if (toggle.getAttribute('data-status') === 'on') {
             $input.autocomplete('search', input.value);
         }
     };
@@ -171,14 +175,18 @@
     };
 
     const toggle_form = () => {
-        const is_hidden = $form.hasClass('is-hidden');
+        const is_off = toggle.getAttribute('data-status') === 'off';
 
-        $form.toggleClass('is-hidden', !is_hidden);
-        toggle.setAttribute('aria-expanded', is_hidden ? 'true' : 'false');
-
-        if (is_hidden) {
+        if (is_off) {
+            toggle.setAttribute('data-status', 'on');
+            toggle.setAttribute('aria-expanded', 'true');
+            $form.addClass('is-visible');
             move_caret_to_end();
+            load_autocomplete_data();
         } else {
+            toggle.setAttribute('data-status', 'off');
+            toggle.setAttribute('aria-expanded', 'false');
+            $form.removeClass('is-visible');
             clearTimeout(reopen_timer);
             reopen_timer = null;
             keep_open_after_select = false;

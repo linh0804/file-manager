@@ -5,14 +5,14 @@
 }
 
 #header-goto-path-form {
+    display: none;
+}
+
+#header-goto-path-form.is-visible {
     display: flex;
     gap: 4px;
     align-items: center;
     margin-top: 6px;
-}
-
-#header-goto-path-form.is-hidden {
-    display: none;
 }
 
 #header-goto-path-form #header-goto-path {

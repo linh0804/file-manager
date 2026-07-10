@@ -24,8 +24,8 @@
 
     const escape_html = (value) => $("<div>").text(value).html();
     const escape_regex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const get_directory_prefix = (value) => {
-        const trimmed = value.trim();
+    const get_dir_base = () => {
+        const trimmed = $input.val().trim();
 
         if (trimmed === "" || trimmed.endsWith("/")) {
             return trimmed;
@@ -50,7 +50,7 @@
 
         return slash_index === -1 ? trimmed : trimmed.slice(slash_index + 1);
     };
-    const to_full_path = (value, item) => get_directory_prefix(value) + item;
+    const to_full_path = (value, item) => get_dir_base() + item;
     const filter_autocomplete_items = (items, keyword) => {
         const normalized_keyword = keyword.toLowerCase();
 
@@ -152,7 +152,7 @@
     });
 
     $input.on("input", async () => {
-        const query = get_directory_prefix($input.val());
+        const query = get_dir_base();
 
         if (query === last_query) {
             return;

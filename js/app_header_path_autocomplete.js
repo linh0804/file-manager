@@ -16,7 +16,7 @@
         $form.removeClass('is-visible');
     }
 
-    const move_caret_to_end = () => {
+    const move_cursor_to_end = () => {
         const el = $input[0];
 
         el.focus();
@@ -122,7 +122,7 @@
                 const value = to_full_path(this.value, ui.item.value);
 
                 $(this).val(value);
-                move_caret_to_end();
+                move_cursor_to_end();
 
                 if (!String(ui.item.value).endsWith('/')) {
                     keep_open_after_select = false;
@@ -163,7 +163,7 @@
             $input.autocomplete('search', value);
             keep_open_after_select = false;
             reopen_timer = null;
-            move_caret_to_end();
+            move_cursor_to_end();
         }, 0);
     };
 
@@ -173,7 +173,7 @@
         if (is_off) {
             $toggle.attr('data-status', 'on');
             $form.addClass('is-visible');
-            move_caret_to_end();
+            move_cursor_to_end();
             await gen_autocomplete();
         } else {
             $toggle.attr('data-status', 'off');
@@ -200,7 +200,7 @@
     });
 
     $input.on('focus', async () => {
-        move_caret_to_end();
+        move_cursor_to_end();
         await gen_autocomplete();
     });
 

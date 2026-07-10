@@ -3,14 +3,10 @@
     const $form = $('#header-goto-path-form');
     const $toggle = $('#header-goto-path-toggle');
 
-    if ($input.length === 0 || $form.length === 0 || $toggle.length === 0) {
-        return;
-    }
-
     let keep_open_after_select = false;
     let reopen_timer = null;
     let autocomplete_request = null;
-    let last_slash_count = ($input.val().match(/\//g) || []).length;
+    let last_query = '';
 
     if ($toggle.attr('data-status') === 'off') {
         $form.removeClass('is-visible');
@@ -58,7 +54,6 @@
         return slash_index === -1 ? trimmed : trimmed.slice(slash_index + 1);
     };
     const to_full_path = (value, item) => get_directory_prefix(value) + item;
-    const count_slashes = (value) => (value.match(/\//g) || []).length;
     const filter_autocomplete_items = (items, keyword) => {
         const normalized_keyword = keyword.toLowerCase();
 
@@ -68,19 +63,7 @@
 
         return items.filter((item) => String(item).toLowerCase().includes(normalized_keyword));
     };
-    const render_autocomplete_item = function (ul, item) {
-        const term = get_search_segment(this.term || '');
-        let label = escape_html(item.label || item.value || '');
 
-        if (term !== '') {
-            label = label.replace(
-                new RegExp(escape_regex(term), 'i'),
-                '<span class="autocomplete-match">$&</span>'
-            );
-        }
-
-        return $('<li>').append($('<div>').html(label)).appendTo(ul);
-    };
     const get_paths = async (str) => {
         if (autocomplete_request) {
             autocomplete_request.abort();
@@ -101,6 +84,7 @@
             return [];
         }
     };
+
     const gen_autocomplete = async () => {
         const items = await get_paths($input.val().trim());
 
@@ -132,10 +116,8 @@
 
                 keep_open_after_select = true;
 
-                const slash_count = count_slashes(value);
-
-                if (slash_count !== last_slash_count) {
-                    last_slash_count = slash_count;
+                if (get_directory_prefix(value) !== last_query) {
+                    last_query = get_directory_prefix(value);
                     keep_open_after_select = false;
                     await gen_autocomplete();
                 }
@@ -149,7 +131,19 @@
             }
         });
 
-        $input.autocomplete('instance')._renderItem = render_autocomplete_item;
+        $input.autocomplete('instance')._renderItem = function (ul, item) {
+        const term = get_search_segment(this.term || '');
+        let label = escape_html(item.label || item.value || '');
+
+        if (term !== '') {
+            label = label.replace(
+                new RegExp(escape_regex(term), 'i'),
+                '<span class="autocomplete-match">$&</span>'
+            );
+        }
+
+        return $('<li>').append($('<div>').html(label)).appendTo(ul);
+    };
 
         if ($toggle.attr('data-status') === 'on') {
             $input.autocomplete('search', $input.val());
@@ -167,17 +161,17 @@
         }, 0);
     };
 
-    const toggle_form = async () => {
+    $toggle.on('click', async () => {
         const is_off = $toggle.attr('data-status') === 'off';
 
         if (is_off) {
             $toggle.attr('data-status', 'on');
             $form.addClass('is-visible');
             move_cursor_to_end();
-            await gen_autocomplete();
         } else {
             $toggle.attr('data-status', 'off');
             $form.removeClass('is-visible');
+
             clearTimeout(reopen_timer);
             reopen_timer = null;
             keep_open_after_select = false;
@@ -186,34 +180,20 @@
                 $input.autocomplete('close');
             }
         }
-    };
-
-    $toggle.on('click', toggle_form);
-
-    $toggle.on('keydown', async (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') {
-            return;
-        }
-
-        event.preventDefault();
-        await toggle_form();
     });
 
     $input.on('focus', async () => {
-        move_cursor_to_end();
         await gen_autocomplete();
     });
 
     $input.on('input', async () => {
-        const slash_count = count_slashes($input.val());
+        const query = get_directory_prefix($input.val());
 
-        if (slash_count === last_slash_count) {
+        if (query === last_query) {
             return;
         }
 
-        last_slash_count = slash_count;
+        last_query = query;
         await gen_autocomplete();
     });
-
-    await gen_autocomplete();
 })();

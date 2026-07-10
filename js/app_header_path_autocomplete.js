@@ -9,6 +9,7 @@
 
     let keep_open_after_select = false;
     let reopen_timer = null;
+    let autocomplete_request = null;
     let last_slash_count = ($input.val().match(/\//g) || []).length;
 
     if ($toggle.attr('data-status') === 'off') {
@@ -81,10 +82,17 @@
         return $('<li>').append($('<div>').html(label)).appendTo(ul);
     };
     const get_paths = async (str) => {
+        if (autocomplete_request) {
+            autocomplete_request.abort();
+        }
+
+        autocomplete_request = new AbortController();
+
         try {
             const response = await fm_fetch("api_autocomplete_path.php", {
                 method: 'POST',
-                body: new URLSearchParams({ path: str })
+                body: new URLSearchParams({ path: str }),
+                signal: autocomplete_request.signal
             });
             const res = await response.json();
 
@@ -94,63 +102,57 @@
         }
     };
     const gen_autocomplete = async () => {
-        $input.prop('disabled', true);
+        const items = await get_paths($input.val().trim());
 
-        try {
-            const items = await get_paths($input.val().trim());
+        if ($input.data('ui-autocomplete')) {
+            $input.autocomplete('destroy');
+        }
 
-            if ($input.data('ui-autocomplete')) {
-                $input.autocomplete('destroy');
-            }
+        $input.autocomplete({
+            source: function (request, response) {
+                response(filter_autocomplete_items(items, get_search_segment(request.term)));
+            },
+            minLength: 1,
+            focus: function (event) {
+                event.preventDefault();
+            },
+            select: async function (event, ui) {
+                event.preventDefault();
 
-            $input.autocomplete({
-                source: function (request, response) {
-                    response(filter_autocomplete_items(items, get_search_segment(request.term)));
-                },
-                minLength: 1,
-                focus: function (event) {
-                    event.preventDefault();
-                },
-                select: async function (event, ui) {
-                    event.preventDefault();
+                const value = to_full_path(this.value, ui.item.value);
 
-                    const value = to_full_path(this.value, ui.item.value);
+                $(this).val(value);
+                move_caret_to_end();
 
-                    $(this).val(value);
-                    move_caret_to_end();
-
-                    if (!String(ui.item.value).endsWith('/')) {
-                        keep_open_after_select = false;
-                        window.location.href = 'file.php?act=info&path=' + encodeURIComponent(value);
-                        return;
-                    }
-
-                    keep_open_after_select = true;
-
-                    const slash_count = count_slashes(value);
-
-                    if (slash_count !== last_slash_count) {
-                        last_slash_count = slash_count;
-                        keep_open_after_select = false;
-                        await gen_autocomplete();
-                    }
-                },
-                close: function () {
-                    if (!keep_open_after_select || $(this).val() === '') {
-                        return;
-                    }
-
-                    reopen_autocomplete($(this).val());
+                if (!String(ui.item.value).endsWith('/')) {
+                    keep_open_after_select = false;
+                    window.location.href = 'file.php?act=info&path=' + encodeURIComponent(value);
+                    return;
                 }
-            });
 
-            $input.autocomplete('instance')._renderItem = render_autocomplete_item;
+                keep_open_after_select = true;
 
-            if ($toggle.attr('data-status') === 'on') {
-                $input.autocomplete('search', $input.val());
+                const slash_count = count_slashes(value);
+
+                if (slash_count !== last_slash_count) {
+                    last_slash_count = slash_count;
+                    keep_open_after_select = false;
+                    await gen_autocomplete();
+                }
+            },
+            close: function () {
+                if (!keep_open_after_select || $(this).val() === '') {
+                    return;
+                }
+
+                reopen_autocomplete($(this).val());
             }
-        } finally {
-            $input.prop('disabled', false);
+        });
+
+        $input.autocomplete('instance')._renderItem = render_autocomplete_item;
+
+        if ($toggle.attr('data-status') === 'on') {
+            $input.autocomplete('search', $input.val());
         }
     };
 

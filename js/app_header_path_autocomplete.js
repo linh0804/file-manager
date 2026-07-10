@@ -82,14 +82,12 @@
         return $('<li>').append($('<div>').html(label)).appendTo(ul);
     };
     const has_autocomplete = () => Boolean($input.data('ui-autocomplete'));
-    const init_autocomplete = (items) => {
-        if (has_autocomplete()) {
-            $input.autocomplete('destroy');
-        }
+    const set_autocomplete = (data) => {
+        $input.autocomplete('destroy');
 
         $input.autocomplete({
             source: function (request, response) {
-                response(filter_autocomplete_items(items, get_search_segment(request.term)));
+                response(filter_autocomplete_items(data, get_search_segment(request.term)));
             },
             minLength: 1,
             focus: function (event) {
@@ -155,7 +153,7 @@
             return;
         }
 
-        init_autocomplete(items);
+        set_autocomplete(items);
 
         if ($toggle.attr('data-status') === 'on') {
             $input.autocomplete('search', $input.val());
@@ -221,5 +219,5 @@
         load_autocomplete_data();
     });
 
-    init_autocomplete([]);
+    set_autocomplete([]);
 })();

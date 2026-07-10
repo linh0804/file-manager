@@ -50,7 +50,6 @@
 
         return slash_index === -1 ? trimmed : trimmed.slice(slash_index + 1);
     };
-    const to_full_path = (value, item) => get_dir_base() + item;
     const filter_autocomplete_items = (items, keyword) => {
         const normalized_keyword = keyword.toLowerCase();
 
@@ -100,7 +99,7 @@
             select: async function (event, ui) {
                 event.preventDefault();
 
-                const value = to_full_path(this.value, ui.item.value);
+                const value = get_dir_base() + ui.item.value;
                 $(this).val(value);
 
                 // for file

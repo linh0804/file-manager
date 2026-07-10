@@ -10,7 +10,6 @@
     let keep_open_after_select = false;
     let reopen_timer = null;
     let last_slash_count = ($input.val().match(/\//g) || []).length;
-    let autocomplete_load_id = 0;
 
     if ($toggle.attr('data-status') === 'off') {
         $form.removeClass('is-visible');
@@ -81,54 +80,6 @@
 
         return $('<li>').append($('<div>').html(label)).appendTo(ul);
     };
-    const has_autocomplete = () => Boolean($input.data('ui-autocomplete'));
-    const set_autocomplete = (data) => {
-        $input.autocomplete('destroy');
-
-        $input.autocomplete({
-            source: function (request, response) {
-                response(filter_autocomplete_items(data, get_search_segment(request.term)));
-            },
-            minLength: 1,
-            focus: function (event) {
-                event.preventDefault();
-            },
-            select: function (event, ui) {
-                event.preventDefault();
-
-                const value = to_full_path(this.value, ui.item.value);
-
-                $(this).val(value);
-                move_caret_to_end();
-
-                if (!String(ui.item.value).endsWith('/')) {
-                    keep_open_after_select = false;
-                    window.location.href = 'file.php?act=info&path=' + encodeURIComponent(value);
-                    return;
-                }
-
-                keep_open_after_select = true;
-
-                const slash_count = count_slashes(value);
-
-                if (slash_count !== last_slash_count) {
-                    last_slash_count = slash_count;
-                    keep_open_after_select = false;
-                    load_autocomplete_data();
-                    return;
-                }
-            },
-            close: function () {
-                if (!keep_open_after_select || $(this).val() === '') {
-                    return;
-                }
-
-                reopen_autocomplete($(this).val());
-            }
-        });
-
-        $input.autocomplete('instance')._renderItem = render_autocomplete_item;
-    };
     const get_paths = async (str) => {
         try {
             const response = await fm_fetch("api_autocomplete_path.php", {
@@ -142,21 +93,64 @@
             return [];
         }
     };
-    const load_autocomplete_data = async () => {
-        const load_id = autocomplete_load_id + 1;
+    const gen_autocomplete = async () => {
+        $input.prop('disabled', true);
 
-        autocomplete_load_id = load_id;
+        try {
+            const items = await get_paths($input.val().trim());
 
-        const items = await get_paths($input.val().trim());
+            if ($input.data('ui-autocomplete')) {
+                $input.autocomplete('destroy');
+            }
 
-        if (load_id !== autocomplete_load_id) {
-            return;
-        }
+            $input.autocomplete({
+                source: function (request, response) {
+                    response(filter_autocomplete_items(items, get_search_segment(request.term)));
+                },
+                minLength: 1,
+                focus: function (event) {
+                    event.preventDefault();
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
 
-        set_autocomplete(items);
+                    const value = to_full_path(this.value, ui.item.value);
 
-        if ($toggle.attr('data-status') === 'on') {
-            $input.autocomplete('search', $input.val());
+                    $(this).val(value);
+                    move_caret_to_end();
+
+                    if (!String(ui.item.value).endsWith('/')) {
+                        keep_open_after_select = false;
+                        window.location.href = 'file.php?act=info&path=' + encodeURIComponent(value);
+                        return;
+                    }
+
+                    keep_open_after_select = true;
+
+                    const slash_count = count_slashes(value);
+
+                    if (slash_count !== last_slash_count) {
+                        last_slash_count = slash_count;
+                        keep_open_after_select = false;
+                        gen_autocomplete();
+                    }
+                },
+                close: function () {
+                    if (!keep_open_after_select || $(this).val() === '') {
+                        return;
+                    }
+
+                    reopen_autocomplete($(this).val());
+                }
+            });
+
+            $input.autocomplete('instance')._renderItem = render_autocomplete_item;
+
+            if ($toggle.attr('data-status') === 'on') {
+                $input.autocomplete('search', $input.val());
+            }
+        } finally {
+            $input.prop('disabled', false);
         }
     };
 
@@ -178,7 +172,7 @@
             $toggle.attr('data-status', 'on');
             $form.addClass('is-visible');
             move_caret_to_end();
-            load_autocomplete_data();
+            gen_autocomplete();
         } else {
             $toggle.attr('data-status', 'off');
             $form.removeClass('is-visible');
@@ -186,7 +180,7 @@
             reopen_timer = null;
             keep_open_after_select = false;
 
-            if (has_autocomplete()) {
+            if ($input.data('ui-autocomplete')) {
                 $input.autocomplete('close');
             }
         }
@@ -205,7 +199,7 @@
 
     $input.on('focus', () => {
         move_caret_to_end();
-        load_autocomplete_data();
+        gen_autocomplete();
     });
 
     $input.on('input', () => {
@@ -216,8 +210,8 @@
         }
 
         last_slash_count = slash_count;
-        load_autocomplete_data();
+        gen_autocomplete();
     });
 
-    set_autocomplete([]);
+    gen_autocomplete();
 })();

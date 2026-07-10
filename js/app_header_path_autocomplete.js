@@ -50,16 +50,6 @@
 
         return slash_index === -1 ? trimmed : trimmed.slice(slash_index + 1);
     };
-    const filter_autocomplete_items = (items, keyword) => {
-        const normalized_keyword = keyword.toLowerCase();
-
-        if (normalized_keyword === "") {
-            return items;
-        }
-
-        return items.filter((item) => String(item).toLowerCase().includes(normalized_keyword));
-    };
-
     const get_paths = async (str) => {
         if (autocomplete_request) {
             autocomplete_request.abort();
@@ -90,7 +80,8 @@
 
         $input.autocomplete({
             source: function (request, response) {
-                response(filter_autocomplete_items(items, get_search_segment(request.term)));
+                const keyword = get_search_segment(request.term).toLowerCase();
+                response(keyword === "" ? items : items.filter((item) => String(item).toLowerCase().includes(keyword)));
             },
             minLength: 1,
             focus: function (event) {
@@ -109,6 +100,7 @@
                 }
 
                 // for dir
+                move_cursor_to_end();
                 await gen_autocomplete();
             },
         });

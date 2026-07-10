@@ -1,4 +1,4 @@
-(() => {
+(async () => {
     const $input = $('#header-goto-path');
     const $form = $('#header-goto-path-form');
     const $toggle = $('#header-goto-path-toggle');
@@ -111,7 +111,7 @@
                 focus: function (event) {
                     event.preventDefault();
                 },
-                select: function (event, ui) {
+                select: async function (event, ui) {
                     event.preventDefault();
 
                     const value = to_full_path(this.value, ui.item.value);
@@ -132,7 +132,7 @@
                     if (slash_count !== last_slash_count) {
                         last_slash_count = slash_count;
                         keep_open_after_select = false;
-                        gen_autocomplete();
+                        await gen_autocomplete();
                     }
                 },
                 close: function () {
@@ -165,14 +165,14 @@
         }, 0);
     };
 
-    const toggle_form = () => {
+    const toggle_form = async () => {
         const is_off = $toggle.attr('data-status') === 'off';
 
         if (is_off) {
             $toggle.attr('data-status', 'on');
             $form.addClass('is-visible');
             move_caret_to_end();
-            gen_autocomplete();
+            await gen_autocomplete();
         } else {
             $toggle.attr('data-status', 'off');
             $form.removeClass('is-visible');
@@ -188,21 +188,21 @@
 
     $toggle.on('click', toggle_form);
 
-    $toggle.on('keydown', (event) => {
+    $toggle.on('keydown', async (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') {
             return;
         }
 
         event.preventDefault();
-        toggle_form();
+        await toggle_form();
     });
 
-    $input.on('focus', () => {
+    $input.on('focus', async () => {
         move_caret_to_end();
-        gen_autocomplete();
+        await gen_autocomplete();
     });
 
-    $input.on('input', () => {
+    $input.on('input', async () => {
         const slash_count = count_slashes($input.val());
 
         if (slash_count === last_slash_count) {
@@ -210,8 +210,8 @@
         }
 
         last_slash_count = slash_count;
-        gen_autocomplete();
+        await gen_autocomplete();
     });
 
-    gen_autocomplete();
+    await gen_autocomplete();
 })();

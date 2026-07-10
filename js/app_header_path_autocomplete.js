@@ -3,8 +3,6 @@
     const $form = $("#header-goto-path-form");
     const $toggle = $("#header-goto-path-toggle");
 
-    let keep_open_after_select = false;
-    let reopen_timer = null;
     let autocomplete_request = null;
     let last_query = "";
 
@@ -103,30 +101,16 @@
                 event.preventDefault();
 
                 const value = to_full_path(this.value, ui.item.value);
-
                 $(this).val(value);
-                move_cursor_to_end();
 
+                // for file
                 if (!String(ui.item.value).endsWith("/")) {
-                    keep_open_after_select = false;
                     window.location.href = "file.php?act=info&path=" + encodeURIComponent(value);
                     return;
                 }
 
-                keep_open_after_select = true;
-
-                if (get_directory_prefix(value) !== last_query) {
-                    last_query = get_directory_prefix(value);
-                    keep_open_after_select = false;
-                    await gen_autocomplete();
-                }
-            },
-            close: function () {
-                if (!keep_open_after_select || $(this).val() === "") {
-                    return;
-                }
-
-                reopen_autocomplete($(this).val());
+                // for dir
+                await gen_autocomplete();
             },
         });
 
@@ -146,17 +130,6 @@
         }
     };
 
-    const reopen_autocomplete = (value) => {
-        clearTimeout(reopen_timer);
-
-        reopen_timer = setTimeout(() => {
-            $input.autocomplete("search", value);
-            keep_open_after_select = false;
-            reopen_timer = null;
-            move_cursor_to_end();
-        }, 0);
-    };
-
     $toggle.on("click", async () => {
         const is_off = $toggle.attr("data-status") === "off";
 
@@ -167,10 +140,6 @@
         } else {
             $toggle.attr("data-status", "off");
             $form.removeClass("is-visible");
-
-            clearTimeout(reopen_timer);
-            reopen_timer = null;
-            keep_open_after_select = false;
 
             if ($input.data("ui-autocomplete")) {
                 $input.autocomplete("close");

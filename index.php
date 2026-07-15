@@ -178,7 +178,7 @@ if ($count <= 0) {
     <li><a href="<?= action_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
     <li><a href="<?= action_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
     <li><a href="<?= action_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
-    <li><a href="<?= action_link('webdav') . '/' . ltrim((string) $curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>
+    <li><a href="webdav.php/<?= ltrim($curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>
     <li><a href="<?= action_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 

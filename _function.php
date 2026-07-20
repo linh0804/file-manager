@@ -113,6 +113,11 @@ function action_link(string $name, array $params = []): string
 {
     $link = $name . '.php';
 
+    // Tự động giữ trang danh sách hiện tại nếu link chưa chỉ định trang khác
+    $params['page_list'] = isset($params['page_list'])
+        ? $params['page_list']
+        : (isset($_GET['page_list']) ? $_GET['page_list'] : null);
+
     // Tự động thêm _referer: base64 URL hiện tại (đã loại bỏ _referer cũ nếu có)
     $params['_referer'] = base64url_encode(get_curr_uri_without_referer());
 

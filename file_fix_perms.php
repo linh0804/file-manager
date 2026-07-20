@@ -6,6 +6,8 @@ define('ACCESS', true);
 
 require __DIR__ . '/_init.php';
 
+$curr_path = get_curr_path();
+
 $site_title = 'Sửa quyền file/thư mục';
 
 require SITE_HEADER;
@@ -35,8 +37,7 @@ echo '<div class="list">
    Công cụ này đã được sinh ra ^^!
 </div>';
 
-$request_path = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : '';
-$folder = (string) request::post('folder', $request_path);
+$folder = (string) request::post('folder', $curr_path);
 $own = (string) request::post('own', get_current_user());
 $folder_mode = (string) request::post('folder_mode', 755);
 $file_mode = (string) request::post('file_mode', 644);

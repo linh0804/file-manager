@@ -16,3 +16,4 @@ This repository is a mostly flat PHP 7.4 application (file manager) served from 
 ## Testing
 
 - Only check syntax.
+- No more check.

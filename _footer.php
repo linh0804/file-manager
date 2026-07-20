@@ -15,7 +15,7 @@ if (IS_LOGIN) {
     $site_sidebar .= '<div class="title">Chức năng</div>
     <ul class="list">
         <li><img src="icon/home.png"/> <a href="' . action_link('setting_home') . '">Sửa Trang chủ</a></li>
-        <li><img src="icon/search.png"/> <a href="' . action_link('folder_compare_simple') . '">So sánh thư mục</a></li>
+        <li><img src="icon/search.png"/> <a href="' . action_link('folder_compare_tree') . '">So sánh thư mục</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('command', ['path' => $curr_path]) . '">Chạy lệnh</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('composer', ['path' => $curr_path]) . '">Chạy lệnh Composer</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('file_fix_perms', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>

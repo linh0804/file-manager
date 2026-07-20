@@ -857,9 +857,7 @@ function file_display_actions($filename)
     echo '<li><img src="icon/move.png"/> <a href="' . action_link('file', ['act' => 'move', 'path' => $path] + get_page_list_params()) . '">Di chuyển</a></li>';
     echo '<li><img src="icon/access.png"/> <a href="' . action_link('file', ['act' => 'chmod', 'path' => $path] + get_page_list_params()) . '">Chmod</a></li>';
     echo '<li><img src="icon/delete.png"/> <a href="' . action_link('file', ['act' => 'delete', 'path' => $path] + get_page_list_params()) . '">Xóa</a></li>';
-
-    echo '<li><img src="icon/info.png"/> <a href="' . action_link('file', ['act' => 'info', 'path' => $path] + get_page_list_params()) . '">Thông tin</a></li>';
-    echo '<li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir] + get_page_list_params()) . '">Danh sách</a></li>';
+    echo '<li><img src="icon/info.png"/> <a href="' . action_link('file', ['act' => 'info', 'path' => $path] + get_page_list_params()) . '">Thông tin</a></li>';  
     echo '</ul>';
 
     show_back();

@@ -556,6 +556,7 @@ function page($current, $total, $url)
 
 function paging(
     string $id,
+    string $page_id,
     array $params,
     int $curr_page,
     int $total_items,
@@ -574,8 +575,8 @@ function paging(
 
     $current_is_valid = $curr_page >= 1 && $curr_page <= $total;
     $current = $current_is_valid ? $curr_page : ($curr_page < 1 ? 1 : $total);
-    $link = static function (int $target_page, string $class, string $text) use ($id, $params): string {
-        return '<a href="' . action_link($id, array_merge($params, ['page' => $target_page])) . '" class="' . $class . '">' . $text . '</a>';
+    $link = static function (int $target_page, string $class, string $text) use ($id, $page_id, $params): string {
+        return '<a href="' . action_link($id, array_merge($params, [$page_id => $target_page])) . '" class="' . $class . '">' . $text . '</a>';
     };
     $html = '<div class="page">';
     $center = PAGE_NUMBER - 2;

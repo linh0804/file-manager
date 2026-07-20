@@ -18,7 +18,7 @@ if (IS_LOGIN) {
         <li><img src="icon/search.png"/> <a href="' . action_link('folder_compare_simple') . '">So sánh thư mục</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('command', ['path' => $curr_path]) . '">Chạy lệnh</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('composer', ['path' => $curr_path]) . '">Chạy lệnh Composer</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('fix_permission', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('file_fix_perms', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>
         <li><img src="icon/mime/php.png"/> <a href="' . action_link('phpinfo') . '">phpinfo()</a></li>
     </ul>';
     

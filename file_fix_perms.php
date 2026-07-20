@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 		}
 
         if ($file->isFile()) {
-            if (chmod($file, intval($file_mode, 8))) {
+            if (!chmod($file, intval($file_mode, 8))) {
             	$file_fail[] = $file;
         	}
 		}

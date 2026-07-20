@@ -10,7 +10,7 @@ This repository is a mostly flat PHP 7.4 application (file manager) served from 
 
 ## Coding Style & Naming Conventions
 
-- PHP style follows PSR-12 with 4-space indentation.
+- PHP style with 4-space indentation.
 - Keep procedural page scripts in root with snake_case file names (for example: file_edit_text.php, multi_delete.php).
 
 ## Testing

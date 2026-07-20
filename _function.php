@@ -554,6 +554,105 @@ function page($current, $total, $url)
     return $html;
 }
 
+function paging(
+    string $id,
+    array $params,
+    int $curr_page,
+    int $total_items,
+    int $page_size
+): string
+{
+    if ($page_size <= 0) {
+        return '';
+    }
+
+    $total = (int) ceil($total_items / $page_size);
+
+    if ($total <= 1) {
+        return '';
+    }
+
+    $current_is_valid = $curr_page >= 1 && $curr_page <= $total;
+    $current = $current_is_valid ? $curr_page : ($curr_page < 1 ? 1 : $total);
+    $link = static function (int $target_page, string $class, string $text) use ($id, $params): string {
+        return '<a href="' . action_link($id, array_merge($params, ['page' => $target_page])) . '" class="' . $class . '">' . $text . '</a>';
+    };
+    $html = '<div class="page">';
+    $center = PAGE_NUMBER - 2;
+
+    if ($total <= PAGE_NUMBER) {
+        for ($i = 1; $i <= $total; ++$i) {
+            if ($current_is_valid && $curr_page === $i) {
+                $html .= '<strong class="current">' . $i . '</strong>';
+            } else {
+                $html .= $link($i, 'other', (string) $i);
+            }
+        }
+    } else {
+        if ($current_is_valid && $curr_page === 1) {
+            $html .= '<strong class="current">1</strong>';
+        } else {
+            $html .= $link(1, 'other', '1');
+        }
+
+        if ($current > $center) {
+            $i = $current - $center < 1 ? 1 : $current - $center;
+            $html .= $link($i, 'text', '...');
+        }
+
+        $offset = [];
+
+        if ($current <= $center) {
+            $offset['start'] = 2;
+        } else {
+            $offset['start'] = $current - ($current > $total - $center ? $current - ($total - $center) : floor($center >> 1));
+        }
+
+        if ($current >= $total - $center + 1) {
+            $offset['end'] = $total - 1;
+        } else {
+            $offset['end'] = $current + ($current <= $center ? ($center + 1) - $current : floor($center >> 1));
+        }
+
+        for ($i = $offset['start']; $i <= $offset['end']; ++$i) {
+            if ($current_is_valid && $curr_page === $i) {
+                $html .= '<strong class="current">' . $i . '</strong>';
+            } else {
+                $html .= $link($i, 'other', (string) $i);
+            }
+        }
+
+        if ($current < $total - $center + 1) {
+            $html .= $link($current + $center > $total ? $total : $current + $center, 'text', '...');
+        }
+
+        if ($current_is_valid && $curr_page === $total) {
+            $html .= '<strong class="current">' . $total . '</strong>';
+        } else {
+            $html .= $link($total, 'other', (string) $total);
+        }
+    }
+
+    return $html . '</div>';
+}
+
+function paging_arr(array $arr, int $page, int $page_size): array
+{
+    if ($page < 1 || $page_size <= 0) {
+        return [];
+    }
+
+    $total_pages = (int) ceil(count($arr) / $page_size);
+
+    if ($page > $total_pages) {
+        return [];
+    }
+
+    $offset = ($page - 1) * $page_size;
+
+    return array_slice($arr, $offset, $page_size);
+}
+
 function file_get_chmod($path)
 {
     $perms = @fileperms($path);

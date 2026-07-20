@@ -33,7 +33,7 @@ echo '<div class="list">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
         <span>Bạn có thực sự muốn xóa các mục đã chọn không?</span><hr/><br/>
         <center>
-            <form action="' . action_link('multi', ['act' => 'delete', 'path' => $curr_path] + get_page_list_params()) . '" method="post">
+            <form action="" method="post">
                 <input type="hidden" name="is_action" value="1"/>';
 
 echo $entry_checkbox;

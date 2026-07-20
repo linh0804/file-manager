@@ -41,7 +41,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
 
     echo '<div class="list">
                 <span class="bull">&bull; </span><span>' . file_print_path($dir . '/' . $name, true) . '</span><hr/>
-                <form action="' . action_link('folder_copy', ['dir' => $dir, 'name' => $name] + get_page_list_params()) . '" method="post">
+                <form action="" method="post">
                     <span class="bull">&bull; </span>Đường dẫn thư mục mới:<br/>
                     <input type="text" name="path" value="' . (isset($_POST['path']) ? $_POST['path'] : $dir) . '" size="18"/><br/>
                     <input type="submit" name="submit" value="Sao chép"/>

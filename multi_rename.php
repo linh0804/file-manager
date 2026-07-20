@@ -86,7 +86,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 
 echo '<div class="list break-word">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path] + get_page_list_params()) . '" method="post">';
+        <form action="" method="post">';
 
 for ($i = 0; $i < count($entries); ++$i) {
     $entry_path = $curr_path . '/' . $entries[$i];

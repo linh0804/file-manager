@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-echo '<form action="' . action_link('setting') . '" method="post">
+echo '<form action="" method="post">
     <div class="list">
     <span class="bull">&bull; </span>Tài khoản:<br/>
     <input type="text" name="username" value="' . $username . '" size="18"/><br/>

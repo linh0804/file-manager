@@ -7,6 +7,10 @@ define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
+$folder = (string) request::post('folder', $curr_path);
+$own = (string) request::post('own', get_current_user());
+$folder_mode = (string) request::post('folder_mode', 755);
+$file_mode = (string) request::post('file_mode', 644);
 
 $site_title = 'Sửa quyền file/thư mục';
 
@@ -37,11 +41,6 @@ echo '<div class="list">
    Công cụ này đã được sinh ra ^^!
 </div>';
 
-$folder = (string) request::post('folder', $curr_path);
-$own = (string) request::post('own', get_current_user());
-$folder_mode = (string) request::post('folder_mode', 755);
-$file_mode = (string) request::post('file_mode', 644);
-
 echo '<div class="list">';
 
 echo '<form method="post">
@@ -67,13 +66,15 @@ if (isset($_POST['submit'])) {
     echo 'Thư mục: ';
     echo '<pre style="white-space: pre-wrap">' . htmlspecialchars($folder) . '</pre>';
 
-    $files = read_full_dir($folder);
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($folder, FilesystemIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
     $chown_fail = [];
     $file_fail = [];
 	$folder_fail = [];
     
     foreach ($files as $file) {
-        // chown
         if (!chown($file, $own)) {
             $chown_fail[] = $file;
         }

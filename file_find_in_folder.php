@@ -255,6 +255,4 @@ if (isset($_POST['submit'])) {
     } // end check error
 } // end submit
 
-show_back();
-
 require SITE_FOOTER;

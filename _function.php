@@ -118,41 +118,9 @@ function action_link(string $name, array $params = []): string
         ? $params['page_list']
         : (isset($_GET['page_list']) ? $_GET['page_list'] : null);
 
-    // Tự động thêm _referer: base64 URL hiện tại (đã loại bỏ _referer cũ nếu có)
-    $params['_referer'] = base64url_encode(get_curr_uri_without_referer());
+    $query = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 
-    return $link . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
-}
-
-function get_curr_uri_without_referer(): string
-{
-    $uri = request::uri('request');
-
-    $pos = strpos($uri, '?');
-    if ($pos === false) {
-        return $uri;
-    }
-
-    $path = substr($uri, 0, $pos);
-    parse_str(substr($uri, $pos + 1), $params);
-    unset($params['_referer']);
-
-    if (empty($params)) {
-        return $path;
-    }
-
-    return $path . '?' . http_build_query($params);
-}
-
-function get_curr_referer(): string
-{
-    $referer = request::get('_referer');
-
-    if (empty($referer)) {
-        return '';
-    }
-
-    return base64url_decode($referer);
+    return $query === '' ? $link : $link . '?' . $query;
 }
 
 function file_get_ext($name)
@@ -899,8 +867,6 @@ function check_path($path, $type = '')
     echo '<div class="notice_failure">' . $name . ' <b><i>bị hệ thống chặn</i></b> hoặc <b><i>không tồn tại</i></b>!</div>';
     echo '<br>';
 
-    show_back();
-
     require SITE_FOOTER;
     exit;
 }
@@ -952,7 +918,6 @@ function file_display_actions($filename)
     echo '<li><img src="icon/info.png"/> <a href="' . action_link('file', ['act' => 'info', 'path' => $path]) . '">Thông tin</a></li>';  
     echo '</ul>';
 
-    show_back();
 }
 
 function file_get_display_link($file)
@@ -1011,20 +976,6 @@ function file_get_display_link($file)
 
 
 
-function show_back()
-{
-    $referer = get_curr_referer();
-
-    if (!empty($referer)) {
-        echo '<a href="' . htmlspecialchars($referer) . '">';
-    } else {
-        echo '<a href="javascript:history.back()">';
-    }
-
-    echo '<img src="icon/back.png"> 
-      <strong class="back">Trở lại</strong>
-    </a>';
-}
 
 
 

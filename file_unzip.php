@@ -20,7 +20,6 @@ echo '<div class="title">' . $site_title . '</div>';
 
 if (!in_array($format, array('zip', 'jar'))) {
     echo '<div class="list"><span>Tập tin không phải zip</span></div>';
-    show_back();
 } else {
     if (request::is_method('post')) {
         $error .= '<div class="notice_failure">';

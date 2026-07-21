@@ -54,6 +54,4 @@ echo '<div class="list">
 ?>
 
 <?php
-show_back();
-
 require SITE_FOOTER;

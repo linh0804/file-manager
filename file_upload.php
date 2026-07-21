@@ -46,8 +46,6 @@ echo '<div class="list">
   </form>
 </div>';
 
-show_back();
-
 ?>
 
 <script>

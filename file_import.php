@@ -54,6 +54,4 @@ echo '<div class="list">
     </form>
 </div>';
 
-show_back();
-
 require SITE_FOOTER;

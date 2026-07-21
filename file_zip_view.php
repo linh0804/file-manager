@@ -18,7 +18,6 @@ if (!in_array($format, array('zip', 'jar'))) {
     <div class="list"><span>Tập tin không phải zip</span></div>
     <div class="title">Chức năng</div>';
     
-    show_back();
 } else {
     $site_title .= ':' . $name;
 

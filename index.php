@@ -128,7 +128,8 @@ if ($count <= 0) {
         <td><b><i>Total: ' . $count .'</i></b></td>
     </tr>';
 
-    echo '</table></div>';
+    echo '</table>';
+    echo '</div>';
 
     echo '<div class="list">';
     echo '<div id="file-select-opt" style="display: block">
@@ -140,11 +141,7 @@ if ($count <= 0) {
         <button formaction="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
-    $pagination = paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);
-
-    if ($pagination !== '') {
-        echo '<hr>' . $pagination;
-    }
+    echo paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);
 
     echo '</div>';
 }

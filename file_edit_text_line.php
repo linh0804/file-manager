@@ -7,9 +7,8 @@ $dir = dirname($curr_path);
 $name = basename($curr_path);
 
 $site_title = 'Sửa tập tin theo dòng';
-$page = array('current' => 0, 'total' => 1, 'paramater_0' => null, 'paramater_1' => null);
-$page['current'] = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$page['current'] = $page['current'] <= 0 ? 1 : $page['current'];
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = $page < 1 ? 1 : $page;
 
 require SITE_HEADER;
 
@@ -28,17 +27,10 @@ if (!is_file(process_directory($curr_path))) {
         <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir]) . '">Danh sách</a></li>
     </ul>';
 } else {
-    if ($page['current'] > 1 && PAGE_SIZE > 0) {
-        $page['paramater_0'] = '?page=' . $page['current'];
-        $page['paramater_1'] = '&page=' . $page['current'];
-    }
-
     $path = $curr_path;
     $content = file_get_contents($path);
     $lines = [];
     $count = 0;
-    $start = 0;
-    $end = 0;
 
     if (strlen($content) > 0) {
         $content = str_replace("\r\n", "\n", $content);
@@ -47,10 +39,6 @@ if (!is_file(process_directory($curr_path))) {
         if (strpos($content, "\n") !== false) {
             $lines = explode("\n", $content);
             $count = count($lines);
-
-            if (PAGE_SIZE > 0) {
-                $page['total'] = ceil($count / PAGE_SIZE);
-            }
         } else {
             $lines[] = $content;
             $count = 1;
@@ -60,25 +48,14 @@ if (!is_file(process_directory($curr_path))) {
         $count = 1;
     }
 
-    if (PAGE_SIZE > 0) {
-        $start = ($page['current'] * PAGE_SIZE) - PAGE_SIZE;
-        $end = $start + PAGE_SIZE > $count - 1 ? $count : $start + PAGE_SIZE;
-    } else {
-        $start = 0;
-        $end = $count;
+    if (PAGE_SIZE <= 0) {
+        $page = 1;
+    } elseif ($page > (int) ceil($count / PAGE_SIZE)) {
+        $page = 1;
     }
 
-    if ($page['current'] < 0 && PAGE_SIZE > 0) {
-        redirect(action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path]));
-    }
-
-    if ($page['current'] > $page['total'] && PAGE_SIZE > 0) {
-        redirect(action_link('file', [
-            'act' => 'edit_text_line',
-            'path' => $curr_path,
-            'page' => $page['total'] > 1 ? $page['total'] : null,
-        ]));
-    }
+    $display_lines = paging_arr($lines, $page, PAGE_SIZE);
+    $offset = PAGE_SIZE > 0 ? ($page - 1) * PAGE_SIZE : 0;
 
     echo '<div class="list">
         <span class="bull">&bull; </span><span>' . file_print_path($dir, true) . '</span><hr/>
@@ -88,21 +65,24 @@ if (!is_file(process_directory($curr_path))) {
     </div>
     <div class="list_line">';
 
-    for ($i = $start; $i < $end; ++$i) {
+    foreach ($display_lines as $index => $line) {
+        $line_number = $offset + $index;
+
         echo '<div id="line">
-            <div id="line_number_' . $i . '">' . htmlspecialchars($lines[$i]) . '</div>
+            <div id="line_number_' . $line_number . '">' . htmlspecialchars($line) . '</div>
             <div>
-                <span id="line_number">[<span>' . ($i + 1) . '</span>]</span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '">Sửa</a>
+                <span id="line_number">[<span>' . ($line_number + 1) . '</span>]</span>
+                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Sửa</a>
                 <span> | </span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '">Xóa</a>
+                <a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Xóa</a>
             </div>
         </div>';
     }
 
-    if ($page['total'] > 1 && PAGE_SIZE > 0) {
-        $pageUrl = action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path]);
-        echo page($page['current'], $page['total'], array(PAGE_URL_DEFAULT => $pageUrl, PAGE_URL_START => $pageUrl . '&page='));
+    $pagination = paging('file', 'page', ['act' => 'edit_text_line', 'path' => $curr_path], $page, $count, PAGE_SIZE);
+
+    if ($pagination !== '') {
+        echo $pagination;
     }
 
     echo '</div>

@@ -10,6 +10,8 @@ $curr_path = get_curr_path();
 $curr_path = $curr_path ? $curr_path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
 $curr_path = (string) $curr_path;
 $site_title = 'Danh sách - ' . basename($curr_path);
+$page_list = isset($_GET['page_list']) ? intval($_GET['page_list']) : 1;
+$page_list = $page_list < 1 ? 1 : $page_list;
 
 if (!isset($_GET['path'])) {
     redirect(action_link('index', ['path' => $curr_path]));
@@ -82,32 +84,23 @@ sort_natural($files);
 $lists = array_merge($folders, $files);
 $count = count($lists);
 
+if (PAGE_SIZE <= 0) {
+    $page_list = 1;
+} elseif ($page_list > (int) ceil($count / PAGE_SIZE)) {
+    $page_list = 1;
+}
+
 echo '<form action="" method="post" name="form">';
 
 if ($count <= 0) {
     echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';
 } else {
-    $start = 0;
-    $end = $count;
-
-    if (PAGE_SIZE > 0 && $count > PAGE_SIZE) {
-        $pages['total'] = ceil($count / PAGE_SIZE);
-
-        if ($pages['total'] <= 0 || $pages['current'] > $pages['total']) {
-            redirect(action_link('index', [
-                'path' => $curr_path,
-                'page_list' => $pages['total'] <= 0 ? null : $pages['total'],
-            ]));
-        }
-
-        $start = ($pages['current'] * PAGE_SIZE) - PAGE_SIZE;
-        $end   = $start + PAGE_SIZE >= $count ? $count : $start + PAGE_SIZE;
-    }
+    $display_lists = paging_arr($lists, $page_list, PAGE_SIZE);
 
     echo '<div class="table-list-file"><table class="list-file">';
 
-    for ($i = $start; $i < $end; ++$i) {
-        $file = new SplFileInfo($lists[$i]);
+    foreach ($display_lists as $entry_path) {
+        $file = new SplFileInfo($entry_path);
         $name = $file->getFilename();
         $perms = file_get_chmod($file->getPathname());
 
@@ -147,8 +140,10 @@ if ($count <= 0) {
         <button formaction="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
-    if (PAGE_SIZE > 0 && $pages['total'] > 1) {
-        echo '<hr>' . page($pages['current'], $pages['total'], array(PAGE_URL_DEFAULT => action_link('index', ['path' => $curr_path]), PAGE_URL_START => action_link('index', ['path' => $curr_path]) . '&page_list='));
+    $pagination = paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);
+
+    if ($pagination !== '') {
+        echo '<hr>' . $pagination;
     }
 
     echo '</div>';

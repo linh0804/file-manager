@@ -39,9 +39,6 @@ define('LOGIN_WAIT', 3600);
 
 define('PAGE_SIZE', 200);
 define('PAGE_NUMBER', 10);
-define('PAGE_URL_DEFAULT', 'default');
-define('PAGE_URL_START', 'start');
-define('PAGE_URL_END', 'end');
 
 // lay phien ban moi
 define('REMOTE_VERSION_URL', 'https://static.nightmare.top/app/file-manager-php/release.json');
@@ -71,13 +68,6 @@ define('COMMON_FILE_EXCLUDES', [
 define('SITE_TITLE', 'File Manager');
 define('SITE_HEADER', __DIR__ . '/_header.php');
 define('SITE_FOOTER', __DIR__ . '/_footer.php');
-
-$pages = array(
-    'current' => 1,
-    'total' => 0,
-    'paramater_0' => null,
-    'paramater_1' => null
-);
 
 // check cấu hình
 if (
@@ -112,24 +102,6 @@ if (!IS_LOGIN) {
         redirect(action_link('login'));
     }
 }
-
-// Phân trang
-
-if (
-    PAGE_SIZE > 0
-    && isset($_GET['page_list'])
-) {
-    $pages['current'] = intval($_GET['page_list']) <= 0
-        ? 1
-        : intval($_GET['page_list']);
-
-    if ($pages['current'] > 1) {
-        $pages['paramater_0'] = '?page_list=' . $pages['current'];
-        $pages['paramater_1'] = '&page_list=' . $pages['current'];
-    }
-}
-
-
 
 if (!IS_LOGIN && !auth_can_login()) {
     exit('đăng nhập sai nhiều lần, cấm 1 giờ');

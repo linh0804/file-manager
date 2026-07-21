@@ -79,11 +79,7 @@ if (!is_file(process_directory($curr_path))) {
         </div>';
     }
 
-    $pagination = paging('file', 'page', ['act' => 'edit_text_line', 'path' => $curr_path], $page, $count, PAGE_SIZE);
-
-    if ($pagination !== '') {
-        echo $pagination;
-    }
+    echo paging('file', 'page', ['act' => 'edit_text_line', 'path' => $curr_path], $page, $count, PAGE_SIZE);
 
     echo '</div>
     <div class="tips">

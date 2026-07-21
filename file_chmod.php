@@ -16,7 +16,7 @@ if (request::is_method('post')) {
     } else if (!@chmod($curr_path, intval($mode, 8))) {
         $error .= 'Chmod tập tin thất bại';
     } else {
-        redirect(action_link('index', ['path' => dirname($curr_path)] + get_page_list_params()));
+        redirect(action_link('index', ['path' => dirname($curr_path)]));
     }
 
     $error .= '</div>';

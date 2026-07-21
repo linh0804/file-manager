@@ -103,7 +103,7 @@ if (!in_array($format, array('zip', 'jar'))) {
 
         if ($curr_path != null && strpos((string) $curr_path, '/') !== false) {
             $array = explode('/', (string) preg_replace('|^/(.*?)$|', '\1', (string) $curr_path));
-            $html = '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname()] + get_page_list_params()) . '">' . $root . '</a>';
+            $html = '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname()]) . '">' . $root . '</a>';
             $item = null;
             $url = null;
 
@@ -116,7 +116,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                 }
 
                 if ($key < count($array) - 1)
-                    $html .= '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname(), 'path_zip' => $url . $item] + get_page_list_params()) . '">';
+                    $html .= '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname(), 'path_zip' => $url . $item]) . '">';
                 else
                     $html .= '/';
 
@@ -134,7 +134,7 @@ if (!in_array($format, array('zip', 'jar'))) {
             if ($curr_path == null)
                 $html = '/' . $root;
             else
-                $html = '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname()] + get_page_list_params()) . '">' . $root . '</a>/' . $curr_path;
+                $html = '/<a href="' . action_link('file', ['act' => 'zip_view', 'path' => $file->getPathname()]) . '">' . $root . '</a>/' . $curr_path;
         }
 
         echo '<div class="title">' . $html . '</div>';
@@ -147,9 +147,9 @@ if (!in_array($format, array('zip', 'jar'))) {
             $back = strrchr((string) $curr_path, '/');
 
             if ($back !== false)
-                $back = action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name, 'path_zip' => substr((string) $curr_path, 0, strlen((string) $curr_path) - strlen($back))] + get_page_list_params());
+                $back = action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name, 'path_zip' => substr((string) $curr_path, 0, strlen((string) $curr_path) - strlen($back))]);
             else
-                $back = action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name] + get_page_list_params());
+                $back = action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name]);
 
             echo '<li class="normal">
                 <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
@@ -169,7 +169,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     echo '<li class="folder">
                         <div>
                             <img src="icon/folder.png"/>
-                            <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name, 'path_zip' => $value['path']] + get_page_list_params()) . '">' . $value['name'] . '</a>
+                            <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $dir . '/' . $name, 'path_zip' => $value['path']]) . '">' . $value['name'] . '</a>
                         </div>
                     </li>';
                 } else {

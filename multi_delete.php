@@ -22,10 +22,10 @@ if (isset($_POST['accept'])) {
     if (!multi_remove($entries, $curr_path)) {
         echo '<div class="notice_failure">Xóa thất bại</div>';
     } else {
-        redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+        redirect(action_link('index', ['path' => $curr_path]));
     }
 } elseif (isset($_POST['not_accept'])) {
-    redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+    redirect(action_link('index', ['path' => $curr_path]));
 }
 
 echo $entry_html_list;
@@ -46,7 +46,7 @@ echo '<input type="submit" name="accept" value="Đồng ý"/>
 
 echo '<div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
     </ul>';
 
 require SITE_FOOTER;

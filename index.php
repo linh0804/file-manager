@@ -117,7 +117,7 @@ if ($count <= 0) {
                 <td class="name"><b>' . file_get_display_link($file) . '</b></td>
                 <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
                 <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()] + get_page_list_params()) . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
@@ -125,7 +125,7 @@ if ($count <= 0) {
                 <td class="name">' . file_get_display_link($file) . '</td>
                 <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
                 <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()] + get_page_list_params()) . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
     }
@@ -139,12 +139,12 @@ if ($count <= 0) {
 
     echo '<div class="list">';
     echo '<div id="file-select-opt" style="display: block">
-        <button formaction="' . action_link('multi', ['act' => 'copy', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
-        <button formaction="' . action_link('multi', ['act' => 'move', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
-        <button formaction="' . action_link('multi', ['act' => 'zip', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/zip.png"/> Zip</button>
-        <button formaction="' . action_link('multi', ['act' => 'delete', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
-        <button formaction="' . action_link('multi', ['act' => 'chmod', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/access.png"/> Chmod</button>
-        <button formaction="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path] + get_page_list_params()) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
+        <button formaction="' . action_link('multi', ['act' => 'copy', 'path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button formaction="' . action_link('multi', ['act' => 'move', 'path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button formaction="' . action_link('multi', ['act' => 'zip', 'path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button formaction="' . action_link('multi', ['act' => 'delete', 'path' => $curr_path]) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button formaction="' . action_link('multi', ['act' => 'chmod', 'path' => $curr_path]) . '" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button formaction="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
     if (PAGE_SIZE > 0 && $pages['total'] > 1) {

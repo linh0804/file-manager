@@ -19,7 +19,7 @@ if (request::has_post('submit')) {
         if ($target_dir === dirname($curr_path)) {
             $message = 'Đường dẫn mới phải khác đường dẫn hiện tại';
         } elseif (@rename($curr_path, $target_dir . '/' . basename($curr_path))) {
-            redirect(action_link('index', ['path' => dirname($curr_path)] + get_page_list_params()));
+            redirect(action_link('index', ['path' => dirname($curr_path)]));
         } else {
             $message = 'Di chuyển tập tin thất bại';
         }

@@ -43,7 +43,7 @@ if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name)
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
     </ul>';
 } else {
     $dir = process_directory($dir);
@@ -62,7 +62,7 @@ if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name)
         } elseif (!folder_zip($dir . '/' . $name, process_directory($_POST['path'] . '/' . $_POST['name']), isset($_POST['is_delete']) == 1)) {
             echo 'Nén zip thư mục thất bại';
         } else {
-            redirect(action_link('index', ['path' => $dir] + get_page_list_params()));
+            redirect(action_link('index', ['path' => $dir]));
         }
 
         echo '</div>';

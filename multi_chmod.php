@@ -50,7 +50,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
     } elseif (!chmods($curr_path, $entries, $_POST['folder'], $_POST['file'])) {
         echo 'Chmod thất bại';
     } else {
-        redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+        redirect(action_link('index', ['path' => $curr_path]));
     }
 
     echo '</div>';
@@ -74,7 +74,7 @@ echo '<input type="submit" name="submit" value="Chmod"/>
 
 echo '<div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
     </ul>';
 
 require SITE_FOOTER;

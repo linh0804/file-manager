@@ -51,13 +51,13 @@ if (!is_file($curr_path)) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
     </ul>';
 } else if (!file_is_text($name) && !file_is_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir]) . '">Danh sách</a></li>
     </ul>';
 } else {
     $content = file_get_contents($curr_path);

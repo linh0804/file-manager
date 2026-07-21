@@ -16,7 +16,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
             <div class="title">Chức năng</div>
             <ul class="list">
-                <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
+                <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
             </ul>';
 } else {
     $dir = process_directory($dir);
@@ -33,7 +33,7 @@ if ($dir == null || $name == null || !is_dir(process_directory($dir . '/' . $nam
         } else if (!copydir($dir . '/' . $name, process_directory($_POST['path']))) {
             echo 'Sao chép thư mục thất bại';
         } else {
-            redirect(action_link('index', ['path' => $dir] + get_page_list_params()));
+            redirect(action_link('index', ['path' => $dir]));
         }
 
         echo '</div>';

@@ -19,13 +19,13 @@ if (!is_file(process_directory($curr_path))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
     </ul>';
 } elseif (!file_is_text($name) && !file_is_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir]) . '">Danh sách</a></li>
     </ul>';
 } else {
     if ($page['current'] > 1 && PAGE_SIZE > 0) {
@@ -69,7 +69,7 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     if ($page['current'] < 0 && PAGE_SIZE > 0) {
-        redirect(action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path] + get_page_list_params()));
+        redirect(action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path]));
     }
 
     if ($page['current'] > $page['total'] && PAGE_SIZE > 0) {
@@ -77,7 +77,7 @@ if (!is_file(process_directory($curr_path))) {
             'act' => 'edit_text_line',
             'path' => $curr_path,
             'page' => $page['total'] > 1 ? $page['total'] : null,
-        ] + get_page_list_params()));
+        ]));
     }
 
     echo '<div class="list">
@@ -93,15 +93,15 @@ if (!is_file(process_directory($curr_path))) {
             <div id="line_number_' . $i . '">' . htmlspecialchars($lines[$i]) . '</div>
             <div>
                 <span id="line_number">[<span>' . ($i + 1) . '</span>]</span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()) . '">Sửa</a>
+                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '">Sửa</a>
                 <span> | </span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()) . '">Xóa</a>
+                <a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $i, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '">Xóa</a>
             </div>
         </div>';
     }
 
     if ($page['total'] > 1 && PAGE_SIZE > 0) {
-        $pageUrl = action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path] + get_page_list_params());
+        $pageUrl = action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path]);
         echo page($page['current'], $page['total'], array(PAGE_URL_DEFAULT => $pageUrl, PAGE_URL_START => $pageUrl . '&page='));
     }
 

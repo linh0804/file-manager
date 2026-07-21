@@ -18,13 +18,13 @@ if (!is_file(process_directory($curr_path))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
     </ul>';
 } elseif (!file_is_text($name) && !file_is_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir]) . '">Danh sách</a></li>
     </ul>';
 } else {
     function process()
@@ -86,7 +86,7 @@ if (!is_file(process_directory($curr_path))) {
             $notice = '<div class="notice_succeed">Xóa thành công</div>';
 
             if (isset($_POST['delete'])) {
-                redirect(action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()) . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
+                redirect(action_link('file', ['act' => 'edit_text_line', 'path' => $curr_path, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
             }
         } else {
             $notice = '<div class="notice_failure">Xóa thất bại</div>';
@@ -107,11 +107,11 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     if ($line < 0) {
-        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => 0, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()));
+        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => 0, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     if ($line > $count - 1) {
-        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $count - 1, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()));
+        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $count - 1, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     $page['current'] = $line + 1 > PAGE_SIZE ? ceil(($line + 1) / PAGE_SIZE) : 1;
@@ -122,13 +122,13 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     if ($isGO) {
-        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()));
+        redirect(action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     $url = array('action' => null, 'prev' => null, 'next' => null);
-    $url['action'] = action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()) . '#line_label';
-    $url['prev'] = $line > 0 ? '<a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line - 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil($line / PAGE_SIZE)] + get_page_list_params()) . '#line_label"><img src="icon/arrow_left.png"/></a>' : '<img src="icon/arrow_left.png"/>';
-    $url['next'] = $line < $count - 1 ? '<a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line + 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil(($line + 2) / PAGE_SIZE)] + get_page_list_params()) . '#line_label"><img src="icon/arrow_right.png"/></a>' : '<img src="icon/arrow_right.png"/>';
+    $url['action'] = action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_label';
+    $url['prev'] = $line > 0 ? '<a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line - 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil($line / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_left.png"/></a>' : '<img src="icon/arrow_left.png"/>';
+    $url['next'] = $line < $count - 1 ? '<a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line + 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil(($line + 2) / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_right.png"/></a>' : '<img src="icon/arrow_right.png"/>';
 
     echo $notice;
     echo '<div class="list">
@@ -144,7 +144,7 @@ if (!is_file(process_directory($curr_path))) {
             <form action="' . $url['action'] . '" method="post">
                 <input type="submit" name="continue" value="Tiếp tục"/>
                 <input type="submit" name="delete" value="Xóa"/>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null] + get_page_list_params()) . '" id="href_line_edit">Sửa</a>
+                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '" id="href_line_edit">Sửa</a>
             </form>
         </div><hr/>
         <form action="' . $url['action'] . '" method="post">

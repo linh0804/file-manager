@@ -19,7 +19,7 @@ if (empty($curr_path) || !is_dir(process_directory($curr_path))) {
         <ul class="list">
             <li>
                 <img src="icon/list.png" alt="" />
-                <a href="' . action_link('index', get_page_list_params()) . '">Danh sách</a>
+                <a href="' . action_link('index') . '">Danh sách</a>
             </li>
         </ul>';
 
@@ -34,7 +34,7 @@ if (count($entries) <= 0) {
         <div class="list"><span>Không có lựa chọn</span></div>
         <div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sách</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
         </ul>';
 
     require SITE_FOOTER;
@@ -50,7 +50,7 @@ if ($act === '' || !file_exists(__DIR__ . '/' . 'multi_' . $act . '.php')) {
         <div class="list"><span>Không có hành động</span></div>
         <div class="title">Chức năng</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sách</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
         </ul>';
 
     require SITE_FOOTER;

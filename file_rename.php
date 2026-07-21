@@ -21,7 +21,7 @@ if (request::has_post('submit')) {
     } elseif (!rename($curr_path, $new_path)) {
         $error .= 'Thay đổi thất bại';
     } else {
-        redirect(action_link('index', ['path' => dirname($curr_path)] + get_page_list_params()));
+        redirect(action_link('index', ['path' => dirname($curr_path)]));
     }
 
     $error .= '</div>';

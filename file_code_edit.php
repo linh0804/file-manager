@@ -57,7 +57,7 @@ require SITE_HEADER;
     <div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="<?= action_link('index', ['path' => $dir] + get_page_list_params()) ?>">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="<?= action_link('index', ['path' => $dir]) ?>">Danh sách</a></li>
     </ul>
 <?php else: ?>
     <style>

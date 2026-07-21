@@ -40,7 +40,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                     fs::remove($curr_path);
                 }
 
-                redirect(action_link('index', ['path' => dirname((string) $curr_path)] + get_page_list_params()));
+                redirect(action_link('index', ['path' => dirname((string) $curr_path)]));
             } else {
                 $error .= 'Giải nén tập tin lỗi';
             }

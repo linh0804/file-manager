@@ -14,7 +14,7 @@ if (request::has_post('submit')) {
     if (!fs::remove($curr_path)) {
         $error .= 'Xoá thất bại';
     } else {
-        redirect(action_link('index', ['path' => dirname($curr_path)] + get_page_list_params()));
+        redirect(action_link('index', ['path' => dirname($curr_path)]));
     }
 
     $error .= '</div>';

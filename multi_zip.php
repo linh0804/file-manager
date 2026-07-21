@@ -67,7 +67,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
     } elseif (!multi_zip($curr_path, $entries, process_directory($_POST['path_new'] . '/' . $_POST['name']), isset($_POST['is_delete']))) {
         echo 'Nén zip thất bại';
     } else {
-        redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+        redirect(action_link('index', ['path' => $curr_path]));
     }
 
     echo '</div>';
@@ -92,7 +92,7 @@ echo '<input type="submit" name="submit" value="Nén"/>
 
 echo '<div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sách</a></li>
+        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
     </ul>';
 
 require SITE_FOOTER;

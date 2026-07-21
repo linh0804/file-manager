@@ -21,7 +21,7 @@ if (empty($act) || !file_exists(__DIR__ . '/' . 'file_' . $act . '.php')) {
         <div class="list"><span>Khong co hanh dong</span></div>
         <div class="title">Chuc nang</div>
         <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path] + get_page_list_params()) . '">Danh sach</a></li>
+            <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sach</a></li>
         </ul>';
 
     require SITE_FOOTER;

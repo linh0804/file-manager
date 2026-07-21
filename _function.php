@@ -155,19 +155,6 @@ function get_curr_referer(): string
     return base64url_decode($referer);
 }
 
-function get_page_list_params(): array
-{
-    global $pages;
-
-    if (!isset($pages['current']) || $pages['current'] <= 1) {
-        return [];
-    }
-
-    return ['page_list' => $pages['current']];
-}
-
-
-
 function file_get_ext($name)
 {
     return strrchr((string) $name, '.') !== false
@@ -944,25 +931,25 @@ function file_display_actions($filename)
 
     if ($file->isFile()) {
         if (in_array($ext, COMMON_FILE_FORMAT['zip'])) {
-            echo '<li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $path] + get_page_list_params()) . '">Xem</a></li>
-              <li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'unzip', 'path' => $path] + get_page_list_params()) . '">Giải nén</a></li>';
+            echo '<li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $path]) . '">Xem</a></li>
+              <li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'unzip', 'path' => $path]) . '">Giải nén</a></li>';
         } elseif (file_is_text($name) || file_is_unknown($name)) {
             echo '<li><img src="icon/edit.png"/> <a href="' . action_link('file', ['act' => 'edit_text', 'path' => $path]) . '">Sửa văn bản</a></li>
               <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'code_edit', 'path' => $path]) . '">Sửa code</a></li>
-               <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_text_line', 'path' => $path] + get_page_list_params()) . '">Sửa theo dòng</a></li>
+               <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_text_line', 'path' => $path]) . '">Sửa theo dòng</a></li>
               <li><img src="icon/columns.png"/> <a href="' . action_link('file', ['act' => 'code_view', 'path' => $path]) . '">Xem code</a></li>';
         }
         echo '<li><img src="icon/download.png"/> <a href="' . action_link('file', ['act' => 'download', 'path' => $path]) . '">Tải về</a></li>';
     } else {
-        echo '<li><img src="icon/zip.png"/> <a href="' . action_link('folder_zip', ['dir' => $dir, 'name' => $name] + get_page_list_params()) . '">Nén zip</a></li>';
+        echo '<li><img src="icon/zip.png"/> <a href="' . action_link('folder_zip', ['dir' => $dir, 'name' => $name]) . '">Nén zip</a></li>';
     }
 
-    echo '<li><img src="icon/rename.png"/> <a href="' . action_link('file', ['act' => 'rename', 'path' => $path] + get_page_list_params()) . '">Đổi tên</a></li>';
-    echo '<li><img src="icon/copy.png"/> <a href="' . action_link('file', ['act' => 'copy', 'path' => $path] + get_page_list_params()) . '">Sao chép</a></li>';
-    echo '<li><img src="icon/move.png"/> <a href="' . action_link('file', ['act' => 'move', 'path' => $path] + get_page_list_params()) . '">Di chuyển</a></li>';
-    echo '<li><img src="icon/access.png"/> <a href="' . action_link('file', ['act' => 'chmod', 'path' => $path] + get_page_list_params()) . '">Chmod</a></li>';
-    echo '<li><img src="icon/delete.png"/> <a href="' . action_link('file', ['act' => 'delete', 'path' => $path] + get_page_list_params()) . '">Xóa</a></li>';
-    echo '<li><img src="icon/info.png"/> <a href="' . action_link('file', ['act' => 'info', 'path' => $path] + get_page_list_params()) . '">Thông tin</a></li>';  
+    echo '<li><img src="icon/rename.png"/> <a href="' . action_link('file', ['act' => 'rename', 'path' => $path]) . '">Đổi tên</a></li>';
+    echo '<li><img src="icon/copy.png"/> <a href="' . action_link('file', ['act' => 'copy', 'path' => $path]) . '">Sao chép</a></li>';
+    echo '<li><img src="icon/move.png"/> <a href="' . action_link('file', ['act' => 'move', 'path' => $path]) . '">Di chuyển</a></li>';
+    echo '<li><img src="icon/access.png"/> <a href="' . action_link('file', ['act' => 'chmod', 'path' => $path]) . '">Chmod</a></li>';
+    echo '<li><img src="icon/delete.png"/> <a href="' . action_link('file', ['act' => 'delete', 'path' => $path]) . '">Xóa</a></li>';
+    echo '<li><img src="icon/info.png"/> <a href="' . action_link('file', ['act' => 'info', 'path' => $path]) . '">Thông tin</a></li>';  
     echo '</ul>';
 
     show_back();
@@ -994,12 +981,12 @@ function file_get_display_link($file)
         if (strtolower($file->getFilename()) === 'error_log' || $is_edit) {
             $file_link = action_link('file', ['act' => 'edit_text', 'path' => $file->getPathname()]);
         } elseif (in_array(file_get_ext($name), COMMON_FILE_FORMAT['zip'])) {
-            $file_link = action_link('file', ['act' => 'unzip', 'path' => $file->getPathname()] + get_page_list_params());
+            $file_link = action_link('file', ['act' => 'unzip', 'path' => $file->getPathname()]);
         } else {
-            $file_link = action_link('file', ['act' => 'rename', 'path' => $path] + get_page_list_params());
+            $file_link = action_link('file', ['act' => 'rename', 'path' => $path]);
         }
     } else {
-        $file_link = action_link('file', ['act' => 'rename', 'path' => $path] + get_page_list_params());
+        $file_link = action_link('file', ['act' => 'rename', 'path' => $path]);
     }
 
     $file_icon = sprintf('<a href="%s">%s</a>', $file_link, $file_icon);

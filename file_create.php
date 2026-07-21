@@ -21,12 +21,12 @@ if (isset($_POST['submit'])) {
             if (!@mkdir($newDir))
                 $error .= 'Tạo thư mục thất bại';
             else
-                redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+                redirect(action_link('index', ['path' => $curr_path]));
         } else if (intval($_POST['type']) === 1) {
             if (@file_put_contents($newDir, '') === false)
                 $error .= 'Tạo tập tin thất bại';
             else
-                redirect(action_link('index', ['path' => $curr_path] + get_page_list_params()));
+                redirect(action_link('index', ['path' => $curr_path]));
         } else {
             $error .= 'Lựa chọn không hợp lệ';
         }

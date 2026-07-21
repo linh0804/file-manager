@@ -113,10 +113,11 @@ function action_link(string $name, array $params = []): string
 {
     $link = $name . '.php';
 
-    // Tự động giữ trang danh sách hiện tại nếu link chưa chỉ định trang khác
-    $params['page_list'] = isset($params['page_list'])
-        ? $params['page_list']
-        : (isset($_GET['page_list']) ? $_GET['page_list'] : null);
+    // Tự động giữ trang danh sách hiện tại nếu link chưa chỉ định trang khác.
+    // Truyền page_list => null để chủ động bỏ phân trang khỏi URL.
+    if (!array_key_exists('page_list', $params) && isset($_GET['page_list'])) {
+        $params['page_list'] = $_GET['page_list'];
+    }
 
     $query = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 
@@ -684,7 +685,7 @@ function file_print_path(string $path, bool $isHrefEnd = false)
             }
 
             if ($key < count($array) - 1 || ($key == count($array) - 1 && $isHrefEnd)) {
-                $html .= '<span class="path_seperator">/</span><a href="' . action_link('index', ['path' => $url . $item]) . '">';
+                $html .= '<span class="path_seperator">/</span><a href="' . action_link('index', ['path' => $url . $item, 'page_list' => null]) . '">';
             } else {
                 $html .= '<span class="path_seperator">/</span>';
             }
@@ -969,7 +970,7 @@ function file_get_display_link($file)
     return sprintf(
         '%s <a href="%s">%s</a>',
         $file_icon,
-        $file->isDir() ? action_link('index', ['path' => $file_dir]) : action_link('file', ['act' => 'info', 'path' => $path]),
+        $file->isDir() ? action_link('index', ['path' => $file_dir, 'page_list' => null]) : action_link('file', ['act' => 'info', 'path' => $path]),
         $name_display
     );
 }

@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                     echo '<div class="item">';
                     echo '<div class="item-title">';
                     echo '<span class="bull">&bull;</span>
-                        <a style="color: red" target="_blank" href="' . action_link('index', ['path' => $file_path]) . '">'
+                        <a style="color: red" target="_blank" href="' . action_link('index', ['path' => $file_path, 'page_list' => null]) . '">'
                             . htmlspecialchars($file_path_sort)
                         . '</a>';
                     echo '</div>';

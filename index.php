@@ -40,7 +40,7 @@ require SITE_HEADER;
 
 echo '<div class="title">' . file_print_path($curr_path, true) . ' <span class="copy-button" data-copy="' . htmlspecialchars((string) $curr_path) . '" style="color: pink">[copy]</span></div>';
 
-echo '<a href="' . action_link('index', ['path' => dirname($curr_path)]) . '">
+echo '<a href="' . action_link('index', ['path' => dirname($curr_path), 'page_list' => null]) . '">
   <div class="list">
     <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
     <strong class="back">...</strong>

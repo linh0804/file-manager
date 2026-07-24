@@ -7,11 +7,15 @@ define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
-$curr_path = $curr_path ? $curr_path : config()->get('home', $_SERVER['DOCUMENT_ROOT']);
+$curr_path = $curr_path ?: config()->get('home');
+$curr_path = $curr_path ?: getenv('HOME');
+$curr_path = $curr_path ?: ($_SERVER['DOCUMENT_ROOT'] ?? '');
 $curr_path = (string) $curr_path;
-$site_title = 'Danh sách - ' . basename($curr_path);
+
 $page_list = isset($_GET['page_list']) ? intval($_GET['page_list']) : 1;
 $page_list = $page_list < 1 ? 1 : $page_list;
+
+$site_title = 'Danh sách - ' . basename($curr_path);
 
 if (!isset($_GET['path'])) {
     redirect(action_link('index', ['path' => $curr_path]));

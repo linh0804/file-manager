@@ -5,9 +5,10 @@
 
 body {
     background-color: #f8f8f8;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Tahoma, Verdana, Segoe, Arial, sans-serif;
     font-size: 14px;
     max-width: 768px;
+    margin: 0;
     margin: auto;
     padding: 0;
 }
@@ -151,7 +152,7 @@ div#app-body {
     border-left: 1px solid #e0e0e0;
     border-right: 1px solid #e0e0e0;
     margin: 0;
-    padding: 12px 4px;
+    padding: 10px 4px;
 }
 
 div#app-footer {

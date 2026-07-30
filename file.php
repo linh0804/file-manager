@@ -12,7 +12,7 @@ $site_title = 'File';
 
 check_path($curr_path);
 
-$act = preg_replace('/[^a-z_]/', '', $act);
+$act = preg_replace('/[^a-z0-9_]/', '', $act);
 
 if (empty($act) || !file_exists(__DIR__ . '/' . 'file_' . $act . '.php')) {
     require SITE_HEADER;

@@ -102,7 +102,7 @@ function config()
     static $instance = null;
 
     if ($instance === null) {
-        $instance = new fm_config(APP_CONFIG_FILE);
+        $instance = new FmConfig(APP_CONFIG_FILE);
     }
 
     return $instance;
@@ -915,7 +915,7 @@ function file_get_display_link($file)
 
 
 
-class fm_config
+class FmConfig
 {
     private array $configs = [];
     private string $config_file;

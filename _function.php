@@ -876,7 +876,7 @@ function file_get_display_link($file)
         }
 
         if (strtolower($file->getFilename()) === 'error_log' || $is_edit) {
-            $file_link = action_link('file', ['act' => 'edit_text', 'path' => $file->getPathname()]);
+            $file_link = action_link('file', ['act' => 'edit_code', 'path' => $file->getPathname()]);
         } elseif (in_array(file_get_ext($name), COMMON_FILE_FORMAT['zip'])) {
             $file_link = action_link('file', ['act' => 'unzip', 'path' => $file->getPathname()]);
         } else {

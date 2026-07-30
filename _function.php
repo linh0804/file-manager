@@ -833,9 +833,9 @@ function file_display_actions($filename)
               <li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'unzip', 'path' => $path]) . '">Giải nén</a></li>';
         } elseif (file_is_text($name) || file_is_unknown($name)) {
             echo '<li><img src="icon/edit.png"/> <a href="' . action_link('file', ['act' => 'edit_text', 'path' => $path]) . '">Sửa văn bản</a></li>
-              <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'code_edit', 'path' => $path]) . '">Sửa code</a></li>
+              <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_code', 'path' => $path]) . '">Sửa code</a></li>
                <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_text_line', 'path' => $path]) . '">Sửa theo dòng</a></li>
-              <li><img src="icon/columns.png"/> <a href="' . action_link('file', ['act' => 'code_view', 'path' => $path]) . '">Xem code</a></li>';
+              <li><img src="icon/columns.png"/> <a href="' . action_link('file', ['act' => 'view_code', 'path' => $path]) . '">Xem code</a></li>';
         }
         echo '<li><img src="icon/download.png"/> <a href="' . action_link('file', ['act' => 'download', 'path' => $path]) . '">Tải về</a></li>';
     } else {

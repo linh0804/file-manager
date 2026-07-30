@@ -37,7 +37,7 @@ require SITE_HEADER;
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
         </div>
         <div>
-            <a href="<?= action_link('file', ['act' => 'code_edit', 'path' => $curr_path]) ?>">
+            <a href="<?= action_link('file', ['act' => 'edit_code', 'path' => $curr_path]) ?>">
                 <button class="button">[Code]</button>
             </a><hr />
         </div>

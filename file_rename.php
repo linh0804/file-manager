@@ -1,15 +1,13 @@
 <?php
 
-use nightmare\http\request;
-
 defined('ACCESS') or exit;
 
 $error = '';
-$name = request::post('name', basename($curr_path));
+$name = request()->post('name', basename($curr_path));
 $new_path = dirname($curr_path) . '/' . $name;
 $site_title = 'Đổi tên ' . basename($curr_path);
 
-if (request::has_post('submit')) {    
+if (request()->has_post('submit')) {
     $error .= '<div class="notice_failure">';
 
     if (empty($name)) {

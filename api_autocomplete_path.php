@@ -1,11 +1,9 @@
 <?php
 
-use nightmare\http\request;
-
 define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
-$curr_path = (string) request::post('path');
+$curr_path = (string) request()->post('path');
 $curr_path = trim($curr_path);
 
 if ($curr_path === '') {

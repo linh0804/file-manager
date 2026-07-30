@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\fs;
+use Nightmare\Fs;
 
 defined('ACCESS') or exit;
 
@@ -178,7 +178,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                             <span>' . $value['name'] . '</span>
                         </p>
                         <p>
-                            <span class="size">' . fs::readable_size($value['size']) . '</span>
+                            <span class="size">' . Fs::sizen($value['size']) . '</span>
                         </p>
                     </li>';
                 }

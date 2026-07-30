@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\http\response;
+use Nightmare\Http\Response;
 
 defined('ACCESS') or exit;
 
@@ -22,7 +22,7 @@ if (isset($_FILES['file'])) {
         }
     }   
     
-    (new response($data))->send();
+    (new Response($data))->send();
 }
 
 $action = action_link('file', ['act' => 'upload', 'path' => $curr_path]);

@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\fs;
+use Nightmare\Fs;
 
 define('ACCESS', true);
 
@@ -73,7 +73,7 @@ foreach ($handler as $entry) {
         continue;
     }
 
-    $entry_path = fs::join_path($curr_path, $entry);
+    $entry_path = Fs::join_path($curr_path, $entry);
 
     if (is_dir($entry_path)) {
         $folders[] = $entry_path;
@@ -113,15 +113,15 @@ if ($count <= 0) {
                 <td><input type="checkbox" name="entries[]" value="' . $name . '"/></td>
                 <td class="name"><b>' . file_get_display_link($file) . '</b></td>
                 <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
-                <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
+                <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
                 <td><input type="checkbox" name="entries[]" value="' . $name . '"/></td>
                 <td class="name">' . file_get_display_link($file) . '</td>
-                <td><span class="size">' . fs::readable_size($file->getSize()) . '</span></td>
-                <td class="chmod">' . fs::get_owner_name_by_id($file->getOwner()) . '</td>
+                <td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>
+                <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
                 <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }

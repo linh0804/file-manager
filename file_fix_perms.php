@@ -1,16 +1,14 @@
 <?php
 
-use nightmare\http\request;
-
 define('ACCESS', true);
 
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
-$folder = (string) request::post('folder', $curr_path);
-$own = (string) request::post('own', get_current_user());
-$folder_mode = (string) request::post('folder_mode', 755);
-$file_mode = (string) request::post('file_mode', 644);
+$folder = (string) request()->post('folder', $curr_path);
+$own = (string) request()->post('own', get_current_user());
+$folder_mode = (string) request()->post('folder_mode', 755);
+$file_mode = (string) request()->post('file_mode', 644);
 
 $site_title = 'Sửa quyền file/thư mục';
 

@@ -1,14 +1,14 @@
 <?php
 
-use nightmare\fs;
-use nightmare\zip;
+use Nightmare\Fs;
+use Nightmare\Zip;
 
 define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
 function folder_zip($path, $file, $isDelete = false)
 {
-    $zip = new zip();
+    $zip = new Zip();
 
     if ($zip->open($file, ZipArchive::CREATE) === true) {
         $path = realpath($path);
@@ -22,7 +22,7 @@ function folder_zip($path, $file, $isDelete = false)
         $zip->close();
 
         if ($isDelete) {
-            fs::remove($path);
+            Fs::remove($path);
         }
 
         return true;

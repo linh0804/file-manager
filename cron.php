@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\json;
+use Nightmare\Json;
 
 define('ACCESS', true);
 define('LOGIN_BYPASS_AUTO_REDIRECT', true);
@@ -29,7 +29,7 @@ if (!file_import($tmp_update_json, REMOTE_VERSION_URL, 15)) {
     exit('<div class="tips">get version info error</div>');
 }
 
-$remote = json::decode((string) @file_get_contents($tmp_update_json));
+$remote = Json::decode((string) @file_get_contents($tmp_update_json));
 
 if (empty($remote) || empty($remote['version'])) {
     exit('<div class="tips">can not get update info</div>');

@@ -1,13 +1,12 @@
 <?php
 
-use nightmare\fs;
-use nightmare\http\request;
+use Nightmare\Fs;
 
 define('ACCESS', true);
 
 require __DIR__ . '/_init.php';
 
-$curr_path = (string) request::post('path');
+$curr_path = (string) request()->post('path');
 
 if (!file_exists($curr_path)) {
     response([
@@ -40,7 +39,7 @@ if (is_file($curr_path)) {
     }
 }
 
-$data['total_size_readable'] = fs::readable_size($data['total_size']);
+$data['total_size_readable'] = Fs::sizen($data['total_size']);
 
 response([
     'status' => true,

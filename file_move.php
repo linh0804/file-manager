@@ -1,14 +1,12 @@
 <?php
 
-use nightmare\http\request;
-
 defined('ACCESS') or exit;
 
 $site_title = 'Di chuyển tập tin';
 
 $message = null;
 
-if (request::has_post('submit')) {
+if (request()->has_post('submit')) {
     $requested_path = trim($_POST['path_new'] ?? '');
 
     if ($requested_path === '') {

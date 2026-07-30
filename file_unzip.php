@@ -1,7 +1,6 @@
 <?php
 
-use nightmare\fs;
-use nightmare\http\request;
+use Nightmare\Fs;
 
 defined('ACCESS') or exit;
 
@@ -9,8 +8,8 @@ $error = '';
 $site_title = 'Giải nén tập tin';
 $file = new SplFileInfo($curr_path);
 $format = file_get_ext(basename($curr_path));
-$path_unzip = request::post('path_unzip', dirname((string) $curr_path));
-$is_delete = request::has_post('is_delete');
+$path_unzip = request()->post('path_unzip', dirname((string) $curr_path));
+$is_delete = request()->has_post('is_delete');
 
 require SITE_HEADER;
 
@@ -21,7 +20,7 @@ echo '<div class="title">' . $site_title . '</div>';
 if (!in_array($format, array('zip', 'jar'))) {
     echo '<div class="list"><span>Tập tin không phải zip</span></div>';
 } else {
-    if (request::is_method('post')) {
+    if (request()->is_method('post')) {
         $error .= '<div class="notice_failure">';
 
         if (empty($path_unzip)) {
@@ -36,7 +35,7 @@ if (!in_array($format, array('zip', 'jar'))) {
                 $zip->close();
 
                 if ($is_delete) {
-                    fs::remove($curr_path);
+                    Fs::remove($curr_path);
                 }
 
                 redirect(action_link('index', ['path' => dirname((string) $curr_path)]));

@@ -1,12 +1,22 @@
 <?php
 
-use nightmare\config;
-use nightmare\fs;
-use nightmare\http\http;
-use nightmare\http\request;
-use nightmare\zip;
+use Nightmare\Fs;
+use Nightmare\Http\Http;
+use Nightmare\Http\Request;
+use Nightmare\Zip;
 
 defined('ACCESS') or exit;
+
+function request(): Request
+{
+    static $instance = null;
+
+    if ($instance === null) {
+        $instance = new Request();
+    }
+
+    return $instance;
+}
 
 
 
@@ -40,7 +50,7 @@ function base64url_decode(string $data): string
 //
 function auth_login_file()
 {
-    return __DIR__ . '/tmp_login_' . md5(request::ip());
+    return __DIR__ . '/tmp_login_' . md5(request()->ip());
 }
 
 function auth_get_login_fail()
@@ -100,7 +110,7 @@ function config()
 
 function response(...$args)
 {
-    return http::response(...$args);
+    return Http::response(...$args);
 }
 
 function redirect($url)
@@ -242,7 +252,7 @@ function file_name_valid($var)
 function multi_remove($entrys, $dir)
 {
     foreach ($entrys as $e) {
-        if (!fs::remove($dir . '/' . $e)) {
+        if (!Fs::remove($dir . '/' . $e)) {
             return false;
         }
     }
@@ -419,7 +429,7 @@ function app_reinstall(): bool
             return false;
         }
 
-        $zip = new zip();
+        $zip = new Zip();
 
         if ($zip->open($file) !== true) {
             return false;
@@ -795,7 +805,7 @@ function check_path($path, $type = '')
 
 function get_curr_path()
 {
-    $path = (string) request::get('path');
+    $path = (string) request()->query('path');
 
     if (!empty($path) && $path[0] !== '/') {
         $path = base64url_decode($path);

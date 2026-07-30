@@ -1,14 +1,12 @@
 <?php
 
-use nightmare\http\request;
-
 defined('ACCESS') or exit;
 
 $site_title = 'Chmod tập tin';
-$mode = request::post('mode', file_get_chmod($curr_path));
+$mode = request()->post('mode', file_get_chmod($curr_path));
 $error = '';
 
-if (request::is_method('post')) {
+if (request()->is_method('post')) {
     $error .= '<div class="notice_failure">';
 
     if (empty($mode)) {

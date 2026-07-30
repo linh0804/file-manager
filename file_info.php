@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\fs;
+use Nightmare\Fs;
 
 defined('ACCESS') or exit;
 
@@ -27,7 +27,7 @@ if ($file->isFile()) {
         echo '<li><center><img src="' . action_link('file', ['act' => 'download_image', 'path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
     }
 
-    echo '<li><span class="bull">&bull; </span><strong>Kích thước</strong>: <span>' . fs::readable_size($file->getSize()) . '</span></li>';
+    echo '<li><span class="bull">&bull; </span><strong>Kích thước</strong>: <span>' . Fs::sizen($file->getSize()) . '</span></li>';
 
     if ($is_image) {
         echo '<li><span class="bull">&bull; </span><strong>Độ phân giải</strong>: <span>' . $pixel[0] . 'x' . $pixel[1] . '</span></li>';

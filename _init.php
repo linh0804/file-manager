@@ -1,7 +1,6 @@
 <?php
 
-use nightmare\http\request;
-use nightmare\json;
+use Nightmare\Json;
 
 defined('ACCESS') or exit;
 
@@ -28,7 +27,7 @@ define('APP_CONFIG_FILE', __DIR__ . '/.env.php');
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/_function.php';
 
-$version = json::decode_file(__DIR__ . '/version.json');
+$version = Json::decode_file(__DIR__ . '/version.json');
 define('APP_VERSION', $version['version']);
 
 // cau hinh

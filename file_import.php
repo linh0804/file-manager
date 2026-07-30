@@ -1,6 +1,6 @@
 <?php
 
-use nightmare\fs;
+use Nightmare\Fs;
 
 defined('ACCESS') or exit;
 
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
                 if (!is_url($_POST['url'][$i])) {
                     echo '<div class="notice_failure">URL <strong class="url_import">' . $_POST['url'][$i] . '</strong> không hợp lệ</div>';
                 } elseif (file_import($curr_path . '/' . basename((string) $_POST['url'][$i]), $_POST['url'][$i])) {
-                    echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . fs::readable_size(filesize($curr_path . '/' . basename((string) $_POST['url'][$i]))) . '</span> thành công</div>';
+                    echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . Fs::sizen(filesize($curr_path . '/' . basename((string) $_POST['url'][$i]))) . '</span> thành công</div>';
                 } else {
                     echo '<div class="notice_failure">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong> thất bại</div>';
                 }

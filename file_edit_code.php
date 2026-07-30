@@ -12,22 +12,19 @@ $api_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_pat
 $file_ext = file_get_ext($name);
 
 $code_lang = 'text';
-$code_langs = [];
 $code_lang_files = glob(__DIR__ . '/js/ace-editor/mode-*.js');
-foreach($code_lang_files as $f) {
-    $code_langs[] = substr(basename($f), 5, -3);
-}
 
-if (in_array($file_ext, $code_langs)) {
+$code_langs = [];
+$code_langs['js'] = 'javascript';
+
+foreach($code_lang_files as $f) {
+    $n = substr(basename($f), 5, -3);
+    $code_langs[$n] = $n;
+}
+ksort($code_langs);
+
+if (array_key_exists($file_ext, $code_langs)) {
     $code_lang = $file_ext;
-} else {
-    foreach([
-        'js' => 'javascript'
-    ] as $k => $v) {
-        if ($file_ext === $k) {
-            $code_lang = $v;
-        }
-    }
 }
 
 require SITE_HEADER;
@@ -45,24 +42,22 @@ require SITE_HEADER;
 </style>
 
 <div class="list">
-    <span><?= file_print_path($dir, true) ?></span><hr/>
+    <span><?= file_print_path($curr_path, true) ?></span><hr/>
 
     <div class="ellipsis break-word">
-        <span class="bull">&bull;</span>
-        Tập tin:
-        <strong class="file_name_edit"><?= $name ?></strong><hr />
-        <div class="code_action">
-            <select id="code_lang">
-                <?php foreach ($code_langs as $code_type_key => $code_type_value): ?>
-                    <option value="<?= $code_type_key ?>" <?= $code_lang === $code_type_key ? 'selected="selected"' : '' ?>>Mode: <?= $code_type_value ?></option>
-                <?php endforeach; ?>
-            </select>
+        <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
+    </div>
 
-            <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
-                <button class="button">Text Mode</button>
-            </a>
-        </div>
-        <hr/>
+    <div class="code_action">
+        <select id="code_lang">
+            <?php foreach ($code_langs as $code_type_key => $code_type_value): ?>
+                <option value="<?= $code_type_value ?>" <?= $code_lang === $code_type_key ? 'selected="selected"' : '' ?>>Mode: <?= $code_type_key ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
+            <button class="button">Text Mode</button>
+        </a>
     </div>
 
     <form id="code_form" action="javascript:void(0)"
@@ -113,11 +108,10 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
         editor.session.setTabSize(4);
         editor.session.setUseSoftTabs(true);
         editor.setShowPrintMargin(false);
-        
         editorElement.style.display = 'block';
 
         document.addEventListener("DOMContentLoaded", function () {
-            editorElement.scrollIntoView({ behavior: "smooth" });
+            codeLangElement.scrollIntoView({ behavior: "smooth" });
         });
 
         function saveCode() {
@@ -201,5 +195,4 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
 
 <script>edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
 
-<?php file_display_actions($curr_path); ?>
 <?php require SITE_FOOTER; ?>

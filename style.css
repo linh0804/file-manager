@@ -5,7 +5,7 @@
 
 body {
     background-color: #f8f8f8;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     max-width: 768px;
     margin: auto;
@@ -172,7 +172,7 @@ div.title {
     color: #ffffff;
     background-color: #0080c0;
     border-bottom: 1px solid #0090e0;
-    padding: 7px;
+    padding: 6px;
     font-weight: bold;
     margin-bottom: 3px;
     position: relative;
@@ -206,7 +206,7 @@ div.title .path_seperator {
 div.content {
     background-color: #f8f8f8;
     border: 1px solid #cecece;
-    padding: 7px;
+    padding: 6px;
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 10px;
@@ -249,7 +249,7 @@ div.notice_succeed,
 div.notice_failure,
 div.notice_info,
 div.tips {
-    padding: 7px;
+    padding: 6px;
     margin: 1px 0;
 }
 
@@ -260,7 +260,7 @@ div.tips img.tips {
 div.page {
     background-color: #f7f7f7;
     border-top: 1px dotted #dedede;
-    padding: 7px;
+    padding: 6px;
     margin: 10px -4px -4px;
     overflow: hidden;
     white-space: nowrap;
@@ -303,9 +303,7 @@ ul.list {
 
 ul.list > li {
     border-bottom: 1px dotted #cecece;
-    padding: 7px 3px 7px 3px;
-    margin-left: 2px;
-    margin-right: 2px;
+    padding: 6px 4px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -445,27 +443,21 @@ ul.list_database > li > p > a {
 }
 
 ul.list_file > li.file > p:first-child,
-ul.list_file > li.file > p:first-child a,
-ul.list_database > li > p:first-child,
-ul.list_database > li > p:first-child a {
+ul.list_file > li.file > p:first-child a {
     color: #202020;
     font-weight: normal;
-    font-size: 14px;
 }
 
 ul.list_file > li.folder > div > div.perms > a.chmod,
 ul.list_file > li.file > p:last-child > a.chmod {
     color: #ff7900;
     font-weight: bold;
-    font-size: 14px;
     text-shadow: none !important;
 }
 
-ul.list_file > li.file > p:last-child > span.size,
-ul.list_database > li > p:last-child > span.size {
+ul.list_file > li.file > p:last-child > span.size {
     color: red;
     font-weight: normal;
-    font-size: 14px;
 }
 
 ul.info {
@@ -671,7 +663,6 @@ div.box_text {
 }
 
 div.list div.input_action {
-    font-size: small;
     display: block;
 }
 

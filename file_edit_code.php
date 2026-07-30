@@ -32,7 +32,6 @@ require SITE_HEADER;
 
 <div class="title"><?= $site_title ?></div>
 
-
 <style>
     #editor {
         height: 100%;
@@ -44,7 +43,7 @@ require SITE_HEADER;
 <div class="list">
     <span><?= file_print_path($curr_path, true) ?></span><hr/>
 
-    <div class="ellipsis break-word">
+    <div class="break-word">
         <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
     </div>
 
@@ -195,4 +194,5 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
 
 <script>edit_recent.add('<?= htmlspecialchars($curr_path, ENT_QUOTES) ?>');</script>
 
+<?php file_display_actions($curr_path); ?>
 <?php require SITE_FOOTER; ?>

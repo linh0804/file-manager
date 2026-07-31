@@ -7,8 +7,19 @@ $name = basename($curr_path);
 $site_title = 'Sửa: ' . $name;
 
 $content = (string) file_get_contents($curr_path);
-$api_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_path)]);
 $file_ext = file_get_ext($name);
+$api_save = action_link('api_text_save', [
+    'path' => base64_encode($curr_path)
+]);
+$api_format = action_link('api_text_format', [
+    'path' => base64_encode($curr_path)
+]);
+$api_syntax = action_link('api_text_syntax', [
+    'path' => base64_encode($curr_path)
+]);
+$is_execute = function_can_use('exec');
+$can_format = file_can_format_code($name);
+$can_syntax = $is_execute && $file_ext === 'php';
 
 $code_lang = 'text';
 $code_langs = [
@@ -59,9 +70,13 @@ require SITE_HEADER;
         </a>
     </div>
 
-    <form id="code_form" action="javascript:void(0)"
-          data-action="<?= $api_edit ?>"
-          data-format="<?= $file_ext ?>"
+    <form
+        id="code_form"
+        action="javascript:void(0)"
+        data-save="<?= htmlspecialchars($api_save, ENT_QUOTES) ?>"
+        data-format="<?= htmlspecialchars($api_format, ENT_QUOTES) ?>"
+        data-syntax="<?= htmlspecialchars($api_syntax, ENT_QUOTES) ?>"
+        data-file-ext="<?= htmlspecialchars($file_ext, ENT_QUOTES) ?>"
     >
         <textarea id="editor-content" style="display: none"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
         <div id="editor"></div>
@@ -69,12 +84,26 @@ require SITE_HEADER;
         <div class="input_action">
             <input type="submit" value="Lưu lại" />
             <span style="margin-right: 12px"></span>
-            <input type="checkbox" id="code_check_php" /> Kiểm tra lỗi PHP
 
             <span style="float: right">
-                <?php if (file_can_format_code($name)): ?>
-                    <button type="button" class="button" id="code_format">Format</button>
-                <?php endif; ?>
+                <button
+                    type="button"
+                    class="button"
+                    id="code_syntax"
+                    <?= $can_syntax ? '' : 'disabled' ?>
+                >
+                    Syntax
+                </button>
+
+                <button
+                    type="button"
+                    class="button"
+                    id="code_format"
+                    <?= $can_format ? '' : 'disabled' ?>
+                >
+                    Format
+                </button>
+
                 <label><input type="checkbox" id="code_wrap" /> Wrap</label>
             </span>
         </div>
@@ -93,47 +122,110 @@ require SITE_HEADER;
 <script>
     (function () {
         var form = document.getElementById("code_form");
-        var action = form.dataset.action;
-        var format = form.dataset.format;
-        var codeCheckMessageElement = document.getElementById("code_check_message");
-        var codeCheckPhpElement = document.getElementById("code_check_php");
-        var editorElement = document.getElementById("editor");
-        var codeFormatElement = document.getElementById("code_format");
+        var saveAction = form.dataset.save;
+        var formatAction = form.dataset.format;
+        var syntaxAction = form.dataset.syntax;
+        var fileExt = form.dataset.fileExt;
 
-        document.addEventListener("DOMContentLoaded", function () {
-            codeLangElement.scrollIntoView({ behavior: "smooth" });
-        });
+        var syntaxButton = document.getElementById("code_syntax");
+        var formatButton = document.getElementById("code_format");
+        var messageElement = document.getElementById("code_check_message");
 
-        function saveCode() {
-            var data = new FormData();
-            data.append("request_api", 1);
-            data.append("content", editor.state.doc.toString());
+        var codeLangElement = document.getElementById("code_lang");
 
-            codeCheckMessageElement.innerHTML = "";
-            data.append("check", codeCheckPhpElement && codeCheckPhpElement.checked ? 1 : 0);
-
-            fetch(action, {
+        function postJson(url, data) {
+            return fetch(url, {
                 method: "POST",
                 body: data,
                 cache: "no-cache"
             }).then(function (response) {
                 if (response.status !== 200) {
-                    alert("Lỗi kết nối!");
-                    return false;
+                    throw new Error("Lỗi kết nối!");
                 }
+
                 return response.json();
-            }).then(function (data) {
-                alert(data.message);
-                if (data.error) {
-                    codeCheckMessageElement.innerHTML = data.error;
-                }
             });
+        }
+
+        function showMessage(message) {
+            messageElement.textContent = message || "";
+            messageElement.style.display = "block";
+        }
+
+        function saveCode() {
+            var data = new FormData();
+
+            data.append("content", editor.state.doc.toString());
+
+            messageElement.textContent = "";
+            messageElement.style.display = "none";
+
+            postJson(saveAction, data)
+                .then(function (data) {
+                    alert(data.message);
+
+                    if (data.error) {
+                        showMessage(data.error);
+                    }
+                })
+                .catch(function (error) {
+                    alert(error.message);
+                });
+        }
+
+        function checkSyntax() {
+            var data = new FormData();
+
+            data.append("content", editor.state.doc.toString());
+
+            postJson(syntaxAction, data)
+                .then(function (data) {
+                    showMessage(data.error || data.message);
+                })
+                .catch(function (error) {
+                    alert(error.message);
+                });
+        }
+
+        function formatCode() {
+            if (!window.confirm(
+                "Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!"
+            )) {
+                return;
+            }
+
+            var data = new FormData();
+
+            data.append("format", fileExt);
+            data.append("content", editor.state.doc.toString());
+
+            postJson(formatAction, data)
+                .then(function (data) {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    editor.dispatch({
+                        changes: {
+                            from: 0,
+                            to: editor.state.doc.length,
+                            insert: data.format
+                        }
+                    });
+                })
+                .catch(function (error) {
+                    alert(error.message);
+                });
         }
 
         form.addEventListener("submit", function (event) {
             event.preventDefault();
             saveCode();
         });
+
+        syntaxButton.addEventListener("click", checkSyntax);
+        formatButton.addEventListener("click", formatCode);
 
         document.addEventListener("keydown", function (event) {
             if (event.ctrlKey && event.key === "s") {
@@ -142,42 +234,13 @@ require SITE_HEADER;
             }
         });
 
-        if (codeFormatElement) {
-            codeFormatElement.addEventListener("click", function () {
-                if (!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
-                    return;
-                }
-
-                var data = new FormData();
-                data.append("request_api", 1);
-                data.append("format", format);
-                data.append("content", editor.state.doc.toString());
-
-                fetch(action, {
-                    method: "POST",
-                    body: data,
-                    cache: "no-cache"
-                }).then(function (response) {
-                    if (response.status !== 200) {
-                        alert("Lỗi kết nối!");
-                        return false;
-                    }
-                    return response.json();
-                }).then(function (data) {
-                    if (!data.error) {
-                        editor.dispatch({
-                            changes: {
-                                from: 0,
-                                to: editor.state.doc.length,
-                                insert: data.format
-                            }
-                        });
-                    } else {
-                        alert(data.error);
-                    }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (codeLangElement) {
+                codeLangElement.scrollIntoView({
+                    behavior: "smooth"
                 });
-            });
-        }
+            }
+        });
     })();
 </script>
 

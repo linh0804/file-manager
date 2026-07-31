@@ -1,13 +1,11 @@
 <?php
 
 define('ACCESS', true);
-
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
-$file = new SplFileInfo($curr_path);
-$dir = dirname($file->getPathname());
-$name = basename($file->getPathname());
+$dir = dirname($curr_path);
+$name = basename($curr_path);
 
 $data = [
     'status' => false,
@@ -16,36 +14,27 @@ $data = [
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $data['message'] = 'Phương thức không hợp lệ';
-    goto end_request;
+    response($data);
 }
 
-if (
-    empty($dir)
-    || empty($name)
-    || !is_file(process_directory($dir . '/' . $name))
-) {
+if (!is_file($curr_path)) {
     $data['message'] = 'Đường dẫn không tồn tại';
-    goto end_request;
-}
-
-if (!file_is_text($name) && !file_is_unknown($name)) {
-    $data['message'] = 'Tập tin này không phải dạng văn bản';
-    goto end_request;
+    response($data);
 }
 
 if (file_get_ext($name) !== 'php') {
     $data['message'] = 'Chỉ hỗ trợ kiểm tra cú pháp PHP';
-    goto end_request;
+    response($data);
 }
 
-if (!array_key_exists('content', $_POST)) {
+if (empty($_POST['content'])) {
     $data['message'] = 'Chưa nhập nội dung';
-    goto end_request;
+    response($data);
 }
 
 if (!function_can_use('exec')) {
-    $data['message'] = 'Không thể kiểm tra cú pháp';
-    goto end_request;
+    $data['message'] = 'Hệ thống chặn kiểm tra';
+    response($data);
 }
 
 $content = (string) $_POST['content'];
@@ -60,15 +49,14 @@ if (
     }
 
     $data['message'] = 'Không thể tạo file tạm';
-    goto end_request;
+    response($data);
 }
 
 $output = [];
 $exit_code = -1;
 
 @exec(
-    escapeshellarg(PHP_BINARY)
-    . ' -l '
+    'php -l '
     . escapeshellarg($temp_file),
     $output,
     $exit_code
@@ -84,9 +72,4 @@ if ($exit_code === 0) {
     $data['error'] = implode(PHP_EOL, $output);
 }
 
-end_request:
-@ob_end_clean();
-
-header('Content-Type: application/json; charset=utf-8');
-
-echo json_encode($data);
+response($data);

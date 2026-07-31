@@ -4,7 +4,7 @@ defined('ACCESS') or exit;
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
-$site_title = 'Sửa tập tin';
+$site_title = 'Sửa: ' . $name;
 
 require SITE_HEADER;
 
@@ -33,19 +33,12 @@ require SITE_HEADER;
     ?>
     <div class="list">
         <span class="bull">&bull; </span><span><?= file_print_path($dir, true) ?></span><hr/>
-        <div class="ellipsis break-word">
+
+        <div class="break-word">
             <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
         </div>
-        <div>
-            <a href="<?= action_link('file', ['act' => 'edit_code', 'path' => $curr_path]) ?>">
-                <button class="button">[Code]</button>
-            </a><hr />
-        </div>
-        <form action="javascript:void(0)" id="code_form" method="post">
-            <div class="parent_box_edit">
-                <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
-            </div>
-            
+
+        <form action="javascript:void(0)" id="code_form" method="post">            
             <div class="input_action">                    
                 <input type="submit" name="s_save" value="Lưu lại"/>
                 <span style="margin-right: 12px"></span>
@@ -58,6 +51,10 @@ require SITE_HEADER;
                     <?php endif; ?>
                     <label><input type="checkbox" id="code_wrap" /> Wrap</label>
                 </div>
+            </div>
+            
+            <div class="parent_box_edit">
+                <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
             </div>
         </form>
     </div>
@@ -73,7 +70,7 @@ require SITE_HEADER;
 
         // auto focus
         document.addEventListener("DOMContentLoaded", function() {
-          editorElement.scrollIntoView({ behavior: "smooth" })
+          codeFormElement.scrollIntoView({ behavior: "smooth" })
          })
 
         function save() {

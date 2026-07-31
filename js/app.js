@@ -34,7 +34,16 @@ async function fm_fetch(...args) {
     NProgress.start();
 
     try {
-        return await fetch(...args);
+        const response = await fetch(...args);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return response;
+    } catch (err) {
+        alert("Lỗi server!");
+        throw err;
     } finally {
         NProgress.done();
     }

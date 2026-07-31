@@ -4,7 +4,7 @@ defined('ACCESS') or exit;
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
-$site_title = 'Sửa - ' . $name;
+$site_title = $name;
 
 
 $content = (string) file_get_contents($curr_path);
@@ -30,10 +30,10 @@ if (array_key_exists($file_ext, $code_langs)) {
 require SITE_HEADER;
 ?>
 
-<div class="title"><?= $site_title ?></div>
+<div class="title"><?= file_print_path($curr_path, true) ?></div>
 
 <style>
-    #editor {
+    .cm-editor {
         height: 100%;
         font-size: 12px;
         line-height: 1.25;
@@ -41,11 +41,9 @@ require SITE_HEADER;
 </style>
 
 <div class="list">
-    <span><?= file_print_path($curr_path, true) ?></span><hr/>
-
     <div class="break-word">
-        <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong><hr/>
-    </div>
+        <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong>
+    </div><hr>
 
     <div class="code_action">
         <select id="code_lang">
@@ -63,8 +61,9 @@ require SITE_HEADER;
           data-action="<?= $api_edit ?>"
           data-format="<?= $file_ext ?>"
     >
-        <div id="editor" style="display: none"><?=  htmlspecialchars($content) ?></div>
-
+        <textarea id="editor-content" style="display: none"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
+        <div id="editor"></div>
+            
         <div class="input_action">
             <input type="submit" value="Lưu lại" />
             <span style="margin-right: 12px"></span>
@@ -81,14 +80,14 @@ require SITE_HEADER;
 </div>
 
 <div class="tips" style="margin-top: 0 !important">
-<img src="icon/tips.png" alt="">
-Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
+    <img src="icon/tips.png" alt="">
+    Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
 </div>
 
 <div id="code_check_message" class="list"></div>
 
 <script>window.EditContext = false</script>
-<script src="<?= asset('js/ace-editor/ace.js') ?>"></script>
+<script src="<?= asset('js/edit_code.bundle.js') ?>"></script>
 <script>
     (function () {
         var form = document.getElementById("code_form");
@@ -97,17 +96,7 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
         var codeCheckMessageElement = document.getElementById("code_check_message");
         var codeCheckPhpElement = document.getElementById("code_check_php");
         var editorElement = document.getElementById("editor");
-        var codeLangElement = document.getElementById("code_lang");
-        var codeWrapElement = document.getElementById("code_wrap");
         var codeFormatElement = document.getElementById("code_format");
-
-        var editor = ace.edit(editorElement);
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/<?= $code_lang ?>");
-        editor.session.setTabSize(4);
-        editor.session.setUseSoftTabs(true);
-        editor.setShowPrintMargin(false);
-        editorElement.style.display = 'block';
 
         document.addEventListener("DOMContentLoaded", function () {
             codeLangElement.scrollIntoView({ behavior: "smooth" });
@@ -116,7 +105,7 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
         function saveCode() {
             var data = new FormData();
             data.append("request_api", 1);
-            data.append("content", editor.getValue());
+            data.append("content", editor.state.doc.toString());
 
             codeCheckMessageElement.innerHTML = "";
             data.append("check", codeCheckPhpElement && codeCheckPhpElement.checked ? 1 : 0);
@@ -151,14 +140,6 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
             }
         });
 
-        codeLangElement.addEventListener("change", function () {
-            editor.session.setMode("ace/mode/" + codeLangElement.value);
-        });
-
-        codeWrapElement.addEventListener("change", function () {
-            editor.session.setUseWrapMode(codeWrapElement.checked);
-        });
-
         if (codeFormatElement) {
             codeFormatElement.addEventListener("click", function () {
                 if (!window.confirm("Chức năng có thể thay đổi cấu trúc code, xác nhận dùng!")) {
@@ -168,7 +149,7 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
                 var data = new FormData();
                 data.append("request_api", 1);
                 data.append("format", format);
-                data.append("content", editor.getValue());
+                data.append("content", editor.state.doc.toString());
 
                 fetch(action, {
                     method: "POST",
@@ -182,7 +163,13 @@ Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
                     return response.json();
                 }).then(function (data) {
                     if (!data.error) {
-                        editor.setValue(data.format, -1);
+                        editor.dispatch({
+                            changes: {
+                                from: 0,
+                                to: editor.state.doc.length,
+                                insert: data.format
+                            }
+                        });
                     } else {
                         alert(data.error);
                     }

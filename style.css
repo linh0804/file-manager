@@ -169,10 +169,9 @@ div#app-footer a {
 }
 
 div.title {
-    word-wrap: break-word;
     color: #ffffff;
     background-color: #0080c0;
-    border-bottom: 1px solid #0090e0;
+    border-bottom: 2px solid #0090e0;
     padding: 6px;
     font-weight: bold;
     margin-bottom: 3px;

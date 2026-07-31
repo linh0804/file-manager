@@ -4,23 +4,20 @@ defined('ACCESS') or exit;
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
-$site_title = $name;
-
+$site_title = 'Sửa: ' . $name;
 
 $content = (string) file_get_contents($curr_path);
 $api_edit = action_link('api_file_edit_text', ['path' => base64_encode($curr_path)]);
 $file_ext = file_get_ext($name);
 
 $code_lang = 'text';
-$code_lang_files = glob(__DIR__ . '/js/ace-editor/mode-*.js');
-
-$code_langs = [];
-$code_langs['js'] = 'javascript';
-
-foreach($code_lang_files as $f) {
-    $n = substr(basename($f), 5, -3);
-    $code_langs[$n] = $n;
-}
+$code_langs = [
+    'js' => 'javascript',
+    'php' => 'php',
+    'txt' => 'text',
+    'sql' => 'sql',
+    'json' => 'json'
+];
 ksort($code_langs);
 
 if (array_key_exists($file_ext, $code_langs)) {
@@ -30,7 +27,7 @@ if (array_key_exists($file_ext, $code_langs)) {
 require SITE_HEADER;
 ?>
 
-<div class="title"><?= file_print_path($curr_path, true) ?></div>
+<div class="title"><?= file_print_path($dir, true) ?></div>
 
 <style>
     .cm-editor {
@@ -38,6 +35,11 @@ require SITE_HEADER;
         font-size: 12px;
         line-height: 1.25;
     }
+    
+    .cm-panel {
+        padding: 5px 10px;
+        font-family: monospace;
+      }
 </style>
 
 <div class="list">
@@ -53,7 +55,7 @@ require SITE_HEADER;
         </select>
 
         <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
-            <button class="button">Text Mode</button>
+            <button class="button">[Text]</button>
         </a>
     </div>
 

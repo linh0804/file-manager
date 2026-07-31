@@ -30,6 +30,44 @@ function redirect(url) {
     window.location.href = url;
 }
 
+async function fm_api(method, url, data = null, callback = null) {
+    NProgress.start();
+
+    try {
+        const options = {
+            method: method.toUpperCase(),
+        };
+
+        if (options.method === "POST") {
+            options.body = data;
+        }
+
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error(`HTTP STATUS ${response.status}`);
+        }
+
+        let json;
+        try {
+            json = await response.json();
+        } catch {
+            throw new Error("Invalid JSON");
+        }
+
+        if (typeof callback === "function") {
+            callback(json);
+        }
+
+        return json;
+    } catch (err) {
+        alert("Lỗi server!");
+        throw err;
+    } finally {
+        NProgress.done();
+    }
+}
+
 async function fm_fetch(...args) {
     NProgress.start();
 

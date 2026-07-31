@@ -47,7 +47,7 @@ define('COMMON_FILE_FORMAT', [
     'image' => ['png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'],
     'text' => ['cpp', 'css', 'csv', 'h', 'htaccess', 'html', 'java', 'js', 'lng', 'pas', 'php', 'pl', 'py', 'rb', 'rss', 'sh', 'svg', 'tpl', 'txt', 'xml', 'ini', 'cnf', 'config', 'conf', 'conv'],
     'archive' => ['7z', 'rar', 'tar', 'tarz', 'zip'],
-    'audio' => ['acc', 'midi', 'mp3', 'mp4', 'swf', 'wav'],
+    'audio' => ['acc', 'm4a', 'midi', 'mp3', 'mp4', 'swf', 'wav'],
     'font' => ['afm', 'bdf', 'otf', 'pcf', 'snf', 'ttf'],
     'binary' => ['pak', 'deb', 'dat'],
     'document' => ['pdf'],

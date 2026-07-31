@@ -32,10 +32,10 @@ if (IS_LOGIN) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.2/themes/base/jquery-ui.min.css" integrity="sha512-EPUSESSvM4jLngGTPXMyezlH1YxB96b4ZSUvvavOR2m2lu9uyRw4K9IdMqf6Gj/awwqAXopEvjljsdqNJM9W4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.2/themes/base/theme.min.css" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.2/jquery-ui.min.js" integrity="sha512-sJcXQUDDRzmJucAnIvFskH17pgX+JW0pjjfgzRyV0HQdUV3ljURrYP8VzbGviocumNEPSV5E9Ue7L6PW+Aly4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
- 
+<script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/dist/jquery-ui.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/base.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/theme.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 
@@ -79,5 +79,5 @@ if (IS_LOGIN) {
 
 <?php if (IS_LOGIN) { ?>
     <link rel="stylesheet" type="text/css" href="<?= asset('js/app_header_path_autocomplete.css') ?>" />
-    <script src="<?= asset('js/app_header_path_autocomplete.js') ?>"></script>
+    <script src="<?= asset('js/app_header_path_autocomplete.js') ?>" defer></script>
 <?php } ?>

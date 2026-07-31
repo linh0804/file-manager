@@ -23,11 +23,16 @@ $can_syntax = $is_execute && $file_ext === 'php';
 
 $code_lang = 'text';
 $code_langs = [
+    'text' => 'text',
     'js' => 'javascript',
+    'html' => 'html',
     'php' => 'php',
     'txt' => 'text',
     'sql' => 'sql',
-    'json' => 'json'
+    'json' => 'json',
+    'css' => 'css',
+    'twig' => 'jinja',
+    'md' => 'markdown',
 ];
 ksort($code_langs);
 
@@ -111,11 +116,6 @@ require SITE_HEADER;
         <textarea id="editor-content" style="display: none"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
         <div id="editor"></div>
     </form>
-</div>
-
-<div class="tips" style="margin-top: 0 !important">
-    <img src="icon/tips.png" alt="">
-    Nếu không thấy nội dung file, vui lòng không chỉnh sửa trên web!
 </div>
 
 <div id="code_check_message" class="list"></div>

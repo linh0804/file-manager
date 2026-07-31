@@ -18,7 +18,8 @@ import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { php } from "@codemirror/lang-php";
 import { sql } from "@codemirror/lang-sql";
-
+import { markdown } from "@codemirror/lang-markdown";
+import { jinja } from "@codemirror/lang-jinja";
 
 function curr_cursor_get(state) {
   let { head } = state.selection.main;
@@ -41,13 +42,14 @@ function curr_cursor_panel(view) {
   }
 }
 
-function getLang(mode) {
+function get_text_lang(mode) {
     let lang = [];
 
     switch (mode) {
         case "html":
             lang = html();
             break;
+
         case "css":
             lang = css();
             break;
@@ -55,6 +57,7 @@ function getLang(mode) {
         case "javascript":
             lang = javascript();
             break;
+
         case "json":
             lang = json();
             break;
@@ -62,8 +65,17 @@ function getLang(mode) {
         case "php":
             lang = php();
             break;
+
         case "sql":
             lang = sql();
+            break;
+
+        case "markdown":
+            lang = markdown();
+            break;
+
+        case "jinja":
+            lang = jinja();
             break;
     }
 
@@ -115,14 +127,14 @@ const editor = new EditorView({
 
 // ngon ngu mac dinh
 editor.dispatch({
-    effects: languageConf.reconfigure(getLang(codeLangElement.value)),
+    effects: languageConf.reconfigure(get_text_lang(codeLangElement.value)),
 });
 
 
 // doi ngon ngu
 codeLangElement.addEventListener("change", function () {
     editor.dispatch({
-        effects: languageConf.reconfigure(getLang(codeLangElement.value)),
+        effects: languageConf.reconfigure(get_text_lang(codeLangElement.value)),
     });
 });
 

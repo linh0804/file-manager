@@ -110,7 +110,8 @@ function config()
 
 function response(...$args)
 {
-    return Http::response(...$args);
+    Http::response(...$args)->send();
+    exit;
 }
 
 function redirect($url)

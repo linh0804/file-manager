@@ -12,7 +12,7 @@ if (!file_exists($curr_path)) {
     response([
         'status' => false,
         'msg' => 'file not found'
-    ])->send();
+    ]);
 }
 
 $data = [
@@ -44,4 +44,4 @@ $data['total_size_readable'] = Fs::sizen($data['total_size']);
 response([
     'status' => true,
     'data' => $data
-])->send();
+]);

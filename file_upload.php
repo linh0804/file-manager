@@ -4,8 +4,6 @@ use Nightmare\Http\Response;
 
 defined('ACCESS') or exit;
 
-$site_title = 'Tải lên tập tin';
-
 if (isset($_FILES['file'])) {
     $data = [];
     $data['error'] = 'Tập tin bị lỗi!';
@@ -22,12 +20,11 @@ if (isset($_FILES['file'])) {
         }
     }   
     
-    (new Response($data))->send();
+    response($data);
 }
 
 $action = action_link('file', ['act' => 'upload', 'path' => $curr_path]);
-
-
+$site_title = 'Tải lên tập tin';
 
 require SITE_HEADER;
 
@@ -59,6 +56,7 @@ echo '<div class="list">
     $('#files').val('');
     $('#files').click();
   });
+
   $('#buttonReset').on('click', function (e) {
     e.preventDefault();
     
@@ -70,6 +68,7 @@ echo '<div class="list">
     files.length = 0;
     fileList.empty();
   });
+
   $('#files').on('change', function (e) {
 	fileList.empty();
 	

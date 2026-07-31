@@ -24,8 +24,7 @@ if (!is_dir($dir) || !is_readable($dir)) {
     response([
         'status' => true,
         'data' => []
-    ])->send();
-    exit;
+    ]);
 }
 
 $items = @scandir($dir, SCANDIR_SORT_NONE);
@@ -34,8 +33,7 @@ if (!is_array($items)) {
     response([
         'status' => true,
         'data' => []
-    ])->send();
-    exit;
+    ]);
 }
 
 $dirs = [];
@@ -64,4 +62,4 @@ sort($files, SORT_NATURAL | SORT_FLAG_CASE);
 response([
     'status' => true,
     'data' => array_merge($dirs, $files)
-])->send();
+]);

@@ -833,7 +833,7 @@ function file_display_actions($filename)
             echo '<li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'zip_view', 'path' => $path]) . '">Xem</a></li>
               <li><img src="icon/unzip.png"/> <a href="' . action_link('file', ['act' => 'unzip', 'path' => $path]) . '">Giải nén</a></li>';
         } elseif (file_is_text($name) || file_is_unknown($name)) {
-            echo '<li><img src="icon/edit.png"/> <a href="' . action_link('file', ['act' => 'edit_text', 'path' => $path]) . '">Sửa văn bản</a></li>
+            echo '<li><img src="icon/edit.png"/> <a href="' . action_link('file', ['act' => 'edit_text', 'path' => base64url_encode($path)]) . '">Sửa văn bản</a></li>
               <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_code', 'path' => $path]) . '">Sửa code</a></li>
                <li><img src="icon/edit_text_line.png"/> <a href="' . action_link('file', ['act' => 'edit_text_line', 'path' => $path]) . '">Sửa theo dòng</a></li>
               <li><img src="icon/columns.png"/> <a href="' . action_link('file', ['act' => 'view_code', 'path' => $path]) . '">Xem code</a></li>';
@@ -877,7 +877,7 @@ function file_get_display_link($file)
         }
 
         if (strtolower($file->getFilename()) === 'error_log' || $is_edit) {
-            $file_link = action_link('file', ['act' => 'edit_text', 'path' => $file->getPathname()]);
+            $file_link = action_link('file', ['act' => 'edit_text', 'path' => base64url_encode($file->getPathname())]);
         } elseif (in_array(file_get_ext($name), COMMON_FILE_FORMAT['zip'])) {
             $file_link = action_link('file', ['act' => 'unzip', 'path' => $file->getPathname()]);
         } else {

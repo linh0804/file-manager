@@ -41,6 +41,10 @@ require SITE_HEADER;
 <div class="title"><?= file_print_path($dir, true) ?></div>
 
 <style>
+    #code_check_message {
+        display: none;
+    }
+
     .cm-editor {
         height: 100%;
         font-size: 12px;
@@ -58,16 +62,42 @@ require SITE_HEADER;
         <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong>
     </div><hr>
 
-    <div class="code_action">
+    <div id="editor-panel">
+        <button type="button" class="button" id="editor-save">
+            Lưu lại
+        </button>
+
+        <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
+            <button type="button" class="button">[Text]</button>
+        </a>
+
+        <button type="button" class="button" id="editor-wrap">
+            Wrap
+        </button>
+
+        <button
+            type="button"
+            class="button"
+            id="editor-syntax"
+            <?= $can_syntax ? '' : 'disabled' ?>
+        >
+            Syntax
+        </button>
+
+        <button
+            type="button"
+            class="button"
+            id="editor-format"
+            <?= $can_format ? '' : 'disabled' ?>
+        >
+            Format
+        </button>
+        
         <select id="code_lang">
             <?php foreach ($code_langs as $code_type_key => $code_type_value): ?>
                 <option value="<?= $code_type_value ?>" <?= $code_lang === $code_type_key ? 'selected="selected"' : '' ?>>Mode: <?= $code_type_key ?></option>
             <?php endforeach; ?>
         </select>
-
-        <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
-            <button class="button">[Text]</button>
-        </a>
     </div>
 
     <form
@@ -80,33 +110,6 @@ require SITE_HEADER;
     >
         <textarea id="editor-content" style="display: none"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
         <div id="editor"></div>
-            
-        <div class="input_action">
-            <input type="submit" value="Lưu lại" />
-            <span style="margin-right: 12px"></span>
-
-            <span style="float: right">
-                <button
-                    type="button"
-                    class="button"
-                    id="code_syntax"
-                    <?= $can_syntax ? '' : 'disabled' ?>
-                >
-                    Syntax
-                </button>
-
-                <button
-                    type="button"
-                    class="button"
-                    id="code_format"
-                    <?= $can_format ? '' : 'disabled' ?>
-                >
-                    Format
-                </button>
-
-                <label><input type="checkbox" id="code_wrap" /> Wrap</label>
-            </span>
-        </div>
     </form>
 </div>
 
@@ -127,32 +130,19 @@ require SITE_HEADER;
         var syntaxAction = form.dataset.syntax;
         var fileExt = form.dataset.fileExt;
 
-        var syntaxButton = document.getElementById("code_syntax");
-        var formatButton = document.getElementById("code_format");
+        var saveButton = document.getElementById("editor-save");
+        var wrapButton = document.getElementById("editor-wrap");
+        var syntaxButton = document.getElementById("editor-syntax");
+        var formatButton = document.getElementById("editor-format");
         var messageElement = document.getElementById("code_check_message");
-
-        var codeLangElement = document.getElementById("code_lang");
-
-        function postJson(url, data) {
-            return fm_fetch(url, {
-                method: "POST",
-                body: data,
-                cache: "no-cache"
-            }).then(function (response) {
-                if (response.status !== 200) {
-                    throw new Error("Lỗi kết nối!");
-                }
-
-                return response.json();
-            });
-        }
+        var wrapEnabled = false;
 
         function showMessage(message) {
             messageElement.textContent = message || "";
             messageElement.style.display = "block";
         }
 
-        function saveCode() {
+        function save() {
             var data = new FormData();
 
             data.append("content", editor.state.doc.toString());
@@ -160,7 +150,14 @@ require SITE_HEADER;
             messageElement.textContent = "";
             messageElement.style.display = "none";
 
-            postJson(saveAction, data)
+            fm_fetch(saveAction, {
+                method: "POST",
+                body: data,
+                cache: "no-cache"
+            })
+                .then(function (response) {
+                    return response.json();
+                })
                 .then(function (data) {
                     alert(data.message);
 
@@ -178,8 +175,16 @@ require SITE_HEADER;
 
             data.append("content", editor.state.doc.toString());
 
-            postJson(syntaxAction, data)
+            fm_fetch(syntaxAction, {
+                method: "POST",
+                body: data,
+                cache: "no-cache"
+            })
+                .then(function (response) {
+                    return response.json();
+                })
                 .then(function (data) {
+                    alert(data.message);
                     showMessage(data.error || data.message);
                 })
                 .catch(function (error) {
@@ -199,7 +204,14 @@ require SITE_HEADER;
             data.append("format", fileExt);
             data.append("content", editor.state.doc.toString());
 
-            postJson(formatAction, data)
+            fm_fetch(formatAction, {
+                method: "POST",
+                body: data,
+                cache: "no-cache"
+            })
+                .then(function (response) {
+                    return response.json();
+                })
                 .then(function (data) {
                     if (data.error) {
                         alert(data.error);
@@ -219,26 +231,20 @@ require SITE_HEADER;
                 });
         }
 
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            saveCode();
-        });
-
+        saveButton.addEventListener("click", save);
         syntaxButton.addEventListener("click", checkSyntax);
         formatButton.addEventListener("click", formatCode);
+
+        wrapButton.addEventListener("click", function () {
+            wrapEnabled = !wrapEnabled;
+            window.editorSetWrap(wrapEnabled);
+            wrapButton.style.borderColor = wrapEnabled ? "green" : "";
+        });
 
         document.addEventListener("keydown", function (event) {
             if (event.ctrlKey && event.key === "s") {
                 event.preventDefault();
-                saveCode();
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            if (codeLangElement) {
-                codeLangElement.scrollIntoView({
-                    behavior: "smooth"
-                });
+                save();
             }
         });
     })();

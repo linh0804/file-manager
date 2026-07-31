@@ -72,6 +72,7 @@ function getLang(mode) {
 
 const languageConf = new Compartment();
 const lineWrapConf = new Compartment();
+const codeLangElement = document.getElementById("code_lang");
 
 const editor = new EditorView({
     parent: document.querySelector("#editor"),
@@ -119,7 +120,6 @@ editor.dispatch({
 
 
 // doi ngon ngu
-var codeLangElement = document.getElementById("code_lang");
 codeLangElement.addEventListener("change", function () {
     editor.dispatch({
         effects: languageConf.reconfigure(getLang(codeLangElement.value)),
@@ -128,18 +128,13 @@ codeLangElement.addEventListener("change", function () {
 
 
 // che do wrap
-var codeWrapElement = document.getElementById("code_wrap");
-codeWrapElement.addEventListener("change", function () {
-    let wrap = [];
-
-    if (codeWrapElement.checked) {
-        wrap = EditorView.lineWrapping;
-    }
-
+window.editorSetWrap = function (enabled) {
     editor.dispatch({
-        effects: lineWrapConf.reconfigure(wrap),
+        effects: lineWrapConf.reconfigure(
+            enabled ? EditorView.lineWrapping : []
+        ),
     });
-});
+};
 
 // xuat bien toan cau
 window.editor = editor;

@@ -22,13 +22,13 @@ $total = 0;
 $dir = process_directory($dir);
 $content = file_get_contents($curr_path);
 $is_execute = function_can_use('exec');
-$api_save = action_link('api_text_save', [
+$api_save = act_link('api_text_save', [
     'path' => base64_encode($curr_path)
 ]);
-$api_format = action_link('api_text_format', [
+$api_format = act_link('api_text_format', [
     'path' => base64_encode($curr_path)
 ]);
-$api_syntax = action_link('api_text_syntax', [
+$api_syntax = act_link('api_text_syntax', [
     'path' => base64_encode($curr_path)
 ]);
 $file_ext = file_get_ext($name);
@@ -45,7 +45,7 @@ $can_syntax = $is_execute && $file_ext === 'php';
             Lưu lại
         </button>
 
-        <a href="<?= action_link('file', [
+        <a href="<?= act_link('file', [
             'act' => 'edit_code',
             'path' => $curr_path
         ]) ?>">

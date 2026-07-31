@@ -69,7 +69,7 @@ echo '<div class="tips"><img src="icon/tips.png" alt=""/> Mật khẩu để tr�
     <div class="title">Chức năng</div>';
 
 echo '<ul class="list">
-  <li><a href="' . action_link('reinstall') . '" class="button"><img src="icon/empty.png" alt=""/> Cài đặt lại!!!</a></li>
+  <li><a href="' . act_link('reinstall') . '" class="button"><img src="icon/empty.png" alt=""/> Cài đặt lại!!!</a></li>
 </ul>';
 
 echo '<div class="list">Thư mục cài đặt: ' . htmlspecialchars(__DIR__) . '</div>';

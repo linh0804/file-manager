@@ -10,4 +10,4 @@ setcookie(
     '/'
 );
 
-redirect(action_link('index'));
+redirect(act_link('index'));

@@ -98,7 +98,7 @@ if (IS_CONFIG_ERROR) {
 
 if (!IS_LOGIN) {
     if (!defined('LOGIN_BYPASS_AUTO_REDIRECT')) {
-        redirect(action_link('login'));
+        redirect(act_link('login'));
     }
 }
 

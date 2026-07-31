@@ -51,7 +51,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
     } elseif (!copys($entries, $curr_path, process_directory($_POST['path_new']))) {
         echo 'Sao chép thất bại';
     } else {
-        redirect(action_link('index', ['path' => $curr_path]));
+        redirect(act_link('index', ['path' => $curr_path]));
     }
 
     echo '</div>';
@@ -73,7 +73,7 @@ echo '<input type="submit" name="submit" value="Sao chép"/>
 
 echo '<div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . action_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
+        <li><img src="icon/list.png" alt=""/> <a href="' . act_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
     </ul>';
 
 require SITE_FOOTER;

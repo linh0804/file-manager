@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . action_link('file', ['act' => 'info', 'path' => $full_path]) . '">1</a>]
+            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path]) . '">1</a>]
         </li>';
     }
     if (empty($files1_only)) {
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . action_link('file', ['act' => 'info', 'path' => $full_path]) . '">2</a>]
+            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path]) . '">2</a>]
         </li>';
     }
     if (empty($files2_only)) {
@@ -177,8 +177,8 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . action_link('file', ['act' => 'info', 'path' => $full_path1]) . '">1</a>]'
-            . ' [<a href="' . action_link('file', ['act' => 'info', 'path' => $full_path2]) . '">2</a>]
+            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path1]) . '">1</a>]'
+            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path2]) . '">2</a>]
         </li>';
     }
     if (empty($files_intersect_final)) {
@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
 
 echo '<div class="title">Chức năng</div>
 <ul class="list">
-    <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
+    <li><img src="icon/list.png"/> <a href="' . act_link('index') . '">Danh sách</a></li>
 </ul>';
 
 require SITE_FOOTER;

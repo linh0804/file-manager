@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
         config()->unset('home');
     }
     
-    redirect(action_link('index'));
+    redirect(act_link('index'));
 }
 
 $site_title = 'Sửa Trang chủ';

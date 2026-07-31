@@ -13,7 +13,7 @@ if (request()->has_post('submit')) {
     if (!Fs::remove($curr_path)) {
         $error .= 'Xoá thất bại';
     } else {
-        redirect(action_link('index', ['path' => dirname($curr_path)]));
+        redirect(act_link('index', ['path' => dirname($curr_path)]));
     }
 
     $error .= '</div>';

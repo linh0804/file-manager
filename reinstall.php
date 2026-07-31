@@ -9,7 +9,7 @@ $error = '';
 
 if (isset($_POST['submit'])) {
     if (app_reinstall()) {
-        redirect(action_link('index'));
+        redirect(act_link('index'));
     }
 
     $error = '<div class="list">Lỗi</div>';

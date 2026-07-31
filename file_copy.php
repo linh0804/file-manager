@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     } elseif (!@copy($dir . '/' . $name, $new_path)) {
         $notice = 'Sao chép tập tin thất bại';
     } else {
-        redirect(action_link('index', ['path' => $dir]));
+        redirect(act_link('index', ['path' => $dir]));
     }
 }
 

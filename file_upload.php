@@ -23,7 +23,7 @@ if (isset($_FILES['file'])) {
     response($data);
 }
 
-$action = action_link('file', ['act' => 'upload', 'path' => $curr_path]);
+$action = act_link('file', ['act' => 'upload', 'path' => $curr_path]);
 $site_title = 'Tải lên tập tin';
 
 require SITE_HEADER;

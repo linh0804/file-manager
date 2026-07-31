@@ -14,12 +14,12 @@ if (IS_LOGIN) {
     // function
     $site_sidebar .= '<div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/home.png"/> <a href="' . action_link('setting_home') . '">Sửa Trang chủ</a></li>
-        <li><img src="icon/search.png"/> <a href="' . action_link('folder_compare_tree') . '">So sánh thư mục</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('command', ['path' => $curr_path]) . '">Chạy lệnh</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('composer', ['path' => $curr_path]) . '">Chạy lệnh Composer</a></li>
-        <li><img src="icon/mime/unknown.png"/> <a href="' . action_link('file_fix_perms', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>
-        <li><img src="icon/mime/php.png"/> <a href="' . action_link('phpinfo') . '">phpinfo()</a></li>
+        <li><img src="icon/home.png"/> <a href="' . act_link('setting_home') . '">Sửa Trang chủ</a></li>
+        <li><img src="icon/search.png"/> <a href="' . act_link('folder_compare_tree') . '">So sánh thư mục</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('command', ['path' => $curr_path]) . '">Chạy lệnh</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('composer', ['path' => $curr_path]) . '">Chạy lệnh Composer</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('file_fix_perms', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>
+        <li><img src="icon/mime/php.png"/> <a href="' . act_link('phpinfo') . '">phpinfo()</a></li>
     </ul>';
     
     // filelist
@@ -38,7 +38,7 @@ echo '</div>';
 
 echo '<div id="app-footer">
     <span>Version: <a href="https://github.com/linh0804/file-manager">' . APP_VERSION . '</a></span>
-    <br><br>[ <a href="' . action_link('logout') . '">Đăng Xuất</a> ]
+    <br><br>[ <a href="' . act_link('logout') . '">Đăng Xuất</a> ]
 </div>';
 
 echo '<script>nightmare_scrolltop.init();</script>';

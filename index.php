@@ -18,13 +18,13 @@ $page_list = $page_list < 1 ? 1 : $page_list;
 $site_title = 'Danh sách - ' . basename($curr_path);
 
 if (!isset($_GET['path'])) {
-    redirect(action_link('index', ['path' => $curr_path]));
+    redirect(act_link('index', ['path' => $curr_path]));
 }
 
 check_path($curr_path);
 
 if (is_file($curr_path)) {
-    redirect(action_link('file', ['act' => 'info', 'path' => $curr_path]));
+    redirect(act_link('file', ['act' => 'info', 'path' => $curr_path]));
 }
 
 require SITE_HEADER;
@@ -46,7 +46,7 @@ require SITE_HEADER;
 
 echo '<div class="title">' . file_print_path($curr_path, true) . ' <span class="copy-button" data-copy="' . htmlspecialchars((string) $curr_path) . '" style="color: pink">[copy]</span></div>';
 
-echo '<a href="' . action_link('index', ['path' => dirname($curr_path), 'page_list' => null]) . '">
+echo '<a href="' . act_link('index', ['path' => dirname($curr_path), 'page_list' => null]) . '">
   <div class="list">
     <img src="icon/back.png" style="margin-left: 5px; margin-right: 5px"/> 
     <strong class="back">...</strong>
@@ -114,7 +114,7 @@ if ($count <= 0) {
                 <td class="name"><b>' . file_get_display_link($file) . '</b></td>
                 <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
                 <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         } else {
             echo '<tr>
@@ -122,7 +122,7 @@ if ($count <= 0) {
                 <td class="name">' . file_get_display_link($file) . '</td>
                 <td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>
                 <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . action_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
+                <td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
             </tr>';
         }
     }
@@ -137,12 +137,12 @@ if ($count <= 0) {
 
     echo '<div class="list">';
     echo '<div id="file-select-opt" style="display: block">
-        <button formaction="' . action_link('multi', ['act' => 'copy', 'path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
-        <button formaction="' . action_link('multi', ['act' => 'move', 'path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
-        <button formaction="' . action_link('multi', ['act' => 'zip', 'path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
-        <button formaction="' . action_link('multi', ['act' => 'delete', 'path' => $curr_path]) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
-        <button formaction="' . action_link('multi', ['act' => 'chmod', 'path' => $curr_path]) . '" class="button"><img src="icon/access.png"/> Chmod</button>
-        <button formaction="' . action_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
+        <button formaction="' . act_link('multi', ['act' => 'copy', 'path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button formaction="' . act_link('multi', ['act' => 'move', 'path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button formaction="' . act_link('multi', ['act' => 'zip', 'path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button formaction="' . act_link('multi', ['act' => 'delete', 'path' => $curr_path]) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button formaction="' . act_link('multi', ['act' => 'chmod', 'path' => $curr_path]) . '" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button formaction="' . act_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
     echo paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);
@@ -170,12 +170,12 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a href="<?= action_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="<?= act_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="<?= act_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="<?= act_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="<?= act_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="webdav.php/<?= ltrim($curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>
-    <li><a href="<?= action_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
+    <li><a href="<?= act_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 
 <?php require SITE_FOOTER ?>

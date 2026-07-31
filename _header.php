@@ -57,17 +57,17 @@ if (IS_LOGIN) {
         <?php if (IS_LOGIN) { ?>
             <button id="nav-menu">&#9776;</button>
         <?php } ?>
-        <li><a href="<?= action_link('index', ['page_list' => null]) ?>"><img src="icon/home.png" /></a></li>
+        <li><a href="<?= act_link('index', ['page_list' => null]) ?>"><img src="icon/home.png" /></a></li>
         <?php if (IS_LOGIN) { ?>
             <li><a href="db/"><img src="icon/database.png"/></a></li>
-            <li><a href="<?= action_link('setting') ?>"><img src="icon/setting.png" /></a></li>
+            <li><a href="<?= act_link('setting') ?>"><img src="icon/setting.png" /></a></li>
             <li>
                 <img id="header-goto-path-toggle" src="icon/search.png" alt="Goto path" role="button" tabindex="0" aria-controls="header-goto-path-form" data-status="off" />
             </li>
         <?php } ?>
     </ul>
     <?php if (IS_LOGIN) { ?>
-        <form id="header-goto-path-form" action="<?= action_link('index', ['page_list' => null]) ?>" method="get">
+        <form id="header-goto-path-form" action="<?= act_link('index', ['page_list' => null]) ?>" method="get">
             <input id="header-goto-path" name="path" type="text" value="<?= htmlspecialchars($header_goto_path) ?>">
             <input type="submit" value="GO">
         </form>

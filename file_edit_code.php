@@ -8,13 +8,13 @@ $site_title = 'Sửa: ' . $name;
 
 $content = (string) file_get_contents($curr_path);
 $file_ext = file_get_ext($name);
-$api_save = action_link('api_text_save', [
+$api_save = act_link('api_text_save', [
     'path' => base64_encode($curr_path)
 ]);
-$api_format = action_link('api_text_format', [
+$api_format = act_link('api_text_format', [
     'path' => base64_encode($curr_path)
 ]);
-$api_syntax = action_link('api_text_syntax', [
+$api_syntax = act_link('api_text_syntax', [
     'path' => base64_encode($curr_path)
 ]);
 $is_execute = function_can_use('exec');
@@ -74,7 +74,7 @@ require SITE_HEADER;
             Lưu lại
         </button>
 
-        <a href="<?= action_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
+        <a href="<?= act_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
             <button type="button" class="button">[Text]</button>
         </a>
 

@@ -6,7 +6,7 @@ define('LOGIN_BYPASS_AUTO_REDIRECT', true);
 require __DIR__ . '/_init.php';
 
 if (IS_LOGIN) {
-    redirect(action_link('index'));
+    redirect(act_link('index'));
 }
 
 $site_title = 'Đăng nhập';
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
         auth_reset_fail_login();
         setcookie(APP_NAME . '_auth', (string) auth_encode_pwd($password), time() + 3600 * 24 * 365, '/');
 
-        redirect(action_link('index'));
+        redirect(act_link('index'));
     }
 
     $notice .= '</div>';

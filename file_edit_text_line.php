@@ -18,13 +18,13 @@ if (!is_file(process_directory($curr_path))) {
     echo '<div class="list"><span>Đường dẫn không tồn tại</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index') . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . act_link('index') . '">Danh sách</a></li>
     </ul>';
 } elseif (!file_is_text($name) && !file_is_unknown($name)) {
     echo '<div class="list"><span>Tập tin này không phải dạng văn bản</span></div>
     <div class="title">Chức năng</div>
     <ul class="list">
-        <li><img src="icon/list.png"/> <a href="' . action_link('index', ['path' => $dir]) . '">Danh sách</a></li>
+        <li><img src="icon/list.png"/> <a href="' . act_link('index', ['path' => $dir]) . '">Danh sách</a></li>
     </ul>';
 } else {
     $path = $curr_path;
@@ -72,9 +72,9 @@ if (!is_file(process_directory($curr_path))) {
             <div id="line_number_' . $line_number . '">' . htmlspecialchars($line) . '</div>
             <div>
                 <span id="line_number">[<span>' . ($line_number + 1) . '</span>]</span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Sửa</a>
+                <a href="' . act_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Sửa</a>
                 <span> | </span>
-                <a href="' . action_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Xóa</a>
+                <a href="' . act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Xóa</a>
             </div>
         </div>';
     }

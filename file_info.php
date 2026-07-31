@@ -24,7 +24,7 @@ if ($file->isFile()) {
         $pixel = getimagesize($curr_path);
         $is_image = true;
 
-        echo '<li><center><img src="' . action_link('file', ['act' => 'download_image', 'path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
+        echo '<li><center><img src="' . act_link('file', ['act' => 'download_image', 'path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
     }
 
     echo '<li><span class="bull">&bull; </span><strong>Kích thước</strong>: <span>' . Fs::sizen($file->getSize()) . '</span></li>';

@@ -5,9 +5,7 @@ define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
-$file = new SplFileInfo($curr_path);
-$dir = dirname($file->getPathname());
-$name = basename($file->getPathname());
+$name = basename($curr_path);
 
 $data = [
     'status' => false,
@@ -16,21 +14,17 @@ $data = [
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $data['message'] = 'Phương thức không hợp lệ';
-    goto end_request;
+    response($data);
 }
 
-if (
-    empty($dir)
-    || empty($name)
-    || !is_file(process_directory($dir . '/' . $name))
-) {
+if (!is_file($curr_path)) {
     $data['message'] = 'Đường dẫn không tồn tại';
-    goto end_request;
+    response($data);
 }
 
 if (!file_is_text($name) && !file_is_unknown($name)) {
     $data['message'] = 'Tập tin này không phải dạng văn bản';
-    goto end_request;
+    response($data);
 }
 
 $content = (string) ($_POST['content'] ?? '');
@@ -148,9 +142,4 @@ switch ($format_type) {
         break;
 }
 
-end_request:
-@ob_end_clean();
-
-header('Content-Type: application/json; charset=utf-8');
-
-echo json_encode($data);
+response($data);

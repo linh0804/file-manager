@@ -134,7 +134,7 @@ require SITE_HEADER;
         var codeLangElement = document.getElementById("code_lang");
 
         function postJson(url, data) {
-            return fetch(url, {
+            return fm_fetch(url, {
                 method: "POST",
                 body: data,
                 cache: "no-cache"

@@ -75,19 +75,9 @@ $can_syntax = $is_execute && $file_ext === 'php';
         </button>
     </div>
 
-    <form action="javascript:void(0)" id="code_form" method="post">            
-        <div class="input_action">                    
-            <input type="submit" name="s_save" value="Lưu lại">
-
-            
-            <span style="margin-right: 12px"></span>
-            <div style="display: inline-block; float: right">
-                <label><input type="checkbox" id="code_wrap" /> Wrap</label>
-            </div>
-        </div>
-        
+    <form action="javascript:void(0)" id="code_form" method="post">
         <div class="parent_box_edit">
-            <textarea id="editor" wrap="off" style="white-space: pre;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
+            <textarea id="editor" wrap="off" style="white-space: nowrap;" class="box_edit" name="content"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
         </div>
     </form>
 </div>
@@ -100,26 +90,12 @@ $can_syntax = $is_execute && $file_ext === 'php';
     const apiSyntax = <?= json_encode($api_syntax) ?>;
 
     const editorElement = document.getElementById("editor");
-    const codeFormElement = document.getElementById("code_form");
     const saveButton = document.getElementById("editor-save");
+    const wrapButton = document.getElementById("editor-wrap");
     const syntaxButton = document.getElementById("editor-syntax");
     const formatButton = document.getElementById("editor-format");
-    const wrapElement = document.getElementById("code_wrap");
     const messageElement = document.getElementById("code_check_message");
-
-    function postJson(url, data) {
-        return fetch(url, {
-            method: "POST",
-            body: data,
-            cache: "no-cache"
-        }).then(function (response) {
-            if (response.status !== 200) {
-                throw new Error("Lỗi kết nối!");
-            }
-
-            return response.json();
-        });
-    }
+    let wrapEnabled = false;
 
     function showMessage(message) {
         messageElement.textContent = message || "";
@@ -134,7 +110,14 @@ $can_syntax = $is_execute && $file_ext === 'php';
         messageElement.textContent = "";
         messageElement.style.display = "none";
 
-        postJson(apiSave, data)
+        fm_fetch(apiSave, {
+            method: "POST",
+            body: data,
+            cache: "no-cache"
+        })
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (data) {
                 alert(data.message);
 
@@ -152,8 +135,16 @@ $can_syntax = $is_execute && $file_ext === 'php';
 
         data.append("content", editorElement.value);
 
-        postJson(apiSyntax, data)
+        fm_fetch(apiSyntax, {
+            method: "POST",
+            body: data,
+            cache: "no-cache"
+        })
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (data) {
+                alert(data.message);
                 showMessage(data.error || data.message);
             })
             .catch(function (error) {
@@ -173,7 +164,14 @@ $can_syntax = $is_execute && $file_ext === 'php';
         data.append("format", <?= json_encode($file_ext) ?>);
         data.append("content", editorElement.value);
 
-        postJson(apiFormat, data)
+        fm_fetch(apiFormat, {
+            method: "POST",
+            body: data,
+            cache: "no-cache"
+        })
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (data) {
                 if (data.error) {
                     alert(data.error);
@@ -191,19 +189,18 @@ $can_syntax = $is_execute && $file_ext === 'php';
     syntaxButton.addEventListener("click", checkSyntax);
     formatButton.addEventListener("click", formatCode);
 
-    wrapElement.addEventListener("change", function () {
-        if (this.checked) {
+    wrapButton.addEventListener("click", function () {
+        wrapEnabled = !wrapEnabled;
+
+        if (wrapEnabled) {
             editorElement.removeAttribute("wrap");
             editorElement.removeAttribute("style");
+            wrapButton.style.borderColor = "green";
         } else {
             editorElement.setAttribute("wrap", "off");
             editorElement.setAttribute("style", "white-space: nowrap");
+            wrapButton.style.borderColor = "";
         }
-    });
-
-    codeFormElement.addEventListener("submit", function (event) {
-        event.preventDefault();
-        save();
     });
 
     document.addEventListener("keydown", function(event) {

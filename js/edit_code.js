@@ -20,6 +20,7 @@ import { php } from "@codemirror/lang-php";
 import { sql } from "@codemirror/lang-sql";
 import { markdown } from "@codemirror/lang-markdown";
 import { jinja } from "@codemirror/lang-jinja";
+import { yaml } from "@codemirror/lang-yaml";
 
 function curr_cursor_get(state) {
   let { head } = state.selection.main;
@@ -76,6 +77,10 @@ function get_text_lang(mode) {
 
         case "jinja":
             lang = jinja();
+            break;
+
+        case "yaml":
+            lang = yaml();
             break;
     }
 

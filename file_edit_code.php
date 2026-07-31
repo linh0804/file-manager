@@ -33,6 +33,8 @@ $code_langs = [
     'css' => 'css',
     'twig' => 'jinja',
     'md' => 'markdown',
+    'yml' => 'yaml',
+    'yaml' => 'yaml'
 ];
 ksort($code_langs);
 

@@ -49,30 +49,11 @@ async function fm_fetch(...args) {
     }
 }
 
-function fm_ajax(method, url, data, success) {
-    $.ajax({
-        url: url,
-        method: method,
-        data: data,
-        success: success
-    });
-}
-
-function file_ajax(data, success) {
-    const requestData = { ...data };
-    const act = String(requestData.act || "");
-
-    delete requestData.act;
-
-    if (!/^[a-z0-9_]+$/.test(act)) {
-        alert("Lỗi action!");
-        return;
-    }
-
-    $.ajax({
-        url: `api_${act}.php`,
+function fm_ajax(data, success) {
+    return $.ajax({
+        url: `api_${data.act}.php`,
         method: "post",
-        data: requestData,
+        data: data,
         success: success
     });
 }
@@ -80,7 +61,7 @@ function file_ajax(data, success) {
 $(".list-file .btn-calc-size").on("click", function () {
     let e = $(this);
 
-    file_ajax(e.data(), function (res) {
+    fm_ajax(e.data(), function (res) {
         e.html(res.data.total_size_readable);
     });
 });

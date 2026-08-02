@@ -203,6 +203,14 @@ div.title .path_seperator {
     color: inherit;
 }
 
+div.title,
+div.title a,
+div.title .path_entry,
+div.title .path_seperator {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 div.content {
     background-color: #f8f8f8;
     border: 1px solid #cecece;

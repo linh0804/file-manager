@@ -32,9 +32,9 @@ if (IS_LOGIN) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/dist/jquery-ui.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/base.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/theme.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/dist/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/base.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/theme.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
@@ -43,6 +43,18 @@ if (IS_LOGIN) {
     <link rel="stylesheet" type="text/css" href="<?= asset('js/nightmare_scrolltop.css') ?>" media="all,handheld" />
 
     <script>const APP_NAME = '<?= APP_NAME ?>';</script>
+    <script>
+        $(document).on("ajaxStart", function() {
+            NProgress.start();
+        });
+        $(document).on("ajaxError", function() {
+            alert("Lỗi server!");
+        });
+        $(document).on("ajaxStop", function() {
+            NProgress.done();
+        });
+    </script>
+
     <script src="<?= asset('js/app.js') ?>" defer></script>
     <script src="<?= asset('js/nightmare_scrolltop.js') ?>"></script>
     <script src="<?= asset('js/edit_recent.js') ?>"></script>

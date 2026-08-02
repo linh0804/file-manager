@@ -30,15 +30,6 @@ if (is_file($curr_path)) {
 require SITE_HEADER;
 
 ?>
-<style>
-    div.title,
-    div.title a,
-    div.title .path_entry,
-    div.title .path_seperator {
-        overflow-wrap: anywhere;
-        word-break: break-word;
-    }
-</style>
 
 <div id="app-index-updater"></div>
 
@@ -108,23 +99,20 @@ if ($count <= 0) {
         $name = $file->getFilename();
         $perms = file_get_chmod($file->getPathname());
 
+        echo '<tr>';
+        echo '<td><input type="checkbox" name="entries[]" value="' . $name . '"/></td>';
+        
         if ($file->isDir()) {
-            echo '<tr>
-                <td><input type="checkbox" name="entries[]" value="' . $name . '"/></td>
-                <td class="name"><b>' . file_get_display_link($file) . '</b></td>
-                <td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>
-                <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
-            </tr>';
+            echo '<td class="name"><b>' . file_get_display_link($file) . '</b></td>';
+            echo '<td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>';
         } else {
-            echo '<tr>
-                <td><input type="checkbox" name="entries[]" value="' . $name . '"/></td>
-                <td class="name">' . file_get_display_link($file) . '</td>
-                <td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>
-                <td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>
-                <td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>
-            </tr>';
+            echo '<td class="name">' . file_get_display_link($file) . '</td>';
+            echo '<td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>';
         }
+
+        echo '<td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>';
+        echo '<td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>';
+        echo '</tr>';
     }
     
     echo '<tr>

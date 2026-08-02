@@ -49,6 +49,15 @@ async function fm_fetch(...args) {
     }
 }
 
+function fm_ajax(method, url, data, success) {
+    $.ajax({
+        url: url,
+        method: method,
+        data: data,
+        success: success
+    });
+}
+
 function file_ajax(data, success) {
     const requestData = { ...data };
     const act = String(requestData.act || "");
@@ -60,23 +69,17 @@ function file_ajax(data, success) {
         return;
     }
 
-    NProgress.start();
-
     $.ajax({
         url: `api_${act}.php`,
         method: "post",
         data: requestData,
-        success: success,
-        error: function () {
-            alert("Lỗi server!");
-        },
-    }).always(function () {
-        NProgress.done();
+        success: success
     });
 }
 
-$(".btn-calc-size").on("click", function () {
+$(".list-file .btn-calc-size").on("click", function () {
     let e = $(this);
+
     file_ajax(e.data(), function (res) {
         e.html(res.data.total_size_readable);
     });

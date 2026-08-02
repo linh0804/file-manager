@@ -52,8 +52,8 @@ echo '</div>
 
 <script>
     setTimeout(() => {
-        $.get("cron.php", function(html) {
-            $("#app-index-updater").html(html);
+        $.getJSON("cron.php", function(response) {
+            $("#app-index-updater").html(response.data);
         });
     }, 1000);
 </script>

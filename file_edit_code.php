@@ -8,15 +8,7 @@ $site_title = 'Sửa: ' . $name;
 
 $content = (string) file_get_contents($curr_path);
 $file_ext = file_get_ext($name);
-$api_save = act_link('api_text_save', [
-    'path' => base64_encode($curr_path)
-]);
-$api_format = act_link('api_text_format', [
-    'path' => base64_encode($curr_path)
-]);
-$api_syntax = act_link('api_text_syntax', [
-    'path' => base64_encode($curr_path)
-]);
+$editor_path = base64_encode($curr_path);
 $is_execute = function_can_use('exec');
 $can_format = file_can_format_code($name);
 $can_syntax = $is_execute && $file_ext === 'php';
@@ -110,9 +102,7 @@ require SITE_HEADER;
     <form
         id="code_form"
         action="javascript:void(0)"
-        data-save="<?= htmlspecialchars($api_save, ENT_QUOTES) ?>"
-        data-format="<?= htmlspecialchars($api_format, ENT_QUOTES) ?>"
-        data-syntax="<?= htmlspecialchars($api_syntax, ENT_QUOTES) ?>"
+        data-path="<?= htmlspecialchars($editor_path, ENT_QUOTES) ?>"
         data-file-ext="<?= htmlspecialchars($file_ext, ENT_QUOTES) ?>"
     >
         <textarea id="editor-content" style="display: none"><?= PHP_EOL . htmlspecialchars($content) ?></textarea>
@@ -127,9 +117,7 @@ require SITE_HEADER;
 <script>
     (function () {
         var form = document.getElementById("code_form");
-        var saveAction = form.dataset.save;
-        var formatAction = form.dataset.format;
-        var syntaxAction = form.dataset.syntax;
+        var editorPath = form.dataset.path;
         var fileExt = form.dataset.fileExt;
 
         var saveButton = document.getElementById("editor-save");
@@ -145,53 +133,31 @@ require SITE_HEADER;
         }
 
         function save() {
-            var data = new FormData();
-
-            data.append("content", editor.state.doc.toString());
-
             messageElement.textContent = "";
             messageElement.style.display = "none";
 
-            fm_fetch(saveAction, {
-                method: "POST",
-                body: data,
-                cache: "no-cache"
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    alert(data.message);
+            fm_ajax({
+                act: "text_save",
+                path: editorPath,
+                content: editor.state.doc.toString()
+            }, function (data) {
+                alert(data.message);
 
-                    if (data.error) {
-                        showMessage(data.error);
-                    }
-                })
-                .catch(function (error) {
-                    alert(error.message);
-                });
+                if (data.error) {
+                    showMessage(data.error);
+                }
+            });
         }
 
         function checkSyntax() {
-            var data = new FormData();
-
-            data.append("content", editor.state.doc.toString());
-
-            fm_fetch(syntaxAction, {
-                method: "POST",
-                body: data,
-                cache: "no-cache"
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    alert(data.message);
-                    showMessage(data.error || data.message);
-                })
-                .catch(function (error) {
-                    alert(error.message);
-                });
+            fm_ajax({
+                act: "text_syntax",
+                path: editorPath,
+                content: editor.state.doc.toString()
+            }, function (data) {
+                alert(data.message);
+                showMessage(data.error || data.message);
+            });
         }
 
         function formatCode() {
@@ -201,36 +167,25 @@ require SITE_HEADER;
                 return;
             }
 
-            var data = new FormData();
+            fm_ajax({
+                act: "text_format",
+                path: editorPath,
+                format: fileExt,
+                content: editor.state.doc.toString()
+            }, function (data) {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
 
-            data.append("format", fileExt);
-            data.append("content", editor.state.doc.toString());
-
-            fm_fetch(formatAction, {
-                method: "POST",
-                body: data,
-                cache: "no-cache"
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    if (data.error) {
-                        alert(data.error);
-                        return;
+                editor.dispatch({
+                    changes: {
+                        from: 0,
+                        to: editor.state.doc.length,
+                        insert: data.format
                     }
-
-                    editor.dispatch({
-                        changes: {
-                            from: 0,
-                            to: editor.state.doc.length,
-                            insert: data.format
-                        }
-                    });
-                })
-                .catch(function (error) {
-                    alert(error.message);
                 });
+            });
         }
 
         saveButton.addEventListener("click", save);

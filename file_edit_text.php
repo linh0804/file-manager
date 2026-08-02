@@ -22,15 +22,7 @@ $total = 0;
 $dir = process_directory($dir);
 $content = file_get_contents($curr_path);
 $is_execute = function_can_use('exec');
-$api_save = act_link('api_text_save', [
-    'path' => base64_encode($curr_path)
-]);
-$api_format = act_link('api_text_format', [
-    'path' => base64_encode($curr_path)
-]);
-$api_syntax = act_link('api_text_syntax', [
-    'path' => base64_encode($curr_path)
-]);
+$editor_path = base64_encode($curr_path);
 $file_ext = file_get_ext($name);
 $can_format = file_can_format_code($name);
 $can_syntax = $is_execute && $file_ext === 'php';
@@ -85,9 +77,7 @@ $can_syntax = $is_execute && $file_ext === 'php';
 <div id="code_check_message" class="list"></div>
 
 <script>
-    const apiSave = <?= json_encode($api_save) ?>;
-    const apiFormat = <?= json_encode($api_format) ?>;
-    const apiSyntax = <?= json_encode($api_syntax) ?>;
+    const editorPath = <?= json_encode($editor_path) ?>;
 
     const editorElement = document.getElementById("editor");
     const saveButton = document.getElementById("editor-save");
@@ -103,53 +93,31 @@ $can_syntax = $is_execute && $file_ext === 'php';
     }
 
     function save() {
-        const data = new FormData();
-
-        data.append("content", editorElement.value);
-
         messageElement.textContent = "";
         messageElement.style.display = "none";
 
-        fm_fetch(apiSave, {
-            method: "POST",
-            body: data,
-            cache: "no-cache"
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                alert(data.message);
+        fm_ajax({
+            act: "text_save",
+            path: editorPath,
+            content: editorElement.value
+        }, function (data) {
+            alert(data.message);
 
-                if (data.error) {
-                    showMessage(data.error);
-                }
-            })
-            .catch(function (error) {
-                alert(error.message);
-            });
+            if (data.error) {
+                showMessage(data.error);
+            }
+        });
     }
 
     function checkSyntax() {
-        const data = new FormData();
-
-        data.append("content", editorElement.value);
-
-        fm_fetch(apiSyntax, {
-            method: "POST",
-            body: data,
-            cache: "no-cache"
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                alert(data.message);
-                showMessage(data.error || data.message);
-            })
-            .catch(function (error) {
-                alert(error.message);
-            });
+        fm_ajax({
+            act: "text_syntax",
+            path: editorPath,
+            content: editorElement.value
+        }, function (data) {
+            alert(data.message);
+            showMessage(data.error || data.message);
+        });
     }
 
     function formatCode() {
@@ -159,30 +127,19 @@ $can_syntax = $is_execute && $file_ext === 'php';
             return;
         }
 
-        const data = new FormData();
+        fm_ajax({
+            act: "text_format",
+            path: editorPath,
+            format: <?= json_encode($file_ext) ?>,
+            content: editorElement.value
+        }, function (data) {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
 
-        data.append("format", <?= json_encode($file_ext) ?>);
-        data.append("content", editorElement.value);
-
-        fm_fetch(apiFormat, {
-            method: "POST",
-            body: data,
-            cache: "no-cache"
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                if (data.error) {
-                    alert(data.error);
-                    return;
-                }
-
-                editorElement.value = data.format;
-            })
-            .catch(function (error) {
-                alert(error.message);
-            });
+            editorElement.value = data.format;
+        });
     }
 
     saveButton.addEventListener("click", save);

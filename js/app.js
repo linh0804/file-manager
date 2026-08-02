@@ -30,25 +30,6 @@ function redirect(url) {
     window.location.href = url;
 }
 
-async function fm_fetch(...args) {
-    NProgress.start();
-
-    try {
-        const response = await fetch(...args);
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
-        return response;
-    } catch (err) {
-        alert("Lỗi server!");
-        throw err;
-    } finally {
-        NProgress.done();
-    }
-}
-
 function fm_ajax(data, success) {
     return $.ajax({
         url: `api_${data.act}.php`,

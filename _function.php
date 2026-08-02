@@ -806,7 +806,10 @@ function check_path($path, $type = '')
 
 function get_curr_path()
 {
-    $path = (string) request()->query('path');
+    $path = request()->has_post('path')
+        ? request()->post('path')
+        : request()->query('path');
+    $path = (string) $path;
 
     if (!empty($path) && $path[0] !== '/') {
         $path = base64url_decode($path);

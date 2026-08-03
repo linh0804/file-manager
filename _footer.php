@@ -51,11 +51,13 @@ echo '<script>edit_recent.render("fm_edit_recent_list");</script>';
 echo '</div>
 
 <script>
-    setTimeout(() => {
+    if (!sessionStorage.getItem("fm_cron")) {
+        sessionStorage.setItem("fm_cron", "true");
+        
         $.getJSON("cron.php", function(response) {
             $("#app-index-updater").html(response.data);
         });
-    }, 1000);
+    }
 </script>
 
 </body>

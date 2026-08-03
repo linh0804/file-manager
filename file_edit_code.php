@@ -61,7 +61,7 @@ require SITE_HEADER;
         <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong>
     </div><hr>
 
-    <div id="editor-panel">
+    <div id="editor-panel" style="display:block; width:100%; overflow-x:auto; white-space:nowrap; padding-bottom: 4px">
         <button type="button" class="button" id="editor-save">
             Lưu lại
         </button>

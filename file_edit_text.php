@@ -9,6 +9,7 @@ $site_title = 'Sửa: ' . $name;
 require SITE_HEADER;
 
 ?>
+
 <style>
     #code_check_message {
         display:none;
@@ -32,7 +33,7 @@ $can_syntax = $is_execute && $file_ext === 'php';
     <span class="bull">&bull; </span>Tập tin: <strong class="file_name_edit"><?= $name ?></strong>
     <hr>
 
-    <div id="editor-panel">
+    <div id="editor-panel" style="display:block; width:100%; overflow-x:auto; white-space:nowrap; padding-bottom: 0px">
         <button type="button" class="button" id="editor-save">
             Lưu lại
         </button>

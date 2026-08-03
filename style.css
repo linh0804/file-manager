@@ -693,7 +693,7 @@ div.list div.input_action input {
     backdrop-filter:blur(7px);
     background-color:rgba(0,0,0,.5);
     position:fixed;
-    z-index:999;
+    z-index: 1;
     top:0;
     left:0;
     bottom:0;
@@ -702,7 +702,7 @@ div.list div.input_action input {
 
 .menu-toggle {
     padding-top: 10px;
-    z-index: 1000;
+    z-index: 2;
     position: fixed;
     top:0;
     left:-65%;

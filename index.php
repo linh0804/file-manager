@@ -3,7 +3,6 @@
 use Nightmare\Fs;
 
 define('ACCESS', true);
-
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
@@ -116,7 +115,7 @@ if ($count <= 0) {
     }
     
     echo '<tr>
-        <td><input id="file-select-all" type="checkbox" name="all" value="1" /></td>
+        <td><input id="file-select-all" type="checkbox" /></td>
         <td><b><i>Total: ' . $count .'</i></b></td>
     </tr>';
 
@@ -124,6 +123,7 @@ if ($count <= 0) {
     echo '</div>';
 
     echo '<div class="list">';
+
     echo '<div id="file-select-opt" style="display: block">
         <button formaction="' . act_link('multi', ['act' => 'copy', 'path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
         <button formaction="' . act_link('multi', ['act' => 'move', 'path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>

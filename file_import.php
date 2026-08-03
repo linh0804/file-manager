@@ -6,6 +6,10 @@ defined('ACCESS') or exit;
 
 $site_title = 'Tải lên tập tin';
 
+require SITE_HEADER;
+
+echo '<div class="title">' . $site_title . '</div>';
+
 if (isset($_POST['submit'])) {
     $is_empty = true;
 
@@ -32,10 +36,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-require SITE_HEADER;
-
-echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>

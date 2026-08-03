@@ -45,7 +45,7 @@ define('REMOTE_FILE_URL', 'https://static.nightmare.top/app/file-manager-php/rel
 
 define('COMMON_FILE_FORMAT', [
     'image' => ['png', 'ico', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'],
-    'text' => ['cpp', 'css', 'csv', 'h', 'htaccess', 'html', 'java', 'js', 'lng', 'pas', 'php', 'pl', 'py', 'rb', 'rss', 'sh', 'svg', 'tpl', 'txt', 'xml', 'ini', 'cnf', 'config', 'conf', 'conv'],
+    'text' => ['cpp', 'css', 'csv', 'h', 'htaccess', 'html', 'java', 'js', 'lng', 'pas', 'php', 'pl', 'py', 'rb', 'rss', 'sh', 'svg', 'tpl', 'txt', 'xml', 'ini', 'cnf', 'config', 'conf', 'conv', 'sql'],
     'archive' => ['7z', 'rar', 'tar', 'tarz', 'zip'],
     'audio' => ['acc', 'm4a', 'midi', 'mp3', 'mp4', 'swf', 'wav'],
     'font' => ['afm', 'bdf', 'otf', 'pcf', 'snf', 'ttf'],

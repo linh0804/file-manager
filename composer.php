@@ -1,15 +1,11 @@
 <?php
 
 define('ACCESS', true);
-
-$function = 'exec';
-if (!function_exists($function)) {
-    exit($function . '() function not found');
-}
-
 require __DIR__ . '/_init.php';
 
-$dir = !empty($_GET['dir']) ? rawurldecode($_GET['dir']) : null;
+if (!function_can_use('exec')) {
+    exit('exec() function not found');
+}
 
 // cài đặt composer.phar
 if (!file_exists('composer.phar')) {
@@ -19,6 +15,11 @@ if (!file_exists('composer.phar')) {
 }
 
 $site_title = 'Chạy lệnh Composer';
+$curr_path = get_curr_path();
+check_path($curr_path);
+
+$php = (string) ($_POST['php'] ?? 'php');
+$command = (string) ($_POST['command'] ?? 'composer update');
 
 require SITE_HEADER;
 
@@ -33,36 +34,42 @@ echo '<style>
         white-space: pre-wrap;
     }
 
+    pre#output-code {
+        color: red;
+    }
+
     pre#output {
         overflow-x: scroll;
         white-space: pre;
+        color: green;
     }
 </style>';
 
-echo '<div class="title">' . $site_title . '</div>';
-
-$requestPath = !empty($_GET['path']) ? rawurldecode((string) $_GET['path']) : (string) $dir;
-$folder = $_POST['folder'] ?? $requestPath;
-$php = $_POST['php'] ?? 'php';
-$command = $_POST['command'] ?? 'composer update';
+echo '<div class="title">' . file_print_path($curr_path, true) . '</div>';
 
 echo '<div class="list">';
 
-echo '<form method="post">
-    <span>Thư mục:</span><br />
-    <input type="text" name="folder" value="' . htmlspecialchars((string) $folder) . '" /><br />
+if (!file_exists($curr_path . '/composer.json')) {
+    echo  'Thư mục không có <b>composer.json</b>';
+} else {
+    echo '<form method="post">
+        <span>PHP BINARY:</span><br />
+        <input type="text" name="php" value="' . htmlspecialchars((string) $php) . '" /><br />
+    
+        <span>Lệnh:</span><br />
+        <input type="text" name="command" value="' . htmlspecialchars((string) $command) . '" /><br />
+    
+       <input type="submit" name="submit" value="OK" />
+    </form>';
+}
 
-    <span>PHP BINARY:</span><br />
-    <input type="text" name="php" value="' . htmlspecialchars((string) $php) . '" /><br />
-
-    <span>Lệnh:</span><br />
-    <input type="text" name="command" value="' . htmlspecialchars((string) $command) . '" /><br />
-
-   <input type="submit" name="submit" value="OK" />
-</form>';
+echo '</div>';
 
 // OK
 if (isset($_POST['submit'])) {
+    echo '<div class="title">Kết quả</div>';
+    echo '<div class="list">';
+
     // RUN
     $output = [];
     $result_code = '';
@@ -70,35 +77,31 @@ if (isset($_POST['submit'])) {
     // for composer.phar
     putenv('COMPOSER_HOME=~/.composer');
     
-    if (substr((string) $command, 0, 9) === "composer ") {
-        $command = substr((string) $command, 9 - strlen((string) $command));
+    if (substr($command, 0, 8) === 'composer') {
+        $command = substr($command, 8);
+        $command = sprintf(
+            'cd %s && %s %s %s 2>&1',
+            $curr_path,
+            $php,
+            __DIR__ . '/composer.phar',
+            $command
+        );
+    } else {
+        $command = '';
     }
-
-    $command = sprintf(
-        'cd %s && %s %s/composer.phar %s 2>&1',
-        process_directory($folder), $php, __DIR__, $command
-    );
 
     if ($command) {
         exec($command, $output, $result_code);
     }
 
     //
-    echo '<hr />';
-
-    echo 'Thư mục:';
-    echo '<pre>' . htmlspecialchars((string) $folder) . '</pre>';
-
-    echo 'Lệnh:';
-    echo '<pre>' . htmlspecialchars($command) . '</pre>';
-
-    echo 'Code:';
-    echo '<pre>' . htmlspecialchars($result_code) . '</pre>';
+    echo 'Result Code:';
+    echo '<pre id="output-code">' . htmlspecialchars($result_code) . '</pre>';
 
     echo 'Kết quả:';
     echo '<pre id="output">' . htmlspecialchars(implode("\n", $output)) . '</pre>';
-}
 
-echo '</div>';
+    echo '</div>';
+}
 
 require SITE_FOOTER;

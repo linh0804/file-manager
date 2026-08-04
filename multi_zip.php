@@ -78,7 +78,7 @@ echo '<div class="list">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
         <form action="" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
-            <input type="text" name="name" value="' . ($_POST['name'] ?? 'archive.zip') . '" size="18"/><br/>
+            <input type="text" name="name" value="' . ($_POST['name'] ?? 'archive-' . date('Ymd-His') . '.zip') . '" size="18"/><br/>
             <span class="bull">&bull; </span>Đường dẫn lưu:<br/>
             <input type="text" name="path_new" value="' . ($_POST['path_new'] ?? $curr_path) . '"/><br/>
             <input type="checkbox" name="is_delete" value="1"' . (isset($_POST['is_delete']) ? ' checked="checked"' : null) . '/> Xóa nguồn<br/>

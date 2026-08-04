@@ -116,7 +116,7 @@ if ($count <= 0) {
     
     echo '<tr>
         <td><input id="file-select-all" type="checkbox" name="all" value="0" /></td>
-        <td><b><i>Total: ' . $count .'</i></b></td>
+        <td colspan="4"><b>Tổng: ' . $count .'</b></td>
     </tr>';
 
     echo '</table>';

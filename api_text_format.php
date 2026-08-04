@@ -56,7 +56,7 @@ switch ($format_type) {
             && function_can_use('exec')
             && file_put_contents($temp_file, $content) !== false
         ) {
-            @chmod($fixer_file, 0775);
+            @chmod($fixer_file, 0755);
             @putenv('PHP_CS_FIXER_IGNORE_ENV=1');
 
             $output = [];

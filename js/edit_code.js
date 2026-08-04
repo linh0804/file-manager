@@ -35,6 +35,7 @@ function curr_cursor_panel(view) {
 
   return {
     dom,
+    top: true,
     update(update) {
       if (update.docChanged || update.selectionSet) {
         dom.textContent = curr_cursor_get(update.state);

@@ -157,8 +157,8 @@ if ($count <= 0) {
 
 <div class="title">Chức năng</div>
 
-<ul class="list">
-    <li><a href="<?= act_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+<ul class="my-index-modal list">
+    <li><span data-modal-url="<?= act_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</span></li>
     <li><a href="<?= act_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
     <li><a href="<?= act_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
     <li><a href="<?= act_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>

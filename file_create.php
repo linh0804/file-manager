@@ -3,9 +3,9 @@
 defined('ACCESS') or exit;
 
 $site_title = 'Tạo mới';
-$error = '';
 
 if (isset($_POST['submit'])) {
+    $error = '';
     $newDir = $curr_path . '/' . $_POST['name'];
     
     $error .= '<div class="notice_failure">';
@@ -33,25 +33,30 @@ if (isset($_POST['submit'])) {
     }
 
     $error .= '</div>';
+    echo $error;
+    exit;
 }
 
-require SITE_HEADER;
 
 echo '<div class="title">' . $site_title . '</div>';
-
-echo $error;
 
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>
     <form action="" method="post">
         <span class="bull">&bull; </span>Tên:<br/>
-        <input type="text" name="name" value="' . ($_POST['name'] ?? null) . '" size="18"/><br/>
-        <button name="type" value="1" class="button"><img src="icon/file.png" alt=""/> Tập tin</button>
-        <button name="type" value="0" class="button"><img src="icon/folder.png" alt=""/> Thư mục </button>
-        <input type="hidden" name="submit" value="1" />
+
+        <input type="text" name="name" value="" /><br/>
+
+        <button name="type" value="1" class="button">
+            <img src="icon/file.png" alt=""/>
+            Tập tin
+        </button>
+
+        <button name="type" value="0" class="button">
+            <img src="icon/folder.png" alt=""/>
+            Thư mục
+        </button>
+
+        <input type="hidden" name="submit" value="1" />      
     </form>
 </div>';
-?>
-
-<?php
-require SITE_FOOTER;

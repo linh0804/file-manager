@@ -136,12 +136,12 @@ require SITE_HEADER;
             messageElement.textContent = "";
             messageElement.style.display = "none";
 
-            fm_ajax({
+            my_ajax("post", {
                 act: "text_save",
                 path: editorPath,
                 content: editor.state.doc.toString()
             }, function (data) {
-                alert(data.message);
+                $.notify(data.message, "success");
 
                 if (data.error) {
                     showMessage(data.error);
@@ -150,12 +150,12 @@ require SITE_HEADER;
         }
 
         function checkSyntax() {
-            fm_ajax({
+            my_ajax("post", {
                 act: "text_syntax",
                 path: editorPath,
                 content: editor.state.doc.toString()
             }, function (data) {
-                alert(data.message);
+                $.notify(data.message, "success");
                 showMessage(data.error || data.message);
             });
         }
@@ -167,7 +167,7 @@ require SITE_HEADER;
                 return;
             }
 
-            fm_ajax({
+            my_ajax("post", {
                 act: "text_format",
                 path: editorPath,
                 format: fileExt,

@@ -54,7 +54,7 @@
             my_request.abort();
         } catch (error) {}
 
-        my_request = fm_ajax({ act: "autocomplete_path", path: $input.val().trim() }, function (res) {
+        my_request = my_ajax("post", { act: "autocomplete_path", path: $input.val().trim() }, function (res) {
             const items = res.data;
     
             if ($input.data("ui-autocomplete")) {

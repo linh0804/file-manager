@@ -124,6 +124,10 @@ span.bull {
     color: green !important;
 }
 
+span img {
+    vertical-align: middle;
+}
+
 div#app-header {
     background-color: #005090;
     padding: 6px 9px;
@@ -789,6 +793,7 @@ table.list-file tr:hover {
 }
 
 #app-modal-overlay {
+    display: none;
     position: fixed;
     inset: 0;
     z-index: 8;
@@ -796,6 +801,7 @@ table.list-file tr:hover {
 }
 
 #app-modal {
+    display: none;
     position: fixed;
     top: 6px;
     left: 50%;

@@ -1,20 +1,34 @@
-// copy
-$(".copy-button").click(function (e) {
-    e.preventDefault();
+function redirect(url) {
+    window.location.href = url;
+}
 
-    let data = $(this).data("copy");
+function my_ajax(method, data, succ) {
+    return $.ajax({
+        url: data.act_link || `api_${data.act}.php`,
+        method: method,
+        data: data,
+        success: succ
+    });
+}
 
-    navigator.clipboard
-        .writeText(data)
-        .then(function () {
-            alert("Đã copy!");
-        })
-        .catch(function (err) {
-            alert("Lỗi: ", err);
-        });
+// MODAL
+
+function app_modal(data) {
+    $("#app-modal-overlay").show();
+    $("#app-modal-body").empty().html(data);
+    $("#app-modal").show();
+}
+
+$(document).on("click", "#app-modal-close", function(event) {
+    event.preventDefault();
+
+    $("#app-modal").hide();
+    $("#app-modal-body").empty();
+    $("#app-modal-overlay").hide();
 });
 
-// menu
+// MENU
+
 function toggle_menu() {
     document.body.classList.toggle("has-menu");
 }
@@ -26,23 +40,36 @@ document.addEventListener("click", function (e) {
     }
 });
 
-function redirect(url) {
-    window.location.href = url;
-}
-
-function fm_ajax(data, success) {
-    return $.ajax({
-        url: `api_${data.act}.php`,
-        method: "post",
-        data: data,
-        success: success
-    });
-}
+// INDEX
 
 $(".list-file .btn-calc-size").on("click", function () {
     let e = $(this);
 
-    fm_ajax(e.data(), function (res) {
+    my_ajax("post", e.data(), function (res) {
         e.html(res.data.total_size_readable);
     });
+});
+
+$(".my-index-modal span").on("click", function() {
+    event.preventDefault();
+    let e = $(this);
+
+    my_ajax("get", { act_link: e.data('modal-url') }, function (res) {
+        app_modal(res);
+    });
+});
+
+$(".copy-button").click(function (e) {
+    e.preventDefault();
+
+    let data = $(this).data("copy");
+
+    navigator.clipboard
+        .writeText(data)
+        .then(function () {
+            $.notify("Đã copy!", "success");
+        })
+        .catch(function (err) {
+            $.notify("Lỗi: " + err);
+        });
 });

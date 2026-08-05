@@ -31,6 +31,7 @@ if (IS_LOGIN) {
     <link rel="shortcut icon" type="image/x-icon" href="icon/icon.ico" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="<?= asset('js/notify.min.js') ?>"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/dist/jquery-ui.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.14.2/themes/base/base.min.css" rel="stylesheet">

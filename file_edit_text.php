@@ -97,12 +97,12 @@ $can_syntax = $is_execute && $file_ext === 'php';
         messageElement.textContent = "";
         messageElement.style.display = "none";
 
-        fm_ajax({
+        my_ajax("post", {
             act: "text_save",
             path: editorPath,
             content: editorElement.value
         }, function (data) {
-            alert(data.message);
+            $.notify(data.message, "success");
 
             if (data.error) {
                 showMessage(data.error);
@@ -111,12 +111,12 @@ $can_syntax = $is_execute && $file_ext === 'php';
     }
 
     function checkSyntax() {
-        fm_ajax({
+        my_ajax("post", {
             act: "text_syntax",
             path: editorPath,
             content: editorElement.value
         }, function (data) {
-            alert(data.message);
+            $.notify(data.message, "success");
             showMessage(data.error || data.message);
         });
     }
@@ -128,7 +128,7 @@ $can_syntax = $is_execute && $file_ext === 'php';
             return;
         }
 
-        fm_ajax({
+        my_ajax("post", {
             act: "text_format",
             path: editorPath,
             format: <?= json_encode($file_ext) ?>,

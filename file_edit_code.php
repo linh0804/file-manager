@@ -137,25 +137,35 @@ require SITE_HEADER;
             messageElement.textContent = "";
             messageElement.style.display = "none";
 
-            my_ajax("post", "api_text_save.php", {
-                path: editorPath,
-                content: editor.state.doc.toString()
-            }, function (data) {
-                $.notify(data.message, "success");
+            $.ajax({
+                method: "post",
+                url: "api_text_save.php",
+                data: {
+                    path: editorPath,
+                    content: editor.state.doc.toString()
+                },
+                success: function (data) {
+                    $.notify(data.message, "success");
 
-                if (data.error) {
-                    showMessage(data.error);
+                    if (data.error) {
+                        showMessage(data.error);
+                    }
                 }
             });
         }
 
         function checkSyntax() {
-            my_ajax("post", "api_text_syntax.php", {
-                path: editorPath,
-                content: editor.state.doc.toString()
-            }, function (data) {
-                $.notify(data.message, "success");
-                showMessage(data.error || data.message);
+            $.ajax({
+                method: "post",
+                url: "api_text_syntax.php",
+                data: {
+                    path: editorPath,
+                    content: editor.state.doc.toString()
+                },
+                success: function (data) {
+                    $.notify(data.message, "success");
+                    showMessage(data.error || data.message);
+                }
             });
         }
 
@@ -166,23 +176,28 @@ require SITE_HEADER;
                 return;
             }
 
-            my_ajax("post", "api_text_format.php", {
-                path: editorPath,
-                format: fileExt,
-                content: editor.state.doc.toString()
-            }, function (data) {
-                if (data.error) {
-                    alert(data.error);
-                    return;
-                }
-
-                editor.dispatch({
-                    changes: {
-                        from: 0,
-                        to: editor.state.doc.length,
-                        insert: data.format
+            $.ajax({
+                method: "post",
+                url: "api_text_format.php",
+                data: {
+                    path: editorPath,
+                    format: fileExt,
+                    content: editor.state.doc.toString()
+                },
+                success: function (data) {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
                     }
-                });
+
+                    editor.dispatch({
+                        changes: {
+                            from: 0,
+                            to: editor.state.doc.length,
+                            insert: data.format
+                        }
+                    });
+                }
             });
         }
 

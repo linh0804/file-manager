@@ -54,62 +54,74 @@
             my_request.abort();
         } catch (error) {}
 
-        my_request = my_ajax(
-            "post",
-            "api_autocomplete_path.php",
-            {
+        my_request = $.ajax({
+            method: "post",
+            url: "api_autocomplete_path.php",
+            data: {
                 path: $input.val().trim()
             },
-            function (res) {
-            const items = res.data;
+            success: function (res) {
+                const items = res.data;
     
-            if ($input.data("ui-autocomplete")) {
-                $input.autocomplete("destroy");
-            }
-    
-            $input.autocomplete({
-                source: function (request, response) {
-                    const keyword = get_search_segment(request.term).toLowerCase();
-                    response(keyword === "" ? items : items.filter((item) => String(item).toLowerCase().includes(keyword)));
-                },
-                minLength: 1,
-                focus: function (event) {
-                    event.preventDefault();
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-    
-                    const value = get_dir_base() + ui.item.value;
-                    $(this).val(value);
-    
-                    // for file
-                    if (!String(ui.item.value).endsWith("/")) {
-                        window.location.href = "file_info.php?path=" + encodeURIComponent(value);
-                        return;
-                    }
-    
-                    // for dir
-                    move_cursor_to_end();
-                    gen_autocomplete();
-                },
-            });
-    
-            $input.autocomplete("instance")._renderItem = function (ul, item) {
-                const term = get_search_segment(this.term || "");
-                let label = escape_html(item.label || item.value || "");
-    
-                if (term !== "") {
-                    label = label.replace(new RegExp(escape_regex(term), "i"), '<span class="autocomplete-match">$&</span>');
+                if ($input.data("ui-autocomplete")) {
+                    $input.autocomplete("destroy");
                 }
     
-                return $("<li>").append($("<div>").html(label)).appendTo(ul);
-            };
+                $input.autocomplete({
+                    source: function (request, response) {
+                        const keyword = get_search_segment(request.term).toLowerCase();
+
+                        response(
+                            keyword === ""
+                                ? items
+                                : items.filter((item) =>
+                                    String(item).toLowerCase().includes(keyword)
+                                )
+                        );
+                    },
+                    minLength: 1,
+                    focus: function (event) {
+                        event.preventDefault();
+                    },
+                    select: function (event, ui) {
+                        event.preventDefault();
     
-            if ($toggle.attr("data-status") === "on") {
-                $input.autocomplete("search", $input.val());
+                        const value = get_dir_base() + ui.item.value;
+                        $(this).val(value);
+    
+                        // for file
+                        if (!String(ui.item.value).endsWith("/")) {
+                            window.location.href = "file_info.php?path=" + encodeURIComponent(value);
+                            return;
+                        }
+    
+                        // for dir
+                        move_cursor_to_end();
+                        gen_autocomplete();
+                    },
+                });
+    
+                $input.autocomplete("instance")._renderItem = function (ul, item) {
+                    const term = get_search_segment(this.term || "");
+                    let label = escape_html(item.label || item.value || "");
+    
+                    if (term !== "") {
+                        label = label.replace(
+                            new RegExp(escape_regex(term), "i"),
+                            '<span class="autocomplete-match">$&</span>'
+                        );
+                    }
+    
+                    return $("<li>")
+                        .append($("<div>").html(label))
+                        .appendTo(ul);
+                };
+    
+                if ($toggle.attr("data-status") === "on") {
+                    $input.autocomplete("search", $input.val());
+                }
             }
-            }
-        );
+        });
     };
 
     $toggle.on("click", () => {

@@ -8,15 +8,6 @@ function redirect(url) {
     window.location.href = url;
 }
 
-function my_ajax(method, url, data, callback) {
-    return $.ajax({
-        url: url,
-        method: method,
-        data: data,
-        success: callback
-    });
-}
-
 // FORM AJAX
 
 $(document).on("submit", "form[data-ajax]", function (event) {
@@ -68,8 +59,13 @@ $(document).on("click", "[data-modal][data-modal-url]", function (event) {
     event.preventDefault();
     const e = $(this);
 
-    my_ajax("get", e.data("modal-url"), {}, function (res) {
-        app_modal(res);
+    $.ajax({
+        method: "get",
+        url: e.data("modal-url"),
+        data: {},
+        success: function (res) {
+            app_modal(res);
+        }
     });
 });
 
@@ -91,10 +87,15 @@ document.addEventListener("click", function (e) {
 $(".list-file .btn-calc-size").on("click", function () {
     let e = $(this);
 
-    my_ajax("post", "api_calc.php", {
-        path: e.data("path")
-    }, function (res) {
-        e.html(res.data.total_size_readable);
+    $.ajax({
+        method: "post",
+        url: "api_calc.php",
+        data: {
+            path: e.data("path")
+        },
+        success: function (res) {
+            e.html(res.data.total_size_readable);
+        }
     });
 });
 

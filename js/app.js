@@ -19,18 +19,33 @@ function my_ajax(method, url, data, callback) {
 
 // FORM AJAX
 
-$(document).on("submit", "form[data-ajax][data-ajax-url]", function (event) {
+$(document).on("submit", "form[data-ajax]", function (event) {
     event.preventDefault();
     const e = $(this);
+    const data = new FormData(this, event.originalEvent.submitter);
 
-    my_ajax(
-        "post",
-        e.data("ajax-url"),
-        e.serialize(),
-        function (res) {
-            $.notify(res.msg, res.status ? "success" : "error");
+    $.ajax({
+        method: "post",
+        url: e.attr("action"),
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            try {
+                $.notify(res.msg, res.status ? "success" : "error");
+                
+                setTimeout(function() {
+                    if (res.redirect) {
+                        redirect(res.redirect);
+                    } else if (res.reload) {
+                        reload();
+                    }
+                }, 3000);
+            } catch (error) {
+                $.notify("Lỗi máy chủ (JSON)", "error");
+            }
         }
-    );
+    });
 });
 
 // MODAL

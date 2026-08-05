@@ -114,6 +114,19 @@ function response(...$args)
     exit;
 }
 
+function response_api($data)
+{
+    $data = array_merge([
+        'status' => false,
+        'msg' => 'Lỗi máy chủ',
+        'data' => null,
+        'redirect' => '',
+        'reload' => false,
+    ], $data);
+    Http::response($data)->send();
+    exit;
+}
+
 function redirect($url)
 {
     header('Location: ' . $url);

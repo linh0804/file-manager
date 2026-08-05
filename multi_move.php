@@ -1,5 +1,8 @@
 <?php
 
+define('ACCESS', true);
+require __DIR__ . '/multi.php';
+
 function multi_move($entrys, $dir, $path)
 {
     foreach ($entrys as $e) {

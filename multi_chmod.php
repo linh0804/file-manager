@@ -1,5 +1,8 @@
 <?php
 
+define('ACCESS', true);
+require __DIR__ . '/multi.php';
+
 function chmods($curr_path, $entrys, $folder, $file)
 {
     $folder = intval($folder, 8);

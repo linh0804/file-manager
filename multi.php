@@ -1,12 +1,11 @@
 <?php
 
-define('ACCESS', true);
+defined('ACCESS') or exit;
 
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
 $entries     = $_POST['entries'] ?? [];
-$act   = !empty($_GET['act']) ? $_GET['act'] : null;
 
 $site_title = 'Thao tác';
 
@@ -41,22 +40,4 @@ if (count($entries) <= 0) {
     exit;
 }
 
-$act = preg_replace('/[^a-z_]/', '', $act);
-
-if ($act === '' || !file_exists(__DIR__ . '/' . 'multi_' . $act . '.php')) {
-    require SITE_HEADER;
-
-    echo '<div class="title">' . $site_title . '</div>
-        <div class="list"><span>Không có hành động</span></div>
-        <div class="title">Chức năng</div>
-        <ul class="list">
-            <li><img src="icon/list.png" alt=""/> <a href="' . act_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
-        </ul>';
-
-    require SITE_FOOTER;
-    exit;
-}
-
 $curr_path = process_directory($curr_path);
-
-require __DIR__ . '/' . 'multi_' . $act . '.php';

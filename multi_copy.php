@@ -1,5 +1,8 @@
 <?php
 
+define('ACCESS', true);
+require __DIR__ . '/multi.php';
+
 function copys($entrys, $curr_path, $path_new)
 {
     foreach ($entrys as $e) {

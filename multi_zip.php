@@ -2,6 +2,9 @@
 
 use Nightmare\Zip;
 
+define('ACCESS', true);
+require __DIR__ . '/multi.php';
+
 function multi_zip($dir, $entrys, $file, $isDelete = false)
 {
     if (@is_file($file)) {

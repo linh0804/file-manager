@@ -79,7 +79,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 echo $entry_html_list;
 echo '<div class="list">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="" method="post">
+        <form action="' . get_curr_url_esc() . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
             <input type="text" name="name" value="' . ($_POST['name'] ?? 'archive-' . date('Ymd-His') . '.zip') . '" size="18"/><br/>
             <span class="bull">&bull; </span>Đường dẫn lưu:<br/>

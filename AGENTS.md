@@ -5,7 +5,7 @@
 This repository is a mostly flat PHP 7.4 application (file manager) served from the project root.
 - Shared bootstrap/layout: `_init.php`, `_function.php`, `_header.php`, `_footer.php`.
 - Frontend assets: `js/` (source + bundle), `style.css`, `icon/`.
-- DB helper area: `db/`.
+- DB library is `db/admin` and not edit if.
 - Runtime/output folders: `vendor/` (Composer), `node_modules/` (pnpm).
 
 ## Coding Style & Naming Conventions

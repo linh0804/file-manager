@@ -55,7 +55,7 @@ if (IS_CONFIG_ERROR) {
 }
 
 echo '<div class="list">
-    <form action="" method="post">
+    <form action="' . get_curr_url_esc() . '" method="post">
         <span class="bull">&bull; </span>Tên đăng nhập:<br/>
         <input type="text" name="username" value="" size="18"/><br/>
         <span class="bull">&bull; </span>Mật khẩu:<br/>

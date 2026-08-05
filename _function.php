@@ -808,6 +808,10 @@ function get_curr_url() {
     return $_SERVER['REQUEST_URI'];
 }
 
+function get_curr_url_esc() {
+    return htmlspecialchars(get_curr_url());
+}
+
 function get_curr_path()
 {
     $path = request()->has_post('path')

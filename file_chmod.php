@@ -32,7 +32,7 @@ require SITE_HEADER;
 <div class="list">
     <span class="bull">&bull;</span>
     <span><?= file_print_path($curr_path) ?></span><hr/>
-    <form action="" method="post">
+    <form action="<?= get_curr_url_esc() ?>" method="post">
         <span class="bull">&bull;</span>
         Chế độ:<br/>
         <input type="text" name="mode" value="<?= $mode ?>" /><br/>

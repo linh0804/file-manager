@@ -62,7 +62,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 echo $entry_html_list;
 echo '<div class="list">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="" method="post">
+        <form action="' . get_curr_url_esc() . '" method="post">
             <span class="bull">&bull; </span>Thư mục:<br/>
             <input type="text" name="folder" value="' . ($_POST['folder'] ?? '755') . '" size="18"/><br/>
             <span class="bull">&bull; </span>Tập tin:<br/>

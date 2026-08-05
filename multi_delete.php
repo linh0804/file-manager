@@ -36,7 +36,7 @@ echo '<div class="list">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
         <span>Bạn có thực sự muốn xóa các mục đã chọn không?</span><hr/><br/>
         <center>
-            <form action="" method="post">
+            <form action="' . get_curr_url_esc() . '" method="post">
                 <input type="hidden" name="is_action" value="1"/>';
 
 echo $entry_checkbox;

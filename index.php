@@ -84,7 +84,7 @@ if (PAGE_SIZE <= 0) {
     $page_list = 1;
 }
 
-echo '<form action="" method="post" name="form">';
+echo '<form action="' . get_curr_url_esc() . '" method="post" name="form">';
 
 if ($count <= 0) {
     echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';

@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>
-    <form action="" method="post">
+    <form action="' . get_curr_url_esc() . '" method="post">
         <span class="bull">&bull; </span>URL 1:<br/>
         <input type="text" name="url[]" size="18"/><br/>
         <span class="bull">&bull; </span>URL:<br/>

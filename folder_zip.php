@@ -71,7 +71,7 @@ if (empty($dir) || empty($name) || !is_dir(process_directory($dir . '/' . $name)
     echo '<div class="list">
         <span class="bull">&bull; </span><span>' . file_print_path($dir . '/' . $name, true) . '</span><hr/>
         
-        <form action="" method="post">
+        <form action="' . get_curr_url_esc() . '" method="post">
             <span class="bull">&bull; </span>Tên tập tin nén:<br/>
             <input type="text" name="name" value="' . (isset($_POST['name']) ? $_POST['name'] : $name . '.zip') . '" size="18"/><br/>
 

@@ -89,7 +89,7 @@ if (isset($_POST['submit']) && isset($_POST['is_action'])) {
 
 echo '<div class="list break-word">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="" method="post">';
+        <form action="' . get_curr_url_esc() . '" method="post">';
 
 for ($i = 0; $i < count($entries); ++$i) {
     $entry_path = $curr_path . '/' . $entries[$i];

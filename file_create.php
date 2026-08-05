@@ -43,7 +43,7 @@ echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>
-    <form action="" method="post">
+    <form action="' . get_curr_url_esc() . '" method="post">
         <span class="bull">&bull; </span>Tên:<br/>
 
         <input type="text" name="name" value="" /><br/>

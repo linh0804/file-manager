@@ -37,7 +37,7 @@ $default_path = $_POST['path_new'] ?? dirname($curr_path);
 
 echo '<div class="list">
     <span class="bull">&bull; </span><span>' . file_print_path($curr_path) . '</span><hr/>
-    <form action="" method="post">
+    <form action="' . get_curr_url_esc() . '" method="post">
         <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
         <input type="text" name="path_new" value="' . htmlspecialchars($default_path, ENT_QUOTES, 'UTF-8') . '"/><br/>
         <input type="submit" name="submit" value="Di chuyển"/>

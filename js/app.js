@@ -25,13 +25,11 @@ $(document).on("submit", "form[data-ajax]", function (event) {
             try {
                 $.notify(res.msg, res.status ? "success" : "error");
                 
-                setTimeout(function() {
-                    if (res.redirect) {
-                        redirect(res.redirect);
-                    } else if (res.reload) {
-                        reload();
-                    }
-                }, 3000);
+                if (res.redirect) {
+                    redirect(res.redirect);
+                } else if (res.reload) {
+                    reload();
+                }
             } catch (error) {
                 $.notify("Lỗi máy chủ (JSON)", "error");
             }

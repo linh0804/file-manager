@@ -6,17 +6,17 @@ require __DIR__ . '/file.php';
 $site_title = 'Tạo mới';
 
 if (isset($_POST['submit'])) {
-    $newDir = $curr_path . '/' . $_POST['name'];
+    $new_dir = $curr_path . '/' . $_POST['name'];
 
     if (empty($_POST['name'])) {
         response_api(['msg' => 'Chưa nhập đầy đủ thông tin']);
-    } else if (file_exists($newDir)) {
+    } else if (file_exists($new_dir)) {
         response_api(['msg' => 'Tên đã tồn tại dạng thư mục hoặc tập tin']);
     } else if (file_name_valid($_POST['name'])) {
         response_api(['msg' => 'Tên không hợp lệ']);
     } else {
         if (intval($_POST['type']) === 0) {
-            if (!@mkdir($newDir)) {
+            if (!@mkdir($new_dir)) {
                 response_api(['msg' => 'Tạo thư mục thất bại']);
             } else {
                 response_api([
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
                 ]);
             }
         } else if (intval($_POST['type']) === 1) {
-            if (@file_put_contents($newDir, '') === false) {
+            if (@file_put_contents($new_dir, '') === false) {
                 response_api(['msg' => 'Tạo tập tin thất bại']);
             } else {
                 response_api([

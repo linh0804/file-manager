@@ -54,7 +54,13 @@
             my_request.abort();
         } catch (error) {}
 
-        my_request = my_ajax("post", { act: "autocomplete_path", path: $input.val().trim() }, function (res) {
+        my_request = my_ajax(
+            "post",
+            "api_autocomplete_path.php",
+            {
+                path: $input.val().trim()
+            },
+            function (res) {
             const items = res.data;
     
             if ($input.data("ui-autocomplete")) {
@@ -102,7 +108,8 @@
             if ($toggle.attr("data-status") === "on") {
                 $input.autocomplete("search", $input.val());
             }
-        });
+            }
+        );
     };
 
     $toggle.on("click", () => {

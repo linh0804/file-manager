@@ -804,6 +804,10 @@ function check_path($path, $type = '')
     exit;
 }
 
+function get_curr_url() {
+    return $_SERVER['REQUEST_URI'];
+}
+
 function get_curr_path()
 {
     $path = request()->has_post('path')

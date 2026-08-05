@@ -137,8 +137,7 @@ require SITE_HEADER;
             messageElement.textContent = "";
             messageElement.style.display = "none";
 
-            my_ajax("post", {
-                act: "text_save",
+            my_ajax("post", "api_text_save.php", {
                 path: editorPath,
                 content: editor.state.doc.toString()
             }, function (data) {
@@ -151,8 +150,7 @@ require SITE_HEADER;
         }
 
         function checkSyntax() {
-            my_ajax("post", {
-                act: "text_syntax",
+            my_ajax("post", "api_text_syntax.php", {
                 path: editorPath,
                 content: editor.state.doc.toString()
             }, function (data) {
@@ -168,8 +166,7 @@ require SITE_HEADER;
                 return;
             }
 
-            my_ajax("post", {
-                act: "text_format",
+            my_ajax("post", "api_text_format.php", {
                 path: editorPath,
                 format: fileExt,
                 content: editor.state.doc.toString()

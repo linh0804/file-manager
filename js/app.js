@@ -1,15 +1,37 @@
+// CORE
+
+function reload() {
+    window.location.reload();
+}
+
 function redirect(url) {
     window.location.href = url;
 }
 
-function my_ajax(method, data, succ) {
+function my_ajax(method, url, data, callback) {
     return $.ajax({
-        url: data.act_link || `api_${data.act}.php`,
+        url: url,
         method: method,
         data: data,
-        success: succ
+        success: callback
     });
 }
+
+// FORM AJAX
+
+$(document).on("submit", "form[data-ajax][data-ajax-url]", function (event) {
+    event.preventDefault();
+    const e = $(this);
+
+    my_ajax(
+        "post",
+        e.data("ajax-url"),
+        e.serialize(),
+        function (res) {
+            $.notify(res.msg, res.status ? "success" : "error");
+        }
+    );
+});
 
 // MODAL
 
@@ -19,12 +41,21 @@ function app_modal(data) {
     $("#app-modal").show();
 }
 
-$(document).on("click", "#app-modal-close", function(event) {
+$(document).on("click", "#app-modal-close", function (event) {
     event.preventDefault();
 
     $("#app-modal").hide();
     $("#app-modal-body").empty();
     $("#app-modal-overlay").hide();
+});
+
+$(document).on("click", "[data-modal][data-modal-url]", function (event) {
+    event.preventDefault();
+    const e = $(this);
+
+    my_ajax("get", e.data("modal-url"), {}, function (res) {
+        app_modal(res);
+    });
 });
 
 // MENU
@@ -45,17 +76,10 @@ document.addEventListener("click", function (e) {
 $(".list-file .btn-calc-size").on("click", function () {
     let e = $(this);
 
-    my_ajax("post", e.data(), function (res) {
+    my_ajax("post", "api_calc.php", {
+        path: e.data("path")
+    }, function (res) {
         e.html(res.data.total_size_readable);
-    });
-});
-
-$(".my-index-modal span").on("click", function() {
-    event.preventDefault();
-    let e = $(this);
-
-    my_ajax("get", { act_link: e.data('modal-url') }, function (res) {
-        app_modal(res);
     });
 });
 

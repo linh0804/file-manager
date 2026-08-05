@@ -787,3 +787,27 @@ table.list-file .active {
 table.list-file tr:hover {
     background-color: #f0f0f0;
 }
+
+#app-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 8;
+    background: rgba(0, 0, 0, 0.3); /* hoặc transparent nếu không muốn tối nền */
+}
+
+#app-modal {
+    position: fixed;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: calc(100dvw - 12px);
+    max-width: calc(768px - 12px);
+    max-height: calc(100dvh - 12px);
+
+    padding: 4px;
+    background: #fff;
+    overflow-y: auto;
+    box-shadow: 0 0 48px rgba(0, 0, 0, 0.6);
+    z-index: 9;
+}

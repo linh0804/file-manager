@@ -50,6 +50,10 @@ echo '<script>edit_recent.render("fm_edit_recent_list");</script>';
 
 echo '</div>
 
+<div id="app-modal-overlay"></div>
+<div id="app-modal"></div>
+<script src="' . asset('js/modal.js') . '"></script>
+
 <script>
     if (!sessionStorage.getItem("fm_cron")) {
         sessionStorage.setItem("fm_cron", "true");

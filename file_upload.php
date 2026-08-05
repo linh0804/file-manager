@@ -2,7 +2,8 @@
 
 use Nightmare\Http\Response;
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 if (isset($_FILES['file'])) {
     $data = [];
@@ -23,7 +24,7 @@ if (isset($_FILES['file'])) {
     response($data);
 }
 
-$action = act_link('file', ['act' => 'upload', 'path' => $curr_path]);
+$action = act_link('file_upload', ['path' => $curr_path]);
 $site_title = 'Tải lên tập tin';
 
 require SITE_HEADER;

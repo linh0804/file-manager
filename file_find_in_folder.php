@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $site_title = 'Tìm trong thư mục';
 $dir = $curr_path;
@@ -155,7 +156,7 @@ if (isset($_POST['submit'])) {
                     echo '<div class="item">';
                     echo '<div class="item-title">';
                     echo '<span class="bull">&bull;</span>
-                        <a style="color: red" href="' . act_link('file', ['act' => 'info', 'path' => $file_path]) . '">'
+                        <a style="color: red" href="' . act_link('file_info', ['path' => $file_path]) . '">'
                         . htmlspecialchars($file_path_sort)
                     . '</a>';
                     echo '</div>';
@@ -206,7 +207,7 @@ if (isset($_POST['submit'])) {
                         echo '<div class="item">';
                         echo '<div class="item-title">';
                         echo '<span class="bull">&bull;</span>
-                            <a style="color: red" target="_blank" href="' . act_link('file', ['act' => 'edit_text', 'path' => (string) $file_path]) . '">'
+                            <a style="color: red" target="_blank" href="' . act_link('file_edit_text', ['path' => (string) $file_path]) . '">'
                                 . htmlspecialchars($file_path_sort)
                             . '</a>';
                         echo '</div>';

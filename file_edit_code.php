@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
@@ -66,7 +67,7 @@ require SITE_HEADER;
             Lưu lại
         </button>
 
-        <a href="<?= act_link('file', ['act' => 'edit_text', 'path' => $curr_path]) ?>">
+        <a href="<?= act_link('file_edit_text', ['path' => $curr_path]) ?>">
             <button type="button" class="button">[Text]</button>
         </a>
 

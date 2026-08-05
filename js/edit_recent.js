@@ -45,7 +45,7 @@ var edit_recent = (function () {
                 var idx = path.lastIndexOf('/');
                 var dir = idx >= 0 ? path.substring(0, idx) : '';
                 var base = idx >= 0 ? path.substring(idx + 1) : path;
-                var link = 'file.php?act=edit_text&path=' + encodeURIComponent(path);
+                var link = 'file_edit_text.php?path=' + encodeURIComponent(path);
                 html += '<div style="font-size:12px;font-style:italic;border-bottom:1px dotted #ddd;padding:4px">'
                     + '<a href="' + link + '">' + escapeHtml(dir) + '/<b>' + escapeHtml(base) + '</b></a></div>';
             }

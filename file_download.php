@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename=' . basename($curr_path));

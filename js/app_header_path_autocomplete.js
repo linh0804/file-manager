@@ -78,7 +78,7 @@
     
                     // for file
                     if (!String(ui.item.value).endsWith("/")) {
-                        window.location.href = "file.php?act=info&path=" + encodeURIComponent(value);
+                        window.location.href = "file_info.php?path=" + encodeURIComponent(value);
                         return;
                     }
     

@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path]) . '">1</a>]
+            . ' [<a href="' . act_link('file_info', ['path' => $full_path]) . '">1</a>]
         </li>';
     }
     if (empty($files1_only)) {
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path]) . '">2</a>]
+            . ' [<a href="' . act_link('file_info', ['path' => $full_path]) . '">2</a>]
         </li>';
     }
     if (empty($files2_only)) {
@@ -177,8 +177,8 @@ if (isset($_POST['submit'])) {
         echo '<li>
             <span class="bull">&bull;</span> '
             . ltrim((string) $file, '/')
-            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path1]) . '">1</a>]'
-            . ' [<a href="' . act_link('file', ['act' => 'info', 'path' => $full_path2]) . '">2</a>]
+            . ' [<a href="' . act_link('file_info', ['path' => $full_path1]) . '">1</a>]'
+            . ' [<a href="' . act_link('file_info', ['path' => $full_path2]) . '">2</a>]
         </li>';
     }
     if (empty($files_intersect_final)) {

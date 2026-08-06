@@ -4,15 +4,16 @@ define('ACCESS', true);
 require __DIR__ . '/file.php';
 
 $site_title = 'Tạo mới';
+$name = (string) ($_POST['name'] ?? '');
 
 if (isset($_POST['submit'])) {
-    $new_dir = $curr_path . '/' . $_POST['name'];
+    $new_dir = $curr_path . '/' . $name;
 
-    if (empty($_POST['name'])) {
+    if (empty($name)) {
         response_api(['msg' => 'Chưa nhập đầy đủ thông tin']);
     } else if (file_exists($new_dir)) {
         response_api(['msg' => 'Tên đã tồn tại dạng thư mục hoặc tập tin']);
-    } else if (file_name_valid($_POST['name'])) {
+    } else if (file_name_valid($name)) {
         response_api(['msg' => 'Tên không hợp lệ']);
     } else {
         if (intval($_POST['type']) === 0) {
@@ -21,7 +22,7 @@ if (isset($_POST['submit'])) {
             } else {
                 response_api([
                     'status' => true,
-                    'msg' => 'Tạo thư mục thành công',
+                    'msg' => 'Tạo thư mục ' . $name . ' thành công',
                     'reload_after_close' => true,
                     'form_reset' => true
                 ]);
@@ -32,7 +33,7 @@ if (isset($_POST['submit'])) {
             } else {
                 response_api([
                     'status' => true,
-                    'msg' => 'Tạo tập tin thành công',
+                    'msg' => 'Tạo tập tin ' . $name . ' thành công',
                     'reload_after_close' => true,
                     'form_reset' => true
                 ]);

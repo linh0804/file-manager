@@ -123,7 +123,7 @@ if ($count <= 0) {
     echo '</div>';
 
     echo '<div id="file-select-opt" class="list">
-        <button class="button" type="button">(<span id="file-select-opt-count">0</span>)</button>
+        <button class="button" type="button"><img src="icon/disconnect.png"/> <b>(<span id="file-select-opt-count">0</span>)</b></button>
 
         <button formaction="' . act_link('multi_copy', ['path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
         <button formaction="' . act_link('multi_move', ['path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>

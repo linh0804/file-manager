@@ -7,24 +7,22 @@ require __DIR__ . '/_init.php';
 $curr_path = get_curr_path();
 $name = basename($curr_path);
 
-$data = [
-    'status' => false,
-    'message' => 'error'
-];
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $data['message'] = 'Phương thức không hợp lệ';
-    response($data);
+    response_api([
+        'msg' => 'Phương thức không hợp lệ'
+    ]);
 }
 
 if (!is_file($curr_path)) {
-    $data['message'] = 'Đường dẫn không tồn tại';
-    response($data);
+    response_api([
+        'msg' => 'Đường dẫn không tồn tại'
+    ]);
 }
 
 if (!file_is_text($name) && !file_is_unknown($name)) {
-    $data['message'] = 'Tập tin này không phải dạng văn bản';
-    response($data);
+    response_api([
+        'msg' => 'Tập tin này không phải dạng văn bản'
+    ]);
 }
 
 $content = (string) ($_POST['content'] ?? '');
@@ -32,10 +30,8 @@ $format_type = strtolower(
     trim((string) ($_POST['format'] ?? file_get_ext($name)))
 );
 
-$data = [
-    'format' => $content,
-    'error' => ''
-];
+$formatted_content = $content;
+$format_error = '';
 
 switch ($format_type) {
     case 'php':
@@ -47,7 +43,7 @@ switch ($format_type) {
         $fixer_file = __DIR__ . '/vendor/bin/php-cs-fixer';
         $temp_file = create_tmp_file('fixer');
 
-        $data['error'] =
+        $format_error =
             'Không thành công! Yêu cầu chạy "composer install"!';
 
         if (
@@ -76,8 +72,8 @@ switch ($format_type) {
                 $formatted = file_get_contents($temp_file);
 
                 if ($formatted !== false) {
-                    $data['format'] = $formatted;
-                    $data['error'] = '';
+                    $formatted_content = $formatted;
+                    $format_error = '';
                 }
             }
         }
@@ -125,10 +121,10 @@ switch ($format_type) {
                 . escapeshellarg($temp_file)
             );
 
-            $data['format'] = $result['out'] !== ''
+            $formatted_content = $result['out'] !== ''
                 ? $result['out']
                 : $content;
-            $data['error'] = $result['err'];
+            $format_error = $result['err'];
 
             @unlink($temp_file);
         }
@@ -136,10 +132,11 @@ switch ($format_type) {
         break;
 
     default:
-        $data['format'] = $content;
-        $data['error'] = '';
-
         break;
 }
 
-response($data);
+response_api([
+    'status' => $format_error === '',
+    'msg' => $format_error,
+    'data' => $formatted_content
+]);

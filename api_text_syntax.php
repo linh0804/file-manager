@@ -4,37 +4,36 @@ define('ACCESS', true);
 require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
-$dir = dirname($curr_path);
 $name = basename($curr_path);
 
-$data = [
-    'status' => false,
-    'message' => 'error'
-];
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $data['message'] = 'Phương thức không hợp lệ';
-    response($data);
+    response_api([
+        'msg' => 'Phương thức không hợp lệ'
+    ]);
 }
 
 if (!is_file($curr_path)) {
-    $data['message'] = 'Đường dẫn không tồn tại';
-    response($data);
+    response_api([
+        'msg' => 'Đường dẫn không tồn tại'
+    ]);
 }
 
 if (file_get_ext($name) !== 'php') {
-    $data['message'] = 'Chỉ hỗ trợ kiểm tra cú pháp PHP';
-    response($data);
+    response_api([
+        'msg' => 'Chỉ hỗ trợ kiểm tra cú pháp PHP'
+    ]);
 }
 
 if (empty($_POST['content'])) {
-    $data['message'] = 'Chưa nhập nội dung';
-    response($data);
+    response_api([
+        'msg' => 'Chưa nhập nội dung'
+    ]);
 }
 
 if (!function_can_use('exec')) {
-    $data['message'] = 'Hệ thống chặn kiểm tra';
-    response($data);
+    response_api([
+        'msg' => 'Hệ thống chặn kiểm tra'
+    ]);
 }
 
 $content = (string) $_POST['content'];
@@ -48,8 +47,9 @@ if (
         @unlink($temp_file);
     }
 
-    $data['message'] = 'Không thể tạo file tạm';
-    response($data);
+    response_api([
+        'msg' => 'Không thể tạo file tạm'
+    ]);
 }
 
 $output = [];
@@ -65,11 +65,15 @@ $exit_code = -1;
 @unlink($temp_file);
 
 if ($exit_code === 0) {
-    $data['status'] = true;
-    $data['message'] = 'Không có lỗi cú pháp';
-} else {
-    $data['message'] = 'Có lỗi cú pháp';
-    $data['error'] = implode(PHP_EOL, $output);
+    response_api([
+        'status' => true,
+        'msg' => 'Không có lỗi cú pháp',
+        'data' => ''
+    ]);
 }
 
-response($data);
+response_api([
+    'status' => false,
+    'msg' => 'Có lỗi cú pháp',
+    'data' => implode(PHP_EOL, $output)
+]);

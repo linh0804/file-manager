@@ -145,11 +145,10 @@ require SITE_HEADER;
                     content: editor.state.doc.toString()
                 },
                 success: function (data) {
-                    $.notify(data.message, "success");
-
-                    if (data.error) {
-                        showMessage(data.error);
-                    }
+                    $.notify(
+                        data.msg,
+                        data.status ? "success" : "error"
+                    );
                 }
             });
         }
@@ -163,8 +162,12 @@ require SITE_HEADER;
                     content: editor.state.doc.toString()
                 },
                 success: function (data) {
-                    $.notify(data.message, "success");
-                    showMessage(data.error || data.message);
+                    $.notify(
+                        data.msg,
+                        data.status ? "success" : "error"
+                    );
+
+                    showMessage(data.status ? data.msg : (data.data || data.msg));
                 }
             });
         }
@@ -185,8 +188,8 @@ require SITE_HEADER;
                     content: editor.state.doc.toString()
                 },
                 success: function (data) {
-                    if (data.error) {
-                        alert(data.error);
+                    if (!data.status) {
+                        $.notify(data.msg, "error");
                         return;
                     }
 
@@ -194,7 +197,7 @@ require SITE_HEADER;
                         changes: {
                             from: 0,
                             to: editor.state.doc.length,
-                            insert: data.format
+                            insert: data.data
                         }
                     });
                 }

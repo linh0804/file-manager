@@ -105,11 +105,10 @@ $can_syntax = $is_execute && $file_ext === 'php';
                 content: editorElement.value
             },
             success: function (data) {
-                $.notify(data.message, "success");
-
-                if (data.error) {
-                    showMessage(data.error);
-                }
+                $.notify(
+                    data.msg,
+                    data.status ? "success" : "error"
+                );
             }
         });
     }
@@ -123,8 +122,12 @@ $can_syntax = $is_execute && $file_ext === 'php';
                 content: editorElement.value
             },
             success: function (data) {
-                $.notify(data.message, "success");
-                showMessage(data.error || data.message);
+                $.notify(
+                    data.msg,
+                    data.status ? "success" : "error"
+                );
+
+                showMessage(data.status ? data.msg : (data.data || data.msg));
             }
         });
     }
@@ -145,12 +148,12 @@ $can_syntax = $is_execute && $file_ext === 'php';
                 content: editorElement.value
             },
             success: function (data) {
-                if (data.error) {
-                    alert(data.error);
+                if (!data.status) {
+                    $.notify(data.msg, "error");
                     return;
                 }
 
-                editorElement.value = data.format;
+                editorElement.value = data.data;
             }
         });
     }

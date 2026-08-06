@@ -8,7 +8,7 @@ require __DIR__ . '/_init.php';
 $curr_path = (string) request()->post('path');
 
 if (!file_exists($curr_path)) {
-    response([
+    response_api([
         'status' => false,
         'msg' => 'file not found'
     ]);
@@ -40,7 +40,7 @@ if (is_file($curr_path)) {
 
 $data['total_size_readable'] = Fs::sizen($data['total_size']);
 
-response([
+response_api([
     'status' => true,
     'data' => $data
 ]);

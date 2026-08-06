@@ -21,7 +21,7 @@ if (substr($curr_path, -1) === '/') {
 }
 
 if (!is_dir($dir) || !is_readable($dir)) {
-    response([
+    response_api([
         'status' => true,
         'data' => []
     ]);
@@ -30,7 +30,7 @@ if (!is_dir($dir) || !is_readable($dir)) {
 $items = @scandir($dir, SCANDIR_SORT_NONE);
 
 if (!is_array($items)) {
-    response([
+    response_api([
         'status' => true,
         'data' => []
     ]);
@@ -59,7 +59,7 @@ foreach ($items as $item) {
 sort($dirs, SORT_NATURAL | SORT_FLAG_CASE);
 sort($files, SORT_NATURAL | SORT_FLAG_CASE);
 
-response([
+response_api([
     'status' => true,
     'data' => array_merge($dirs, $files)
 ]);

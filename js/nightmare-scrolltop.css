@@ -1,6 +1,7 @@
 #nightmare-scrolltop {
     box-sizing: content-box;
     position: fixed;
+    z-index: 888;
     right: 20px;
     bottom: 20px;
     display: flex;

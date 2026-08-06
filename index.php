@@ -122,9 +122,8 @@ if ($count <= 0) {
     echo '</table>';
     echo '</div>';
 
-    echo '<div class="list">';
-
-    echo '<div id="file-select-opt" style="display: block">
+    echo '<div id="file-select-opt" class="list">
+        <button class="button" type="button">(<span id="file-select-opt-count">0</span>)</button>
         <button formaction="' . act_link('multi_copy', ['path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
         <button formaction="' . act_link('multi_move', ['path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
         <button formaction="' . act_link('multi_zip', ['path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
@@ -133,8 +132,8 @@ if ($count <= 0) {
         <button formaction="' . act_link('multi_rename', ['path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
+    echo '<div class="list">';
     echo paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);
-
     echo '</div>';
 }
 ?>
@@ -144,13 +143,21 @@ if ($count <= 0) {
         $(this).addClass("active").siblings().removeClass("active");
     });
 
-    $('#file-select-all').on('change', function () {
-        for (let i = 0; i < document.form.elements.length; ++i) {
-            if (document.form.elements[i].type === "checkbox") {
-                document.form.elements[i].checked = document.form.all.checked === true;
-            }
-        }
+    function updateFileSelectOpt() {
+        var selectedEntries = $('input[name="entries[]"]:checked').length;
+        $('#file-select-opt-count').text(selectedEntries);
+    }
+
+    $('input[name="entries[]"]').on('change', function () {
+        updateFileSelectOpt();
     });
+
+    $('#file-select-all').on('change', function () {
+        $('input[name="entries[]"]').prop('checked', this.checked);
+        updateFileSelectOpt();
+    });
+
+    updateFileSelectOpt();
 </script>
 
 </form>

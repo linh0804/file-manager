@@ -3,6 +3,10 @@
 define('ACCESS', true);
 require __DIR__ . '/multi.php';
 
+$site_title = 'Di chuyển';
+
+///
+
 function multi_move($entrys, $dir, $path)
 {
     foreach ($entrys as $e) {
@@ -24,8 +28,29 @@ function multi_move($entrys, $dir, $path)
     return true;
 }
 
-$site_title = 'Di chuyển';
-$curr_path = process_directory($curr_path);
+///
+
+if (isset($_POST['submit'])) {
+    if (empty($_POST['path_new'])) {
+        response_api(['msg' => 'Chưa nhập đầy đủ thông tin']);
+    } elseif ($curr_path == process_directory($_POST['path_new'])) {
+        response_api(['msg' => 'Đường dẫn mới phải khác đường dẫn hiện tại']);
+    } elseif (!is_dir($_POST['path_new'])) {
+        response_api(['msg' => 'Đường dẫn mới không tồn tại']);
+    } elseif (!multi_move($entries, $curr_path, process_directory($_POST['path_new']))) {
+        response_api(['msg' => 'Di chuyển thất bại']);
+    } else {
+        response_api([
+            'status' => true,
+            'msg' => 'Thành công',
+            'reload' => true
+        ]);
+    }
+    exit;
+}
+
+///
+
 $entry_checkbox = '';
 $entry_html_list = '<ul class="list">';
 
@@ -38,45 +63,20 @@ foreach ($entries as $e) {
 
 $entry_html_list .= '</ul>';
 
-require SITE_HEADER;
-
 echo '<div class="title">' . $site_title . '</div>';
 
-if (isset($_POST['submit']) && isset($_POST['is_action'])) {
-    echo '<div class="notice_failure">';
-
-    if (empty($_POST['path_new'])) {
-        echo 'Chưa nhập đầy đủ thông tin';
-    } elseif ($curr_path == process_directory($_POST['path_new'])) {
-        echo 'Đường dẫn mới phải khác đường dẫn hiện tại';
-    } elseif (!is_dir($_POST['path_new'])) {
-        echo 'Đường dẫn mới không tồn tại';
-    } elseif (!multi_move($entries, $curr_path, process_directory($_POST['path_new']))) {
-        echo 'Di chuyển thất bại';
-    } else {
-        redirect(act_link('index', ['path' => $curr_path]));
-    }
-
-    echo '</div>';
-}
-
 echo $entry_html_list;
+
 echo '<div class="list">
-        <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="' . get_curr_url_esc() . '" method="post">
-            <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
-            <input type="text" name="path_new" value="' . ($_POST['path_new'] ?? $curr_path) . '"/><br/>
-            <input type="hidden" name="is_action" value="1"/>';
+    <span>' . file_print_path($curr_path, true) . '</span><hr/>
+    <form data-ajax action="' . get_curr_url_esc() . '" method="post">
+        <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
+        <input type="text" name="path_new" value="' . ($_POST['path_new'] ?? $curr_path) . '"/><br/>';
 
 echo $entry_checkbox;
 
 echo '<input type="submit" name="submit" value="Di chuyển"/>
-        </form>
-    </div>';
-
-echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . act_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
-    </ul>';
-
-require SITE_FOOTER;
+    <hr>
+    <span style="color: blue">Sẽ ghi đè nếu file tồn tại!<span>
+    </form>
+</div>';

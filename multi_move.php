@@ -70,7 +70,7 @@ echo $entry_html_list;
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>
     <form data-ajax action="' . get_curr_url_esc() . '" method="post">
-        <span class="bull">&bull; </span>Đường dẫn tập tin mới:<br/>
+        <span class="bull">&bull;</span> Đường dẫn tập tin mới:<br/>
         <input type="text" name="path_new" value="' . ($_POST['path_new'] ?? $curr_path) . '"/><br/>';
 
 echo $entry_checkbox;

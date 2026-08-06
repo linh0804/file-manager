@@ -22,7 +22,8 @@ if (isset($_POST['submit'])) {
                 response_api([
                     'status' => true,
                     'msg' => 'Tạo thư mục thành công',
-                    'redirect' => act_link('index', ['path' => $curr_path])
+                    'reload_after_close' => true,
+                    'form_reset' => true
                 ]);
             }
         } else if (intval($_POST['type']) === 1) {
@@ -32,7 +33,8 @@ if (isset($_POST['submit'])) {
                 response_api([
                     'status' => true,
                     'msg' => 'Tạo tập tin thành công',
-                    'redirect' => act_link('index', ['path' => $curr_path])
+                    'reload_after_close' => true,
+                    'form_reset' => true
                 ]);
             }
         } else {

@@ -84,7 +84,7 @@ if (PAGE_SIZE <= 0) {
     $page_list = 1;
 }
 
-echo '<form action="' . get_curr_url_esc() . '" method="post" name="form">';
+echo '<form data-modal action="' . get_curr_url_esc() . '" method="post" name="form">';
 
 if ($count <= 0) {
     echo '<div class="list"><img src="icon/empty.png"/> <span class="empty">Không có thư mục hoặc tập tin</span></div>';
@@ -124,6 +124,7 @@ if ($count <= 0) {
 
     echo '<div id="file-select-opt" class="list">
         <button class="button" type="button">(<span id="file-select-opt-count">0</span>)</button>
+
         <button formaction="' . act_link('multi_copy', ['path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
         <button formaction="' . act_link('multi_move', ['path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
         <button formaction="' . act_link('multi_zip', ['path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
@@ -165,7 +166,7 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a data-modal data-modal-url="<?= act_link('file_create', ['path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a data-modal href="<?= act_link('file_create', ['path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
     <li><a href="<?= act_link('file_upload', ['path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
     <li><a href="<?= act_link('file_import', ['path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
     <li><a href="<?= act_link('file_find_in_folder', ['path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>

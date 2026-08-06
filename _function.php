@@ -122,6 +122,8 @@ function response_api($data)
         'data' => null,
         'redirect' => '',
         'reload' => false,
+        'reload_after_close' => false,
+        'form_reset' => false
     ], $data);
     Http::response($data)->send();
     exit;

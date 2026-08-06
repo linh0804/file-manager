@@ -1,3 +1,5 @@
+let app_modal_reload_after_close = false;
+
 // CORE
 
 function reload() {
@@ -25,6 +27,14 @@ $(document).on("submit", "form[data-ajax]", function (event) {
             try {
                 $.notify(res.msg, res.status ? "success" : "error");
                 
+                if (res.reload_after_close) {
+                    app_modal_reload_after_close = true;
+                }
+                
+                if (res.form_reset) {
+                    e.trigger("reset");
+                }
+                
                 if (res.redirect) {
                     redirect(res.redirect);
                 } else if (res.reload) {
@@ -51,15 +61,19 @@ $(document).on("click", "#app-modal-close", function (event) {
     $("#app-modal").hide();
     $("#app-modal-body").empty();
     $("#app-modal-overlay").hide();
+    
+    if (app_modal_reload_after_close) {
+        reload();
+    }
 });
 
-$(document).on("click", "[data-modal][data-modal-url]", function (event) {
+$(document).on("click", "a[data-modal]", function (event) {
     event.preventDefault();
     const e = $(this);
 
     $.ajax({
         method: "get",
-        url: e.data("modal-url"),
+        url: e.attr("href"),
         data: {},
         success: function (res) {
             app_modal(res);
@@ -67,7 +81,26 @@ $(document).on("click", "[data-modal][data-modal-url]", function (event) {
     });
 });
 
-// MENU
+$(document).on("submit", "form[data-modal]", function (event) {
+    event.preventDefault();
+
+    const form = this;
+    const submitter = event.originalEvent.submitter;
+    const data = new FormData(form, submitter);
+
+    $.ajax({
+        method: submitter?.formMethod || form.method || "post",
+        url: submitter?.formAction || form.action,
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            app_modal(res);
+        }
+    });
+});
+
+// SIDEBAR MENU
 
 function toggle_menu() {
     document.body.classList.toggle("has-menu");

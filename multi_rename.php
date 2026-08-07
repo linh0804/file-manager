@@ -34,6 +34,8 @@ if (isset($_POST['submit'])) {
     if (!is_array($modifier) || count($entries) !== count($modifier)) {
         response_api(['msg' => 'Số lượng tên cũ và tên mới không khớp']);
     }
+    
+    ///
 
     foreach ($entries as $name) {
         $entry_path = $curr_path . '/' . $name;
@@ -51,9 +53,10 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    $modifier_lower = array_map(function ($value) {
-        return strtolower((string) $value);
-    }, $modifier);
+    ///
+
+    $entries_lower = array_map('strtolower', $entries);
+    $modifier_lower = array_map('strtolower', $modifier);
 
     $modifier_unique = array_unique($modifier_lower);
     $modifier_duplicate = array_diff_key($modifier_lower, $modifier_unique);
@@ -75,13 +78,15 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+    
+    ///
 
-    foreach ($modifier as $k => $e) {
-        if (!is_in_array($entries, strtolower((string) $e), true) && file_exists($curr_path . '/' . $e)) {
-            $entry_path = $curr_path . '/' . $entries[$k];
-            $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-
-            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại']);
+    foreach ($modifier as $k => $name) {
+        if (
+            file_exists($curr_path . '/' . $name)
+            && !in_array($modifier_lower[$k], $entries_lower, true)
+        ) {
+            response_api(['msg' => 'Tên mới ' . $name . ' đã tồn tại']);
         }
     }
 

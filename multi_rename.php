@@ -14,23 +14,41 @@ foreach ($entries as $e) {
 $modifier = $entries;
 
 if (isset($_POST['submit'])) {
-    $modifier  = $_POST['modifier'];
+    $modifier = $_POST['modifier'] ?? null;
+
+    if (!is_array($modifier) || count($entries) !== count($modifier)) {
+        response_api(['msg' => 'Số lượng tên cũ và tên mới không khớp']);
+    }
+
     $is_succeed = true;
 
     foreach ($modifier as $k => $e) {
-        $entry_path = $curr_path . '/' . $entries[$k];
-
         if (empty($e)) {
             response_api(['msg' => 'Không được để trống ô nào']);
-        } elseif (file_name_valid($e)) {
+        }
+    }
+
+    foreach ($modifier as $k => $e) {
+        if (file_name_valid($e)) {
+            $entry_path = $curr_path . '/' . $entries[$k];
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
 
             response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' không hợp lệ']);
-        } elseif (count_string_array($modifier, strtolower((string) $e), true) > 1 && $e != $entries[$k]) {
+        }
+    }
+
+    foreach ($modifier as $k => $e) {
+        if (count_string_array($modifier, strtolower((string) $e), true) > 1 && $e != $entries[$k]) {
+            $entry_path = $curr_path . '/' . $entries[$k];
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
 
             response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại ở một khung nhập khác']);
-        } elseif (!is_in_array($entries, strtolower((string) $e), true) && file_exists($curr_path . '/' . $e)) {
+        }
+    }
+
+    foreach ($modifier as $k => $e) {
+        if (!is_in_array($entries, strtolower((string) $e), true) && file_exists($curr_path . '/' . $e)) {
+            $entry_path = $curr_path . '/' . $entries[$k];
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
 
             response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại']);

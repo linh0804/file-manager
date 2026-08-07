@@ -14,26 +14,28 @@ foreach ($entries as $e) {
 $modifier = $entries;
 
 if (isset($_POST['submit'])) {
-    $modifier = $_POST['modifier'] ?? null;
+    $modifier = $_POST['modifier'] ?? [];
+    $is_succeed = true;
 
     if (!is_array($modifier) || count($entries) !== count($modifier)) {
         response_api(['msg' => 'Số lượng tên cũ và tên mới không khớp']);
     }
 
-    $is_succeed = true;
-
-    foreach ($modifier as $k => $e) {
-        if (empty($e)) {
-            response_api(['msg' => 'Không được để trống ô nào']);
+    foreach ($entries as $name) {
+        if (!file_exists($curr_path . '/' . $name)) {
+            response_api(['msg' => 'File gốc ' . $name . ' không tồn tại!']);
         }
     }
 
     foreach ($modifier as $k => $e) {
-        if (file_name_valid($e)) {
-            $entry_path = $curr_path . '/' . $entries[$k];
-            $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
+        $name = $entries[$k];
 
-            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' không hợp lệ']);
+        if (empty($e)) {
+            response_api(['msg' => 'Tên mới của ' . $name . ' trống!']);
+        }
+
+        if (file_name_valid($e)) {
+            response_api(['msg' => 'File gốc ' . $name . ' có tên mới không hợp quy tắc!']);
         }
     }
 

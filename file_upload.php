@@ -52,8 +52,9 @@ echo '</form>';
 ?>
 
 <script>
-  const files = [];
-  let uploading = false;
+  $(function () {
+    const files = [];
+    let uploading = false;
 
   $(document).on('click', '#file-upload #button-choose', function (e) {
     e.preventDefault();
@@ -134,74 +135,75 @@ echo '</form>';
     }
   })
 
-  function upload(file, result) {
-    return new Promise(function (resolve) {
-      console.log(file.name);
+    function upload(file, result) {
+      return new Promise(function (resolve) {
+        console.log(file.name);
 
-      const formData = new FormData();
-      formData.append("file", file)
+        const formData = new FormData();
+        formData.append("file", file)
 
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "<?= $action ?>");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "<?= $action ?>");
 
-      let lastLoaded = 0;
-      let lastTime = performance.now();
+        let lastLoaded = 0;
+        let lastTime = performance.now();
 
-      xhr.upload.onprogress = function (e) {
-        if (e.lengthComputable) {
-          const now = performance.now();
-          const elapsed = (now - lastTime) / 1000;
-          const uploaded = e.loaded - lastLoaded;
-          const speed = elapsed > 0 ? uploaded / elapsed : 0;
-          const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
-          const speedKB = (speed / 1024).toFixed(0);
+        xhr.upload.onprogress = function (e) {
+          if (e.lengthComputable) {
+            const now = performance.now();
+            const elapsed = (now - lastTime) / 1000;
+            const uploaded = e.loaded - lastLoaded;
+            const speed = elapsed > 0 ? uploaded / elapsed : 0;
+            const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
+            const speedKB = (speed / 1024).toFixed(0);
 
-          result.html('<span style="color: orange">[' + percent + '%] (' + speedKB + ' kb/s)</span>')
+            result.html('<span style="color: orange">[' + percent + '%] (' + speedKB + ' kb/s)</span>')
 
-          lastLoaded = e.loaded;
-          lastTime = now;
+            lastLoaded = e.loaded;
+            lastTime = now;
+          }
         }
-      }
 
-      xhr.onload = function () {
-        try {
-          var res = JSON.parse(xhr.responseText)
+        xhr.onload = function () {
+          try {
+            var res = JSON.parse(xhr.responseText)
 
-          if (res.error) {
-            result.html('<span style="color:red">' + res.error + '</span>')
-            alert("Tải lên thất bại: " + file.name)
-          } else if (xhr.status < 200 || xhr.status >= 300) {
+            if (res.error) {
+              result.html('<span style="color:red">' + res.error + '</span>')
+              alert("Tải lên thất bại: " + file.name)
+            } else if (xhr.status < 200 || xhr.status >= 300) {
+              result.html('<span style="color:red">Thất bại!</span>')
+              alert("Tải lên thất bại: " + file.name)
+            } else {
+              result.html('<span style="color:green">OK!</span>')
+            }
+          } catch (e) {
             result.html('<span style="color:red">Thất bại!</span>')
             alert("Tải lên thất bại: " + file.name)
-          } else {
-            result.html('<span style="color:green">OK!</span>')
+            console.log(e)
           }
+        }
+
+        xhr.onerror = function () {
+          result.html('<span style="color:red">Lỗi kết nối!</span>')
+          alert("Tải lên thất bại: " + file.name)
+        }
+
+        xhr.onloadend = function () {
+          resolve();
+        }
+
+        try {
+          xhr.send(formData)
         } catch (e) {
           result.html('<span style="color:red">Thất bại!</span>')
           alert("Tải lên thất bại: " + file.name)
           console.log(e)
+          resolve();
         }
-      }
-
-      xhr.onerror = function () {
-        result.html('<span style="color:red">Lỗi kết nối!</span>')
-        alert("Tải lên thất bại: " + file.name)
-      }
-
-      xhr.onloadend = function () {
-        resolve();
-      }
-
-      try {
-        xhr.send(formData)
-      } catch (e) {
-        result.html('<span style="color:red">Thất bại!</span>')
-        alert("Tải lên thất bại: " + file.name)
-        console.log(e)
-        resolve();
-      }
-    });
-  }
+      });
+    }
+  });
 </script>
 
 <?php require SITE_FOOTER;

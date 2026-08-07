@@ -33,33 +33,35 @@ echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
   <span>' . file_print_path($curr_path, true) . '</span><hr/>
-  <form enctype="multipart/form-data">        
-    <div id="fileList"></div>
+  <form id="file-upload" enctype="multipart/form-data">        
+    <div id="file-list"></div>
     <input id="files" type="file" multiple style="display:none">
  
-    <button id="buttonChoose" class="button"><img src="icon/file.png" alt=""/> Chọn file</button>
-    <button id="buttonReset" class="button"><img src="icon/delete.png" alt=""/> Reset</button>
+    <button id="button-choose" class="button"><img src="icon/file.png" alt=""/> Chọn file</button>
+    <button id="button-reset" class="button"><img src="icon/delete.png" alt=""/> Reset</button>
     <br>
-    <button id="buttonUpload" class="button"><img src="icon/upload.png" alt=""/> Tải lên</button>
+    <button id="button-upload" class="button"><img src="icon/upload.png" alt=""/> Tải lên</button>
   </form>
 </div>';
 
 ?>
 
 <script>
-  const fileList = $('#fileList');
+  const $document = $(document);
   
   const files = [];
   let uploading = false;
 
-  $('#buttonChoose').on('click', function (e) {
+  $document.on('click', '#file-upload #button-choose', function (e) {
     e.preventDefault();
-    $('#files').val('');
-    $('#files').click();
+    const $fileUpload = $(this).closest('#file-upload');
+    $fileUpload.find('#files').val('');
+    $fileUpload.find('#files').click();
   });
 
-  $('#buttonReset').on('click', function (e) {
+  $document.on('click', '#file-upload #button-reset', function (e) {
     e.preventDefault();
+    const $fileUpload = $(this).closest('#file-upload');
     
     if (uploading) {
         alert("Đang upload!")
@@ -67,16 +69,19 @@ echo '<div class="list">
     }
     
     files.length = 0;
-    fileList.empty();
+    $fileUpload.find('#file-list').empty();
   });
 
-  $('#files').on('change', function (e) {
-	fileList.empty();
+  $document.on('change', '#file-upload #files', function (e) {
+    const $fileUpload = $(this).closest('#file-upload');
+    const $fileList = $fileUpload.find('#file-list');
+
+	$fileList.empty();
 	
-	files.push(...Array.from($(this)[0].files))
+	files.push(...Array.from(this.files))
     for (let i = 0; i < files.length; i++) {      
-      fileList.append(`
-        <div class="fileUpload" data-id="${i}">
+      $fileList.append(`
+        <div class="file-upload" data-id="${i}">
           <span class="bull">&gt;&gt; </span>${files[i].name}<br/>
           <div class="result"></div>
           <hr />
@@ -85,8 +90,9 @@ echo '<div class="list">
     }
   });
 
-  $('#buttonUpload').click(async function (e) {
+  $document.on('click', '#file-upload #button-upload', async function (e) {
     e.preventDefault()
+    const $fileUpload = $(this).closest('#file-upload');
 
     if (!files.length) {
       alert('Chưa chọn file!');
@@ -100,14 +106,14 @@ echo '<div class="list">
     
     const uploadItems = [];
     
-    $('.fileUpload').each(function() {
-        let e = $(this);
-        let id = e.data('id');
+    $fileUpload.find('.file-upload').each(function() {
+        let $item = $(this);
+        let id = $item.data('id');
         
         if (files[id]) {
             uploadItems.push({
                 file: files[id],
-                result: e.find('.result')
+                result: $item.find('.result')
             });
         }
     })
@@ -137,10 +143,10 @@ echo '<div class="list">
 
       xhr.upload.onprogress = function (e) {
         if (e.lengthComputable) {
-          let loaded = (e.loaded / 1024).toFixed(2) + " KB"
-          let total = (e.total / 1024).toFixed(2) + " KB"
-          
-          result.html('<span style="color: blue">' + loaded + " / " + total + '</span>')
+          let percent = Math.min(100, Math.round((e.loaded / e.total) * 100))
+          let total = (e.total / (1024 * 1024)).toFixed(2) + " MB"
+
+          result.html('<span style="color: blue">(' + percent + "%) " + total + '</span>')
         }
       }
 

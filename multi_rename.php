@@ -85,25 +85,30 @@ if (isset($_POST['submit'])) {
             response_api(['msg' => 'Tên mới ' . $e . ' đã tồn tại']);
         }
     }
+    
+    ///
 
-    $rand = md5(rand(1000, 99999) . '-' . $curr_path);
-    $rand = substr($rand, 0, strlen($rand) >> 1);
+    $rename_mappings = [];
 
     foreach ($entries as $e) {
         $entry_path = $curr_path . '/' . $e;
+        $rand = create_temp_rand($curr_path);
+        $rename_mappings[] = $rand;
 
-        @rename($entry_path, $entry_path . '-' . $rand);
+        if (!@rename($entry_path, $curr_path . '/' . $rand)) {
+            $is_succeed = false;
+        }
     }
 
     foreach ($entries as $k => $e) {
-        $entry_path = $curr_path . '/' . $e;
+        $entry_path = $curr_path . '/' . $rename_mappings[$k];
 
-        if (!@rename($entry_path . '-' . $rand, $curr_path . '/' . $modifier[$k])) {
+        if (!@rename($entry_path, $curr_path . '/' . $modifier[$k])) {
             $is_succeed = false;
-        } else {
-            $entries[$k] = $modifier[$k];
         }
     }
+    
+    ///
 
     if (!$is_succeed) {
         response_api(['msg' => 'Đổi tên thất bại']);

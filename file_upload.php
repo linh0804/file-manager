@@ -24,14 +24,13 @@ if (isset($_FILES['file'])) {
     response($data);
 }
 
-$action = act_link('file_upload', ['path' => $curr_path]);
 $site_title = 'Tải lên tập tin';
 
 require SITE_HEADER;
 
 echo '<div class="title">' . $site_title . '</div>';
 
-echo '<form id="file-upload" action="' . htmlspecialchars($action, ENT_QUOTES, 'UTF-8') . '" enctype="multipart/form-data">';
+echo '<form id="file-upload" action="' . get_curr_url_esc() . '" enctype="multipart/form-data">';
 
 echo '<div class="list">';
 echo '<span>' . file_print_path($curr_path, true) . '</span>';

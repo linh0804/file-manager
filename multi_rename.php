@@ -4,6 +4,18 @@ define('ACCESS', true);
 require __DIR__ . '/multi.php';
 
 $site_title = 'Đổi tên';
+
+function create_temp_rand($curr_path)
+{
+    do {
+        $rand = uniqid('tmp_', true) . bin2hex(random_bytes(16));
+    } while (file_exists($curr_path . '/' . $rand));
+
+    return $rand;
+}
+
+///
+
 $curr_path = process_directory($curr_path);
 $entry_checkbox = '';
 

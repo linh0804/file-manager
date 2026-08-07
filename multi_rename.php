@@ -13,83 +13,65 @@ foreach ($entries as $e) {
 
 $modifier = $entries;
 
-require SITE_HEADER;
-
-echo '<div class="title">' . $site_title . '</div>';
-
 if (isset($_POST['submit']) && isset($_POST['is_action'])) {
     $modifier  = $_POST['modifier'];
-    $is_failed  = false;
     $is_succeed = true;
 
     foreach ($modifier as $k => $e) {
         $entry_path = $curr_path . '/' . $entries[$k];
 
         if (empty($e)) {
-            $is_failed = true;
-
-            echo '<div class="notice_failure">Không được để trống ô nào</div>';
-            break;
+            response_api(['msg' => 'Không được để trống ô nào']);
         } elseif (file_name_valid($e)) {
-            $is_failed   = true;
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-            $entry_css   = is_dir($entry_path) ? 'folder' : 'file';
 
-            echo '<div class="notice_failure">Tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $entries[$k] . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> không hợp lệ</div>';
-            break;
+            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' không hợp lệ']);
         } elseif (count_string_array($modifier, strtolower((string) $e), true) > 1 && $e != $entries[$k]) {
-            $is_failed   = true;
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-            $entry_css   = is_dir($entry_path) ? 'folder' : 'file';
 
-            echo '<div class="notice_failure">Tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $entries[$k] . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> này đã tồn tại ở một khung nhập khác</div>';
-            break;
+            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại ở một khung nhập khác']);
         } elseif (!is_in_array($entries, strtolower((string) $e), true) && file_exists($curr_path . '/' . $e)) {
-            $is_failed   = true;
             $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-            $entry_css   = is_dir($entry_path) ? 'folder' : 'file';
 
-            echo '<div class="notice_failure">Tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $entries[$k] . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> này đã tồn tại</div>';
-            break;
+            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại']);
         }
     }
 
-    if (!$is_failed) {
-        $is_succeed = true;
-        $rand      = md5(rand(1000, 99999) . '-' . $curr_path);
-        $rand      = substr($rand, 0, strlen($rand) >> 1);
+    $rand = md5(rand(1000, 99999) . '-' . $curr_path);
+    $rand = substr($rand, 0, strlen($rand) >> 1);
 
-        foreach ($entries as $e) {
-            $entry_path = $curr_path . '/' . $e;
+    foreach ($entries as $e) {
+        $entry_path = $curr_path . '/' . $e;
 
-            @rename($entry_path, $entry_path . '-' . $rand);
-        }
+        @rename($entry_path, $entry_path . '-' . $rand);
+    }
 
-        foreach ($entries as $k => $e) {
-            $entry_path  = $curr_path . '/' . $e;
-            $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-            $entry_css   = is_dir($entry_path) ? 'folder' : 'file';
+    foreach ($entries as $k => $e) {
+        $entry_path = $curr_path . '/' . $e;
 
-            if (!@rename($entry_path . '-' . $rand, $curr_path . '/' . $modifier[$k])) {
-                $is_succeed = false;
-
-                echo '<div class="notice_failure">Đổi tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $modifier[$k] . '</strong> thất bại</div>';
-            } else {
-                $entries[$k] = $modifier[$k];
-
-                echo '<div class="notice_succeed">Đổi tên ' . $entry_label . ' <strong class="' . $entry_css . '_name_rename_action">' . $e . '</strong> <strong>=></strong> <strong class="' . $entry_css . '_name_rename_action">' . $modifier[$k] . '</strong> thành công</div>';
-            }
+        if (!@rename($entry_path . '-' . $rand, $curr_path . '/' . $modifier[$k])) {
+            $is_succeed = false;
+        } else {
+            $entries[$k] = $modifier[$k];
         }
     }
 
-    if (!$is_failed && $is_succeed) {
-        redirect(act_link('index', ['path' => $curr_path]));
+    if (!$is_succeed) {
+        response_api(['msg' => 'Đổi tên thất bại']);
     }
+
+    response_api([
+        'status' => true,
+        'msg' => 'Thành công',
+        'reload' => true
+    ]);
 }
+
+echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list break-word">
         <span>' . file_print_path($curr_path, true) . '</span><hr/>
-        <form action="' . get_curr_url_esc() . '" method="post">';
+        <form data-ajax action="' . get_curr_url_esc() . '" method="post">';
 
 for ($i = 0; $i < count($entries); ++$i) {
     $entry_path = $curr_path . '/' . $entries[$i];
@@ -106,10 +88,3 @@ echo $entry_checkbox;
 echo '<input type="submit" name="submit" value="Đổi tên"/>
         </form>
     </div>';
-
-echo '<div class="title">Chức năng</div>
-    <ul class="list">
-        <li><img src="icon/list.png" alt=""/> <a href="' . act_link('index', ['path' => $curr_path]) . '">Danh sách</a></li>
-    </ul>';
-
-require SITE_FOOTER;

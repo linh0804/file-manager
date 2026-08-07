@@ -869,7 +869,7 @@ function file_display_actions($filename)
         echo '<li><img src="icon/zip.png"/> <a href="' . act_link('folder_zip', ['dir' => $dir, 'name' => $name]) . '">Nén zip</a></li>';
     }
 
-    echo '<li><img src="icon/rename.png"/> <a href="' . act_link('file_rename', ['path' => $path]) . '">Đổi tên</a></li>';
+    echo '<li><img src="icon/rename.png"/> <a data-modal href="' . act_link('file_rename', ['path' => $path]) . '">Đổi tên</a></li>';
     echo '<li><img src="icon/copy.png"/> <a href="' . act_link('file_copy', ['path' => $path]) . '">Sao chép</a></li>';
     echo '<li><img src="icon/move.png"/> <a href="' . act_link('file_move', ['path' => $path]) . '">Di chuyển</a></li>';
     echo '<li><img src="icon/access.png"/> <a href="' . act_link('file_chmod', ['path' => $path]) . '">Chmod</a></li>';
@@ -887,6 +887,7 @@ function file_get_display_link($file)
     $file_dir = $file->isDir() ? $file->getPathname() : dirname($file->getPathname());
     $name = $file->getFilename();
     $is_edit = false;
+    $is_rename = false;
 
     $file_icon = file_get_icon_display($path);
 
@@ -908,12 +909,19 @@ function file_get_display_link($file)
             $file_link = act_link('file_unzip', ['path' => $file->getPathname()]);
         } else {
             $file_link = act_link('file_rename', ['path' => $path]);
+            $is_rename = true;
         }
     } else {
         $file_link = act_link('file_rename', ['path' => $path]);
+        $is_rename = true;
     }
 
-    $file_icon = sprintf('<a href="%s">%s</a>', $file_link, $file_icon);
+    $file_icon = sprintf(
+        '<a href="%s"%s>%s</a>',
+        $file_link,
+        $is_rename ? ' data-modal' : '',
+        $file_icon
+    );
 
     if (is_app_file($path)) {
         $name_display = '<span style="color: red !important">' . $name . '</span>';

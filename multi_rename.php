@@ -77,16 +77,12 @@ if (isset($_POST['submit'])) {
                 response_api(['msg' => 'Tên mới ' . $duplicate_name . ' bị trùng']);
             }
         }
-    }
-    
-    ///
 
-    foreach ($modifier as $k => $name) {
         if (
-            file_exists($curr_path . '/' . $name)
+            file_exists($curr_path . '/' . $e)
             && !in_array($modifier_lower[$k], $entries_lower, true)
         ) {
-            response_api(['msg' => 'Tên mới ' . $name . ' đã tồn tại']);
+            response_api(['msg' => 'Tên mới ' . $e . ' đã tồn tại']);
         }
     }
 

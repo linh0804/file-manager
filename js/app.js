@@ -55,7 +55,7 @@ function app_modal(data) {
     $("#app-modal").show();
 }
 
-$(document).on("click", "#app-modal-close", function (event) {
+$(document).on("click", ".app-modal-close-btn", function (event) {
     event.preventDefault();
 
     $("#app-modal").hide();

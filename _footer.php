@@ -52,9 +52,10 @@ echo '</div>
 
 <div id="app-modal-overlay"></div>
 <div id="app-modal">
+    <div class="app-modal-close-btn" style="position: absolute; top: 0; right: 0; z-index: 1000; padding: 6px; color: red; background: #fff">[x]</div>
     <div id="app-modal-body"></div>
     <div style="text-align: right">
-        <button id="app-modal-close" class="button" style="border-color: red; color: red !important">ĐÓNG</button>
+        <button class="button app-modal-close-btn" style="border-color: red; color: red !important">ĐÓNG</button>
     </div>
 </div>
 <script>

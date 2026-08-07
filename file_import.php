@@ -7,52 +7,44 @@ require __DIR__ . '/file.php';
 
 $site_title = 'Tải lên tập tin';
 
-require SITE_HEADER;
+if (isset($_POST['submit'])) {
+    $url = $_POST['url'] ?? '';
+
+    if (!is_string($url) || trim($url) === '') {
+        response_api(['msg' => 'Chưa nhập url nào cả']);
+    }
+
+    $url = trim($url);
+
+    if (!is_url($url)) {
+        response_api(['msg' => 'URL không hợp lệ']);
+    }
+
+    $name = basename($url);
+    $path = $curr_path . '/' . $name;
+
+    if (!file_import($path, $url)) {
+        response_api(['msg' => 'Nhập khẩu tập tin ' . $name . ' thất bại']);
+    }
+
+    response_api([
+        'status' => true,
+        'msg' => $name . ', ' . Fs::sizen(filesize($path)),
+        'reload_after_close' => true,
+        'form_reset' => true
+    ]);
+}
 
 echo '<div class="title">' . $site_title . '</div>';
 
-if (isset($_POST['submit'])) {
-    $is_empty = true;
-
-    foreach ($_POST['url'] as $entry) {
-        if (!empty($entry)) {
-            $is_empty = false;
-            break;
-        }
-    }
-
-    if ($is_empty) {
-        echo '<div class="notice_failure">Chưa nhập url nào cả</div>';
-    } else {
-        for ($i = 0; $i < count($_POST['url']); ++$i) {
-            if (!empty($_POST['url'][$i])) {
-                if (!is_url($_POST['url'][$i])) {
-                    echo '<div class="notice_failure">URL <strong class="url_import">' . $_POST['url'][$i] . '</strong> không hợp lệ</div>';
-                } elseif (file_import($curr_path . '/' . basename((string) $_POST['url'][$i]), $_POST['url'][$i])) {
-                    echo '<div class="notice_succeed">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong>, <span class="file_size_import">' . Fs::sizen(filesize($curr_path . '/' . basename((string) $_POST['url'][$i]))) . '</span> thành công</div>';
-                } else {
-                    echo '<div class="notice_failure">Nhập khẩu tập tin <strong class="file_name_import">' . basename((string) $_POST['url'][$i]) . '</strong> thất bại</div>';
-                }
-            }
-        }
-    }
-}
-
 echo '<div class="list">
     <span>' . file_print_path($curr_path, true) . '</span><hr/>
-    <form action="' . get_curr_url_esc() . '" method="post">
-        <span class="bull">&bull; </span>URL 1:<br/>
-        <input type="text" name="url[]" size="18"/><br/>
+
+    <form data-ajax action="' . get_curr_url_esc() . '" method="post">
         <span class="bull">&bull; </span>URL:<br/>
-        <input type="text" name="url[]" size="18"/><br/>
-        <span class="bull">&bull; </span>URL 3:<br/>
-        <input type="text" name="url[]" size="18"/><br/>
-        <span class="bull">&bull; </span>URL 4:<br/>
-        <input type="text" name="url[]" size="18"/><br/>
-        <span class="bull">&bull; </span>URL 5:<br/>
-        <input type="text" name="url[]" size="18"/><br/>
-        <input type="submit" name="submit" value="Nhập khẩu"/>
+        <input type="text" name="url"><br>
+
+	<input type="submit" name="submit" value="Nhập khẩu"/>
     </form>
 </div>';
 
-require SITE_FOOTER;

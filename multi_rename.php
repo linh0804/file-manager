@@ -90,10 +90,10 @@ if (isset($_POST['submit'])) {
 
     $rename_mappings = [];
 
-    foreach ($entries as $e) {
+    foreach ($entries as $k => $e) {
         $entry_path = $curr_path . '/' . $e;
         $rand = create_temp_rand($curr_path);
-        $rename_mappings[] = $rand;
+        $rename_mappings[$k] = $rand;
 
         if (!@rename($entry_path, $curr_path . '/' . $rand)) {
             $is_succeed = false;

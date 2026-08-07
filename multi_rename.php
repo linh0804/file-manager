@@ -13,7 +13,7 @@ foreach ($entries as $e) {
 
 $modifier = $entries;
 
-if (isset($_POST['submit']) && isset($_POST['is_action'])) {
+if (isset($_POST['submit'])) {
     $modifier  = $_POST['modifier'];
     $is_succeed = true;
 
@@ -80,8 +80,6 @@ for ($i = 0; $i < count($entries); ++$i) {
     echo '<img src="icon/' . (is_dir($entry_path) ? 'folder' : 'file') . '.png" style="margin-bottom: -3px"> ' . $entry_name . '<br>';
     echo '<input type="text" name="modifier[]" value="' . $modifier[$i] . '" size="18"/><hr/>';
 }
-
-echo '<input type="hidden" name="is_action" value="1"/>';
 
 echo $entry_checkbox;
 

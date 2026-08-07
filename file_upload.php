@@ -31,18 +31,23 @@ require SITE_HEADER;
 
 echo '<div class="title">' . $site_title . '</div>';
 
-echo '<div class="list">
-  <span>' . file_print_path($curr_path, true) . '</span><hr/>
-  <form id="file-upload" enctype="multipart/form-data">        
-    <div id="file-list"></div>
-    <input id="files" type="file" multiple style="display:none">
+echo '<form id="file-upload" enctype="multipart/form-data">';
+
+echo '<div class="list">';
+echo '<span>' . file_print_path($curr_path, true) . '</span>';
+echo '</div>';
  
+echo '<div id="file-list"></div>';
+echo '<input id="files" type="file" multiple style="display:none">';
+
+echo '<div class="list">
     <button id="button-choose" class="button"><img src="icon/file.png" alt=""/> Chọn file</button>
     <button id="button-reset" class="button"><img src="icon/delete.png" alt=""/> Reset</button>
     <br>
     <button id="button-upload" class="button"><img src="icon/upload.png" alt=""/> Tải lên</button>
-  </form>
 </div>';
+
+echo '</form>';
 
 ?>
 
@@ -79,10 +84,10 @@ echo '<div class="list">
 	files.push(...Array.from(this.files))
     for (let i = 0; i < files.length; i++) {      
       $fileList.append(`
-        <div class="file-upload" data-id="${i}">
-          <span class="bull">&gt;&gt; </span>${files[i].name} <span style="color: red">(${(files[i].size / (1024 * 1024)).toFixed(2)} MB)</span><br/>
-          <div class="result"></div>
-          <hr />
+        <div class="file-upload list" data-id="${i}" style="font-size: small">
+          <span class="bull"></span> ${files[i].name}<br>
+          <span style="color: #FF00FF">(${(files[i].size / (1024 * 1024)).toFixed(2)} MB)</span>
+          <span class="result"></span>
         </div>
       `);
     }
@@ -149,9 +154,9 @@ echo '<div class="list">
           const uploaded = e.loaded - lastLoaded;
           const speed = elapsed > 0 ? uploaded / elapsed : 0;
           const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
-          const speedKB = (speed / 1024).toFixed(2);
+          const speedKB = (speed / 1024).toFixed(0);
 
-          result.html('<span style="color: blue">' + percent + '% (' + speedKB + ' kb/s)</span>')
+          result.html('<span style="color: orange">[' + percent + '%] (' + speedKB + ' kb/s)</span>')
 
           lastLoaded = e.loaded;
           lastTime = now;

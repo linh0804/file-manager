@@ -67,6 +67,7 @@ define('COMMON_FILE_EXCLUDES', [
 define('SITE_TITLE', 'File Manager');
 define('SITE_HEADER', __DIR__ . '/_header.php');
 define('SITE_FOOTER', __DIR__ . '/_footer.php');
+define('IS_AJAX', request()->is_ajax());
 
 // check cấu hình
 if (

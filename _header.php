@@ -2,6 +2,10 @@
 
 defined('ACCESS') or exit;
 
+if (IS_AJAX) {
+    return;
+}
+
 $site_title = $site_title ?? SITE_TITLE;
 $site_sidebar = '';
 $header_goto_path = get_curr_path();

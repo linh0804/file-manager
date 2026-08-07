@@ -2,6 +2,10 @@
 
 defined('ACCESS') or exit;
 
+if (IS_AJAX) {
+    return;
+}
+
 $curr_path = get_curr_path();
 
 if (IS_LOGIN) {

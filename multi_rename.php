@@ -57,7 +57,6 @@ if (isset($_POST['submit'])) {
 
     $modifier_unique = array_unique($modifier_lower);
     $modifier_duplicate = array_diff_key($modifier_lower, $modifier_unique);
-    $duplicate_names = array_values(array_intersect_key($modifier, $modifier_duplicate));
 
     foreach ($modifier as $k => $e) {
         $name = $entries[$k];
@@ -70,8 +69,10 @@ if (isset($_POST['submit'])) {
             response_api(['msg' => 'File gốc ' . $name . ' có tên mới không hợp quy tắc!']);
         }
 
-        if (count($modifier_lower) !== count($modifier_unique)) {
-            response_api(['msg' => 'Tên mới ' . $duplicate_names[0] . ' bị trùng']);
+        if (!empty($modifier_duplicate)) {
+            foreach ($modifier_duplicate as $duplicate_name) {
+                response_api(['msg' => 'Tên mới ' . $duplicate_name . ' bị trùng']);
+            }
         }
     }
 

@@ -25,6 +25,8 @@ foreach ($entries as $e) {
 
 $modifier = $entries;
 
+///
+
 if (isset($_POST['submit'])) {
     $modifier = $_POST['modifier'] ?? [];
     $is_succeed = true;
@@ -34,8 +36,18 @@ if (isset($_POST['submit'])) {
     }
 
     foreach ($entries as $name) {
-        if (!file_exists($curr_path . '/' . $name)) {
+        $entry_path = $curr_path . '/' . $name;
+
+        if (!file_exists($entry_path)) {
             response_api(['msg' => 'File gốc ' . $name . ' không tồn tại!']);
+        }
+
+        $temp_path = $curr_path . '/' . create_temp_rand($curr_path);
+
+        if (!@rename($entry_path, $temp_path)) {
+            response_api(['msg' => 'File gốc ' . $name . ' không thể đổi tên, hãy kiểm tra lại Owner và Chmod']);
+        } else {
+            rename($temp_path, $entry_path)
         }
     }
 

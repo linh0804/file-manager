@@ -167,7 +167,7 @@ if ($count <= 0) {
 
 <ul class="list">
     <li><a data-modal href="<?= act_link('file_create', ['path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="<?= act_link('file_upload', ['path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a data-modal href="<?= act_link('file_upload', ['path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
     <li><a data-modal href="<?= act_link('file_import', ['path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
     <li><a href="<?= act_link('file_find_in_folder', ['path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="webdav.php/<?= ltrim($curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>

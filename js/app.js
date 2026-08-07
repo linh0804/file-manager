@@ -264,14 +264,17 @@ $(function () {
                 try {
                     const res = JSON.parse(xhr.responseText);
 
-                    if (res.error) {
-                        result.html("<span style=\"color:red\">" + res.error + "</span>");
-                        alert("Tải lên thất bại: " + file.name);
-                    } else if (xhr.status < 200 || xhr.status >= 300) {
-                        result.html("<span style=\"color:red\">Thất bại!</span>");
+                    if (xhr.status < 200 || xhr.status >= 300 || !res.status) {
+                        const msg = res.msg || "Thất bại!";
+
+                        result.html("<span style=\"color:red\">" + msg + "</span>");
                         alert("Tải lên thất bại: " + file.name);
                     } else {
-                        result.html("<span style=\"color:green\">OK!</span>");
+                        if (res.reload_after_close) {
+                            app_modal_reload_after_close = true;
+                        }
+
+                        result.html("<span style=\"color:green\">" + (res.msg || "OK!") + "</span>");
                     }
                 } catch (e) {
                     result.html("<span style=\"color:red\">Thất bại!</span>");

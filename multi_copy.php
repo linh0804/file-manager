@@ -52,6 +52,8 @@ if (isset($_POST['submit'])) {
 
 ///
 
+require SITE_HEADER;
+
 $entry_checkbox = '';
 $entry_html_list = '<ul class="list">';
 
@@ -83,3 +85,5 @@ echo '<input type="submit" name="submit" value="Sao chép"/>
     <span style="color: blue">Sẽ ghi đè nếu file tồn tại!<span>
     </form>
 </div>';
+
+require SITE_FOOTER;

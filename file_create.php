@@ -47,6 +47,8 @@ if (isset($_POST['submit'])) {
 }
 
 
+require SITE_HEADER;
+
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
@@ -70,3 +72,5 @@ echo '<div class="list">
         <input type="hidden" name="submit" value="1" />      
     </form>
 </div>';
+
+require SITE_FOOTER;

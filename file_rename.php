@@ -27,6 +27,8 @@ if (isset($_POST['submit'])) {
     exit;
 }
 
+require SITE_HEADER;
+
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
@@ -39,3 +41,5 @@ echo '<div class="list">
         <input type="submit" name="submit" value="Thay đổi" />
     </form>
 </div>';
+
+require SITE_FOOTER;

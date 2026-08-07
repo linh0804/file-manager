@@ -121,6 +121,8 @@ if (isset($_POST['submit'])) {
     ]);
 }
 
+require SITE_HEADER;
+
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list break-word">
@@ -140,3 +142,5 @@ echo $entry_checkbox;
 echo '<input type="submit" name="submit" value="Đổi tên"/>
         </form>
     </div>';
+
+require SITE_FOOTER;

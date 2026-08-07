@@ -20,6 +20,8 @@ if (isset($_POST['accept'])) {
 
 ///
 
+require SITE_HEADER;
+
 $entry_checkbox = '';
 $entry_html_list = '<ul class="list">';
 foreach ($entries as $e) {
@@ -44,3 +46,5 @@ echo '<div class="list">
         . '<input type="submit" name="accept" value="Đồng ý"/>
     </form>
 </div>';
+
+require SITE_FOOTER;

@@ -35,6 +35,8 @@ if (isset($_POST['submit'])) {
     ]);
 }
 
+require SITE_HEADER;
+
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<div class="list">
@@ -48,3 +50,4 @@ echo '<div class="list">
     </form>
 </div>';
 
+require SITE_FOOTER;

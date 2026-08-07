@@ -27,6 +27,8 @@ if (isset($_FILES['file'])) {
 
 $site_title = 'Tải lên tập tin';
 
+require SITE_HEADER;
+
 echo '<div class="title">' . $site_title . '</div>';
 
 echo '<form id="file-upload" action="' . get_curr_url_esc() . '" method="post" enctype="multipart/form-data">';
@@ -46,3 +48,5 @@ echo '<div class="list">
 </div>';
 
 echo '</form>';
+
+require SITE_FOOTER;

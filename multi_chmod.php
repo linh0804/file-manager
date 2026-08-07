@@ -53,6 +53,8 @@ if (isset($_POST['submit'])) {
 
 ///
 
+require SITE_HEADER;
+
 $entry_checkbox = '';
 $entry_html_list = '<ul class="list">';
 
@@ -81,3 +83,5 @@ echo $entry_checkbox;
 echo '<input type="submit" name="submit" value="Chmod"/>
     </form>
 </div>';
+
+require SITE_FOOTER;

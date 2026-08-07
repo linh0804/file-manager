@@ -821,3 +821,19 @@ table.list-file tr:hover {
     box-shadow: 0 0 48px rgba(0, 0, 0, 0.6);
     z-index: 900;
 }
+
+#app-modal .app-modal-close-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 0;
+}
+
+#app-modal .app-modal-close-sticky .app-modal-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 6px;
+    color: red;
+    background: #fff;
+}

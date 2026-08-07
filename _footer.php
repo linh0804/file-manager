@@ -56,7 +56,9 @@ echo '</div>
 
 <div id="app-modal-overlay"></div>
 <div id="app-modal">
-    <div class="app-modal-close-btn" style="position: absolute; top: 0; right: 0; z-index: 1000; padding: 6px; color: red; background: #fff">[x]</div>
+    <div class="app-modal-close-sticky">
+        <div class="app-modal-close-btn">[x]</div>
+    </div>
     <div id="app-modal-body"></div>
     <div style="text-align: right">
         <button class="button app-modal-close-btn" style="border-color: red; color: red !important">ĐÓNG</button>

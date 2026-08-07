@@ -47,19 +47,17 @@ echo '<div class="list">
 ?>
 
 <script>
-  const $document = $(document);
-  
   const files = [];
   let uploading = false;
 
-  $document.on('click', '#file-upload #button-choose', function (e) {
+  $(document).on('click', '#file-upload #button-choose', function (e) {
     e.preventDefault();
     const $fileUpload = $(this).closest('#file-upload');
     $fileUpload.find('#files').val('');
     $fileUpload.find('#files').click();
   });
 
-  $document.on('click', '#file-upload #button-reset', function (e) {
+  $(document).on('click', '#file-upload #button-reset', function (e) {
     e.preventDefault();
     const $fileUpload = $(this).closest('#file-upload');
     
@@ -72,7 +70,7 @@ echo '<div class="list">
     $fileUpload.find('#file-list').empty();
   });
 
-  $document.on('change', '#file-upload #files', function (e) {
+  $(document).on('change', '#file-upload #files', function (e) {
     const $fileUpload = $(this).closest('#file-upload');
     const $fileList = $fileUpload.find('#file-list');
 
@@ -82,7 +80,7 @@ echo '<div class="list">
     for (let i = 0; i < files.length; i++) {      
       $fileList.append(`
         <div class="file-upload" data-id="${i}">
-          <span class="bull">&gt;&gt; </span>${files[i].name}<br/>
+          <span class="bull">&gt;&gt; </span>${files[i].name} <span style="color: red">(${(files[i].size / (1024 * 1024)).toFixed(2)} MB)</span><br/>
           <div class="result"></div>
           <hr />
         </div>
@@ -90,7 +88,7 @@ echo '<div class="list">
     }
   });
 
-  $document.on('click', '#file-upload #button-upload', async function (e) {
+  $(document).on('click', '#file-upload #button-upload', async function (e) {
     e.preventDefault()
     const $fileUpload = $(this).closest('#file-upload');
 
@@ -141,12 +139,22 @@ echo '<div class="list">
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "<?= $action ?>");
 
+      let lastLoaded = 0;
+      let lastTime = performance.now();
+
       xhr.upload.onprogress = function (e) {
         if (e.lengthComputable) {
-          let percent = Math.min(100, Math.round((e.loaded / e.total) * 100))
-          let total = (e.total / (1024 * 1024)).toFixed(2) + " MB"
+          const now = performance.now();
+          const elapsed = (now - lastTime) / 1000;
+          const uploaded = e.loaded - lastLoaded;
+          const speed = elapsed > 0 ? uploaded / elapsed : 0;
+          const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
+          const speedKB = (speed / 1024).toFixed(2);
 
-          result.html('<span style="color: blue">(' + percent + "%) " + total + '</span>')
+          result.html('<span style="color: blue">' + percent + '% (' + speedKB + ' kb/s)</span>')
+
+          lastLoaded = e.loaded;
+          lastTime = now;
         }
       }
 

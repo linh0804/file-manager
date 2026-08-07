@@ -47,9 +47,17 @@ if (isset($_POST['submit'])) {
         if (!@rename($entry_path, $temp_path)) {
             response_api(['msg' => 'File gốc ' . $name . ' không thể đổi tên, hãy kiểm tra lại Owner và Chmod']);
         } else {
-            rename($temp_path, $entry_path)
+            rename($temp_path, $entry_path);
         }
     }
+
+    $modifier_lower = array_map(function ($value) {
+        return strtolower((string) $value);
+    }, $modifier);
+
+    $modifier_unique = array_unique($modifier_lower);
+    $modifier_duplicate = array_diff_key($modifier_lower, $modifier_unique);
+    $duplicate_names = array_values(array_intersect_key($modifier, $modifier_duplicate));
 
     foreach ($modifier as $k => $e) {
         $name = $entries[$k];
@@ -61,14 +69,9 @@ if (isset($_POST['submit'])) {
         if (file_name_valid($e)) {
             response_api(['msg' => 'File gốc ' . $name . ' có tên mới không hợp quy tắc!']);
         }
-    }
 
-    foreach ($modifier as $k => $e) {
-        if (count_string_array($modifier, strtolower((string) $e), true) > 1 && $e != $entries[$k]) {
-            $entry_path = $curr_path . '/' . $entries[$k];
-            $entry_label = is_dir($entry_path) ? 'thư mục' : 'tập tin';
-
-            response_api(['msg' => 'Tên ' . $entry_label . ' ' . $entries[$k] . ' => ' . $e . ' này đã tồn tại ở một khung nhập khác']);
+        if (count($modifier_lower) !== count($modifier_unique)) {
+            response_api(['msg' => 'Tên mới ' . $duplicate_names[0] . ' bị trùng']);
         }
     }
 

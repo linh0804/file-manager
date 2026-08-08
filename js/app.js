@@ -1,4 +1,5 @@
 let app_modal_reload_after_close = false;
+let app_modal_opened = false;
 
 // CORE
 
@@ -49,7 +50,26 @@ $(document).on("submit", "form[data-ajax]", function (event) {
 
 // MODAL
 
+function app_modal_close() {
+    app_modal_opened = false;
+
+    $("#app-modal").hide();
+    $("#app-modal-body").empty();
+    $("#app-modal-overlay").hide();
+
+    if (app_modal_reload_after_close) {
+        app_modal_reload_after_close = false;
+        reload();
+    }
+}
+
 function app_modal(data) {
+    if (!app_modal_opened) {
+        window.history.pushState(null, "", window.location.href);
+    }
+
+    app_modal_opened = true;
+
     $("#app-modal-overlay").show();
     $("#app-modal-body").empty().html(data);
     $("#app-modal").show();
@@ -57,13 +77,12 @@ function app_modal(data) {
 
 $(document).on("click", ".app-modal-close-btn", function (event) {
     event.preventDefault();
+    app_modal_close();
+});
 
-    $("#app-modal").hide();
-    $("#app-modal-body").empty();
-    $("#app-modal-overlay").hide();
-    
-    if (app_modal_reload_after_close) {
-        reload();
+window.addEventListener("popstate", function () {
+    if (app_modal_opened) {
+        app_modal_close();
     }
 });
 

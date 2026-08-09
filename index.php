@@ -109,8 +109,8 @@ if ($count <= 0) {
             echo '<td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>';
         }
 
-        echo '<td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>';
         echo '<td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>';
+        echo '<td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>';
         echo '</tr>';
     }
     

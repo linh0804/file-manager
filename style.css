@@ -142,10 +142,9 @@ div#app-header > ul li {
     vertical-align: middle;
 }
 
-div#app-header > img {
-    vertical-align: middle;
-    margin-left: 5px;
-    margin-right: 5px;
+div#app-header img {
+    vertical-align: baseline;
+    padding: 2px;
 }
 
 div#app-body {

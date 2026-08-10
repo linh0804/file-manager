@@ -19,6 +19,7 @@ if (IS_LOGIN) {
         <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('command', ['path' => $curr_path]) . '">Chạy lệnh</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('composer', ['path' => $curr_path]) . '">Chạy lệnh Composer</a></li>
         <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('file_fix_perms', ['path' => $curr_path]) . '">Fix chown/chmod</a></li>
+        <li><img src="icon/mime/unknown.png"/> <a href="' . act_link('search_error_log', ['path' => $curr_path]) . '">Tìm <span style="color: red; font-weight: bold">error_log</span></a></li>
         <li><img src="icon/mime/php.png"/> <a href="' . act_link('phpinfo') . '">phpinfo()</a></li>
     </ul>';
     

@@ -18,6 +18,16 @@ function request(): Request
     return $instance;
 }
 
+function response_api($data)
+{
+    $data = array_merge([
+        'status' => false,
+        'msg' => 'Lỗi máy chủ',
+        'data' => null
+    ], $data);
+    Http::response($data)->send();
+    exit;
+}
 
 
 // ========

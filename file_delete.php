@@ -2,7 +2,8 @@
 
 use Nightmare\Fs;
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $error = '';
 $site_title = 'Xoá ' . basename($curr_path);

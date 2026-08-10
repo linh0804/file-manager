@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
@@ -38,8 +39,7 @@ $can_syntax = $is_execute && $file_ext === 'php';
             Lưu lại
         </button>
 
-        <a href="<?= act_link('file', [
-            'act' => 'edit_code',
+        <a href="<?= act_link('file_edit_code', [
             'path' => $curr_path
         ]) ?>">
             <button type="button" class="button">[Code]</button>

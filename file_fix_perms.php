@@ -1,10 +1,7 @@
 <?php
 
 define('ACCESS', true);
-
-require __DIR__ . '/_init.php';
-
-$curr_path = get_curr_path();
+require __DIR__ . '/file.php';
 $folder = (string) request()->post('folder', $curr_path);
 $own = (string) request()->post('own', get_current_user());
 $folder_mode = (string) request()->post('folder_mode', 755);

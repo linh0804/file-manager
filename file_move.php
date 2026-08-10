@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $site_title = 'Di chuyển tập tin';
 

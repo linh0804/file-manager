@@ -1,7 +1,8 @@
 <?php
 
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
@@ -72,14 +73,14 @@ if (!is_file(process_directory($curr_path))) {
             <div id="line_number_' . $line_number . '">' . htmlspecialchars($line) . '</div>
             <div>
                 <span id="line_number">[<span>' . ($line_number + 1) . '</span>]</span>
-                <a href="' . act_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Sửa</a>
+                <a href="' . act_link('file_edit_text_line_number', ['path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Sửa</a>
                 <span> | </span>
-                <a href="' . act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Xóa</a>
+                <a href="' . act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $line_number, 'page' => $page > 1 ? $page : null]) . '">Xóa</a>
             </div>
         </div>';
     }
 
-    echo paging('file', 'page', ['act' => 'edit_text_line', 'path' => $curr_path], $page, $count, PAGE_SIZE);
+    echo paging('file_edit_text_line', 'page', ['path' => $curr_path], $page, $count, PAGE_SIZE);
 
     echo '</div>
     <div class="tips">

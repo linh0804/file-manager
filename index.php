@@ -23,7 +23,7 @@ if (!isset($_GET['path'])) {
 check_path($curr_path);
 
 if (is_file($curr_path)) {
-    redirect(act_link('file', ['act' => 'info', 'path' => $curr_path]));
+    redirect(act_link('file_info', ['path' => $curr_path]));
 }
 
 require SITE_HEADER;
@@ -109,7 +109,7 @@ if ($count <= 0) {
             echo '<td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>';
         }
 
-        echo '<td><a href="' . act_link('file', ['act' => 'chmod', 'path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>';
+        echo '<td><a href="' . act_link('file_chmod', ['path' => $file->getPathname()]) . '" class="chmod">' . $perms . '</a></td>';
         echo '<td class="chmod">' . Fs::get_owner_name_by_id($file->getOwner()) . '</td>';
         echo '</tr>';
     }
@@ -158,12 +158,12 @@ if ($count <= 0) {
 <div class="title">Chức năng</div>
 
 <ul class="list">
-    <li><a href="<?= act_link('file', ['act' => 'create', 'path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
-    <li><a href="<?= act_link('file', ['act' => 'upload', 'path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
-    <li><a href="<?= act_link('file', ['act' => 'import', 'path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
-    <li><a href="<?= act_link('file', ['act' => 'find_in_folder', 'path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
+    <li><a href="<?= act_link('file_create', ['path' => $curr_path]) ?>"><img src="icon/create.png"/> Tạo mới</a></li>
+    <li><a href="<?= act_link('file_upload', ['path' => $curr_path]) ?>"><img src="icon/upload.png"/> Tải lên</a></li>
+    <li><a href="<?= act_link('file_import', ['path' => $curr_path]) ?>"><img src="icon/import.png"/> Nhập khẩu</a></li>
+    <li><a href="<?= act_link('file_find_in_folder', ['path' => $curr_path]) ?>"><img src="icon/search.png"/> Tìm trong thư mục</a></li>
     <li><a href="webdav.php/<?= ltrim($curr_path, '/') ?>"><img src="icon/rows.png"/> Webdav</a></li>
-    <li><a href="<?= act_link('file', ['act' => 'info', 'path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
+    <li><a href="<?= act_link('file_info', ['path' => $curr_path]) ?>"><img src="icon/info.png"/> Thông tin</a></li>
 </ul>
 
 <?php require SITE_FOOTER ?>

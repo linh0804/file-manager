@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $dir = dirname($curr_path);
 $name = basename($curr_path);
@@ -86,7 +87,7 @@ if (!is_file(process_directory($curr_path))) {
             $notice = '<div class="notice_succeed">Xóa thành công</div>';
 
             if (isset($_POST['delete'])) {
-                redirect(act_link('file', ['act' => 'edit_text_line', 'path' => $curr_path, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
+                redirect(act_link('file_edit_text_line', ['path' => $curr_path, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_number_' . ($line > $count - 2 ? $count - 2 : $line));
             }
         } else {
             $notice = '<div class="notice_failure">Xóa thất bại</div>';
@@ -107,11 +108,11 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     if ($line < 0) {
-        redirect(act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => 0, 'page' => $page['current'] > 1 ? $page['current'] : null]));
+        redirect(act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => 0, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     if ($line > $count - 1) {
-        redirect(act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $count - 1, 'page' => $page['current'] > 1 ? $page['current'] : null]));
+        redirect(act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $count - 1, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     $page['current'] = $line + 1 > PAGE_SIZE ? ceil(($line + 1) / PAGE_SIZE) : 1;
@@ -122,13 +123,13 @@ if (!is_file(process_directory($curr_path))) {
     }
 
     if ($isGO) {
-        redirect(act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]));
+        redirect(act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]));
     }
 
     $url = array('action' => null, 'prev' => null, 'next' => null);
-    $url['action'] = act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_label';
-    $url['prev'] = $line > 0 ? '<a href="' . act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line - 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil($line / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_left.png"/></a>' : '<img src="icon/arrow_left.png"/>';
-    $url['next'] = $line < $count - 1 ? '<a href="' . act_link('file', ['act' => 'edit_text_line_delete', 'path' => $curr_path, 'line' => $line + 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil(($line + 2) / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_right.png"/></a>' : '<img src="icon/arrow_right.png"/>';
+    $url['action'] = act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '#line_label';
+    $url['prev'] = $line > 0 ? '<a href="' . act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $line - 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil($line / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_left.png"/></a>' : '<img src="icon/arrow_left.png"/>';
+    $url['next'] = $line < $count - 1 ? '<a href="' . act_link('file_edit_text_line_delete', ['path' => $curr_path, 'line' => $line + 1, 'page' => PAGE_SIZE > 0 && $line <= PAGE_SIZE ? null : ceil(($line + 2) / PAGE_SIZE)]) . '#line_label"><img src="icon/arrow_right.png"/></a>' : '<img src="icon/arrow_right.png"/>';
 
     echo $notice;
     echo '<div class="list">
@@ -144,7 +145,7 @@ if (!is_file(process_directory($curr_path))) {
             <form action="' . $url['action'] . '" method="post">
                 <input type="submit" name="continue" value="Tiếp tục"/>
                 <input type="submit" name="delete" value="Xóa"/>
-                <a href="' . act_link('file', ['act' => 'edit_text_line_number', 'path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '" id="href_line_edit">Sửa</a>
+                <a href="' . act_link('file_edit_text_line_number', ['path' => $curr_path, 'line' => $line, 'page' => $page['current'] > 1 ? $page['current'] : null]) . '" id="href_line_edit">Sửa</a>
             </form>
         </div><hr/>
         <form action="' . $url['action'] . '" method="post">

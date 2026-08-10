@@ -2,7 +2,8 @@
 
 use Nightmare\Fs;
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $file_name = basename($curr_path);
 $site_title = 'Thông tin: ' . basename($curr_path);
@@ -24,7 +25,7 @@ if (is_file($curr_path)) {
         $pixel = getimagesize($curr_path);
         $is_image = true;
 
-        echo '<li><center><img src="' . act_link('file', ['act' => 'download_image', 'path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
+        echo '<li><center><img src="' . act_link('file_download_image', ['path' => $curr_path]) . '" width="' . ($pixel[0] > 200 ? 200 : $pixel[0]) . 'px"/></center><br/></li>';
     }
 
     echo '<li><span class="bull">&bull; </span><strong>Kích thước</strong>: <span>' . Fs::sizen(filesize($curr_path)) . '</span></li>';

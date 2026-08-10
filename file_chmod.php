@@ -1,6 +1,7 @@
 <?php
 
-defined('ACCESS') or exit;
+define('ACCESS', true);
+require __DIR__ . '/file.php';
 
 $site_title = 'Chmod tập tin';
 $mode = request()->post('mode', file_get_chmod($curr_path));

@@ -42,7 +42,6 @@ if (IS_LOGIN) {
     <link rel="stylesheet" type="text/css" href="<?= asset('style.css') ?>" media="all,handheld" />
     <link rel="stylesheet" type="text/css" href="<?= asset('js/nightmare-scrolltop.css') ?>" media="all,handheld" />
 
-    <script>const APP_NAME = '<?= APP_NAME ?>';</script>
     <script>
         $(document).on("ajaxStart", function() {
             NProgress.start();
@@ -57,7 +56,6 @@ if (IS_LOGIN) {
 
     <script src="<?= asset('js/app.js') ?>" defer></script>
     <script src="<?= asset('js/nightmare-scrolltop.js') ?>"></script>
-    <script src="<?= asset('js/edit_recent.js') ?>"></script>
 </head>
 
 <body>

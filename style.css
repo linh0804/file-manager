@@ -593,17 +593,6 @@ div.list div.input_action input {
     overflow-y: scroll;
 }
 
-#fm_edit_recent_list {
-    direction: rtl;
-    overflow-x: auto;
-}
-
-#fm_edit_recent_list > div {
-    direction: ltr;
-    white-space: nowrap;
-    width: max-content;
-}
-
 body.has-menu {
     height:100vh;
     overflow-y:hidden!important

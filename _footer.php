@@ -22,11 +22,6 @@ if (IS_LOGIN) {
         <li><img src="icon/mime/php.png"/> <a href="' . act_link('phpinfo') . '">phpinfo()</a></li>
     </ul>';
     
-    // filelist
-    $site_sidebar .= '<div class="title">Sửa gần đây</div>';
-    $site_sidebar .= '<div class="list" id="fm_edit_recent_list"></div>';
-    // end filelist
-
     $site_sidebar .= '<div class="list" style="font-size: small; font-style: italic">
         run on: ' . get_current_user() . ' (' . getmyuid() . ')
     </div>';
@@ -45,8 +40,6 @@ echo '<script>nightmare_scrolltop.init();</script>';
 
 echo '<div id="menu-overlay"></div>
     <div id="box-overlay"></div>';
-
-echo '<script>edit_recent.render("fm_edit_recent_list");</script>';
 
 echo '</div>
 

@@ -125,12 +125,12 @@ if ($count <= 0) {
     echo '<div class="list">';
 
     echo '<div id="file-select-opt" style="display: block">
-        <button formaction="' . act_link('multi', ['act' => 'copy', 'path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
-        <button formaction="' . act_link('multi', ['act' => 'move', 'path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
-        <button formaction="' . act_link('multi', ['act' => 'zip', 'path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
-        <button formaction="' . act_link('multi', ['act' => 'delete', 'path' => $curr_path]) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
-        <button formaction="' . act_link('multi', ['act' => 'chmod', 'path' => $curr_path]) . '" class="button"><img src="icon/access.png"/> Chmod</button>
-        <button formaction="' . act_link('multi', ['act' => 'rename', 'path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
+        <button formaction="' . act_link('multi_copy', ['path' => $curr_path]) . '" class="button"><img src="icon/copy.png"/> Sao chép</button>
+        <button formaction="' . act_link('multi_move', ['path' => $curr_path]) . '" class="button"><img src="icon/move.png"/> Di chuyển</button>
+        <button formaction="' . act_link('multi_zip', ['path' => $curr_path]) . '" class="button"><img src="icon/zip.png"/> Zip</button>
+        <button formaction="' . act_link('multi_delete', ['path' => $curr_path]) . '" class="button"><img src="icon/delete.png"/> Xoá</button>
+        <button formaction="' . act_link('multi_chmod', ['path' => $curr_path]) . '" class="button"><img src="icon/access.png"/> Chmod</button>
+        <button formaction="' . act_link('multi_rename', ['path' => $curr_path]) . '" class="button"><img src="icon/rename.png"/> Đổi tên</button>
     </div>';
 
     echo paging('index', 'page_list', ['path' => $curr_path], $page_list, $count, PAGE_SIZE);

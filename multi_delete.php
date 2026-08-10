@@ -1,5 +1,8 @@
 <?php
 
+define('ACCESS', true);
+require __DIR__ . '/multi.php';
+
 $site_title = 'Xóa';
 $curr_path = process_directory($curr_path);
 $entry_checkbox = '';

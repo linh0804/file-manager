@@ -1,4 +1,41 @@
-// copy
+function redirect(url) {
+    window.location.href = url;
+}
+
+function reload() {
+    window.location.reload();
+}
+
+// SIDEBAR MENU
+
+function toggle_menu() {
+    document.body.classList.toggle("has-menu");
+}
+
+document.addEventListener("click", function (e) {
+    var target_id = e.target.id;
+    if (target_id === "nav-menu" || target_id === "menu-overlay" || (document.body.classList.contains("has-menu") && e.target.closest(".menu-toggle a:not(.no-pusher)"))) {
+        document.body.classList.toggle("has-menu");
+    }
+});
+
+// INDEX
+
+$(".list-file .btn-calc-size").on("click", function () {
+    let e = $(this);
+
+    $.ajax({
+        url: "api_calc.php",
+        method: "post",
+        data: {
+            path: e.data("path")
+        },
+        success: function (res) {
+            e.html(res.data.total_size_readable);
+        }
+    });
+});
+
 $(".copy-button").click(function (e) {
     e.preventDefault();
 
@@ -12,37 +49,4 @@ $(".copy-button").click(function (e) {
         .catch(function (err) {
             alert("Lỗi: ", err);
         });
-});
-
-// menu
-function toggle_menu() {
-    document.body.classList.toggle("has-menu");
-}
-
-document.addEventListener("click", function (e) {
-    var target_id = e.target.id;
-    if (target_id === "nav-menu" || target_id === "menu-overlay" || (document.body.classList.contains("has-menu") && e.target.closest(".menu-toggle a:not(.no-pusher)"))) {
-        document.body.classList.toggle("has-menu");
-    }
-});
-
-function redirect(url) {
-    window.location.href = url;
-}
-
-function fm_ajax(data, success) {
-    return $.ajax({
-        url: `api_${data.act}.php`,
-        method: "post",
-        data: data,
-        success: success
-    });
-}
-
-$(".list-file .btn-calc-size").on("click", function () {
-    let e = $(this);
-
-    fm_ajax(e.data(), function (res) {
-        e.html(res.data.total_size_readable);
-    });
 });

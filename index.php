@@ -103,7 +103,7 @@ if ($count <= 0) {
         
         if ($file->isDir()) {
             echo '<td class="name"><b>' . file_get_display_link($file) . '</b></td>';
-            echo '<td><span data-act="calc" data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>';
+            echo '<td><span data-path="' . $file->getPathname() . '" class="btn-calc-size size">[...]</span></td>';
         } else {
             echo '<td class="name">' . file_get_display_link($file) . '</td>';
             echo '<td><span class="size">' . Fs::sizen($file->getSize()) . '</span></td>';

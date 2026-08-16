@@ -97,27 +97,35 @@ $can_syntax = $is_execute && $file_ext === 'php';
         messageElement.textContent = "";
         messageElement.style.display = "none";
 
-        fm_ajax({
-            act: "text_save",
-            path: editorPath,
-            content: editorElement.value
-        }, function (data) {
-            alert(data.message);
+        $.ajax({
+            url: "api_text_save.php",
+            method: "post",
+            data: {
+                path: editorPath,
+                content: editorElement.value
+            },
+            success: function (data) {
+                alert(data.message);
 
-            if (data.error) {
-                showMessage(data.error);
+                if (data.error) {
+                    showMessage(data.error);
+                }
             }
         });
     }
 
     function checkSyntax() {
-        fm_ajax({
-            act: "text_syntax",
-            path: editorPath,
-            content: editorElement.value
-        }, function (data) {
-            alert(data.message);
-            showMessage(data.error || data.message);
+        $.ajax({
+            url: "api_text_syntax.php",
+            method: "post",
+            data: {
+                path: editorPath,
+                content: editorElement.value
+            },
+            success: function (data) {
+                alert(data.message);
+                showMessage(data.error || data.message);
+            }
         });
     }
 
@@ -128,18 +136,22 @@ $can_syntax = $is_execute && $file_ext === 'php';
             return;
         }
 
-        fm_ajax({
-            act: "text_format",
-            path: editorPath,
-            format: <?= json_encode($file_ext) ?>,
-            content: editorElement.value
-        }, function (data) {
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
+        $.ajax({
+            url: "api_text_format.php",
+            method: "post",
+            data: {
+                path: editorPath,
+                format: <?= json_encode($file_ext) ?>,
+                content: editorElement.value
+            },
+            success: function (data) {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
 
-            editorElement.value = data.format;
+                editorElement.value = data.format;
+            }
         });
     }
 

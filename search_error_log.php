@@ -22,7 +22,7 @@ if (!empty($_POST)) {
     foreach ($iterator as $file) {
         if ($file->isFile() && $file->getFilename() === $error_log) {
             echo '<li>'
-                . '<a href="#">' . $file->getPathname() . '</a>'
+                . '<a target="_blank" href="' . act_link('file_edit_text', ['path' => $file->getPathname()]) . '">' . $file->getPathname() . '</a>'
                 . ' (' . Fs::sizen($file->getSize()) . ')'
             . '</li>';
         }

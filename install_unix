@@ -4,6 +4,7 @@ set -e
 INSTALL_DIR="/root/.local/share/file-manager-php"
 TEMP_ZIP="$INSTALL_DIR/file-manager.zip"
 PORT="12089"
+WEBSERVER_VERSION='v1.12.7'
 
 apt update -qq
 apt install -y curl unzip
@@ -73,7 +74,7 @@ EOF
 curl -L "https://static.nightmare.top/app/file-manager-php/release.zip" -o "$TEMP_ZIP"
 unzip -q -o "$TEMP_ZIP" -d "$INSTALL_DIR/src"
 
-curl -L -o frankenphp https://github.com/php/frankenphp/releases/download/v1.12.4/frankenphp-linux-x86_64
+curl -L -o frankenphp https://github.com/php/frankenphp/releases/download/$WEBSERVER_VERSION/frankenphp-linux-x86_64
 chmod +x frankenphp
 
 # ==================== SYSTEMD SERVICE ====================
@@ -121,5 +122,5 @@ echo "=== Kiểm tra service ==="
 systemctl status file-manager-php.service --no-pager
 
 echo ""
-echo "🌐 Truy cập: http://[IP_VPS]:$PORT"
+echo "🌐 Truy cập: http://[IP_VPS]:$((PORT - 1))"
 echo "🌐 Truy cập: https://[IP_VPS]:$PORT"

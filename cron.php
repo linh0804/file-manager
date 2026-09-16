@@ -12,7 +12,7 @@ $tmp_cron = __DIR__ . '/tmp_cron';
 $last = (int) @filemtime($tmp_cron);
 
 if ($last >= (time() - 24 * 3600)) {
-    response(['data' => '']);
+    exit;
 }
 
 @touch($tmp_cron);
@@ -26,21 +26,21 @@ foreach (glob(__DIR__ . '/tmp_login_*') ?: [] as $f) {
 $tmp_update_json = __DIR__ . '/tmp_app_update';
 
 if (!file_import($tmp_update_json, REMOTE_VERSION_URL, 15)) {
-    response(['data' => '<div class="tips">get version info error</div>']);
+    exit('get version info error');
 }
 
 $remote = Json::decode((string) @file_get_contents($tmp_update_json));
 
 if (empty($remote) || empty($remote['version'])) {
-    response(['data' => '<div class="tips">can not get update info</div>']);
+    exit('can not get update info');
 }
 
 if (!version_compare((string) $remote['version'], APP_VERSION, '>')) {
-    response(['data' => '']);
+    exit;
 }
 
 if (app_reinstall()) {
-    response(['data' => '<div class="tips">auto update success</div>']);
+    exit('auto update success');
 }
 
-response(['data' => '<div class="tips">auto update error</div>']);
+exit('auto update error');

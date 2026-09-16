@@ -38,8 +38,8 @@ echo '<div id="app-footer">
 
 echo '<script>nightmare_scrolltop.init();</script>';
 
-echo '<div id="menu-overlay"></div>
-    <div id="box-overlay"></div>';
+echo '<div id="menu-overlay"></div>';
+echo '<div id="box-overlay"></div>';
 
 echo '</div>
 
@@ -47,9 +47,7 @@ echo '</div>
     if (!sessionStorage.getItem("fm_cron")) {
         sessionStorage.setItem("fm_cron", "true");
         
-        $.getJSON("cron.php", function(response) {
-            $("#app-index-updater").html(response.data);
-        });
+        fetch("cron.php").catch(function() {});
     }
 </script>
 

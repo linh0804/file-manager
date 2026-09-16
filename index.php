@@ -7,7 +7,6 @@ require __DIR__ . '/_init.php';
 
 $curr_path = get_curr_path();
 $curr_path = $curr_path ?: config()->get('home');
-$curr_path = $curr_path ?: getenv('HOME');
 $curr_path = $curr_path ?: ($_SERVER['DOCUMENT_ROOT'] ?? '');
 $curr_path = (string) $curr_path;
 
@@ -29,8 +28,6 @@ if (is_file($curr_path)) {
 require SITE_HEADER;
 
 ?>
-
-<div id="app-index-updater"></div>
 
 <?php
 

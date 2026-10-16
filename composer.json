@@ -2,7 +2,7 @@
     "require": {
         "php": ">=7.4.0",
         "friendsofphp/php-cs-fixer": "^3.88",
-        "nightmare/php": "^0.0",
+        "ngatngay/php": "^0.0",
         "sabre/dav": "^4.7"
     },
     "config": {
@@ -10,9 +10,5 @@
         "platform": {
             "php": "7.4"
         }
-    },
-    "repositories": [{
-        "type": "composer",
-        "url": "https://composer.nightmare.top"
-    }]
+    }
 }
